@@ -1,0 +1,112 @@
+{
+    "skipText": "Gaan na inhoud",
+    "titles": {
+        "main": "Welkom by tenon-ui",
+        "nav": "Komponent biblioteek",
+        "lang": "Taal opsies"
+    },
+    "forms": {
+        "demo": {
+            "heading": "Vorm komponente",
+            "example": {
+                "heading": "Werkende voorbeeld"
+            },
+            "code": {
+                "heading": "Voorbeeld kode",
+                "reset": "Die forms voorbeeld kode is geherstel",
+                "resetAction": "Sluit berig"
+            },
+            "userName": {
+                "label": "Gebruikersnaam",
+                "contentHint":
+                    "Die gebruikersnaam moet langer as 5 karakters wees",
+                "errorMessageRequired": "Die gebruikersnaam is verplig",
+                "errorMessageTooShort": "Die gebruikersnaam is te kort"
+            },
+            "password": {
+                "label": "Wagwoord",
+                "errorMessageRequired": "Die wagwoord is verplig"
+            },
+            "submitButton": {
+                "label": "Teken aan"
+            }
+        }
+    },
+    "heading": {
+        "demo": {
+            "heading": "Opskrif met outomatiese hierargie berekening",
+            "example": {
+                "heading": "Werkende voorbeeld",
+                "h1": "Dit is 'n h1",
+                "h2": "Dit is 'n h2",
+                "h3": "Dit is 'n h3"
+            },
+            "code": {
+                "heading": "Voorbeeld kode",
+                "reset": "Die opskrif voorbeeld kode is geherstel",
+                "resetAction": "Sluit berig"
+            }
+        }
+    },
+    "notification": {
+        "demo": {
+            "heading": "Kennisgewing komponent met skermleser meldings",
+            "example": {
+                "heading": "Werkende voorbeeld",
+                "infoText": "Dit is 'n informasie kennisgewing berig",
+                "infoDismiss": "Sluit voorbeeld berig",
+                "showInfo": "Wys 'n informasie kennisgewing berig"
+            },
+            "code": {
+                "heading": "Voorbeeld kode",
+                "reset": "Die kennisgewing voorbeeld kode is geherstel",
+                "resetAction": "Sluit berig"
+            }
+        }
+    },
+    "spinnerButton": {
+        "demo": {
+            "heading": "Spinknop komponent met skermleser meldings",
+            "example": {
+                "heading": "Werkende voorbeeld",
+                "text": "Kliek op my",
+                "isBusy": "Die knop is nog besig",
+                "busyText": "Besig"
+            },
+            "code": {
+                "heading": "Voorbeeld kode",
+                "reset": "Die spinnerknop voorbeeld kode is geherstel",
+                "resetAction": "Sluit berig"
+            }
+        }
+    },
+    "tabs": {
+        "demo": {
+            "heading": "WAI-ARIA Tabs komponent",
+            "example": {
+                "heading": "Werkende voorbeeld",
+                "panel1": {
+                    "title": "Paneel 1",
+                    "content": "Jy is op die eerste paneel"
+                },
+                "panel2": {
+                    "title": "Paneel 2",
+                    "content": "Jy is op die tweede paneel"
+                },
+                "panel3": {
+                    "title": "Paneel 3",
+                    "content": "Jy is op die derde paneel"
+                },
+                "panel4": {
+                    "title": "Paneel 4",
+                    "content": "Jy is op die vierde paneel"
+                }
+            },
+            "code": {
+                "heading": "Voorbeeld kode",
+                "reset": "Die tabs voorbeeld kode is geherstel",
+                "resetAction": "Sluit berig"
+            }
+        }
+    }
+}

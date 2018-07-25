@@ -1,0 +1,114 @@
+{
+    "skipText": "Skip to contents",
+    "titles": {
+        "main": "Welcome to tenon-ui",
+        "nav": "Component library",
+        "lang": "Language options"
+    },
+    "forms": {
+        "demo": {
+            "heading": "Form components",
+            "example": {
+                "heading": "Working example"
+            },
+            "code": {
+                "heading": "Code example",
+                "reset": "The forms example code was reset",
+                "resetAction": "Dismiss"
+            },
+            "userName": {
+                "label": "Username",
+                "contentHint": "Username must be longer than 5 characters",
+                "errorMessageRequired": "Username is required",
+                "errorMessageTooShort":
+                "Username must be longer than 5 characters"
+            },
+            "password": {
+                "label": "Password",
+                "errorMessageRequired": "Password is required"
+            },
+            "submitButton": {
+                "label": "Login"
+            }
+        }
+    },
+    "heading": {
+        "demo": {
+            "heading": "Heading with automatic level calculation",
+            "example": {
+                "heading": "Working example",
+                "h1": "This is an h1",
+                "h2": "This is an h2",
+                "h3": "This is an h3"
+            },
+            "code": {
+                "heading": "Code example",
+                "reset": "The heading example code was reset",
+                "resetAction": "Dismiss"
+            }
+        }
+    },
+    "notification": {
+        "demo": {
+            "heading": "Notification component with live region announcements",
+            "example": {
+                "heading": "Working example",
+                "infoText": "This is an information message",
+                "infoDismiss": "Dismiss",
+                "showInfo": "Show an information message"
+            },
+            "code": {
+                "heading": "Code example",
+                "reset": "The notification example code was reset",
+                "resetAction": "Dismiss"
+            }
+        }
+    },
+    "spinnerButton": {
+        "demo": {
+            "heading":
+            "Spinner button component with screen reader announcement",
+            "example": {
+                "heading": "Working example",
+                "text": "Click me",
+                "isBusy": "The button is still busy",
+                "busyText": "Working"
+            },
+            "code": {
+                "heading": "Code example",
+                "reset": "The spinner button example code was reset",
+                "resetAction": "Dismiss"
+            }
+        }
+    },
+    "tabs": {
+        "demo": {
+            "heading": "WAI-ARIA Tabs contol",
+            "example": {
+                "heading": "Working example",
+                "panel1": {
+                    "title": "Panel 1",
+                    "content": "You are on the first panel"
+                },
+                "panel2": {
+                    "title": "Panel 2",
+                    "content": "You are on the second panel"
+                },
+                "panel3": {
+                    "title": "Panel 3",
+                    "content": "You are on the third panel"
+                },
+                "panel4": {
+                    "title": "Panel 4",
+                    "content": "You are on the fourth panel"
+                }
+            },
+            "code": {
+                "heading": "Code example",
+                "reset": "The tabs example code was reset",
+                "resetAction": "Dismiss"
+            }
+        }
+
+    }
+}

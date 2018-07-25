@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ErrorBlock should render as an unordered list to track the number of items 1`] = `
+<ul>
+  <li>
+    <a
+      href="#usernameControl"
+    >
+      User name is required.
+    </a>
+  </li>
+</ul>
+`;
