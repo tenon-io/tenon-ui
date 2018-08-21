@@ -448,15 +448,17 @@ describe('Form', () => {
 
     afterEach(cleanup);
 
-    it('should call the child render with a collection of form control values and a validity flag', () => {
+    it('should call the child render with a collection of form control values, a validity flag and a hasSubmitted flag', () => {
         let formControlsReference = null;
         let validityReference = null;
+        let hasSubmittedReference = null;
 
         render(
             <Form onSubmit={jest.fn()}>
-                {({ formControls, validity }) => {
+                {({ formControls, validity, hasSubmitted }) => {
                     formControlsReference = formControls;
                     validityReference = validity;
+                    hasSubmittedReference = hasSubmitted;
                     return (
                         <div>
                             <InputController name="testInput">
@@ -500,6 +502,40 @@ describe('Form', () => {
             }
         });
         expect(validityReference).toBeTruthy();
+        expect(hasSubmittedReference).toBeFalsy();
+    });
+
+    it('should update the hasSubmitted flag once a form submit is attempted', () => {
+        let hasSubmittedReference = null;
+
+        const { getByText } = render(
+            <Form onSubmit={jest.fn()}>
+                {({ formControls, validity, hasSubmitted }) => {
+                    hasSubmittedReference = hasSubmitted;
+                    return (
+                        <div>
+                            <InputController name="testInput">
+                                {({ getInputProps, getLabelProps }) => (
+                                    <div>
+                                        <label {...getLabelProps()}>
+                                            Test input
+                                        </label>
+                                        <input {...getInputProps()} />
+                                    </div>
+                                )}
+                            </InputController>
+                            <button type="submit">Submit</button>
+                        </div>
+                    );
+                }}
+            </Form>
+        );
+
+        expect(hasSubmittedReference).toBeFalsy();
+
+        fireEvent.click(getByText('Submit'));
+
+        expect(hasSubmittedReference).toBeTruthy();
     });
 
     it('should support unmounting of components', () => {

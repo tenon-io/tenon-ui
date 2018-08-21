@@ -1,6 +1,7 @@
 jest.mock('uuid/v4');
 
 import React from 'react';
+import ReactTestUtils from 'react-dom/test-utils';
 import { render, fireEvent, cleanup } from 'react-testing-library';
 import 'jest-dom/extend-expect';
 import Tabs from '../Tabs';
@@ -411,7 +412,7 @@ describe('Tabs dynamic render', () => {
 
         let showFirstTab = false;
 
-        const { container, rerender, debug } = render(
+        const { container, rerender } = render(
             <Tabs>
                 {showFirstTab ? (
                     <Tabs.Tab title="Panel 1">
@@ -473,7 +474,14 @@ describe('Tabs.Tab', () => {
 
         const containerSection = container.querySelector('section');
 
-        expect(containerSection.firstChild.innerHTML).toBe('Test title');
+        const focusTrapDiv = container.querySelector('div');
+
+        expect(focusTrapDiv).toHaveAttribute('tabindex', '-1');
+        expect(focusTrapDiv).toHaveAttribute('style', 'outline: 0;');
+
+        expect(containerSection.querySelector('h2').innerHTML).toBe(
+            'Test title'
+        );
         expect(containerSection.querySelector('span').innerHTML).toBe(
             'Some content'
         );
@@ -535,5 +543,23 @@ describe('Tabs.Tab', () => {
         );
 
         expect(elementRef.current).toHaveAttribute('id', 'panelId');
+    });
+
+    it('should trap focus on the internal div container', () => {
+        const mockEventObject = {
+            stopPropagation: jest.fn()
+        };
+
+        const { container } = render(
+            <Tabs.Tab title="Test title">
+                <span>Some content</span>
+            </Tabs.Tab>
+        );
+
+        const focusDiv = container.querySelector('section div');
+
+        ReactTestUtils.Simulate.focus(focusDiv, mockEventObject);
+
+        expect(mockEventObject.stopPropagation).toHaveBeenCalled();
     });
 });

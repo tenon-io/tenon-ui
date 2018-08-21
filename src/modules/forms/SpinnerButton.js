@@ -37,7 +37,7 @@ class SpinnerButton extends Component {
     static propTypes = {
         isBusy: PropTypes.bool.isRequired,
         busyText: PropTypes.string.isRequired,
-        onClick: PropTypes.func.isRequired,
+        onClick: PropTypes.func,
         onBusyClick: PropTypes.func,
         spinnerImgSrc: PropTypes.string
     };

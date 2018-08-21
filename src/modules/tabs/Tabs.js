@@ -40,8 +40,16 @@ export const Tab = forwardRef(
                     aria-describedby={tabId}
                     hidden={isHidden ? 'hidden' : null}
                 >
-                    <Heading.H>{title}</Heading.H>
-                    {children}
+                    <div
+                        tabIndex="-1"
+                        onFocus={e => {
+                            e.stopPropagation();
+                        }}
+                        style={{ outline: '0' }}
+                    >
+                        <Heading.H>{title}</Heading.H>
+                        {children}
+                    </div>
                 </section>
             </Heading.LevelBoundary>
         );

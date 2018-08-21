@@ -61,7 +61,8 @@ class Form extends Component {
 
     state = {
         formControls: {},
-        validity: true
+        validity: true,
+        hasSubmitted: false
     };
 
     /**
@@ -78,6 +79,11 @@ class Form extends Component {
         const { onSubmit } = this.props;
         const { validity, formControls } = this.state;
         e.preventDefault();
+
+        this.setState({
+            hasSubmitted: true
+        });
+
         if (validity) {
             onSubmit(
                 Object.assign(
@@ -247,14 +253,15 @@ class Form extends Component {
     }));
 
     render() {
-        const { formControls, validity } = this.state;
+        const { formControls, validity, hasSubmitted } = this.state;
         const context = this.getContext();
         return (
             <FormContext.Provider value={context}>
                 <form noValidate={true} onSubmit={this.onSubmitHandler}>
                     {this.props.children({
                         formControls,
-                        validity
+                        validity,
+                        hasSubmitted
                     })}
                 </form>
             </FormContext.Provider>
