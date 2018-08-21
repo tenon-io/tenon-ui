@@ -98,7 +98,7 @@ class SpinnerButton extends Component {
     onClickHandler = () => {
         const { isBusy, onClick, onBusyClick } = this.props;
         if (!isBusy) {
-            onClick();
+            onClick && onClick();
         } else if (onBusyClick) {
             onBusyClick();
         }

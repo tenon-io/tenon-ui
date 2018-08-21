@@ -127,6 +127,18 @@ describe('SpinnerButton', () => {
         expect(mockOnBusyClickHandler).not.toHaveBeenCalled();
     });
 
+    it('should not attempt to execute the onClick handler if it is not defined', () => {
+        const { getByText } = render(
+            <SpinnerButton isBusy={false} busyText="Working">
+                Press me
+            </SpinnerButton>
+        );
+
+        const button = getByText('Press me');
+
+        fireEvent.click(button);
+    });
+
     it('should call the onBusyClick handler if busy', () => {
         const mockOnClickHandler = jest.fn();
         const mockOnBusyClickHandler = jest.fn();
