@@ -28,6 +28,8 @@ export const isValidWebURL = value => {
         return true;
     }
 
+    //Reference: https://mathiasbynens.be/demo/url-regex
+    //Reference: https://gist.github.com/dperini/729294
     const webUrlTest = new RegExp(
         '^' +
             // protocol identifier
