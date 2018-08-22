@@ -27,6 +27,9 @@
                 "label": "Password",
                 "errorMessageRequired": "Password is required"
             },
+            "description":{
+                "label": "Description"
+            },
             "submitButton": {
                 "label": "Login"
             }

@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import {
     Form,
     Input,
+    TextArea,
     InputController,
     isLongerThan,
     isRequired,
@@ -83,6 +84,17 @@ class FormsGuide extends Component {
                                                     require="required"
                                                     labelText={t(
                                                         'forms.demo.password.label'
+                                                    )}
+                                                />
+                                            )}
+                                        </InputController>
+                                        <InputController name="description">
+                                            {props => (
+                                                <TextArea
+                                                    {...props}
+                                                    rows="10"
+                                                    labelText={t(
+                                                        'forms.demo.description.label'
                                                     )}
                                                 />
                                             )}

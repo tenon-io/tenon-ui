@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TextArea should render a content hint if given 1`] = `
+<div
+  class="group"
+>
+  <div
+    class="fieldwrapper"
+  >
+    <label
+      for="foo"
+    >
+      Test textarea
+    </label>
+    <textarea
+      aria-describedby="bar"
+      id="foo"
+    />
+  </div>
+  <div
+    class="infoWrapper"
+  >
+    <span
+      id="bar"
+    >
+      Content hint test
+    </span>
+  </div>
+</div>
+`;
+
+exports[`TextArea should render a textarea and label only 1`] = `
+<div
+  class="group"
+>
+  <div
+    class="fieldwrapper"
+  >
+    <label
+      for="foo"
+    >
+      Test textarea
+    </label>
+    <textarea
+      id="foo"
+    />
+  </div>
+</div>
+`;
+
+exports[`TextArea should render an error text when invalid 1`] = `
+<div
+  class="group"
+>
+  <div
+    class="fieldwrapper"
+  >
+    <label
+      for="foo"
+    >
+      Test textarea
+    </label>
+    <textarea
+      aria-describedby="bar"
+      id="foo"
+    />
+  </div>
+  <div
+    class="errorWrapper"
+  >
+    <span
+      id="bar"
+    >
+      Test error
+    </span>
+  </div>
+</div>
+`;

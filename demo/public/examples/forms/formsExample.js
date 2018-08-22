@@ -3,12 +3,14 @@ import ErrorBlock from '../../../../src/modules/forms/ErrorBlock';
 import {
     Form,
     Input,
+    TextArea,
     InputController,
     isLongerThan,
     isRequired,
     validator
 } from '@tenon-io/tenon-ui';
 import React from 'react';
+import { TextArea } from '../../../../src';
 
 const FormsExample = () => (
     <Form onSubmit={this.onSubmitHandler}>
@@ -46,6 +48,15 @@ const FormsExample = () => (
                             {...props}
                             require="required"
                             labelText="Password"
+                        />
+                    )}
+                </InputController>
+                <InputController name="description">
+                    {props => (
+                        <TextArea
+                            {...props}
+                            rows="10"
+                            labelText="Description"
                         />
                     )}
                 </InputController>

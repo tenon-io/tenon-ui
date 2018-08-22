@@ -42,6 +42,12 @@ describe('isLongerThan', () => {
 });
 
 describe('isValidWebURL', () => {
+    it('should pass for empty values', () => {
+        expect(isValidWebURL('')).toBeTruthy();
+        expect(isValidWebURL(null)).toBeTruthy();
+        expect(isValidWebURL(undefined)).toBeTruthy();
+    });
+
     it('should validate valid URLs', () => {
         expect(isValidWebURL('http://foo.com/blah_blah')).toBeTruthy();
         expect(isValidWebURL('http://foo.com/blah_blah/')).toBeTruthy();

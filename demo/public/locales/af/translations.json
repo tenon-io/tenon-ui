@@ -27,6 +27,9 @@
                 "label": "Wagwoord",
                 "errorMessageRequired": "Die wagwoord is verplig"
             },
+            "description":{
+                "label": "Beskrywing"
+            },
             "submitButton": {
                 "label": "Teken aan"
             }
