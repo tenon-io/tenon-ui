@@ -27,7 +27,19 @@ import { getKey } from '../utils/helpers/eventHelpers';
  *                  The default is <h2>.
  */
 export const Tab = forwardRef(
-    ({ children, title, tabId, panelId, isHidden, headingLevel }, ref) => {
+    (
+        {
+            children,
+            title,
+            tabId,
+            panelId,
+            isHidden,
+            headingLevel,
+            noHeading,
+            className
+        },
+        ref
+    ) => {
         return (
             <Heading.LevelBoundary
                 levelOverride={headingLevel ? headingLevel : null}
@@ -37,6 +49,7 @@ export const Tab = forwardRef(
                     role="tabpanel"
                     tabIndex="0"
                     ref={ref}
+                    className={className ? className : null}
                     aria-describedby={tabId}
                     hidden={isHidden ? 'hidden' : null}
                 >
@@ -47,7 +60,7 @@ export const Tab = forwardRef(
                         }}
                         style={{ outline: '0' }}
                     >
-                        <Heading.H>{title}</Heading.H>
+                        {noHeading ? null : <Heading.H>{title}</Heading.H>}
                         {children}
                     </div>
                 </section>
@@ -61,7 +74,9 @@ Tab.propTypes = {
     tabId: PropTypes.string,
     panelId: PropTypes.string,
     isHidden: PropTypes.bool,
-    headingLevel: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    headingLevel: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    noHeading: PropTypes.bool,
+    className: PropTypes.string
 };
 
 Tab.displayName = 'Tabs.Tab';
