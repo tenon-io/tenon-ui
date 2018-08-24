@@ -27,7 +27,7 @@
                 "label": "Password",
                 "errorMessageRequired": "Password is required"
             },
-            "description":{
+            "description": {
                 "label": "Description"
             },
             "submitButton": {
@@ -63,6 +63,19 @@
             "code": {
                 "heading": "Code example",
                 "reset": "The notification example code was reset",
+                "resetAction": "Dismiss"
+            }
+        }
+    },
+    "spinner": {
+        "demo": {
+            "heading": "Spinner component with an animated SVG spinner",
+            "example": {
+                "heading": "Working example"
+            },
+            "code": {
+                "heading": "Code example",
+                "reset": "The spinner example code was reset",
                 "resetAction": "Dismiss"
             }
         }
@@ -112,6 +125,5 @@
                 "resetAction": "Dismiss"
             }
         }
-
     }
 }

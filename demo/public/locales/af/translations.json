@@ -27,7 +27,7 @@
                 "label": "Wagwoord",
                 "errorMessageRequired": "Die wagwoord is verplig"
             },
-            "description":{
+            "description": {
                 "label": "Beskrywing"
             },
             "submitButton": {
@@ -63,6 +63,19 @@
             "code": {
                 "heading": "Voorbeeld kode",
                 "reset": "Die kennisgewing voorbeeld kode is geherstel",
+                "resetAction": "Sluit berig"
+            }
+        }
+    },
+    "spinner": {
+        "demo": {
+            "heading": "Spinner komponent met 'n geänimeerde SVG spinner",
+            "example": {
+                "heading": "Werkende voorbeeld"
+            },
+            "code": {
+                "heading": "Voorbeeld kode",
+                "reset": "Die spinner voorbeeld kode is geherstel",
                 "resetAction": "Sluit berig"
             }
         }

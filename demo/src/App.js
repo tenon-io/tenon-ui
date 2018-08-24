@@ -22,6 +22,9 @@ const NotificationGuideAsync = AsyncLoader({
 const SpinnerButtonGuideAsync = AsyncLoader({
     loader: () => import('./guides/SpinnerButtonGuide')
 });
+const SpinnerGuideAsync = AsyncLoader({
+    loader: () => import('./guides/SpinnerGuide')
+});
 
 class App extends Component {
     render() {
@@ -93,6 +96,7 @@ class App extends Component {
                                         <HeadingGuideAsync path="/heading" />
                                         <NotificationGuideAsync path="/notification" />
                                         <SpinnerButtonGuideAsync path="/spinner-button" />
+                                        <SpinnerGuideAsync path="/spinner" />
                                     </Router>
                                 </main>
                             </div>

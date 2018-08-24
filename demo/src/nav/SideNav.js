@@ -14,6 +14,9 @@ const SideNav = () => (
                 <Link to="/notification">Notification</Link>
             </li>
             <li>
+                <Link to="/spinner">Spinner</Link>
+            </li>
+            <li>
                 <Link to="/spinner-button">Spinner Button</Link>
             </li>
             <li>

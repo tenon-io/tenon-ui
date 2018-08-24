@@ -1,5 +1,5 @@
 .App {
-    position:relative;
+    position: relative;
 }
 
 .working-example {
@@ -10,7 +10,6 @@
 .pane-section {
     width: 80%;
 }
-
 
 .skip-link {
     position: absolute !important;
@@ -30,4 +29,12 @@
     width: auto;
     overflow: auto;
     clip: inherit;
+}
+
+.demo-spinner g {
+    stroke: #002964;
+}
+
+.demo-spinner circle {
+    fill: #002964
 }
