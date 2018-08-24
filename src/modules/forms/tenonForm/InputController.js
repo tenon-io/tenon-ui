@@ -52,7 +52,8 @@ class InnerInputController extends Component {
         getControlValidity: PropTypes.func.isRequired,
         getControlErrorText: PropTypes.func.isRequired,
         validators: PropTypes.arrayOf(PropTypes.object),
-        name: PropTypes.string.isRequired
+        name: PropTypes.string.isRequired,
+        registerErrors: PropTypes.bool
     };
 
     static displayName = 'InnerInputController';
@@ -67,8 +68,8 @@ class InnerInputController extends Component {
         super(props);
 
         this.controlId = uuidv4();
-        this.errorId = uuidv4();
         this.contentHintId = uuidv4();
+        this.errorId = uuidv4();
 
         this.state = {
             contentHintId: null
@@ -190,9 +191,14 @@ class InnerInputController extends Component {
      * @returns {object}
      */
     getInputProps = ({ onChange, ...props } = {}) => {
-        const { name, getControlValue, getControlValidity } = this.props;
+        const {
+            name,
+            getControlValue,
+            getControlValidity,
+            registerErrors
+        } = this.props;
         const { contentHintId } = this.state;
-        const isValid = getControlValidity(name);
+        const isValid = registerErrors ? getControlValidity(name) : true;
 
         return {
             'aria-describedby':
@@ -283,14 +289,15 @@ class InnerInputController extends Component {
             children,
             getControlValidity,
             getControlErrorText,
-            name
+            name,
+            registerErrors
         } = this.props;
         return children({
             getLabelProps: this.getLabelProps,
             getInputProps: this.getInputProps,
             getErrorProps: this.getErrorProps,
             getContentHintProps: this.getContentHintProps,
-            showError: !getControlValidity(name),
+            showError: registerErrors ? !getControlValidity(name) : false,
             errorText: getControlErrorText(name)
         });
     }

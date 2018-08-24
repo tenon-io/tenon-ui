@@ -28,9 +28,9 @@ class FormsGuide extends Component {
                             heading={t('forms.demo.example.heading')}
                         >
                             <Form onSubmit={this.onSubmitHandler}>
-                                {({ formControls, validity }) => (
+                                {({ formControls, validity, hasSubmitted }) => (
                                     <Fragment>
-                                        {!validity ? (
+                                        {!validity && hasSubmitted ? (
                                             <ErrorBlock
                                                 formControls={formControls}
                                             />

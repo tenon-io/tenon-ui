@@ -50,11 +50,15 @@ import memoize from 'memoize-one';
  *                  from the smart form state.
  * getControlErrorText: Gets the given control's current errorMessage,
  *                  if any, from the smart form state.
+ *
+ * Context also contains a registerErrors boolean what can be used
+ * by the consumers to decide when to show errors.
  * */
 class Form extends Component {
     static propTypes = {
         children: PropTypes.func.isRequired,
-        onSubmit: PropTypes.func.isRequired
+        onSubmit: PropTypes.func.isRequired,
+        alwaysShowErrors: PropTypes.bool
     };
 
     static displayName = 'Form';
@@ -240,21 +244,23 @@ class Form extends Component {
     /**
      * @function
      * Builds up the React Context value. This function
-     * memoized to avoid Consumer redenders.
+     * memoized to avoid Consumer rerenders.
      */
-    getContext = memoize(() => ({
+    getContext = memoize(registerErrors => ({
         registerControl: this.registerControl,
         deregisterControl: this.deregisterControl,
         setControlValue: this.setControlValue,
         getControlValue: this.getControlValue,
         setControlValidity: this.setControlValidity,
         getControlValidity: this.getControlValidity,
-        getControlErrorText: this.getControlErrorText
+        getControlErrorText: this.getControlErrorText,
+        registerErrors
     }));
 
     render() {
+        const { alwaysShowErrors } = this.props;
         const { formControls, validity, hasSubmitted } = this.state;
-        const context = this.getContext();
+        const context = this.getContext(alwaysShowErrors || hasSubmitted);
         return (
             <FormContext.Provider value={context}>
                 <form noValidate={true} onSubmit={this.onSubmitHandler}>

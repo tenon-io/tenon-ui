@@ -477,7 +477,7 @@ describe('Tabs.Tab', () => {
         const focusTrapDiv = container.querySelector('div');
 
         expect(focusTrapDiv).toHaveAttribute('tabindex', '-1');
-        expect(focusTrapDiv).toHaveAttribute('style', 'outline: 0;');
+        expect(focusTrapDiv).toHaveAttribute('style', 'outline: none;');
 
         expect(containerSection.querySelector('h2').innerHTML).toBe(
             'Test title'

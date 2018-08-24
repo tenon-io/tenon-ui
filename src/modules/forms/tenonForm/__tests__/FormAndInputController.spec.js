@@ -16,8 +16,8 @@ describe('InputController', () => {
         jest.clearAllMocks();
         uuidv4
             .mockReturnValueOnce('inputLabelId')
-            .mockReturnValueOnce('errorId')
-            .mockReturnValueOnce('contentHintId');
+            .mockReturnValueOnce('contentHintId')
+            .mockReturnValueOnce('errorId');
     });
 
     afterEach(cleanup);
@@ -128,46 +128,51 @@ describe('InputController', () => {
     });
 
     it('should validate an input and set an error text when appropriate', () => {
-        const { getByLabelText, getByTestId } = render(
+        const { getByLabelText, getByTestId, getByText } = render(
             <Form onSubmit={jest.fn()}>
                 {() => (
-                    <InputController
-                        name="testInput"
-                        validators={[
-                            validator(isRequired, 'This field is required.')
-                        ]}
-                    >
-                        {({
-                            getInputProps,
-                            getLabelProps,
-                            getErrorProps,
-                            showError,
-                            errorText
-                        }) => {
-                            return (
-                                <div>
-                                    <label {...getLabelProps()}>
-                                        Test input
-                                    </label>
-                                    <input
-                                        {...getInputProps({
-                                            required: 'required'
-                                        })}
-                                    />
-                                    <div data-testid="errorContainer">
-                                        {showError ? (
-                                            <span {...getErrorProps()}>
-                                                {errorText}
-                                            </span>
-                                        ) : null}
+                    <div>
+                        <InputController
+                            name="testInput"
+                            validators={[
+                                validator(isRequired, 'This field is required.')
+                            ]}
+                        >
+                            {({
+                                getInputProps,
+                                getLabelProps,
+                                getErrorProps,
+                                showError,
+                                errorText
+                            }) => {
+                                return (
+                                    <div>
+                                        <label {...getLabelProps()}>
+                                            Test input
+                                        </label>
+                                        <input
+                                            {...getInputProps({
+                                                required: 'required'
+                                            })}
+                                        />
+                                        <div data-testid="errorContainer">
+                                            {showError ? (
+                                                <span {...getErrorProps()}>
+                                                    {errorText}
+                                                </span>
+                                            ) : null}
+                                        </div>
                                     </div>
-                                </div>
-                            );
-                        }}
-                    </InputController>
+                                );
+                            }}
+                        </InputController>
+                        <button type="submit">Submit</button>
+                    </div>
                 )}
             </Form>
         );
+
+        fireEvent.click(getByText('Submit'));
 
         const input = getByLabelText('Test input');
 
@@ -201,51 +206,59 @@ describe('InputController', () => {
     });
 
     it('should run input validators in sequence to allow for hierarchical control of validation', () => {
-        const { getByLabelText, getByTestId } = render(
+        const { getByLabelText, getByTestId, getByText } = render(
             <Form onSubmit={jest.fn()}>
                 {() => (
-                    <InputController
-                        name="testInput"
-                        validators={[
-                            validator(isRequired, 'This field is required.'),
-                            validator(
-                                isLongerThan,
-                                'The entry text should be longer than 5 characters',
-                                5
-                            )
-                        ]}
-                    >
-                        {({
-                            getInputProps,
-                            getLabelProps,
-                            getErrorProps,
-                            showError,
-                            errorText
-                        }) => {
-                            return (
-                                <div>
-                                    <label {...getLabelProps()}>
-                                        Test input
-                                    </label>
-                                    <input
-                                        {...getInputProps({
-                                            required: 'required'
-                                        })}
-                                    />
-                                    <div data-testid="errorContainer">
-                                        {showError ? (
-                                            <span {...getErrorProps()}>
-                                                {errorText}
-                                            </span>
-                                        ) : null}
+                    <div>
+                        <InputController
+                            name="testInput"
+                            validators={[
+                                validator(
+                                    isRequired,
+                                    'This field is required.'
+                                ),
+                                validator(
+                                    isLongerThan,
+                                    'The entry text should be longer than 5 characters',
+                                    5
+                                )
+                            ]}
+                        >
+                            {({
+                                getInputProps,
+                                getLabelProps,
+                                getErrorProps,
+                                showError,
+                                errorText
+                            }) => {
+                                return (
+                                    <div>
+                                        <label {...getLabelProps()}>
+                                            Test input
+                                        </label>
+                                        <input
+                                            {...getInputProps({
+                                                required: 'required'
+                                            })}
+                                        />
+                                        <div data-testid="errorContainer">
+                                            {showError ? (
+                                                <span {...getErrorProps()}>
+                                                    {errorText}
+                                                </span>
+                                            ) : null}
+                                        </div>
                                     </div>
-                                </div>
-                            );
-                        }}
-                    </InputController>
+                                );
+                            }}
+                        </InputController>
+                        <button type="submit">Submit</button>
+                    </div>
                 )}
             </Form>
         );
+
+        fireEvent.click(getByText('Submit'));
 
         expect(getByTestId('errorContainer').firstChild).toHaveTextContent(
             'This field is required.'
@@ -270,57 +283,61 @@ describe('InputController', () => {
     });
 
     it('should allow a specific validator to be ignored', () => {
-        const { getByLabelText, getByTestId } = render(
+        const { getByLabelText, getByTestId, getByText } = render(
             <Form onSubmit={jest.fn()}>
                 {() => (
-                    <InputController
-                        name="testInput"
-                        validators={[
-                            validator(
-                                isRequired,
-                                'This field is required.',
-                                null,
-                                true
-                            ),
-                            validator(
-                                isLongerThan,
-                                'The entry text should be longer than 5 characters',
-                                5
-                            )
-                        ]}
-                    >
-                        {({
-                            getInputProps,
-                            getLabelProps,
-                            getErrorProps,
-                            showError,
-                            errorText
-                        }) => {
-                            return (
-                                <div>
-                                    <label {...getLabelProps()}>
-                                        Test input
-                                    </label>
-                                    <input
-                                        {...getInputProps({
-                                            required: 'required'
-                                        })}
-                                    />
-                                    <div data-testid="errorContainer">
-                                        {showError ? (
-                                            <span {...getErrorProps()}>
-                                                {errorText}
-                                            </span>
-                                        ) : null}
+                    <div>
+                        <InputController
+                            name="testInput"
+                            validators={[
+                                validator(
+                                    isRequired,
+                                    'This field is required.',
+                                    null,
+                                    true
+                                ),
+                                validator(
+                                    isLongerThan,
+                                    'The entry text should be longer than 5 characters',
+                                    5
+                                )
+                            ]}
+                        >
+                            {({
+                                getInputProps,
+                                getLabelProps,
+                                getErrorProps,
+                                showError,
+                                errorText
+                            }) => {
+                                return (
+                                    <div>
+                                        <label {...getLabelProps()}>
+                                            Test input
+                                        </label>
+                                        <input
+                                            {...getInputProps({
+                                                required: 'required'
+                                            })}
+                                        />
+                                        <div data-testid="errorContainer">
+                                            {showError ? (
+                                                <span {...getErrorProps()}>
+                                                    {errorText}
+                                                </span>
+                                            ) : null}
+                                        </div>
                                     </div>
-                                </div>
-                            );
-                        }}
-                    </InputController>
+                                );
+                            }}
+                        </InputController>
+                        <button type="submit">Submit</button>
+                    </div>
                 )}
             </Form>
         );
 
+        fireEvent.click(getByText('Submit'));
         expect(getByTestId('errorContainer')).toBeEmpty();
 
         const input = getByLabelText('Test input');
@@ -375,47 +392,58 @@ describe('InputController', () => {
     });
 
     it('should properly link both a content hint and an error message accessibly', () => {
-        const { getByLabelText } = render(
+        const { getByLabelText, getByText } = render(
             <Form onSubmit={jest.fn()}>
                 {() => (
-                    <InputController
-                        name="testInput"
-                        validators={[validator(isRequired, 'It is required')]}
-                    >
-                        {({
-                            getInputProps,
-                            getLabelProps,
-                            getErrorProps,
-                            getContentHintProps,
-                            errorText
-                        }) => {
-                            return (
-                                <div>
-                                    <label {...getLabelProps()}>
-                                        Test input
-                                    </label>
-                                    <input
-                                        {...getInputProps({
-                                            required: 'required'
-                                        })}
-                                    />
-                                    <div data-testid="contentHintContainer">
-                                        <span {...getContentHintProps()}>
-                                            Some content hint
-                                        </span>
+                    <div>
+                        {' '}
+                        <InputController
+                            name="testInput"
+                            validators={[
+                                validator(isRequired, 'It is required')
+                            ]}
+                        >
+                            {({
+                                getInputProps,
+                                getLabelProps,
+                                getErrorProps,
+                                getContentHintProps,
+                                errorText,
+                                showError
+                            }) => {
+                                return (
+                                    <div>
+                                        <label {...getLabelProps()}>
+                                            Test input
+                                        </label>
+                                        <input
+                                            {...getInputProps({
+                                                required: 'required'
+                                            })}
+                                        />
+                                        <div data-testid="contentHintContainer">
+                                            <span {...getContentHintProps()}>
+                                                Some content hint
+                                            </span>
+                                        </div>
+                                        {showError ? (
+                                            <div data-testid="errorContainer">
+                                                <span {...getErrorProps()}>
+                                                    {errorText}
+                                                </span>
+                                            </div>
+                                        ) : null}
                                     </div>
-                                    <div data-testid="errorContainer">
-                                        <span {...getErrorProps()}>
-                                            {errorText}
-                                        </span>
-                                    </div>
-                                </div>
-                            );
-                        }}
-                    </InputController>
+                                );
+                            }}
+                        </InputController>
+                        <button type="submit">Submit</button>
+                    </div>
                 )}
             </Form>
         );
+
+        fireEvent.click(getByText('Submit'));
 
         expect(getByLabelText('Test input')).toHaveAttribute(
             'aria-describedby',
@@ -430,6 +458,135 @@ describe('InputController', () => {
             'aria-describedby',
             'contentHintId'
         );
+    });
+
+    it('should should only display errors after one submit attempt', () => {
+        const { getByLabelText, getByText, queryByTestId } = render(
+            <Form onSubmit={jest.fn()}>
+                {() => (
+                    <div>
+                        {' '}
+                        <InputController
+                            name="testInput"
+                            validators={[
+                                validator(isRequired, 'It is required')
+                            ]}
+                        >
+                            {({
+                                getInputProps,
+                                getLabelProps,
+                                getErrorProps,
+                                getContentHintProps,
+                                errorText,
+                                showError
+                            }) => {
+                                return (
+                                    <div>
+                                        <label {...getLabelProps()}>
+                                            Test input
+                                        </label>
+                                        <input
+                                            {...getInputProps({
+                                                required: 'required'
+                                            })}
+                                        />
+                                        <div data-testid="contentHintContainer">
+                                            <span {...getContentHintProps()}>
+                                                Some content hint
+                                            </span>
+                                        </div>
+                                        {showError ? (
+                                            <div data-testid="errorContainer">
+                                                <span {...getErrorProps()}>
+                                                    {errorText}
+                                                </span>
+                                            </div>
+                                        ) : null}
+                                    </div>
+                                );
+                            }}
+                        </InputController>
+                        <button type="submit">Submit</button>
+                    </div>
+                )}
+            </Form>
+        );
+
+        expect(getByLabelText('Test input')).toHaveAttribute(
+            'aria-describedby',
+            'contentHintId'
+        );
+
+        expect(queryByTestId('errorContainer')).toBeNull();
+
+        fireEvent.click(getByText('Submit'));
+
+        expect(getByLabelText('Test input')).toHaveAttribute(
+            'aria-describedby',
+            'contentHintId errorId'
+        );
+
+        expect(queryByTestId('errorContainer')).not.toBeNull();
+    });
+
+    it('should should display errors always when alwaysShowErrors is on', () => {
+        const { getByLabelText, getByText, queryByTestId } = render(
+            <Form onSubmit={jest.fn()} alwaysShowErrors={true}>
+                {() => (
+                    <div>
+                        {' '}
+                        <InputController
+                            name="testInput"
+                            validators={[
+                                validator(isRequired, 'It is required')
+                            ]}
+                        >
+                            {({
+                                getInputProps,
+                                getLabelProps,
+                                getErrorProps,
+                                getContentHintProps,
+                                errorText,
+                                showError
+                            }) => {
+                                return (
+                                    <div>
+                                        <label {...getLabelProps()}>
+                                            Test input
+                                        </label>
+                                        <input
+                                            {...getInputProps({
+                                                required: 'required'
+                                            })}
+                                        />
+                                        <div data-testid="contentHintContainer">
+                                            <span {...getContentHintProps()}>
+                                                Some content hint
+                                            </span>
+                                        </div>
+                                        {showError ? (
+                                            <div data-testid="errorContainer">
+                                                <span {...getErrorProps()}>
+                                                    {errorText}
+                                                </span>
+                                            </div>
+                                        ) : null}
+                                    </div>
+                                );
+                            }}
+                        </InputController>
+                        <button type="submit">Submit</button>
+                    </div>
+                )}
+            </Form>
+        );
+
+        expect(getByLabelText('Test input')).toHaveAttribute(
+            'aria-describedby',
+            'contentHintId errorId'
+        );
+
+        expect(queryByTestId('errorContainer')).not.toBeNull();
     });
 });
 

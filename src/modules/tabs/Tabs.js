@@ -58,7 +58,7 @@ export const Tab = forwardRef(
                         onFocus={e => {
                             e.stopPropagation();
                         }}
-                        style={{ outline: '0' }}
+                        style={{ outline: 'none' }}
                     >
                         {noHeading ? null : <Heading.H>{title}</Heading.H>}
                         {children}
