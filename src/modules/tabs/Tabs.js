@@ -94,6 +94,11 @@ Tab.displayName = 'Tabs.Tab';
  * </Tabs>
  */
 class Tabs extends Component {
+    static propTypes = {
+        toggleRender: PropTypes.func,
+        onTabActivated: PropTypes.func
+    };
+
     static Tab = Tab;
 
     state = {
@@ -158,6 +163,8 @@ class Tabs extends Component {
                 this.tabRefs[this.tabsById[newIndex].tabId].focus();
             }
         );
+
+        this.callActivateHandler(this.tabsById[newIndex].name);
     };
 
     /**
@@ -168,11 +175,27 @@ class Tabs extends Component {
      * Activates the tab.
      *
      * @param {SyntheticPointerEvent} e
-     * @param {string} tabId
+     * @param {Object} tab
      */
-    onClickHandler = (e, tabId) => {
+    onClickHandler = (e, tab) => {
         e.preventDefault();
-        this.setState({ activeTabId: tabId });
+        this.setState({ activeTabId: tab.tabId });
+        this.callActivateHandler(tab.name);
+    };
+
+    /**
+     * @function
+     * If defined, this handler gets called with the given tab name
+     * when the tab is activated.
+     *
+     * @param {string} name
+     */
+    callActivateHandler = name => {
+        const { onTabActivated } = this.props;
+
+        if (onTabActivated) {
+            onTabActivated(name);
+        }
     };
 
     /**
@@ -215,21 +238,23 @@ class Tabs extends Component {
      * NOTE: That the panels need to take into account null/undefined
      * values for conditionally rendered children.
      *
-     *@param {Array} titles - Array of all tabs titles.
+     *@param {Object} tabChildren - Array of all tab children titles and
+     *            names.
      *
      *@returns {Object} Metadata object containing two arrays:
      *            tabMetadata: Metadata to use for the tabs.
      *            renderedTabs: Metadata to use for the tab panels.
      */
-    calcIds = memoize(titles => {
+    calcTabMetadata = memoize(tabChildren => {
         this.tabRefs = {};
         this.panelRefs = {};
 
-        const tabPanelMetadata = titles.map(
-            title =>
-                title
+        const tabPanelMetadata = tabChildren.map(
+            child =>
+                child
                     ? {
-                          title,
+                          title: child.title,
+                          name: child.name,
                           tabId: uuidv4(),
                           panelId: uuidv4()
                       }
@@ -238,7 +263,10 @@ class Tabs extends Component {
 
         const tabMetadata = tabPanelMetadata.filter(tab => !!tab.tabId);
 
-        this.tabsById = tabMetadata.map(tab => ({ tabId: tab.tabId }));
+        this.tabsById = tabMetadata.map(tab => ({
+            tabId: tab.tabId,
+            name: tab.name
+        }));
 
         this.panelIdByTabId = tabMetadata.reduce(
             (prev, cur) => ({
@@ -272,13 +300,18 @@ class Tabs extends Component {
     );
 
     render() {
-        const { children } = this.props;
+        const { children, toggleRender } = this.props;
 
-        const tabs = this.calcIds(
-            React.Children.map(
-                children,
-                child => (child ? child.props.title : '')
-            )
+        //If a name is not given as prop on the Tab component, the tab gets
+        //an autoassigned name based on the child index.
+        const tabs = this.calcTabMetadata(
+            React.Children.map(children, (child, i) => ({
+                title: child ? child.props.title : '',
+                name:
+                    child && child.props.name
+                        ? child.props.name
+                        : `tab${i.toString()}`
+            }))
         );
 
         const { activeTabId } = this.state;
@@ -299,7 +332,7 @@ class Tabs extends Component {
                                     tab.tabId === selectedTabId ? '0' : '-1'
                                 }
                                 onClick={e => {
-                                    this.onClickHandler(e, tab.tabId);
+                                    this.onClickHandler(e, tab);
                                 }}
                                 aria-controls={this.panelIdByTabId[tab.tabId]}
                                 onKeyUp={this.onKeyUpHandler}
@@ -307,7 +340,15 @@ class Tabs extends Component {
                                     tab.tabId === selectedTabId ? 'true' : null
                                 }
                             >
-                                <span>{tab.title}</span>
+                                {toggleRender ? (
+                                    toggleRender({
+                                        title: tab.title,
+                                        name: tab.name,
+                                        isActive: tab.tabId === selectedTabId
+                                    })
+                                ) : (
+                                    <span>{tab.title}</span>
+                                )}
                             </div>
                         </li>
                     ))}
