@@ -1,6 +1,6 @@
 {
     "name": "@tenon-io/tenon-ui",
-    "version": "1.0.0-alpha.20",
+    "version": "1.0.0-alpha.21",
     "description": "Tenon ui components library",
     "contributors": [
         "Karl Groves <karl@tenon.io>",

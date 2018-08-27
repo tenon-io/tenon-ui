@@ -25,6 +25,9 @@ import { getKey } from '../utils/helpers/eventHelpers';
  * @prop {boolean} isHidden - Indicates id the tab is visible or CSS hidden.
  * @prop {string | number} headingLevel - The level of <h> element to render.
  *                  The default is <h2>.
+ * @prop {function} toggleRender - An alternative render function for the
+ *                  Tab toggle. Receives the title, the name and a boolean
+ *                  flag to indicate if the tab is active.
  */
 export const Tab = forwardRef(
     (
@@ -76,7 +79,8 @@ Tab.propTypes = {
     isHidden: PropTypes.bool,
     headingLevel: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     noHeading: PropTypes.bool,
-    className: PropTypes.string
+    className: PropTypes.string,
+    toggleRender: PropTypes.func
 };
 
 Tab.displayName = 'Tabs.Tab';
@@ -92,11 +96,15 @@ Tab.displayName = 'Tabs.Tab';
  *         <p>Some panel content</span>
  *     </Tabs.Tab>
  * </Tabs>
+ *
+ * @prop {function} toggleRender - An alternative render function for the
+ *                  Tab toggles. Receives the title, the name and a boolean
+ *                  flag to indicate if the tab is active. This function is
+ *                  overridden by child toggle render functions.
  */
 class Tabs extends Component {
     static propTypes = {
-        toggleRender: PropTypes.func,
-        onTabActivated: PropTypes.func
+        toggleRender: PropTypes.func
     };
 
     static Tab = Tab;
@@ -163,8 +171,6 @@ class Tabs extends Component {
                 this.tabRefs[this.tabsById[newIndex].tabId].focus();
             }
         );
-
-        this.callActivateHandler(this.tabsById[newIndex].name);
     };
 
     /**
@@ -180,22 +186,6 @@ class Tabs extends Component {
     onClickHandler = (e, tab) => {
         e.preventDefault();
         this.setState({ activeTabId: tab.tabId });
-        this.callActivateHandler(tab.name);
-    };
-
-    /**
-     * @function
-     * If defined, this handler gets called with the given tab name
-     * when the tab is activated.
-     *
-     * @param {string} name
-     */
-    callActivateHandler = name => {
-        const { onTabActivated } = this.props;
-
-        if (onTabActivated) {
-            onTabActivated(name);
-        }
     };
 
     /**
@@ -255,6 +245,7 @@ class Tabs extends Component {
                     ? {
                           title: child.title,
                           name: child.name,
+                          toggleRender: child.toggleRender,
                           tabId: uuidv4(),
                           panelId: uuidv4()
                       }
@@ -304,13 +295,21 @@ class Tabs extends Component {
 
         //If a name is not given as prop on the Tab component, the tab gets
         //an autoassigned name based on the child index.
+        //If a toggle render function is defined on the Tab component, it is
+        //applied. If a child toggle render function is defined it overrides
         const tabs = this.calcTabMetadata(
             React.Children.map(children, (child, i) => ({
                 title: child ? child.props.title : '',
                 name:
                     child && child.props.name
                         ? child.props.name
-                        : `tab${i.toString()}`
+                        : `tab${i.toString()}`,
+                toggleRender:
+                    child && child.props.toggleRender
+                        ? child.props.toggleRender
+                        : toggleRender
+                            ? toggleRender
+                            : null
             }))
         );
 
@@ -340,8 +339,8 @@ class Tabs extends Component {
                                     tab.tabId === selectedTabId ? 'true' : null
                                 }
                             >
-                                {toggleRender ? (
-                                    toggleRender({
+                                {tab.toggleRender ? (
+                                    tab.toggleRender({
                                         title: tab.title,
                                         name: tab.name,
                                         isActive: tab.tabId === selectedTabId
