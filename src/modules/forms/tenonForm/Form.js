@@ -29,6 +29,10 @@ import memoize from 'memoize-one';
  * on a submit event if the total state of the form is valid. The
  * function gets called with an object representing all form controls
  * and their values at the moment of submission.
+ * @prop {function} onRawSubmit - An optional eventhandler function that gets
+ * called with every submit attempt of the form with the raw form data
+ * and validity flag. This can be handy if something had to happen during
+ * invalid form submit phases.
  * @example
  * {
  *     [controlName]:[value]
@@ -58,6 +62,7 @@ class Form extends Component {
     static propTypes = {
         children: PropTypes.func.isRequired,
         onSubmit: PropTypes.func.isRequired,
+        onRawSubmit: PropTypes.func,
         alwaysShowErrors: PropTypes.bool
     };
 
@@ -80,13 +85,17 @@ class Form extends Component {
      * form controls in the scope of the smart form passes validation.
      */
     onSubmitHandler = e => {
-        const { onSubmit } = this.props;
+        const { onSubmit, onRawSubmit } = this.props;
         const { validity, formControls } = this.state;
         e.preventDefault();
 
         this.setState({
             hasSubmitted: true
         });
+
+        if (onRawSubmit) {
+            onRawSubmit(formControls, validity);
+        }
 
         if (validity) {
             onSubmit(
