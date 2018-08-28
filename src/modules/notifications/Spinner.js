@@ -14,7 +14,7 @@ import PropTypes from 'prop-types';
  */
 class Spinner extends Component {
     static propTypes = {
-        title: PropTypes.string.isRequired,
+        title: PropTypes.string,
         className: PropTypes.string
     };
 
@@ -31,11 +31,11 @@ class Spinner extends Component {
                 role="img"
                 viewBox="0 0 58 58"
                 xmlns="http://www.w3.org/2000/svg"
-                aria-describedby={this.svgTitleId}
+                aria-describedby={title ? this.svgTitleId : null}
                 className={className ? className : null}
                 {...props}
             >
-                <title id={this.svgTitleId}>{title}</title>
+                {title ? <title id={this.svgTitleId}>{title}</title> : null}
                 <g fill="none" fillRule="evenodd">
                     <g
                         transform="translate(2 1)"
