@@ -6,12 +6,10 @@ describe('validator', () => {
         const validatorObj = validator(
             mockFunction,
             'Validation message',
-            'compareValue',
             true
         );
 
         expect(validatorObj.message).toBe('Validation message');
-        expect(validatorObj.compare).toBe('compareValue');
         expect(validatorObj.ignore).toBeTruthy();
 
         validatorObj.func();

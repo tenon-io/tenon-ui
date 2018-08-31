@@ -46,11 +46,10 @@ class FormsGuide extends Component {
                                                     )
                                                 ),
                                                 validator(
-                                                    isLongerThan,
+                                                    isLongerThan(5),
                                                     t(
                                                         'forms.demo.userName.errorMessageTooShort'
-                                                    ),
-                                                    5
+                                                    )
                                                 )
                                             ]}
                                         >

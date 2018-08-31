@@ -1,6 +1,6 @@
 jest.mock('uuid/v4');
 
-import React from 'react';
+import React, { Fragment } from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
 import { render, fireEvent, cleanup } from 'react-testing-library';
 import 'jest-dom/extend-expect';
@@ -9,7 +9,6 @@ import uuidv4 from 'uuid/v4';
 
 describe('Tabs render', () => {
     beforeEach(() => {
-        jest.clearAllMocks();
         uuidv4
             .mockReturnValueOnce('tabId1')
             .mockReturnValueOnce('panelId1')
@@ -62,6 +61,158 @@ describe('Tabs render', () => {
         expect(secondPanel).toHaveAttribute('aria-describedby', 'tabId2');
         expect(secondPanel.querySelector('h2').innerHTML).toBe('Panel 2');
         expect(secondPanel).toHaveAttribute('hidden');
+        expect(secondPanel.querySelector('p').innerHTML).toBe(
+            'This is panel 2'
+        );
+    });
+
+    it('should allow custom tab toggle rendering via a render functions on the Tab controls', () => {
+        const toggleRender = ({ title, name, isActive }) => (
+            <Fragment>
+                <span className="title">{title}</span>
+                <span className="name">{name}</span>
+                <span className="isActive">{isActive.toString()}</span>
+            </Fragment>
+        );
+
+        const { container } = render(
+            <Tabs>
+                <Tabs.Tab
+                    title="Panel 1"
+                    name="panel1"
+                    toggleRender={toggleRender}
+                >
+                    <p>This is panel 1</p>
+                </Tabs.Tab>
+                <Tabs.Tab
+                    title="Panel 2"
+                    name="panel2"
+                    toggleRender={toggleRender}
+                >
+                    <p>This is panel 2</p>
+                </Tabs.Tab>
+            </Tabs>
+        );
+
+        const list = container.querySelector('ul');
+        const firstTab = list.querySelector('div#tabId1');
+        const secondTab = list.querySelector('div#tabId2');
+
+        expect(firstTab.querySelector('.title').innerHTML).toBe('Panel 1');
+        expect(firstTab.querySelector('.name').innerHTML).toBe('panel1');
+        expect(firstTab.querySelector('.isActive').innerHTML).toBe('true');
+
+        expect(secondTab.querySelector('.title').innerHTML).toBe('Panel 2');
+        expect(secondTab.querySelector('.name').innerHTML).toBe('panel2');
+        expect(secondTab.querySelector('.isActive').innerHTML).toBe('false');
+    });
+
+    it('should allow a global custom tab toggle render function to render all the toggles', () => {
+        const toggleRender = ({ title, name, isActive }) => (
+            <Fragment>
+                <span className="title">{title}</span>
+                <span className="name">{name}</span>
+                <span className="isActive">{isActive.toString()}</span>
+            </Fragment>
+        );
+
+        const { container } = render(
+            <Tabs toggleRender={toggleRender}>
+                <Tabs.Tab title="Panel 1" name="panel1">
+                    <p>This is panel 1</p>
+                </Tabs.Tab>
+                <Tabs.Tab title="Panel 2" name="panel2">
+                    <p>This is panel 2</p>
+                </Tabs.Tab>
+            </Tabs>
+        );
+
+        const list = container.querySelector('ul');
+        const firstTab = list.querySelector('div#tabId1');
+        const secondTab = list.querySelector('div#tabId2');
+
+        expect(firstTab.querySelector('.title').innerHTML).toBe('Panel 1');
+        expect(firstTab.querySelector('.name').innerHTML).toBe('panel1');
+        expect(firstTab.querySelector('.isActive').innerHTML).toBe('true');
+
+        expect(secondTab.querySelector('.title').innerHTML).toBe('Panel 2');
+        expect(secondTab.querySelector('.name').innerHTML).toBe('panel2');
+        expect(secondTab.querySelector('.isActive').innerHTML).toBe('false');
+    });
+
+    it('should allow a global custom tab toggle render functions to be overridden on the tabs', () => {
+        const toggleRenderMain = ({ title, name, isActive }) => (
+            <Fragment>
+                <span className="titleMain">{title}</span>
+                <span className="nameMain">{name}</span>
+                <span className="isActiveMain">{isActive.toString()}</span>
+            </Fragment>
+        );
+
+        const toggleRender = ({ title, name, isActive }) => (
+            <Fragment>
+                <span className="title">{title}</span>
+                <span className="name">{name}</span>
+                <span className="isActive">{isActive.toString()}</span>
+            </Fragment>
+        );
+
+        const { container } = render(
+            <Tabs toggleRender={toggleRenderMain}>
+                <Tabs.Tab title="Panel 1" name="panel1">
+                    <p>This is panel 1</p>
+                </Tabs.Tab>
+                <Tabs.Tab
+                    title="Panel 2"
+                    name="panel2"
+                    toggleRender={toggleRender}
+                >
+                    <p>This is panel 2</p>
+                </Tabs.Tab>
+            </Tabs>
+        );
+
+        const list = container.querySelector('ul');
+        const firstTab = list.querySelector('div#tabId1');
+        const secondTab = list.querySelector('div#tabId2');
+
+        expect(firstTab.querySelector('.titleMain').innerHTML).toBe('Panel 1');
+        expect(firstTab.querySelector('.nameMain').innerHTML).toBe('panel1');
+        expect(firstTab.querySelector('.isActiveMain').innerHTML).toBe('true');
+
+        expect(secondTab.querySelector('.title').innerHTML).toBe('Panel 2');
+        expect(secondTab.querySelector('.name').innerHTML).toBe('panel2');
+        expect(secondTab.querySelector('.isActive').innerHTML).toBe('false');
+    });
+
+    it('should allow nulls as children to cater for dynamic tab adding and removing', () => {
+        const { container } = render(
+            <Tabs>
+                <Tabs.Tab title="Panel 1">
+                    <p>This is panel 1</p>
+                </Tabs.Tab>
+                {null}
+                <Tabs.Tab title="Panel 2">
+                    <p>This is panel 2</p>
+                </Tabs.Tab>
+            </Tabs>
+        );
+
+        const list = container.querySelector('ul');
+        const listItems = list.querySelectorAll('li[role="presentation"]');
+        const firstTab = list.querySelector('div#tabId1');
+        const secondTab = list.querySelector('div#tabId2');
+        const firstPanel = container.querySelector('section#panelId1');
+        const secondPanel = container.querySelector('section#panelId2');
+
+        expect(listItems.length).toBe(2);
+
+        expect(firstTab.innerHTML).toBe('<span>Panel 1</span>');
+
+        expect(secondTab.innerHTML).toBe('<span>Panel 2</span>');
+
+        expect(firstPanel.querySelector('p').innerHTML).toBe('This is panel 1');
+
         expect(secondPanel.querySelector('p').innerHTML).toBe(
             'This is panel 2'
         );
@@ -561,5 +712,27 @@ describe('Tabs.Tab', () => {
         ReactTestUtils.Simulate.focus(focusDiv, mockEventObject);
 
         expect(mockEventObject.stopPropagation).toHaveBeenCalled();
+    });
+
+    it('should allow for specifying a custom CSS class', () => {
+        const { container } = render(
+            <Tabs.Tab title="Test title" className="test-class">
+                <span>Some content</span>
+            </Tabs.Tab>
+        );
+
+        const containerSection = container.querySelector('section');
+
+        expect(containerSection).toHaveAttribute('class', 'test-class');
+    });
+
+    it('should allow for panels without headings', () => {
+        const { container } = render(
+            <Tabs.Tab title="Test title" noHeading={true}>
+                <span>Some content</span>
+            </Tabs.Tab>
+        );
+
+        expect(container.querySelector('h2')).toBeNull();
     });
 });

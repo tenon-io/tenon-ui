@@ -46,7 +46,7 @@ const Input = ({
 }) => {
     return (
         <div className="group">
-            <div className="fieldwrapper">
+            <div className="fieldWrapper">
                 <label {...getLabelProps(labelProps)}>{labelText}</label>
                 <input {...getInputProps(rest)} />
             </div>

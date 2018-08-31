@@ -27,7 +27,7 @@ describe('spinner', () => {
         expect(container).toMatchSnapshot();
     });
 
-    it('should accept a custome CSS class', () => {
+    it('should accept a custom CSS class', () => {
         uuidv4.mockReturnValueOnce('testId');
 
         const { container } = render(
@@ -37,5 +37,22 @@ describe('spinner', () => {
         const svg = container.querySelector('svg');
 
         expect(svg).toHaveAttribute('class', 'test-class');
+    });
+
+    it('should also render a spinner without a title', () => {
+        uuidv4.mockReturnValueOnce('testId');
+
+        const { container } = render(<Spinner />);
+
+        const svg = container.querySelector('svg');
+
+        expect(svg).not.toHaveAttribute('aria-describedby');
+        expect(svg).toHaveAttribute('role', 'img');
+
+        const title = svg.querySelector('title');
+
+        expect(title).toBeNull();
+
+        expect(container).toMatchSnapshot();
     });
 });

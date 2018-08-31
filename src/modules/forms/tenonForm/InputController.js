@@ -72,7 +72,7 @@ class InnerInputController extends Component {
         this.errorId = uuidv4();
 
         this.state = {
-            contentHintId: null
+            contentHintId: ''
         };
 
         this.contentHintRegistered = false;
@@ -134,6 +134,9 @@ class InnerInputController extends Component {
             setControlValidity(name, this.runValidation(getControlValue(name)));
         }
 
+        //This is required to update the component when a content hint is
+        //detected so that the id linkage is established in the prop
+        //getter functions.
         if (this.contentHintRegistered && !this.state.contentHintId) {
             this.setState({
                 contentHintId: this.contentHintId
@@ -181,6 +184,28 @@ class InnerInputController extends Component {
     });
 
     /**
+     * Calculates the aria-describedby property of the <input> tag.
+     *
+     * @param {boolean} isValid
+     * @returns {string | null}
+     */
+    getAriaDescribedBy = isValid => {
+        const { contentHintId } = this.state;
+
+        let describedByIds = [];
+
+        if (contentHintId) {
+            describedByIds.push(contentHintId);
+        }
+
+        if (!isValid) {
+            describedByIds.push(this.errorId);
+        }
+
+        return describedByIds.join(' ') || null;
+    };
+
+    /**
      * @function
      * Prop getter for the <input>.
      *
@@ -197,16 +222,10 @@ class InnerInputController extends Component {
             getControlValidity,
             registerErrors
         } = this.props;
-        const { contentHintId } = this.state;
         const isValid = registerErrors ? getControlValidity(name) : true;
 
         return {
-            'aria-describedby':
-                !isValid || contentHintId
-                    ? `${contentHintId ? contentHintId : ''}${
-                          !isValid && contentHintId ? ' ' : ''
-                      }${isValid ? '' : this.errorId}`
-                    : null,
+            'aria-describedby': this.getAriaDescribedBy(isValid),
             'aria-disabled': props['disabled'] ? 'true' : null,
             'aria-invalid': isValid ? null : 'true',
             'aria-readonly': props['readOnly'] ? 'true' : null,
@@ -275,7 +294,7 @@ class InnerInputController extends Component {
                 if (prev.errorText || cur.ignore) {
                     return prev;
                 }
-                const validateResult = cur.func(textValue, cur.compare);
+                const validateResult = cur.func(textValue);
                 return !validateResult
                     ? { validity: validateResult, errorText: cur.message }
                     : prev;

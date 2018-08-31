@@ -22,16 +22,16 @@ describe('isLongerThan', () => {
     });
 
     it('should fail for values shorter or equal to the given length', () => {
-        expect(isLongerThan(' ', 5)).toBeFalsy();
-        expect(isLongerThan('  ', 5)).toBeFalsy();
-        expect(isLongerThan('   ', 5)).toBeFalsy();
-        expect(isLongerThan('    ', 5)).toBeFalsy();
-        expect(isLongerThan('     ', 5)).toBeFalsy();
-        expect(isLongerThan('A', 5)).toBeFalsy();
-        expect(isLongerThan('AB', 5)).toBeFalsy();
-        expect(isLongerThan('ABC', 5)).toBeFalsy();
-        expect(isLongerThan('ABCD', 5)).toBeFalsy();
-        expect(isLongerThan('ACBDE', 5)).toBeFalsy();
+        expect(isLongerThan(5)(' ')).toBeFalsy();
+        expect(isLongerThan(5)('  ')).toBeFalsy();
+        expect(isLongerThan(5)('   ')).toBeFalsy();
+        expect(isLongerThan(5)('    ')).toBeFalsy();
+        expect(isLongerThan(5)('     ')).toBeFalsy();
+        expect(isLongerThan(5)('A')).toBeFalsy();
+        expect(isLongerThan(5)('AB')).toBeFalsy();
+        expect(isLongerThan(5)('ABC')).toBeFalsy();
+        expect(isLongerThan(5)('ABCD')).toBeFalsy();
+        expect(isLongerThan(5)('ACBDE')).toBeFalsy();
     });
 
     it('should pass for values longer than the given length', () => {

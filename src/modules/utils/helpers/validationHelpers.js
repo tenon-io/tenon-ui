@@ -4,13 +4,11 @@
  *
  * @param {function} func
  * @param {string} message
- * @param {any} compare
  * @param {boolean} ignore
  * @returns {object} - A validator configuration object.
  */
-export const validator = (func, message, compare, ignore) => ({
+export const validator = (func, message, ignore) => ({
     func,
     message,
-    compare,
     ignore
 });

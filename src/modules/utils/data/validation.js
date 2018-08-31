@@ -11,11 +11,14 @@ export const isRequired = value => (value && !!value.trim()) || false;
  * @function
  * Tests if the given value is longer than the given length
  *
+ * Note that this validator is curried.
+ *
+ * @param {number} minLength
  * @param {string} value
- * @param {number} length
  * @returns {boolean}
  */
-export const isLongerThan = (value, length) => !value || value.length > length;
+export const isLongerThan = minLength => value =>
+    !value || value.length > minLength;
 
 /**
  * Tests of the given value conforms to a valid web url string

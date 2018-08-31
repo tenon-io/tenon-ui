@@ -14,7 +14,7 @@ class SpinnerButtonGuide extends Component {
         this.setState({ showSpinner: true });
         setTimeout(() => {
             this.setState({ showSpinner: false });
-        }, 400000);
+        }, 2000);
     };
 
     render() {

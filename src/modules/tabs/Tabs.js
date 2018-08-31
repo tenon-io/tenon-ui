@@ -109,14 +109,18 @@ class Tabs extends Component {
 
     static Tab = Tab;
 
-    state = {
-        activeTabId: ''
-    };
+    constructor(props) {
+        super(props);
 
-    tabsById = [];
-    panelIdByTabId = {};
-    tabRefs = {};
-    panelRefs = {};
+        this.state = {
+            activeTabId: ''
+        };
+
+        this.tabsById = [];
+        this.panelIdByTabId = {};
+        this.tabRefs = {};
+        this.panelRefs = {};
+    }
 
     /**
      * @function
@@ -241,7 +245,7 @@ class Tabs extends Component {
 
         const tabPanelMetadata = tabChildren.map(
             child =>
-                child
+                child.title
                     ? {
                           title: child.title,
                           name: child.name,
@@ -296,7 +300,7 @@ class Tabs extends Component {
         //If a name is not given as prop on the Tab component, the tab gets
         //an autoassigned name based on the child index.
         //If a toggle render function is defined on the Tab component, it is
-        //applied. If a child toggle render function is defined it overrides
+        //applied. If a child toggle render function is defined it overrides.
         const tabs = this.calcTabMetadata(
             React.Children.map(children, (child, i) => ({
                 title: child ? child.props.title : '',
@@ -352,26 +356,24 @@ class Tabs extends Component {
                         </li>
                     ))}
                 </ul>
-                {React.Children.map(
-                    children,
-                    (child, i) =>
-                        child
-                            ? React.cloneElement(child, {
-                                  key: tabs.tabPanelMetadata[i].tabId,
-                                  tabId: tabs.tabPanelMetadata[i].tabId,
-                                  panelId: tabs.tabPanelMetadata[i].panelId,
-                                  ref: panel => {
-                                      this.registerPanelRef(
-                                          tabs.tabPanelMetadata[i].tabId,
-                                          panel
-                                      );
-                                  },
-                                  isHidden:
-                                      tabs.tabPanelMetadata[i].tabId !==
-                                      selectedTabId
-                              })
-                            : child
-                )}
+                {React.Children.map(children, (child, i) => {
+                    const tabPanelMetadata = tabs.tabPanelMetadata[i];
+
+                    return child
+                        ? React.cloneElement(child, {
+                              key: tabPanelMetadata.tabId,
+                              tabId: tabPanelMetadata.tabId,
+                              panelId: tabPanelMetadata.panelId,
+                              ref: panel => {
+                                  this.registerPanelRef(
+                                      tabPanelMetadata.tabId,
+                                      panel
+                                  );
+                              },
+                              isHidden: tabPanelMetadata.tabId !== selectedTabId
+                          })
+                        : child;
+                })}
             </Fragment>
         );
     }

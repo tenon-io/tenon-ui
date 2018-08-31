@@ -218,9 +218,8 @@ describe('InputController', () => {
                                     'This field is required.'
                                 ),
                                 validator(
-                                    isLongerThan,
-                                    'The entry text should be longer than 5 characters',
-                                    5
+                                    isLongerThan(5),
+                                    'The entry text should be longer than 5 characters'
                                 )
                             ]}
                         >
@@ -293,13 +292,11 @@ describe('InputController', () => {
                                 validator(
                                     isRequired,
                                     'This field is required.',
-                                    null,
                                     true
                                 ),
                                 validator(
-                                    isLongerThan,
-                                    'The entry text should be longer than 5 characters',
-                                    5
+                                    isLongerThan(5),
+                                    'The entry text should be longer than 5 characters'
                                 )
                             ]}
                         >
@@ -530,7 +527,7 @@ describe('InputController', () => {
     });
 
     it('should should display errors always when alwaysShowErrors is on', () => {
-        const { getByLabelText, getByText, queryByTestId } = render(
+        const { getByLabelText, queryByTestId } = render(
             <Form onSubmit={jest.fn()} alwaysShowErrors={true}>
                 {() => (
                     <div>
@@ -871,6 +868,99 @@ describe('Form', () => {
         expect(submitObjReference).toEqual({
             testInput: 'Some text',
             testInput2: 'Some other text'
+        });
+    });
+
+    it('should always call the raw submit function even if validation does not pass', () => {
+        let submitObjReference = null;
+
+        const onRawSubmitHandler = submitObj => {
+            submitObjReference = submitObj;
+        };
+
+        const { getByText, getByLabelText } = render(
+            <Form onSubmit={jest.fn()} onRawSubmit={onRawSubmitHandler}>
+                {() => {
+                    return (
+                        <div>
+                            <InputController
+                                name="testInput"
+                                validators={[
+                                    validator(
+                                        isRequired,
+                                        'A value is required.'
+                                    )
+                                ]}
+                            >
+                                {({ getInputProps, getLabelProps }) => (
+                                    <div>
+                                        <label {...getLabelProps()}>
+                                            Test input
+                                        </label>
+                                        <input
+                                            {...getInputProps({
+                                                required: 'required'
+                                            })}
+                                        />
+                                    </div>
+                                )}
+                            </InputController>
+                            <InputController name="testInput2">
+                                {({ getInputProps, getLabelProps }) => (
+                                    <div>
+                                        <label {...getLabelProps()}>
+                                            Test input 2
+                                        </label>
+                                        <input {...getInputProps()} />
+                                    </div>
+                                )}
+                            </InputController>
+                            <button type="submit">Submit</button>
+                        </div>
+                    );
+                }}
+            </Form>
+        );
+
+        const input2 = getByLabelText('Test input 2');
+        input2.value = 'Some other text';
+        fireEvent.change(input2);
+
+        fireEvent.click(getByText('Submit'));
+        expect(submitObjReference).toEqual({
+            testInput: {
+                controlId: 'inputLabelId2',
+                errorText: 'A value is required.',
+                validity: false,
+                value: ''
+            },
+            testInput2: {
+                controlId: 'inputLabelId',
+                errorText: '',
+                validity: true,
+                value: 'Some other text'
+            }
+        });
+
+        submitObjReference = null;
+        const input1 = getByLabelText('Test input');
+        input1.value = 'Some text';
+        fireEvent.change(input1);
+
+        fireEvent.click(getByText('Submit'));
+        expect(submitObjReference).toEqual({
+            testInput: {
+                controlId: 'inputLabelId2',
+                errorText: '',
+                validity: true,
+                value: 'Some text'
+            },
+            testInput2: {
+                controlId: 'inputLabelId',
+                errorText: '',
+                validity: true,
+                value: 'Some other text'
+            }
         });
     });
 });
