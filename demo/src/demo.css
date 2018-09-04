@@ -1,0 +1,40 @@
+.App {
+    position: relative;
+}
+
+.working-example {
+    border: 2px solid black;
+    padding: 1rem;
+}
+
+.pane-section {
+    width: 80%;
+}
+
+.skip-link {
+    position: absolute !important;
+    margin-top: 0.5rem;
+    margin-left: 0.5rem;
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    border: solid #0047ab;
+    background-color: white;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+}
+
+.skip-link:focus {
+    height: auto;
+    width: auto;
+    overflow: auto;
+    clip: inherit;
+}
+
+.demo-spinner g {
+    stroke: #002964;
+}
+
+.demo-spinner circle {
+    fill: #002964
+}
