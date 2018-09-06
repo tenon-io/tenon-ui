@@ -1,3 +1,29 @@
+.App-logo {
+    height: 80px;
+}
+
+.App-header {
+    text-align: center;
+    background-color: #222;
+    height: 150px;
+    padding: 20px;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.App-title {
+    font-size: 1.5em;
+}
+
+.App-intro {
+    font-size: large;
+}
+
+.main-panel {
+    display: flex;
+    flex-direction: row;
+}
+
 .App {
     position: relative;
 }
@@ -36,5 +62,34 @@
 }
 
 .demo-spinner circle {
-    fill: #002964
+    fill: #002964;
 }
+
+.language-container {
+    display: flex;
+    flex-direction: column; }
+
+.nav-panel {
+    width: 30%;
+    display: flex;
+    flex-direction: column; }
+.nav-panel button {
+    margin-top: 0.5rem; }
+.nav-panel ul {
+    list-style-type: none;
+    padding: 0; }
+.nav-panel ul a {
+    display: block;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    border-style: solid;
+    border-color: #0047ab; }
+.nav-panel ul a:focus {
+    background-color: #002964;
+    color: #fff; }
+
+.viewport {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 5em; }

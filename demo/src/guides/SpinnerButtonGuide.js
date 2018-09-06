@@ -32,6 +32,7 @@ class SpinnerButtonGuide extends Component {
                                         t('spinnerButton.demo.example.isBusy')
                                     );
                                 }}
+                                type="submit"
                                 busyText={t(
                                     'spinnerButton.demo.example.busyText'
                                 )}

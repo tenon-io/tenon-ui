@@ -27,7 +27,7 @@
         "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
         "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
         "build": "npm-run-all lint lint-demo build-css build-js",
-        "build-js": "nwb build-react-component",
+        "build-js": "nwb build-react-component --copy-files",
         "clean": "nwb clean-module && nwb clean-demo",
         "start": "npm-run-all -p watch-css start-js",
         "start-js": "nwb serve-react-demo",
@@ -42,7 +42,8 @@
     "dependencies": {
         "lodash.isequal": "4.5.0",
         "memoize-one": "4.0.0",
-        "uuid": "3.3.2"
+        "uuid": "3.3.2",
+        "vanilla-framework": "1.8.0"
     },
     "peerDependencies": {
         "react": "^16.3.x"

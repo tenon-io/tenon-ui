@@ -98,6 +98,39 @@ class FormsGuide extends Component {
                                                 />
                                             )}
                                         </InputController>
+                                        <InputController name="testSelect">
+                                            {({
+                                                getInputProps,
+                                                getLabelProps
+                                            }) => (
+                                                <div className="group">
+                                                    <div className="fieldWrapper">
+                                                        <label
+                                                            {...getLabelProps()}
+                                                        >
+                                                            This is a select
+                                                        </label>
+                                                        <select
+                                                            {...getInputProps()}
+                                                        >
+                                                            <option>
+                                                                Default
+                                                            </option>
+                                                            <option value="1">
+                                                                Value1
+                                                            </option>
+                                                            <option value="2">
+                                                                Value2
+                                                            </option>
+                                                            <option value="3">
+                                                                Value3
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </InputController>
+
                                         <button type="submit">
                                             {t('forms.demo.submitButton.label')}
                                         </button>

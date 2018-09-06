@@ -1,0 +1,224 @@
+@import '../../node_modules/vanilla-framework/scss/vanilla';
+
+@include vf-base;
+
+@include vf-p-forms;
+
+$black: #002964;
+$white: #fff;
+$primary: #0047ab;
+$secondary: #006aff;
+$tone: #eff5fe;
+$placeholder: #456fab;
+$grey: #b8c6d9;
+$error: #ab2010;
+
+.main-panel {
+    display: flex;
+    flex-direction: row;
+}
+
+.notification {
+    > div {
+        border-style: solid;
+        border-width: 2px;
+        padding: 0.5rem;
+        margin-top: 0.5rem;
+    }
+
+    .error {
+        color: #b80000;
+    }
+
+    .warning {
+        color: #ab4103;
+    }
+
+    .info {
+        color: darkblue;
+    }
+
+    .success {
+        color: green;
+    }
+
+    button {
+        position: relative;
+        float: right;
+        top: -0.1rem;
+    }
+
+    svg {
+        &.notification-icon {
+            position: relative;
+            top: 5px;
+            margin-right: 0.5rem;
+        }
+    }
+}
+
+.button-spinner-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    position: relative;
+    top: 0.3rem;
+    margin-left: 0.5rem;
+    margin-top: -1rem;
+}
+
+.visually-hidden {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+}
+
+.errorWrapper {
+    align-self: stretch;
+    margin-top: 0.5rem;
+    color: $error;
+}
+
+.infoWrapper {
+    align-self: stretch;
+    margin-top: 0.5rem;
+    color: darkblue;
+}
+
+.error-block {
+    ul {
+        list-style-type: none;
+        padding-left: 0;
+
+        li {
+            margin-top: 1rem;
+        }
+
+        a {
+            color: $error;
+        }
+    }
+}
+
+ul[role='tablist'] {
+    position: relative;
+    display: inline-flex;
+    flex-direction: row;
+    padding-left: 1.5rem;
+    list-style-type: none;
+    margin-bottom: 0;
+    padding-right: 10rem;
+
+    &::after {
+        content: '';
+        z-index: 1;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 1px;
+    }
+}
+
+[role='tab'] {
+    transition: transform 0.1s ease;
+    position: relative;
+    display: block;
+    margin-left: 0.5rem;
+    text-decoration: none;
+    transform-origin: 50% 100%;
+
+    &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 1rem;
+        background-color: $secondary;
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: none;
+    }
+
+    &:active {
+        transform: scale(0.9);
+    }
+}
+
+[role='tab'] span {
+    transition: color 0.1s ease, border-color 0.1s ease, transform 0.1s ease;
+    z-index: 1;
+    position: relative;
+    display: block;
+    padding: 1rem 1.5rem;
+    background-color: $white;
+    border: 0.125rem solid $grey;
+    border-bottom: 0 none;
+    border-top-left-radius: 0.2rem;
+    border-top-right-radius: 0.2rem;
+    transform-origin: 50% 100%;
+    text-decoration: none;
+    color: $black;
+    cursor: pointer;
+
+    &::after {
+        transition: transform 0.1s ease;
+        content: '';
+        z-index: 1;
+        position: absolute;
+        left: 1.5rem;
+        right: 1.5rem;
+        bottom: 0.5rem;
+        height: 1px;
+        border-top: 0.125rem solid $tone;
+        transform-origin: 50% 0;
+        transform: scaleX(0);
+    }
+}
+
+[role='tab']:hover span,
+[role='tab']:focus span {
+    border-color: $secondary;
+    background-color: $secondary;
+    color: $white;
+    transform: translateY(-0.5rem);
+}
+
+[role='tab']:hover span::after,
+[role='tab']:focus span::after {
+    transform: scaleX(1);
+}
+
+[role='tab'][aria-selected='true'] span {
+    text-decoration: none;
+    border-color: $black;
+    font-weight: bold;
+}
+
+[role='tabpanel'] {
+    border: 1px solid $black;
+
+    & > div {
+        padding: 1.5rem;
+    }
+}
+
+[role='tabpanel'] * + * {
+    margin-top: 0.75rem;
+}
+
+section[role='tabpanel']:focus {
+    border: 2px solid dodgerblue;
+}
+
+[hidden] {
+    display: none;
+}
+
+button, [type='submit'] {
+    margin-bottom: 0.5rem;
+}
