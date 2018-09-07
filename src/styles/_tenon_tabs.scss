@@ -1,0 +1,96 @@
+.tabs-container {
+    border-radius: 0;
+    overflow: hidden;
+    padding: 0;
+    position: relative;
+
+    &::before {
+        background: linear-gradient(
+            to right,
+            $color-transparent 0%,
+            $color-x-light 45%,
+            $color-x-light 100%
+        );
+        color: $color-mid-dark;
+        content: '\203A';
+        display: block;
+        font-size: 2rem;
+        line-height: calc(100% + 1rem - #{$bar-thickness});
+        padding-left: 1.5rem;
+        padding-right: $sp-large;
+        pointer-events: none;
+        position: absolute;
+        right: 0;
+        text-align: right;
+        top: 0;
+        width: 1rem;
+        z-index: 10;
+
+        @media screen and (min-width: $breakpoint-medium) {
+            display: none;
+        }
+    }
+
+    [role='tablist'] {
+        @extend %vf-pseudo-border--bottom;
+        display: flex;
+        font-size: 0;
+        margin: 0 auto 0;
+        overflow-x: auto;
+        padding: 0;
+        position: relative;
+        white-space: nowrap;
+        width: 100%;
+    }
+
+    li[role='presentation'] {
+        display: inline-block;
+        float: none;
+        font-size: 1rem;
+        margin: 0;
+        padding: 0;
+        width: auto;
+
+        &:last-child {
+            margin-right: $sp-xxx-large;
+        }
+    }
+}
+
+[role='tab'] {
+    color: $color-x-dark;
+    display: inline-block;
+    padding: $spv-intra--expanded $sph-intra;
+    border-top: 2px solid transparent;
+    border-right: 2px solid transparent;
+    border-left: 2px solid transparent;
+
+    &:visited,
+    &:active,
+    &:hover {
+        color: $color-x-dark;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    &:hover,
+    &[aria-selected='true'] {
+        @include vf-highlight-bar($color-tabs-active-bar, bottom, true);
+    }
+
+    &:focus {
+        outline: 0;
+        border-top: 2px solid $color-focus;
+        border-right: 2px solid $color-focus;
+        border-left: 2px solid $color-focus;
+    }
+}
+
+[role='tabpanel'] {
+    padding: 0.5rem;
+    border: 2px solid transparent;
+
+    &:focus {
+        border: 2px solid $color-focus;
+    }
+}

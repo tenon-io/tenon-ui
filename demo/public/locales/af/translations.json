@@ -5,6 +5,11 @@
         "nav": "Komponent biblioteek",
         "lang": "Taal opsies"
     },
+    "welcome": {
+        "heading": "Die Tenon.io React komponente biblioteek",
+        "p1":
+            "Welkom by ons biblioteek van toegankelike komponente. Kies asseblief een van die komponente onder die Komponent Biblioteek kieslys om verder te gaan."
+    },
     "forms": {
         "demo": {
             "heading": "Vorm komponente",

@@ -21,8 +21,6 @@ class TabsGuide extends Component {
                                     <p>
                                         {t('tabs.demo.example.panel1.content')}
                                     </p>
-                                    <label htmlFor="test">Test</label>
-                                    <input id="test" />
                                 </Tabs.Tab>
                                 <Tabs.Tab
                                     title={t('tabs.demo.example.panel2.title')}
@@ -47,7 +45,6 @@ class TabsGuide extends Component {
                                 </Tabs.Tab>
                             </Tabs>
                         </WorkingExample>
-
                         <CodeExample
                             file="/examples/tabs/tabsExample.js"
                             heading={t('tabs.demo.code.heading')}

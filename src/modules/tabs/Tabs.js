@@ -1,4 +1,4 @@
-import React, { Component, Fragment, forwardRef } from 'react';
+import React, { Component, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import uuidv4 from 'uuid/v4';
 import memoize from 'memoize-one';
@@ -321,7 +321,7 @@ class Tabs extends Component {
         const selectedTabId = this.getSelectedTab(activeTabId, this.tabsById);
 
         return (
-            <Fragment>
+            <div className="tabs-container">
                 <ul role="tablist">
                     {tabs.tabMetadata.map(tab => (
                         <li key={tab.tabId} role="presentation">
@@ -374,7 +374,7 @@ class Tabs extends Component {
                           })
                         : child;
                 })}
-            </Fragment>
+            </div>
         );
     }
 }
