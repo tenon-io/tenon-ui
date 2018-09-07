@@ -1,3 +1,8 @@
+$color-button-primary: #004aa9;
+$color-button-secondary: #575757;
+$color-negative: darken(#c7162b, 10%);
+$color-caution: #ffa500;
+
 @import 'vanilla-framework/scss/vanilla';
 
 @include vf-base;
@@ -5,8 +10,9 @@
 @include vf-p-buttons;
 
 @import 'tenon_forms';
+@import 'tenon_buttons';
 @import 'tenon_notifications';
 @import 'tenon_tabs';
 @import 'tenon_spinner_buttons';
-@import '_tenon_helpers.scss';
+@import 'tenon_helpers.scss';
 @import 'tenon_resets';

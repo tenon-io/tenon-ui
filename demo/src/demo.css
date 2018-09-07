@@ -106,7 +106,7 @@
     display: block;
     margin-top: 0.5rem;
     padding: 0.5rem 0.5rem 0.5rem 0.5rem;
-    border: solid #0047ab;
+    border: 1px solid #0047ab;
 }
 .nav-panel ul a:focus,
 .nav-panel ul a:hover{

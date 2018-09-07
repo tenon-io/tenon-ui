@@ -8,7 +8,7 @@
     "welcome": {
         "heading": "The Tenon.io React components library",
         "p1":
-            "Welcome to the our accessible components library. Please select one of the components from the Components Library menu to go further."
+        "Welcome to the our accessible components library. Please select one of the components from the Components Library menu to go further."
     },
     "forms": {
         "demo": {
@@ -21,21 +21,21 @@
                 "reset": "The forms example code was reset",
                 "resetAction": "Dismiss"
             },
-            "userName": {
-                "label": "Username",
-                "contentHint": "The username must be longer than 5 characters",
-                "errorMessageRequired": "A username is required",
-                "errorMessageTooShort": "The username is too short"
+            "petName": {
+                "label": "Name of pet",
+                "contentHint": "The pet's name must be longer than 5 characters",
+                "errorMessageRequired": "A name is required for your pet",
+                "errorMessageTooShort": "The pet's name is too short"
             },
-            "password": {
-                "label": "Password",
-                "errorMessageRequired": "A password is required"
+            "petType": {
+                "label": "Type of pet",
+                "errorMessageRequired": "A type of pet is required"
             },
-            "description": {
+            "petDescription": {
                 "label": "Description"
             },
             "submitButton": {
-                "label": "Login"
+                "label": "Save"
             }
         }
     },
@@ -87,7 +87,7 @@
     "spinnerButton": {
         "demo": {
             "heading":
-                "Spinner button component with screen reader announcement",
+            "Spinner button component with screen reader announcement",
             "example": {
                 "heading": "Working example",
                 "text": "Click me",

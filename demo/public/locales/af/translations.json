@@ -21,22 +21,22 @@
                 "reset": "Die forms voorbeeld kode is geherstel",
                 "resetAction": "Sluit berig"
             },
-            "userName": {
-                "label": "Gebruikersnaam",
+            "petName": {
+                "label": "Troeteldier naam",
                 "contentHint":
-                    "Die gebruikersnaam moet langer as 5 karakters wees",
-                "errorMessageRequired": "Die gebruikersnaam is verplig",
-                "errorMessageTooShort": "Die gebruikersnaam is te kort"
+                    "Die troeteldier se naam moet langer as 5 karakters wees",
+                "errorMessageRequired": "Die troedeldier het 'n naam nodig",
+                "errorMessageTooShort": "Die troeteldier se naam is te kort"
             },
-            "password": {
-                "label": "Wagwoord",
-                "errorMessageRequired": "Die wagwoord is verplig"
+            "petType": {
+                "label": "Troeteldier soort",
+                "errorMessageRequired": "Die troeteldier het 'n soort nodig"
             },
-            "description": {
+            "petDescription": {
                 "label": "Beskrywing"
             },
             "submitButton": {
-                "label": "Teken aan"
+                "label": "Bewaar jou troeteldier"
             }
         }
     },

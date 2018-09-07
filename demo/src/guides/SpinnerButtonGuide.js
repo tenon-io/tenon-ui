@@ -11,6 +11,13 @@ class SpinnerButtonGuide extends Component {
     };
 
     onClickHandler = () => {
+        const array = [{ name: 'jason', value: 'voorhees' }];
+        const object = array.reduce((prev, cur) => {
+            return Object.assign(prev, { [cur.name]: cur.value });
+        }, {});
+
+        console.log(object);
+
         this.setState({ showSpinner: true });
         setTimeout(() => {
             this.setState({ showSpinner: false });
@@ -26,7 +33,7 @@ class SpinnerButtonGuide extends Component {
                             heading={t('spinnerButton.demo.example.heading')}
                         >
                             <SpinnerButton
-                                className="p-button--positive spinner-button"
+                                className="button-primary spinner-button"
                                 onClick={this.onClickHandler}
                                 onBusyClick={() => {
                                     alert(

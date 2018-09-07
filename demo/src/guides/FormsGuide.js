@@ -37,18 +37,18 @@ class FormsGuide extends Component {
                                         ) : null}
 
                                         <InputController
-                                            name="userName"
+                                            name="petName"
                                             validators={[
                                                 validator(
                                                     isRequired,
                                                     t(
-                                                        'forms.demo.userName.errorMessageRequired'
+                                                        'forms.demo.petName.errorMessageRequired'
                                                     )
                                                 ),
                                                 validator(
                                                     isLongerThan(5),
                                                     t(
-                                                        'forms.demo.userName.errorMessageTooShort'
+                                                        'forms.demo.petName.errorMessageTooShort'
                                                     )
                                                 )
                                             ]}
@@ -58,21 +58,21 @@ class FormsGuide extends Component {
                                                     {...props}
                                                     required="required"
                                                     contentHintText={t(
-                                                        'forms.demo.userName.contentHint'
+                                                        'forms.demo.petName.contentHint'
                                                     )}
                                                     labelText={t(
-                                                        'forms.demo.userName.label'
+                                                        'forms.demo.petName.label'
                                                     )}
                                                 />
                                             )}
                                         </InputController>
                                         <InputController
-                                            name="password"
+                                            name="petType"
                                             validators={[
                                                 validator(
                                                     isRequired,
                                                     t(
-                                                        'forms.demo.password.errorMessageRequired'
+                                                        'forms.demo.petType.errorMessageRequired'
                                                     )
                                                 )
                                             ]}
@@ -82,18 +82,18 @@ class FormsGuide extends Component {
                                                     {...props}
                                                     require="required"
                                                     labelText={t(
-                                                        'forms.demo.password.label'
+                                                        'forms.demo.petType.label'
                                                     )}
                                                 />
                                             )}
                                         </InputController>
-                                        <InputController name="description">
+                                        <InputController name="petDescription">
                                             {props => (
                                                 <TextArea
                                                     {...props}
                                                     rows="10"
                                                     labelText={t(
-                                                        'forms.demo.description.label'
+                                                        'forms.demo.petDescription.label'
                                                     )}
                                                 />
                                             )}

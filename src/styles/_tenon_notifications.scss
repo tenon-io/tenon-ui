@@ -6,18 +6,26 @@
     }
 
     .error {
-        color: $color-negative;
+        border-color: $color-negative;
+        background-color: lighten($color-negative, 60%);
+        color: $color-x-dark;
     }
 
     .warning {
-        color: darken($color-caution, 20%);
+        border-color: $color-caution;
+        background-color: lighten($color-caution, 45%);
+        color: $color-x-dark;
     }
 
     .info {
-        color: $color-information;
+        border-color: $color-information;
+        background-color: lighten($color-information, 58%);
+        color: $color-x-dark;
     }
 
     .success {
-        color: $color-positive;
+        border-color: $color-positive;
+        background-color: lighten($color-positive, 68%);
+        color: $color-x-dark;
     }
 }
