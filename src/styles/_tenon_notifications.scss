@@ -1,0 +1,23 @@
+.notification {
+    > div {
+        border: 1px solid;
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .error {
+        color: $color-negative;
+    }
+
+    .warning {
+        color: darken($color-caution, 20%);
+    }
+
+    .info {
+        color: $color-information;
+    }
+
+    .success {
+        color: $color-positive;
+    }
+}

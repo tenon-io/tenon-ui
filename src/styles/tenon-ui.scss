@@ -1,8 +1,11 @@
 @import '../../node_modules/vanilla-framework/scss/vanilla';
 
 @include vf-base;
-
 @include vf-p-forms;
+@include vf-p-buttons;
+
+@import 'tenon_forms';
+@import 'tenon_notifications';
 
 $black: #002964;
 $white: #fff;
@@ -13,46 +16,24 @@ $placeholder: #456fab;
 $grey: #b8c6d9;
 $error: #ab2010;
 
-.main-panel {
-    display: flex;
-    flex-direction: row;
-}
+body {
+    font-weight: 400;
 
-.notification {
-    > div {
-        border-style: solid;
-        border-width: 2px;
-        padding: 0.5rem;
-        margin-top: 0.5rem;
+    *:focus {
+        outline-width: 2px !important;
     }
 
-    .error {
-        color: #b80000;
-    }
+    a {
+        text-decoration: underline;
 
-    .warning {
-        color: #ab4103;
-    }
+        &:focus {
+            outline: 2px solid $color-focus;
+            outline-offset: 2px;
+        }
 
-    .info {
-        color: darkblue;
-    }
-
-    .success {
-        color: green;
-    }
-
-    button {
-        position: relative;
-        float: right;
-        top: -0.1rem;
-    }
-
-    svg {
-        &.notification-icon {
-            position: relative;
-            top: 5px;
-            margin-right: 0.5rem;
+        &:focus,
+        &:hover {
+            text-decoration: none;
         }
     }
 }
@@ -72,33 +53,6 @@ $error: #ab2010;
     width: 1px;
     overflow: hidden;
     clip: rect(1px, 1px, 1px, 1px);
-}
-
-.errorWrapper {
-    align-self: stretch;
-    margin-top: 0.5rem;
-    color: $error;
-}
-
-.infoWrapper {
-    align-self: stretch;
-    margin-top: 0.5rem;
-    color: darkblue;
-}
-
-.error-block {
-    ul {
-        list-style-type: none;
-        padding-left: 0;
-
-        li {
-            margin-top: 1rem;
-        }
-
-        a {
-            color: $error;
-        }
-    }
 }
 
 ul[role='tablist'] {
@@ -219,6 +173,7 @@ section[role='tabpanel']:focus {
     display: none;
 }
 
-button, [type='submit'] {
+button,
+[type='submit'] {
     margin-bottom: 0.5rem;
 }

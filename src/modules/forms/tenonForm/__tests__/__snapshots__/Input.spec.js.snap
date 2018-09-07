@@ -2,10 +2,10 @@
 
 exports[`Input should render a content hint if given 1`] = `
 <div
-  class="group"
+  class="form-group"
 >
   <div
-    class="fieldWrapper"
+    class="field-wrapper"
   >
     <label
       for="foo"
@@ -18,7 +18,7 @@ exports[`Input should render a content hint if given 1`] = `
     />
   </div>
   <div
-    class="infoWrapper"
+    class="info-wrapper"
   >
     <span
       id="bar"
@@ -31,10 +31,10 @@ exports[`Input should render a content hint if given 1`] = `
 
 exports[`Input should render an error text when invalid 1`] = `
 <div
-  class="group"
+  class="form-group"
 >
   <div
-    class="fieldWrapper"
+    class="field-wrapper"
   >
     <label
       for="foo"
@@ -43,11 +43,12 @@ exports[`Input should render an error text when invalid 1`] = `
     </label>
     <input
       aria-describedby="bar"
+      class="has-error"
       id="foo"
     />
   </div>
   <div
-    class="errorWrapper"
+    class="error-wrapper"
   >
     <span
       id="bar"
@@ -60,10 +61,10 @@ exports[`Input should render an error text when invalid 1`] = `
 
 exports[`Input should render an input and label only 1`] = `
 <div
-  class="group"
+  class="form-group"
 >
   <div
-    class="fieldWrapper"
+    class="field-wrapper"
   >
     <label
       for="foo"

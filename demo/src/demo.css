@@ -1,21 +1,26 @@
-.App-logo {
+.app-logo {
     height: 80px;
 }
 
-.App-header {
-    text-align: center;
+.app-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     background-color: #222;
-    height: 150px;
     padding: 20px;
     color: white;
     margin-bottom: 1rem;
 }
 
-.App-title {
-    font-size: 1.5em;
+.app-header h1 {
+    margin-bottom: 0.3em;
 }
 
-.App-intro {
+.app-title {
+    font-size: 3.5em;
+}
+
+.app-intro {
     font-size: large;
 }
 
@@ -24,17 +29,14 @@
     flex-direction: row;
 }
 
-.App {
-    position: relative;
-}
-
 .working-example {
-    border: 2px solid black;
+    border: 1px solid black;
     padding: 1rem;
+    margin-bottom: 1rem;
 }
 
 .pane-section {
-    width: 80%;
+    margin-right: 2em;
 }
 
 .skip-link {
@@ -67,29 +69,66 @@
 
 .language-container {
     display: flex;
-    flex-direction: column; }
+    flex-direction: column;
+}
+
+.language-container button {
+    width: 100%
+}
+
+.notification-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.notification-container button {
+    margin-bottom: 0;
+}
+
+.spinner-button {
+    margin-bottom: 0;
+}
 
 .nav-panel {
     width: 30%;
     display: flex;
-    flex-direction: column; }
+    flex-direction: column;
+    margin-left: 2em;
+}
 .nav-panel button {
-    margin-top: 0.5rem; }
+    margin-top: 0.5rem;
+}
 .nav-panel ul {
     list-style-type: none;
-    padding: 0; }
+    padding: 0;
+}
 .nav-panel ul a {
     display: block;
     margin-top: 0.5rem;
     padding: 0.5rem 0.5rem 0.5rem 0.5rem;
-    border-style: solid;
-    border-color: #0047ab; }
-.nav-panel ul a:focus {
+    border: solid #0047ab;
+}
+.nav-panel ul a:focus,
+.nav-panel ul a:hover{
     background-color: #002964;
-    color: #fff; }
+    color: #fff;
+}
+
+.nav-panel ul a[aria-current="page"]{
+    background-color: rgba(0, 91, 255, 0.13);
+    color:black;
+}
+
+.nav-panel ul a[aria-current="page"]:focus,
+.nav-panel ul a[aria-current="page"]:hover
+{
+    background-color: #002964;
+    color: #fff;
+}
 
 .viewport {
     width: 100%;
     display: flex;
     flex-direction: column;
-    margin-left: 5em; }
+    margin-left: 5em;
+}

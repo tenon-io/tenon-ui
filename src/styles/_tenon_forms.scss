@@ -1,0 +1,30 @@
+.form-group {
+    margin-bottom: 1rem;
+
+    .error-wrapper {
+        color: $color-negative;
+    }
+
+    .info-wrapper {
+        margin-bottom: 0.5rem;
+        color: $color-information;
+    }
+}
+
+.error-block {
+    ul {
+        list-style-type: none;
+        padding-left: 0;
+
+        li {
+            margin-top: 1rem;
+        }
+
+        a {
+            color: $color-negative;
+        }
+    }
+
+    border: 1px solid $color-negative;
+    background-color: lighten($color-negative, 55%);
+}

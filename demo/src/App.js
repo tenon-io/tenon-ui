@@ -33,17 +33,17 @@ class App extends Component {
                 <I18n>
                     {(t, { i18n }) => (
                         <Heading.LevelBoundary levelOverride={1}>
-                            <header className="App">
+                            <header className="app">
                                 <a className="skip-link" href="#main">
                                     {t('skipText')}
                                 </a>
-                                <header className="App-header">
+                                <header className="app-header">
                                     <img
                                         src={logo}
-                                        className="App-logo"
+                                        className="app-logo"
                                         alt="logo"
                                     />
-                                    <Heading.H className="App-title">
+                                    <Heading.H className="app-title">
                                         {t('titles.main')}
                                     </Heading.H>
                                 </header>
@@ -63,6 +63,7 @@ class App extends Component {
                                                 {t('titles.lang')}
                                             </Heading.H>
                                             <button
+                                                className="p-button--brand"
                                                 onClick={() =>
                                                     i18n.changeLanguage('af')
                                                 }
@@ -70,6 +71,7 @@ class App extends Component {
                                                 Afrikaans
                                             </button>
                                             <button
+                                                className="p-button--brand"
                                                 onClick={() =>
                                                     i18n.changeLanguage('en')
                                                 }
@@ -77,6 +79,7 @@ class App extends Component {
                                                 English
                                             </button>
                                             <button
+                                                className="p-button--brand"
                                                 onClick={() =>
                                                     i18n.changeLanguage(
                                                         'pseudo'

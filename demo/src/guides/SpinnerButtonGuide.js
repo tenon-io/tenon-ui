@@ -26,13 +26,13 @@ class SpinnerButtonGuide extends Component {
                             heading={t('spinnerButton.demo.example.heading')}
                         >
                             <SpinnerButton
+                                className="p-button--positive spinner-button"
                                 onClick={this.onClickHandler}
                                 onBusyClick={() => {
                                     alert(
                                         t('spinnerButton.demo.example.isBusy')
                                     );
                                 }}
-                                type="submit"
                                 busyText={t(
                                     'spinnerButton.demo.example.busyText'
                                 )}

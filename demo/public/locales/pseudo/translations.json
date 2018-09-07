@@ -18,14 +18,14 @@
             },
             "userName": {
                 "label": "Username",
-                "contentHint": "Username must be longer than 5 characters",
-                "errorMessageRequired": "Username is required",
+                "contentHint": "The username must be longer than 5 characters",
+                "errorMessageRequired": "A username is required",
                 "errorMessageTooShort":
-                "Username must be longer than 5 characters"
+                "The username is too short"
             },
             "password": {
                 "label": "Password",
-                "errorMessageRequired": "Password is required"
+                "errorMessageRequired": "A password is required"
             },
             "description": {
                 "label": "Description"

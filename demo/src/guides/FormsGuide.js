@@ -130,7 +130,26 @@ class FormsGuide extends Component {
                                                 </div>
                                             )}
                                         </InputController>
-
+                                        <p>
+                                            Lorem ipsum dolor sit amet,
+                                            consectetur adipiscing elit. In
+                                            venenatis vel ante in laoreet. Nam
+                                            id libero eu ligula volutpat aliquet
+                                            vitae sit amet mi. Pellentesque
+                                            augue elit, volutpat a dictum at,
+                                            fermentum nec libero. Suspendisse
+                                            mattis id sapien id eleifend. Fusce
+                                            ac orci dapibus, aliquet turpis eu,
+                                            condimentum arcu. Vestibulum eu
+                                            tortor elit. Aenean et nisi quis
+                                            arcu scelerisque sollicitudin vel
+                                            sit amet quam. Etiam a euismod
+                                            massa, ut iaculis tellus. Sed
+                                            accumsan mollis malesuada. Donec
+                                            ultrices fringilla orci sed
+                                            tincidunt. Sed neque magna, dictum
+                                            quis egestas nec, auctor in ligula.
+                                        </p>
                                         <button type="submit">
                                             {t('forms.demo.submitButton.label')}
                                         </button>

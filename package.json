@@ -40,6 +40,7 @@
         "lint-demo": "eslint *.js demo"
     },
     "dependencies": {
+        "classnames": "^2.2.6",
         "lodash.isequal": "4.5.0",
         "memoize-one": "4.0.0",
         "uuid": "3.3.2",
@@ -71,8 +72,8 @@
         "nwb": "0.22.0",
         "prettier": "1.13.7",
         "prop-types": "15.6.2",
-        "react": "16.4.1",
-        "react-dom": "16.4.1",
+        "react": "16.5.0",
+        "react-dom": "16.5.0",
         "react-i18next": "^7.10.1",
         "react-loadable": "^5.5.0",
         "react-testing-library": "4.1.5"

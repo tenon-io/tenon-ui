@@ -1,4 +1,6 @@
 import React from 'react';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
 /**
  * @component
@@ -24,6 +26,8 @@ import React from 'react';
  *              for the <label>
  * @prop {boolean} showError - A flag to indicate when the
  *              error container should be displayed.
+ * @prop {string} className - An optional class string to transfer to the
+ *              className prop of the textarea element.
  *
  * NOTE: All props given to this textarea that does not
  * satisfy one of the above will be passed into the
@@ -42,26 +46,47 @@ const TextArea = ({
     labelText,
     labelProps,
     showError,
+    className,
     ...rest
 }) => {
+    const textareaClass = classNames(className, { 'has-error': showError });
+
     return (
-        <div className="group">
-            <div className="fieldwrapper">
+        <div className="form-group">
+            <div className="field-wrapper">
                 <label {...getLabelProps(labelProps)}>{labelText}</label>
-                <textarea {...getInputProps(rest)} />
+                <textarea
+                    className={textareaClass || null}
+                    {...getInputProps(rest)}
+                />
             </div>
             {contentHintText && getContentHintProps ? (
-                <div className="infoWrapper">
+                <div className="info-wrapper">
                     <span {...getContentHintProps()}>{contentHintText}</span>
                 </div>
             ) : null}
             {showError && getErrorProps ? (
-                <div className="errorWrapper">
+                <div className="error-wrapper">
                     <span {...getErrorProps()}>{errorText}</span>
                 </div>
             ) : null}
         </div>
     );
+};
+
+TextArea.displayName = 'TextArea';
+
+TextArea.propTypes = {
+    contentHintText: PropTypes.string,
+    errorText: PropTypes.string,
+    getLabelProps: PropTypes.func.isRequired,
+    getInputProps: PropTypes.func.isRequired,
+    getErrorProps: PropTypes.func,
+    getContentHintProps: PropTypes.func,
+    labelText: PropTypes.string.isRequired,
+    labelProps: PropTypes.object,
+    showError: PropTypes.bool,
+    className: PropTypes.string
 };
 
 export default TextArea;

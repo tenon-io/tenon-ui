@@ -30,18 +30,27 @@ class NotificationGuide extends Component {
                                 isActive={this.state.showInfoMessage}
                                 type="info"
                             >
-                                <span>
-                                    {t('notification.demo.example.infoText')}
-                                </span>
-                                <button
-                                    type="button"
-                                    className="dismiss-button"
-                                    onClick={this.onDismissHandler}
-                                >
-                                    {t('notification.demo.example.infoDismiss')}
-                                </button>
+                                <div className="notification-container">
+                                    <span>
+                                        {t(
+                                            'notification.demo.example.infoText'
+                                        )}
+                                    </span>
+                                    <button
+                                        type="button"
+                                        className="dismiss-button"
+                                        onClick={this.onDismissHandler}
+                                    >
+                                        {t(
+                                            'notification.demo.example.infoDismiss'
+                                        )}
+                                    </button>
+                                </div>
                             </Notification>
-                            <button onClick={this.onClickHandler}>
+                            <button
+                                className="p-button--positive"
+                                onClick={this.onClickHandler}
+                            >
                                 {t('notification.demo.example.showInfo')}
                             </button>
                         </WorkingExample>

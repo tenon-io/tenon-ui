@@ -33,10 +33,11 @@ import memoize from 'memoize-one';
  * called with every submit attempt of the form with the raw form data
  * and validity flag. This can be handy if something had to happen during
  * invalid form submit phases.
- * @example
- * {
- *     [controlName]:[value]
- * }
+ * @prop {boolean} alwaysShowErrors - An optional boolean indicating
+ * whether the form should always display errors, and not only once submit has
+ * been clicked.
+ * @prop {string} className - An optional class string to transfer to the
+ * className prop of the form element.
  *
  * This component exposes functionality through React Context that is
  * meant to be used by Tenon-ui smart form controls. The functions
@@ -63,7 +64,8 @@ class Form extends Component {
         children: PropTypes.func.isRequired,
         onSubmit: PropTypes.func.isRequired,
         onRawSubmit: PropTypes.func,
-        alwaysShowErrors: PropTypes.bool
+        alwaysShowErrors: PropTypes.bool,
+        className: PropTypes.string
     };
 
     static displayName = 'Form';
@@ -267,12 +269,16 @@ class Form extends Component {
     }));
 
     render() {
-        const { alwaysShowErrors } = this.props;
+        const { alwaysShowErrors, className } = this.props;
         const { formControls, validity, hasSubmitted } = this.state;
         const context = this.getContext(alwaysShowErrors || hasSubmitted);
         return (
             <FormContext.Provider value={context}>
-                <form noValidate={true} onSubmit={this.onSubmitHandler}>
+                <form
+                    noValidate={true}
+                    onSubmit={this.onSubmitHandler}
+                    className={className || null}
+                >
                     {this.props.children({
                         formControls,
                         validity,
