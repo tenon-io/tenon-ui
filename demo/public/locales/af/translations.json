@@ -32,6 +32,14 @@
                 "label": "Troeteldier soort",
                 "errorMessageRequired": "Die troeteldier het 'n soort nodig"
             },
+            "petWeight": {
+                "label": "Troeteldier de gewig",
+                "errorMessageRequired": "Kies asseblief 'n gewig kategorie",
+                "defaultOption": "'n Gewigskategorie is noodsaaklik",
+                "weightClass1": "0-3kg",
+                "weightClass2": "3-7kg",
+                "weightClass3": "Baie swaar!"
+            },
             "petDescription": {
                 "label": "Beskrywing"
             },

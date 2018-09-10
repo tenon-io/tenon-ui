@@ -41,7 +41,7 @@ import { callAll } from '../../utils/helpers/functionHelpers';
  *                  validator helper function.
  * @prop required {string} name: The unique name of the control.
  */
-class InnerInputController extends Component {
+class InnerElementController extends Component {
     static propTypes = {
         children: PropTypes.func.isRequired,
         deregisterControl: PropTypes.func.isRequired,
@@ -56,7 +56,7 @@ class InnerInputController extends Component {
         registerErrors: PropTypes.bool
     };
 
-    static displayName = 'InnerInputController';
+    static displayName = 'InnerElementController';
 
     /**
      * @constructor
@@ -70,6 +70,7 @@ class InnerInputController extends Component {
         this.controlId = uuidv4();
         this.contentHintId = uuidv4();
         this.errorId = uuidv4();
+        this.legendId = uuidv4();
 
         this.state = {
             contentHintId: ''
@@ -175,6 +176,10 @@ class InnerInputController extends Component {
      * Composes the given prop configuration object with the
      * standard control props object.
      *
+     * If an autoIdPostfix config property is provided, this
+     * will be appended to the automatically generated Id. This
+     * is required for radio button collections.
+     *
      * @param {object} props
      * @returns {object}
      */
@@ -239,20 +244,81 @@ class InnerInputController extends Component {
         };
     };
 
+    /**
+     * @function
+     * Prop getter for the <textarea>.
+     *
+     * Composes the given prop configuration object with the
+     * standard control props object.
+     *
+     * Direct re-export of the getInputProps function as a
+     * <textarea> takes the same props as an <input>. This
+     * is done to make the usage more declarative.
+     *
+     * @param {object} props
+     * @returns {object}
+     */
     getTextareaProps = (props = {}) => this.getInputProps(props);
 
+    /**
+     * @function
+     * Prop getter for the <select>.
+     *
+     * Composes the given prop configuration object with the
+     * standard control props object.
+     *
+     * Direct re-export of the getInputProps function as a
+     * <select> takes the same props as an <input>. This
+     * is done to make the usage more declarative.
+     *
+     * @param {object} props
+     * @returns {object}
+     */
     getSelectProps = (props = {}) => this.getInputProps(props);
 
+    /**
+     * @function
+     * Prop getter every <input> of a groupd of radio buttons.
+     *
+     * Composes the given prop configuration object with the
+     * standard control props object.
+     *
+     * Required a value config property as this is used to
+     * set the value of the radio button as well as determine
+     * if the radio button is checked.
+     *
+     * @param {object} props
+     * @returns {object}
+     */
     getRadioButtonProps = ({ onChange, value, ...props } = {}) => {
         const { name, getControlValue } = this.props;
 
         return {
+            'aria-disabled': props['disabled'] ? 'true' : null,
+            'aria-readonly': props['readOnly'] ? 'true' : null,
             name,
-            id: this.controlId + '-' + value,
+            id: `${this.controlId}${value ? `-${value}` : ''}`,
             type: 'radio',
             onChange: callAll(onChange, this.onChangeHandler),
             value,
             checked: getControlValue(name) === value,
+            ...props
+        };
+    };
+
+    getLegendProps = () => ({
+        id: this.legendId
+    });
+
+    getRadioGroupProps = (props = {}) => {
+        const { name, getControlValidity, registerErrors } = this.props;
+        const isValid = registerErrors ? getControlValidity(name) : true;
+        return {
+            'aria-describedby': this.getAriaDescribedBy(isValid),
+            'aria-invalid': isValid ? null : 'true',
+            'aria-required': props['required'] ? 'true' : null,
+            'aria-labelledby': this.legendId,
+            role: 'radiogroup',
             ...props
         };
     };
@@ -331,11 +397,12 @@ class InnerInputController extends Component {
         } = this.props;
         return children({
             getLabelProps: this.getLabelProps,
-            getRadioButtonLabelProps: this.getRadioButtonLabelProps,
+            getLegendProps: this.getLegendProps,
             getInputProps: this.getInputProps,
             getTextareaProps: this.getTextareaProps,
             getSelectProps: this.getSelectProps,
             getRadioButtonProps: this.getRadioButtonProps,
+            getRadioGroupProps: this.getRadioGroupProps,
             getErrorProps: this.getErrorProps,
             getContentHintProps: this.getContentHintProps,
             showError: registerErrors ? !getControlValidity(name) : false,
@@ -346,19 +413,19 @@ class InnerInputController extends Component {
 
 /**
  * @component
- * Wrapper component for InnerInputController to fetch the
+ * Wrapper component for InnerElementController to fetch the
  * React Context exposed functionality from the smart form
  * containing the Context provider and expose it as props
- * to InnerInputController.
+ * to InnerElementController.
  *
  * @props props
  */
 const ElementController = props => (
     <FormContext.Consumer>
         {contextProps => (
-            <InnerInputController {...props} {...contextProps}>
+            <InnerElementController {...props} {...contextProps}>
                 {props.children}
-            </InnerInputController>
+            </InnerElementController>
         )}
     </FormContext.Consumer>
 );
@@ -369,6 +436,6 @@ ElementController.propTypes = {
     name: PropTypes.string.isRequired
 };
 
-ElementController.displayName = 'InputController';
+ElementController.displayName = 'ElementController';
 
 export default ElementController;

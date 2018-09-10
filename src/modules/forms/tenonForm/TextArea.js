@@ -8,18 +8,18 @@ import PropTypes from 'prop-types';
  * smart textarea.
  *
  * @prop {string} contentHintText - Text to show as content
- *                hint of the smart input.
- * @prop {string} errorText - Text to show are error message
- *                of the smart input.
+ *                hint of the smart textarea.
+ * @prop {string} errorText - Text to show as error message
+ *                of the smart select.
  * @prop required {function} getLabelProps - Prop getter function
- *              from the smart input controller for the <label>.
+ *              from the smart element controller for the <label>.
  * @prop required {function} getInputProps - Prop getter function
- *              from the smart input controller for the <input>.
+ *              from the smart element controller for the <input>.
  * @prop {function} getErrorProps - Prop getter function
- *              from the smart input controller for the
+ *              from the smart element controller for the
  *              error message container.
  * @prop {function} getContentHintProps - Prop getter
- *              function from the smart input controller
+ *              function from the smart element controller
  *              for the content hint container.
  * @prop required {string} labelText
  * @prop {object} labelProps - Control prop collection
@@ -47,6 +47,11 @@ const TextArea = ({
     labelProps,
     showError,
     className,
+    getInputProps,
+    getSelectProps,
+    getRadioButtonProps,
+    getLegendProps,
+    getRadioGroupProps,
     ...rest
 }) => {
     const textareaClass = classNames(className, { 'has-error': showError });

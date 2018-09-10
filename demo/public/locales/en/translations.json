@@ -23,7 +23,8 @@
             },
             "petName": {
                 "label": "Name of pet",
-                "contentHint": "The pet's name must be longer than 5 characters",
+                "contentHint":
+                    "The pet's name must be longer than 5 characters",
                 "errorMessageRequired": "A name is required for your pet",
                 "errorMessageTooShort": "The pet's name is too short"
             },
@@ -33,6 +34,14 @@
             },
             "petDescription": {
                 "label": "Description"
+            },
+            "petWeight": {
+                "label": "Pet's weight",
+                "errorMessageRequired": "Please select a weight category",
+                "defaultOption": "No weight category selected",
+                "weightClass1": "0-3kg",
+                "weightClass2": "3-7kg",
+                "weightClass3": "Really heavy!"
             },
             "submitButton": {
                 "label": "Save"

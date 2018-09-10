@@ -3,6 +3,7 @@ import {
     Form,
     Input,
     RadioGroup,
+    Select,
     TextArea,
     ElementController,
     isLongerThan,
@@ -99,42 +100,61 @@ class FormsGuide extends Component {
                                                 />
                                             )}
                                         </ElementController>
-                                        <ElementController name="testSelect">
-                                            {({
-                                                getSelectProps,
-                                                getLabelProps
-                                            }) => (
-                                                <div className="form-group">
-                                                    <div className="field-wrapper">
-                                                        <label
-                                                            {...getLabelProps()}
-                                                        >
-                                                            This is a select
-                                                        </label>
-                                                        <select
-                                                            {...getSelectProps()}
-                                                        >
-                                                            <option>
-                                                                Default
-                                                            </option>
-                                                            <option value="1">
-                                                                Value1
-                                                            </option>
-                                                            <option value="2">
-                                                                Value2
-                                                            </option>
-                                                            <option value="3">
-                                                                Value3
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
+                                        <ElementController
+                                            name="petWeight"
+                                            validators={[
+                                                validator(
+                                                    isRequired,
+                                                    t(
+                                                        'forms.demo.petWeight.errorMessageRequired'
+                                                    )
+                                                )
+                                            ]}
+                                        >
+                                            {props => (
+                                                <Select
+                                                    {...props}
+                                                    labelText={t(
+                                                        'forms.demo.petWeight.label'
+                                                    )}
+                                                    required="required"
+                                                >
+                                                    <option>
+                                                        {t(
+                                                            'forms.demo.petWeight.defaultOption'
+                                                        )}
+                                                    </option>
+                                                    <option value="weightClass1">
+                                                        {t(
+                                                            'forms.demo.petWeight.weightClass1'
+                                                        )}
+                                                    </option>
+                                                    <option value="weightClass2">
+                                                        {t(
+                                                            'forms.demo.petWeight.weightClass2'
+                                                        )}
+                                                    </option>
+                                                    <option value="weightClass3">
+                                                        {t(
+                                                            'forms.demo.petWeight.weightClass3'
+                                                        )}
+                                                    </option>
+                                                </Select>
                                             )}
                                         </ElementController>
-                                        <ElementController name="radioSet">
+                                        <ElementController
+                                            name="radioSet"
+                                            validators={[
+                                                validator(
+                                                    isRequired,
+                                                    'Please select an option'
+                                                )
+                                            ]}
+                                        >
                                             {props => (
                                                 <RadioGroup
                                                     {...props}
+                                                    contentHintText="The options are like so"
                                                     legend="Please select an option"
                                                     options={{
                                                         option1: 'Option 1',

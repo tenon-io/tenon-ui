@@ -595,9 +595,11 @@ describe('Form', () => {
             .mockReturnValueOnce('inputLabelId')
             .mockReturnValueOnce('errorId')
             .mockReturnValueOnce('contentHintId')
+            .mockReturnValueOnce('legendId')
             .mockReturnValueOnce('inputLabelId2')
             .mockReturnValueOnce('errorId2')
-            .mockReturnValueOnce('contentHintId2');
+            .mockReturnValueOnce('contentHintId2')
+            .mockReturnValueOnce('legendId2');
     });
 
     afterEach(cleanup);
