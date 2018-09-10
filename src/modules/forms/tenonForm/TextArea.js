@@ -40,7 +40,7 @@ const TextArea = ({
     contentHintText,
     errorText,
     getLabelProps,
-    getInputProps,
+    getTextareaProps,
     getErrorProps,
     getContentHintProps,
     labelText,
@@ -57,7 +57,7 @@ const TextArea = ({
                 <label {...getLabelProps(labelProps)}>{labelText}</label>
                 <textarea
                     className={textareaClass || null}
-                    {...getInputProps(rest)}
+                    {...getTextareaProps(rest)}
                 />
             </div>
             {contentHintText && getContentHintProps ? (
@@ -80,7 +80,7 @@ TextArea.propTypes = {
     contentHintText: PropTypes.string,
     errorText: PropTypes.string,
     getLabelProps: PropTypes.func.isRequired,
-    getInputProps: PropTypes.func.isRequired,
+    getTextareaProps: PropTypes.func.isRequired,
     getErrorProps: PropTypes.func,
     getContentHintProps: PropTypes.func,
     labelText: PropTypes.string.isRequired,

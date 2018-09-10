@@ -178,8 +178,8 @@ class InnerInputController extends Component {
      * @param {object} props
      * @returns {object}
      */
-    getLabelProps = (props = {}) => ({
-        htmlFor: this.controlId,
+    getLabelProps = ({ autoIdPostfix, ...props } = {}) => ({
+        htmlFor: `${this.controlId}${autoIdPostfix ? `-${autoIdPostfix}` : ''}`,
         ...props
     });
 
@@ -235,6 +235,24 @@ class InnerInputController extends Component {
             onChange: callAll(onChange, this.onChangeHandler),
             type: 'text',
             value: getControlValue(name),
+            ...props
+        };
+    };
+
+    getTextareaProps = (props = {}) => this.getInputProps(props);
+
+    getSelectProps = (props = {}) => this.getInputProps(props);
+
+    getRadioButtonProps = ({ onChange, value, ...props } = {}) => {
+        const { name, getControlValue } = this.props;
+
+        return {
+            name,
+            id: this.controlId + '-' + value,
+            type: 'radio',
+            onChange: callAll(onChange, this.onChangeHandler),
+            value,
+            checked: getControlValue(name) === value,
             ...props
         };
     };
@@ -313,7 +331,11 @@ class InnerInputController extends Component {
         } = this.props;
         return children({
             getLabelProps: this.getLabelProps,
+            getRadioButtonLabelProps: this.getRadioButtonLabelProps,
             getInputProps: this.getInputProps,
+            getTextareaProps: this.getTextareaProps,
+            getSelectProps: this.getSelectProps,
+            getRadioButtonProps: this.getRadioButtonProps,
             getErrorProps: this.getErrorProps,
             getContentHintProps: this.getContentHintProps,
             showError: registerErrors ? !getControlValidity(name) : false,
@@ -331,7 +353,7 @@ class InnerInputController extends Component {
  *
  * @props props
  */
-const InputController = props => (
+const ElementController = props => (
     <FormContext.Consumer>
         {contextProps => (
             <InnerInputController {...props} {...contextProps}>
@@ -341,12 +363,12 @@ const InputController = props => (
     </FormContext.Consumer>
 );
 
-InputController.propTypes = {
+ElementController.propTypes = {
     children: PropTypes.func.isRequired,
     validators: PropTypes.arrayOf(PropTypes.object),
     name: PropTypes.string.isRequired
 };
 
-InputController.displayName = 'InputController';
+ElementController.displayName = 'InputController';
 
-export default InputController;
+export default ElementController;

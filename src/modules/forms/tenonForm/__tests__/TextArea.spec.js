@@ -10,7 +10,7 @@ describe('TextArea', () => {
         const { container } = render(
             <TextArea
                 getLabelProps={() => ({ htmlFor: 'foo' })}
-                getInputProps={() => ({ id: 'foo' })}
+                getTextareaProps={() => ({ id: 'foo' })}
                 labelText="Test textarea"
             />
         );
@@ -22,7 +22,10 @@ describe('TextArea', () => {
         const { container } = render(
             <TextArea
                 getLabelProps={() => ({ htmlFor: 'foo' })}
-                getInputProps={() => ({ id: 'foo', 'aria-describedby': 'bar' })}
+                getTextareaProps={() => ({
+                    id: 'foo',
+                    'aria-describedby': 'bar'
+                })}
                 getErrorProps={() => ({ id: 'bar' })}
                 labelText="Test textarea"
                 errorText="Test error"
@@ -38,7 +41,10 @@ describe('TextArea', () => {
             <TextArea
                 contentHintText="Content hint test"
                 getLabelProps={() => ({ htmlFor: 'foo' })}
-                getInputProps={() => ({ id: 'foo', 'aria-describedby': 'bar' })}
+                getTextareaProps={() => ({
+                    id: 'foo',
+                    'aria-describedby': 'bar'
+                })}
                 getContentHintProps={() => ({ id: 'bar' })}
                 labelText="Test textarea"
             />
@@ -51,7 +57,7 @@ describe('TextArea', () => {
         const { getByLabelText, getByText } = render(
             <TextArea
                 getLabelProps={() => ({ htmlFor: 'foo' })}
-                getInputProps={() => ({ id: 'foo' })}
+                getTextareaProps={() => ({ id: 'foo' })}
                 labelText="Test textarea"
                 id="foo"
                 labelProps={{ htmlFor: 'foo' }}
