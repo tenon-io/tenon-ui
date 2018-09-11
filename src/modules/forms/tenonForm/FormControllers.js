@@ -14,7 +14,9 @@ const controllerType = {
 
 /**
  * @component
- * Controller component for a tenon-ui smart input control.
+ * Controller components for tenon-ui smart controls.
+ *
+ * Exports a controlling functions for each of the controls in the tenon-ui toolkit.
  *
  * @prop required {function} children - The standard React children have been overridden to
  * accept render functions. This render function gets called with an object containing
@@ -22,6 +24,7 @@ const controllerType = {
  * and a display flag for the error container.
  *
  * @example
+ * This is an example for the TextInputController call.
  * {
  *      getLabelProps: function,
  *      getInputProps: function,
@@ -70,6 +73,8 @@ class FormController extends Component {
      * @constructor
      * Initializes the internal component ID's
      *
+     * If the type is radioGroup, extra id's are required.
+     *
      * @param props
      */
     constructor(props) {
@@ -100,7 +105,10 @@ class FormController extends Component {
      * states.
      *
      * The control is registered with a unique generated ID,
-     * the give name and the current validation state.
+     * the given name and the current validation state. The
+     * ID is that of the focusable element, and therefore the
+     * ID if the container is supplied in the case of a
+     * radiogroup.
      */
     componentDidMount() {
         const {
@@ -204,6 +212,20 @@ class FormController extends Component {
     });
 
     /**
+     * @function
+     * Prop getter for the legend element.
+     *
+     * Composes the given prop configuration object with the
+     * standard control props object.
+     *
+     * @param {object} props
+     * @returns {object}
+     */
+    getLegendProps = () => ({
+        id: this.legendId
+    });
+
+    /**
      * Calculates the aria-describedby property of the <input> tag.
      *
      * @param {boolean} isValid
@@ -298,7 +320,7 @@ class FormController extends Component {
      * Composes the given prop configuration object with the
      * standard control props object.
      *
-     * Required a value config property as this is used to
+     * Requires a value config property as this is used to
      * set the value of the radio button as well as determine
      * if the radio button is checked.
      *
@@ -321,10 +343,16 @@ class FormController extends Component {
         };
     };
 
-    getLegendProps = () => ({
-        id: this.legendId
-    });
-
+    /**
+     * @function
+     * Prop getter for the radiogroup container element.
+     *
+     * Composes the given prop configuration object with the
+     * standard control props object.
+     *
+     * @param {object} props
+     * @returns {object}
+     */
     getRadioGroupProps = (props = {}) => {
         const { name, getControlValidity, registerErrors } = this.props;
         const isValid = registerErrors ? getControlValidity(name) : true;
@@ -404,6 +432,13 @@ class FormController extends Component {
         );
     };
 
+    /**
+     * @function
+     * Composes the object to send to the render function for each
+     * controller type.
+     *
+     * Memoized so as to only recalculate if the type changes.
+     */
     buildRenderObject = memoize(type => {
         const generalRenderObject = {
             getLabelProps: this.getLabelProps,
@@ -456,11 +491,11 @@ class FormController extends Component {
 }
 
 /**
- * @component
- * Wrapper component for FormController to fetch the
+ * @function
+ * Function to return the controller based on type. Fetches the
  * React Context exposed functionality from the smart form
  * containing the Context provider and expose it as props
- * to FormController.
+ * to the controllers.
  *
  * @props props
  */
@@ -480,18 +515,62 @@ const controllerPropTypes = {
     name: PropTypes.string.isRequired
 };
 
+/**
+ * @component
+ * Text input controller
+ *
+ * @prop required {function} children - Render function for the
+ * text input view.
+ * @prop required {string} name - The name to register the control
+ * with, with the smartform.
+ * @validators {array} validators - Array of validator functions to
+ * run
+ */
 export const TextInputController = props =>
     getController(props, controllerType.input);
 TextInputController.propTypes = controllerPropTypes;
 
+/**
+ * @component
+ * Textarea controller
+ *
+ * @prop required {function} children - Render function for the
+ * text input view.
+ * @prop required {string} name - The name to register the control
+ * with, with the smartform.
+ * @validators {array} validators - Array of validator functions to
+ * run
+ */
 export const TextareaController = props =>
     getController(props, controllerType.textarea);
 TextareaController.propTypes = controllerPropTypes;
 
+/**
+ * @component
+ * Select controller
+ *
+ * @prop required {function} children - Render function for the
+ * text input view.
+ * @prop required {string} name - The name to register the control
+ * with, with the smartform.
+ * @validators {array} validators - Array of validator functions to
+ * run
+ */
 export const SelectController = props =>
     getController(props, controllerType.select);
 SelectController.propTypes = controllerPropTypes;
 
+/**
+ * @component
+ * Radiogroup controller
+ *
+ * @prop required {function} children - Render function for the
+ * text input view.
+ * @prop required {string} name - The name to register the control
+ * with, with the smartform.
+ * @validators {array} validators - Array of validator functions to
+ * run
+ */
 export const RadioGroupController = props =>
     getController(props, controllerType.radioGroup);
 RadioGroupController.propTypes = controllerPropTypes;
