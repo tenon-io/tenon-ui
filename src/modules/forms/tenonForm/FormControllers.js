@@ -288,14 +288,13 @@ class FormController extends Component {
      * Composes the given prop configuration object with the
      * standard control props object.
      *
-     * Direct re-export of the getInputProps function as a
-     * <textarea> takes the same props as an <input>. This
-     * is done to make the usage more declarative.
-     *
      * @param {object} props
      * @returns {object}
      */
-    getTextareaProps = (props = {}) => this.getInputProps(props);
+    getTextareaProps = (props = {}) => {
+        const { type, ...rest } = this.getInputProps(props);
+        return rest;
+    };
 
     /**
      * @function
@@ -311,7 +310,10 @@ class FormController extends Component {
      * @param {object} props
      * @returns {object}
      */
-    getSelectProps = (props = {}) => this.getInputProps(props);
+    getSelectProps = (props = {}) => {
+        const { type, ...rest } = this.getInputProps(props);
+        return rest;
+    };
 
     /**
      * @function
