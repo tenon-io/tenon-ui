@@ -6,7 +6,7 @@ import {
     RadioGroupController,
     SelectController,
     TextareaController,
-    InputController
+    TextInputController
 } from './FormControllers';
 
 /**
@@ -66,7 +66,7 @@ import {
  * by the consumers to decide when to show errors.
  * */
 class Form extends Component {
-    static InputController = InputController;
+    static TextInputController = TextInputController;
     static TextareaController = TextareaController;
     static SelectController = SelectController;
     static RadioGroupController = RadioGroupController;

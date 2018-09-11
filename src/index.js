@@ -1,6 +1,6 @@
 export Form from './modules/forms/tenonForm/Form';
 export {
-    InputController,
+    TextInputController,
     TextareaController,
     SelectController,
     RadioGroupController

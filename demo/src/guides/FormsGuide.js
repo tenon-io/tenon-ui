@@ -36,7 +36,7 @@ class FormsGuide extends Component {
                                                 formControls={formControls}
                                             />
                                         ) : null}
-                                        <Form.InputController
+                                        <Form.TextInputController
                                             name="petName"
                                             validators={[
                                                 validator(
@@ -65,8 +65,8 @@ class FormsGuide extends Component {
                                                     )}
                                                 />
                                             )}
-                                        </Form.InputController>
-                                        <Form.InputController
+                                        </Form.TextInputController>
+                                        <Form.TextInputController
                                             name="petType"
                                             validators={[
                                                 validator(
@@ -86,7 +86,7 @@ class FormsGuide extends Component {
                                                     )}
                                                 />
                                             )}
-                                        </Form.InputController>
+                                        </Form.TextInputController>
                                         <Form.TextareaController name="petDescription">
                                             {props => (
                                                 <TextArea
@@ -141,23 +141,33 @@ class FormsGuide extends Component {
                                             )}
                                         </Form.SelectController>
                                         <Form.RadioGroupController
-                                            name="radioSet"
+                                            name="petColour"
                                             validators={[
                                                 validator(
                                                     isRequired,
-                                                    'Please select an option'
+                                                    t(
+                                                        'forms.demo.petColour.errorMessageRequired'
+                                                    )
                                                 )
                                             ]}
                                         >
                                             {props => (
                                                 <RadioGroup
                                                     {...props}
-                                                    contentHintText="The options are like so"
-                                                    legend="Please select an option"
+                                                    legend={t(
+                                                        'forms.demo.petColour.legend'
+                                                    )}
+                                                    required="required"
                                                     options={{
-                                                        option1: 'Option 1',
-                                                        option2: 'Option 2',
-                                                        option3: 'Option 3'
+                                                        black: t(
+                                                            'forms.demo.petColour.blackOption'
+                                                        ),
+                                                        white: t(
+                                                            'forms.demo.petColour.whiteOption'
+                                                        ),
+                                                        brown: t(
+                                                            'forms.demo.petColour.brownOption'
+                                                        )
                                                     }}
                                                 />
                                             )}

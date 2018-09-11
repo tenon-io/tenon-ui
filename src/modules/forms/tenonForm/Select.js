@@ -5,21 +5,21 @@ import PropTypes from 'prop-types';
 /**
  * @component
  * A default view component to use with the tenon-ui
- * smart input.
+ * smart select controller.
  *
  * @prop {string} contentHintText - Text to show as content
- *                hint of the smart input.
+ *                hint of the select.
  * @prop {string} errorText - Text to show as error message
- *                of the smart select.
+ *                of the select.
  * @prop required {function} getLabelProps - Prop getter function
- *              from the smart element controller for the <label>.
+ *              from the smart select controller for the <label>.
  * @prop required {function} getSelectProps - Prop getter function
- *              from the smart element controller for the <select>.
+ *              from the smart select controller for the <select>.
  * @prop {function} getErrorProps - Prop getter function
- *              from the smart element controller for the
+ *              from the smart select controller for the
  *              error message container.
  * @prop {function} getContentHintProps - Prop getter
- *              function from the smart element controller
+ *              function from the smart select controller
  *              for the content hint container.
  * @prop required {string} labelText
  * @prop {object} labelProps - Control prop collection
@@ -28,7 +28,7 @@ import PropTypes from 'prop-types';
  *              error container should be displayed.
  * @prop {string} className - An optional class string to transfer to the
  *              className prop of the select element.
- * @prop required {React element} - The <option> tags to render for the
+ * @prop required {React element} children - The <option> tags to render for the
  *              <select> element.
  *
  * NOTE: All props given to this select that does not
@@ -51,33 +51,31 @@ const Select = ({
     className,
     children,
     ...rest
-}) => {
-    const selectClass = classNames(className, { 'has-error': showError });
-
-    return (
-        <div className="form-group">
-            <div className="field-wrapper">
-                <label {...getLabelProps(labelProps)}>{labelText}</label>
-                <select
-                    className={selectClass || null}
-                    {...getSelectProps(rest)}
-                >
-                    {children}
-                </select>
-            </div>
-            {contentHintText && getContentHintProps ? (
-                <div className="info-wrapper">
-                    <span {...getContentHintProps()}>{contentHintText}</span>
-                </div>
-            ) : null}
-            {showError && getErrorProps ? (
-                <div className="error-wrapper">
-                    <span {...getErrorProps()}>{errorText}</span>
-                </div>
-            ) : null}
+}) => (
+    <div className="form-group">
+        <div className="field-wrapper">
+            <label {...getLabelProps(labelProps)}>{labelText}</label>
+            <select
+                className={
+                    classNames(className, { 'has-error': showError }) || null
+                }
+                {...getSelectProps(rest)}
+            >
+                {children}
+            </select>
         </div>
-    );
-};
+        {contentHintText && getContentHintProps ? (
+            <div className="info-wrapper">
+                <span {...getContentHintProps()}>{contentHintText}</span>
+            </div>
+        ) : null}
+        {showError && getErrorProps ? (
+            <div className="error-wrapper">
+                <span {...getErrorProps()}>{errorText}</span>
+            </div>
+        ) : null}
+    </div>
+);
 
 Select.displayName = 'Select';
 

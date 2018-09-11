@@ -40,6 +40,13 @@
                 "weightClass2": "3-7kg",
                 "weightClass3": "Baie swaar!"
             },
+            "petColour": {
+                "legend": "Watse kleur is jou troeteldier?",
+                "errorMessageRequired": "Kies asseblief 'n kleur",
+                "blackOption": "Swart",
+                "whiteOption": "Wit",
+                "brownOption": "Bruin"
+            },
             "petDescription": {
                 "label": "Beskrywing"
             },

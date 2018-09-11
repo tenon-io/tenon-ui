@@ -1,6 +1,10 @@
 .form-group {
     margin-bottom: 1rem;
 
+    [role='radiogroup'] {
+        margin-bottom: 0.5rem;
+    }
+
     .error-wrapper {
         color: $color-negative;
     }

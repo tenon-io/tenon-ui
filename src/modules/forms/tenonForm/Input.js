@@ -5,21 +5,21 @@ import PropTypes from 'prop-types';
 /**
  * @component
  * A default view component to use with the tenon-ui
- * smart input.
+ * smart textinput controller.
  *
  * @prop {string} contentHintText - Text to show as content
- *                hint of the smart input.
+ *                hint of the input.
  * @prop {string} errorText - Text to show as error message
  *                of the input.
  * @prop required {function} getLabelProps - Prop getter function
- *              from the smart element controller for the <label>.
+ *              from the smart textinput controller for the <label>.
  * @prop required {function} getInputProps - Prop getter function
- *              from the smart element controller for the <input>.
+ *              from the smart textinput controller for the <input>.
  * @prop {function} getErrorProps - Prop getter function
- *              from the smart element controller for the
+ *              from the smart textinput controller for the
  *              error message container.
  * @prop {function} getContentHintProps - Prop getter
- *              function from the smart element controller
+ *              function from the smart textinput controller
  *              for the content hint container.
  * @prop required {string} labelText
  * @prop {object} labelProps - Control prop collection
@@ -48,31 +48,29 @@ const Input = ({
     showError,
     className,
     ...rest
-}) => {
-    const inputClass = classNames(className, { 'has-error': showError });
-
-    return (
-        <div className="form-group">
-            <div className="field-wrapper">
-                <label {...getLabelProps(labelProps)}>{labelText}</label>
-                <input
-                    className={inputClass || null}
-                    {...getInputProps(rest)}
-                />
-            </div>
-            {contentHintText && getContentHintProps ? (
-                <div className="info-wrapper">
-                    <span {...getContentHintProps()}>{contentHintText}</span>
-                </div>
-            ) : null}
-            {showError && getErrorProps ? (
-                <div className="error-wrapper">
-                    <span {...getErrorProps()}>{errorText}</span>
-                </div>
-            ) : null}
+}) => (
+    <div className="form-group">
+        <div className="field-wrapper">
+            <label {...getLabelProps(labelProps)}>{labelText}</label>
+            <input
+                className={
+                    classNames(className, { 'has-error': showError }) || null
+                }
+                {...getInputProps(rest)}
+            />
         </div>
-    );
-};
+        {contentHintText && getContentHintProps ? (
+            <div className="info-wrapper">
+                <span {...getContentHintProps()}>{contentHintText}</span>
+            </div>
+        ) : null}
+        {showError && getErrorProps ? (
+            <div className="error-wrapper">
+                <span {...getErrorProps()}>{errorText}</span>
+            </div>
+        ) : null}
+    </div>
+);
 
 Input.displayName = 'Input';
 

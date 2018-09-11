@@ -480,9 +480,9 @@ const controllerPropTypes = {
     name: PropTypes.string.isRequired
 };
 
-export const InputController = props =>
+export const TextInputController = props =>
     getController(props, controllerType.input);
-InputController.propTypes = controllerPropTypes;
+TextInputController.propTypes = controllerPropTypes;
 
 export const TextareaController = props =>
     getController(props, controllerType.textarea);
