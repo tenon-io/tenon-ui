@@ -50,11 +50,6 @@ const Select = ({
     showError,
     className,
     children,
-    getInputProps,
-    getTextareaProps,
-    getRadioButtonProps,
-    getLegendProps,
-    getRadioGroupProps,
     ...rest
 }) => {
     const selectClass = classNames(className, { 'has-error': showError });

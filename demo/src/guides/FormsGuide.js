@@ -2,12 +2,11 @@ import React, { Component, Fragment } from 'react';
 import {
     Form,
     Input,
+    isLongerThan,
+    isRequired,
     RadioGroup,
     Select,
     TextArea,
-    ElementController,
-    isLongerThan,
-    isRequired,
     validator
 } from '../../../src/index';
 import ErrorBlock from '../../../src/modules/forms/ErrorBlock';
@@ -37,8 +36,7 @@ class FormsGuide extends Component {
                                                 formControls={formControls}
                                             />
                                         ) : null}
-
-                                        <ElementController
+                                        <Form.InputController
                                             name="petName"
                                             validators={[
                                                 validator(
@@ -67,8 +65,8 @@ class FormsGuide extends Component {
                                                     )}
                                                 />
                                             )}
-                                        </ElementController>
-                                        <ElementController
+                                        </Form.InputController>
+                                        <Form.InputController
                                             name="petType"
                                             validators={[
                                                 validator(
@@ -88,8 +86,8 @@ class FormsGuide extends Component {
                                                     )}
                                                 />
                                             )}
-                                        </ElementController>
-                                        <ElementController name="petDescription">
+                                        </Form.InputController>
+                                        <Form.TextareaController name="petDescription">
                                             {props => (
                                                 <TextArea
                                                     {...props}
@@ -99,8 +97,8 @@ class FormsGuide extends Component {
                                                     )}
                                                 />
                                             )}
-                                        </ElementController>
-                                        <ElementController
+                                        </Form.TextareaController>
+                                        <Form.SelectController
                                             name="petWeight"
                                             validators={[
                                                 validator(
@@ -141,8 +139,8 @@ class FormsGuide extends Component {
                                                     </option>
                                                 </Select>
                                             )}
-                                        </ElementController>
-                                        <ElementController
+                                        </Form.SelectController>
+                                        <Form.RadioGroupController
                                             name="radioSet"
                                             validators={[
                                                 validator(
@@ -163,7 +161,7 @@ class FormsGuide extends Component {
                                                     }}
                                                 />
                                             )}
-                                        </ElementController>
+                                        </Form.RadioGroupController>
 
                                         <button type="submit">
                                             {t('forms.demo.submitButton.label')}

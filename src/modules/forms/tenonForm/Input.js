@@ -47,11 +47,6 @@ const Input = ({
     labelProps,
     showError,
     className,
-    getSelectProps,
-    getTextareaProps,
-    getRadioButtonProps,
-    getLegendProps,
-    getRadioGroupProps,
     ...rest
 }) => {
     const inputClass = classNames(className, { 'has-error': showError });

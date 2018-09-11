@@ -5,13 +5,13 @@ const RadioGroup = ({
     options,
     getRadioButtonProps,
     getLabelProps,
+    getLegendProps,
+    getRadioGroupProps,
     contentHintText,
     errorText,
     getErrorProps,
     getContentHintProps,
-    showError,
-    getLegendProps,
-    getRadioGroupProps
+    showError
 }) => (
     <fieldset className="form-group">
         <legend {...getLegendProps()}>{legend}</legend>

@@ -3,6 +3,14 @@ import PropTypes from 'prop-types';
 import uuidv4 from 'uuid/v4';
 import FormContext from './FormContext';
 import { callAll } from '../../utils/helpers/functionHelpers';
+import memoize from 'memoize-one';
+
+const controllerType = {
+    input: 'input',
+    textarea: 'textarea',
+    select: 'select',
+    radioGroup: 'radioGroup'
+};
 
 /**
  * @component
@@ -41,7 +49,7 @@ import { callAll } from '../../utils/helpers/functionHelpers';
  *                  validator helper function.
  * @prop required {string} name: The unique name of the control.
  */
-class InnerElementController extends Component {
+class FormController extends Component {
     static propTypes = {
         children: PropTypes.func.isRequired,
         deregisterControl: PropTypes.func.isRequired,
@@ -56,7 +64,7 @@ class InnerElementController extends Component {
         registerErrors: PropTypes.bool
     };
 
-    static displayName = 'InnerElementController';
+    static displayName = 'FormController';
 
     /**
      * @constructor
@@ -70,7 +78,11 @@ class InnerElementController extends Component {
         this.controlId = uuidv4();
         this.contentHintId = uuidv4();
         this.errorId = uuidv4();
-        this.legendId = uuidv4();
+
+        if (props.type === controllerType.radioGroup) {
+            this.legendId = uuidv4();
+            this.containerId = uuidv4();
+        }
 
         this.state = {
             contentHintId: ''
@@ -95,12 +107,15 @@ class InnerElementController extends Component {
             registerControl,
             getControlValue,
             setControlValidity,
-            name
+            name,
+            type
         } = this.props;
         const validationObject = this.runValidation('');
         registerControl(
             name,
-            this.controlId,
+            type === controllerType.radioGroup
+                ? this.containerId
+                : this.controlId,
             '',
             validationObject.validity,
             validationObject.errorText
@@ -278,7 +293,7 @@ class InnerElementController extends Component {
 
     /**
      * @function
-     * Prop getter every <input> of a groupd of radio buttons.
+     * Prop getter for every <input> of a group of radio buttons.
      *
      * Composes the given prop configuration object with the
      * standard control props object.
@@ -314,6 +329,8 @@ class InnerElementController extends Component {
         const { name, getControlValidity, registerErrors } = this.props;
         const isValid = registerErrors ? getControlValidity(name) : true;
         return {
+            id: this.containerId,
+            tabIndex: '-1',
             'aria-describedby': this.getAriaDescribedBy(isValid),
             'aria-invalid': isValid ? null : 'true',
             'aria-required': props['required'] ? 'true' : null,
@@ -387,55 +404,94 @@ class InnerElementController extends Component {
         );
     };
 
+    buildRenderObject = memoize(type => {
+        const generalRenderObject = {
+            getLabelProps: this.getLabelProps,
+            getErrorProps: this.getErrorProps,
+            getContentHintProps: this.getContentHintProps
+        };
+
+        switch (type) {
+            case controllerType.textarea:
+                return {
+                    getTextareaProps: this.getTextareaProps,
+                    ...generalRenderObject
+                };
+            case controllerType.select:
+                return {
+                    getSelectProps: this.getSelectProps,
+                    ...generalRenderObject
+                };
+            case controllerType.radioGroup:
+                return {
+                    getLegendProps: this.getLegendProps,
+                    getRadioButtonProps: this.getRadioButtonProps,
+                    getRadioGroupProps: this.getRadioGroupProps,
+                    ...generalRenderObject
+                };
+            case controllerType.input:
+            default:
+                return {
+                    getInputProps: this.getInputProps,
+                    ...generalRenderObject
+                };
+        }
+    });
+
     render() {
         const {
             children,
+            type,
             getControlValidity,
             getControlErrorText,
             name,
             registerErrors
         } = this.props;
         return children({
-            getLabelProps: this.getLabelProps,
-            getLegendProps: this.getLegendProps,
-            getInputProps: this.getInputProps,
-            getTextareaProps: this.getTextareaProps,
-            getSelectProps: this.getSelectProps,
-            getRadioButtonProps: this.getRadioButtonProps,
-            getRadioGroupProps: this.getRadioGroupProps,
-            getErrorProps: this.getErrorProps,
-            getContentHintProps: this.getContentHintProps,
             showError: registerErrors ? !getControlValidity(name) : false,
-            errorText: getControlErrorText(name)
+            errorText: getControlErrorText(name),
+            ...this.buildRenderObject(type)
         });
     }
 }
 
 /**
  * @component
- * Wrapper component for InnerElementController to fetch the
+ * Wrapper component for FormController to fetch the
  * React Context exposed functionality from the smart form
  * containing the Context provider and expose it as props
- * to InnerElementController.
+ * to FormController.
  *
  * @props props
  */
-const ElementController = props => (
+const getController = (props, type) => (
     <FormContext.Consumer>
         {contextProps => (
-            <InnerElementController {...props} {...contextProps}>
+            <FormController {...props} {...contextProps} type={type}>
                 {props.children}
-            </InnerElementController>
+            </FormController>
         )}
     </FormContext.Consumer>
 );
 
-ElementController.propTypes = {
+const controllerPropTypes = {
     children: PropTypes.func.isRequired,
     validators: PropTypes.arrayOf(PropTypes.object),
     name: PropTypes.string.isRequired
 };
 
-ElementController.displayName = 'ElementController';
+export const InputController = props =>
+    getController(props, controllerType.input);
+InputController.propTypes = controllerPropTypes;
 
-export default ElementController;
+export const TextareaController = props =>
+    getController(props, controllerType.textarea);
+TextareaController.propTypes = controllerPropTypes;
+
+export const SelectController = props =>
+    getController(props, controllerType.select);
+SelectController.propTypes = controllerPropTypes;
+
+export const RadioGroupController = props =>
+    getController(props, controllerType.radioGroup);
+RadioGroupController.propTypes = controllerPropTypes;

@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import FormContext from './FormContext';
 import memoize from 'memoize-one';
+import {
+    RadioGroupController,
+    SelectController,
+    TextareaController,
+    InputController
+} from './FormControllers';
 
 /**
  * @component
@@ -60,6 +66,11 @@ import memoize from 'memoize-one';
  * by the consumers to decide when to show errors.
  * */
 class Form extends Component {
+    static InputController = InputController;
+    static TextareaController = TextareaController;
+    static SelectController = SelectController;
+    static RadioGroupController = RadioGroupController;
+
     static propTypes = {
         children: PropTypes.func.isRequired,
         onSubmit: PropTypes.func.isRequired,

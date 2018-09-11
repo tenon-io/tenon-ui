@@ -47,11 +47,6 @@ const TextArea = ({
     labelProps,
     showError,
     className,
-    getInputProps,
-    getSelectProps,
-    getRadioButtonProps,
-    getLegendProps,
-    getRadioGroupProps,
     ...rest
 }) => {
     const textareaClass = classNames(className, { 'has-error': showError });
