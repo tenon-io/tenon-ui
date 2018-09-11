@@ -3,7 +3,6 @@ import ErrorBlock from '../../../../src/modules/forms/ErrorBlock';
 import {
     Form,
     Input,
-    InputController,
     isLongerThan,
     isRequired,
     TextArea,

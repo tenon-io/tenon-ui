@@ -1,16 +1,16 @@
 jest.mock('uuid/v4');
 
 import React from 'react';
-import { cleanup, render, fireEvent } from 'react-testing-library';
+import { cleanup, fireEvent, render } from 'react-testing-library';
 import 'jest-dom/extend-expect';
 import Form from '../Form';
 import { validator } from '../../../utils/helpers/validationHelpers';
-import { isRequired, isLongerThan } from '../../../utils/data/validation';
+import { isLongerThan, isRequired } from '../../../utils/data/validation';
 import uuidv4 from 'uuid/v4';
 
-//Tests for ElementController registering with Form and the
+//Tests for TextInputController registering with Form and the
 //Form functionality supporting that.
-xdescribe('ElementController', () => {
+describe('Form.TextInputController', () => {
     beforeEach(() => {
         jest.clearAllMocks();
         uuidv4
@@ -25,14 +25,14 @@ xdescribe('ElementController', () => {
         const { getByLabelText, getByText } = render(
             <Form onSubmit={jest.fn()}>
                 {() => (
-                    <ElementController name="testInput">
+                    <Form.TextInputController name="testInput">
                         {({ getInputProps, getLabelProps }) => (
                             <div>
                                 <label {...getLabelProps()}>Test input</label>
                                 <input {...getInputProps()} />
                             </div>
                         )}
-                    </ElementController>
+                    </Form.TextInputController>
                 )}
             </Form>
         );
@@ -52,7 +52,7 @@ xdescribe('ElementController', () => {
         const { getByLabelText } = render(
             <Form onSubmit={jest.fn()}>
                 {() => (
-                    <ElementController name="testInput">
+                    <Form.TextInputController name="testInput">
                         {({ getInputProps, getLabelProps }) => (
                             <div>
                                 <label {...getLabelProps()}>Test input</label>
@@ -63,7 +63,7 @@ xdescribe('ElementController', () => {
                                 />
                             </div>
                         )}
-                    </ElementController>
+                    </Form.TextInputController>
                 )}
             </Form>
         );
@@ -78,7 +78,7 @@ xdescribe('ElementController', () => {
         const { getByLabelText } = render(
             <Form onSubmit={jest.fn()}>
                 {() => (
-                    <ElementController name="testInput">
+                    <Form.TextInputController name="testInput">
                         {({ getInputProps, getLabelProps }) => (
                             <div>
                                 <label {...getLabelProps()}>Test input</label>
@@ -89,7 +89,7 @@ xdescribe('ElementController', () => {
                                 />
                             </div>
                         )}
-                    </ElementController>
+                    </Form.TextInputController>
                 )}
             </Form>
         );
@@ -104,7 +104,7 @@ xdescribe('ElementController', () => {
         const { getByLabelText } = render(
             <Form onSubmit={jest.fn()}>
                 {() => (
-                    <ElementController name="testInput">
+                    <Form.TextInputController name="testInput">
                         {({ getInputProps, getLabelProps }) => (
                             <div>
                                 <label {...getLabelProps()}>Test input</label>
@@ -115,7 +115,7 @@ xdescribe('ElementController', () => {
                                 />
                             </div>
                         )}
-                    </ElementController>
+                    </Form.TextInputController>
                 )}
             </Form>
         );
@@ -131,7 +131,7 @@ xdescribe('ElementController', () => {
             <Form onSubmit={jest.fn()}>
                 {() => (
                     <div>
-                        <ElementController
+                        <Form.TextInputController
                             name="testInput"
                             validators={[
                                 validator(isRequired, 'This field is required.')
@@ -164,7 +164,7 @@ xdescribe('ElementController', () => {
                                     </div>
                                 );
                             }}
-                        </ElementController>
+                        </Form.TextInputController>
                         <button type="submit">Submit</button>
                     </div>
                 )}
@@ -209,7 +209,7 @@ xdescribe('ElementController', () => {
             <Form onSubmit={jest.fn()}>
                 {() => (
                     <div>
-                        <ElementController
+                        <Form.TextInputController
                             name="testInput"
                             validators={[
                                 validator(
@@ -249,7 +249,7 @@ xdescribe('ElementController', () => {
                                     </div>
                                 );
                             }}
-                        </ElementController>
+                        </Form.TextInputController>
                         <button type="submit">Submit</button>
                     </div>
                 )}
@@ -285,7 +285,7 @@ xdescribe('ElementController', () => {
             <Form onSubmit={jest.fn()}>
                 {() => (
                     <div>
-                        <ElementController
+                        <Form.TextInputController
                             name="testInput"
                             validators={[
                                 validator(
@@ -326,7 +326,7 @@ xdescribe('ElementController', () => {
                                     </div>
                                 );
                             }}
-                        </ElementController>
+                        </Form.TextInputController>
                         <button type="submit">Submit</button>
                     </div>
                 )}
@@ -348,7 +348,7 @@ xdescribe('ElementController', () => {
         const { getByLabelText, getByTestId } = render(
             <Form onSubmit={jest.fn()}>
                 {() => (
-                    <ElementController name="testInput">
+                    <Form.TextInputController name="testInput">
                         {({
                             getInputProps,
                             getLabelProps,
@@ -372,7 +372,7 @@ xdescribe('ElementController', () => {
                                 </div>
                             );
                         }}
-                    </ElementController>
+                    </Form.TextInputController>
                 )}
             </Form>
         );
@@ -392,8 +392,7 @@ xdescribe('ElementController', () => {
             <Form onSubmit={jest.fn()}>
                 {() => (
                     <div>
-                        {' '}
-                        <ElementController
+                        <Form.TextInputController
                             name="testInput"
                             validators={[
                                 validator(isRequired, 'It is required')
@@ -432,7 +431,7 @@ xdescribe('ElementController', () => {
                                     </div>
                                 );
                             }}
-                        </ElementController>
+                        </Form.TextInputController>
                         <button type="submit">Submit</button>
                     </div>
                 )}
@@ -462,7 +461,7 @@ xdescribe('ElementController', () => {
                 {() => (
                     <div>
                         {' '}
-                        <ElementController
+                        <Form.TextInputController
                             name="testInput"
                             validators={[
                                 validator(isRequired, 'It is required')
@@ -501,7 +500,7 @@ xdescribe('ElementController', () => {
                                     </div>
                                 );
                             }}
-                        </ElementController>
+                        </Form.TextInputController>
                         <button type="submit">Submit</button>
                     </div>
                 )}
@@ -531,7 +530,7 @@ xdescribe('ElementController', () => {
                 {() => (
                     <div>
                         {' '}
-                        <ElementController
+                        <Form.TextInputController
                             name="testInput"
                             validators={[
                                 validator(isRequired, 'It is required')
@@ -570,7 +569,7 @@ xdescribe('ElementController', () => {
                                     </div>
                                 );
                             }}
-                        </ElementController>
+                        </Form.TextInputController>
                         <button type="submit">Submit</button>
                     </div>
                 )}
@@ -587,18 +586,16 @@ xdescribe('ElementController', () => {
 });
 
 // Tests for Form specific functionality.
-xdescribe('Form', () => {
+describe('Form', () => {
     beforeEach(() => {
         jest.clearAllMocks();
         uuidv4
             .mockReturnValueOnce('inputLabelId')
             .mockReturnValueOnce('errorId')
             .mockReturnValueOnce('contentHintId')
-            .mockReturnValueOnce('legendId')
             .mockReturnValueOnce('inputLabelId2')
             .mockReturnValueOnce('errorId2')
-            .mockReturnValueOnce('contentHintId2')
-            .mockReturnValueOnce('legendId2');
+            .mockReturnValueOnce('contentHintId2');
     });
 
     afterEach(cleanup);
@@ -616,7 +613,7 @@ xdescribe('Form', () => {
                     hasSubmittedReference = hasSubmitted;
                     return (
                         <div>
-                            <ElementController name="testInput">
+                            <Form.TextInputController name="testInput">
                                 {({ getInputProps, getLabelProps }) => (
                                     <div>
                                         <label {...getLabelProps()}>
@@ -625,8 +622,8 @@ xdescribe('Form', () => {
                                         <input {...getInputProps()} />
                                     </div>
                                 )}
-                            </ElementController>
-                            <ElementController name="testInput2">
+                            </Form.TextInputController>
+                            <Form.TextInputController name="testInput2">
                                 {({ getInputProps, getLabelProps }) => (
                                     <div>
                                         <label {...getLabelProps()}>
@@ -635,7 +632,7 @@ xdescribe('Form', () => {
                                         <input {...getInputProps()} />
                                     </div>
                                 )}
-                            </ElementController>
+                            </Form.TextInputController>
                         </div>
                     );
                 }}
@@ -669,7 +666,7 @@ xdescribe('Form', () => {
                     hasSubmittedReference = hasSubmitted;
                     return (
                         <div>
-                            <ElementController name="testInput">
+                            <Form.TextInputController name="testInput">
                                 {({ getInputProps, getLabelProps }) => (
                                     <div>
                                         <label {...getLabelProps()}>
@@ -678,7 +675,7 @@ xdescribe('Form', () => {
                                         <input {...getInputProps()} />
                                     </div>
                                 )}
-                            </ElementController>
+                            </Form.TextInputController>
                             <button type="submit">Submit</button>
                         </div>
                     );
@@ -708,7 +705,7 @@ xdescribe('Form', () => {
                     updateInfo(formInfo);
                     return (
                         <div>
-                            <ElementController name="testInput">
+                            <Form.TextInputController name="testInput">
                                 {({ getInputProps, getLabelProps }) => (
                                     <div>
                                         <label {...getLabelProps()}>
@@ -717,9 +714,9 @@ xdescribe('Form', () => {
                                         <input {...getInputProps()} />
                                     </div>
                                 )}
-                            </ElementController>
+                            </Form.TextInputController>
                             {hideComponent ? null : (
-                                <ElementController name="testInput2">
+                                <Form.TextInputController name="testInput2">
                                     {({ getInputProps, getLabelProps }) => (
                                         <div>
                                             <label {...getLabelProps()}>
@@ -728,7 +725,7 @@ xdescribe('Form', () => {
                                             <input {...getInputProps()} />
                                         </div>
                                     )}
-                                </ElementController>
+                                </Form.TextInputController>
                             )}
                         </div>
                     );
@@ -761,7 +758,7 @@ xdescribe('Form', () => {
                 {() => {
                     return (
                         <div>
-                            <ElementController name="testInput">
+                            <Form.TextInputController name="testInput">
                                 {({ getInputProps, getLabelProps }) => (
                                     <div>
                                         <label {...getLabelProps()}>
@@ -770,8 +767,8 @@ xdescribe('Form', () => {
                                         <input {...getInputProps()} />
                                     </div>
                                 )}
-                            </ElementController>
-                            <ElementController name="testInput2">
+                            </Form.TextInputController>
+                            <Form.TextInputController name="testInput2">
                                 {({ getInputProps, getLabelProps }) => (
                                     <div>
                                         <label {...getLabelProps()}>
@@ -780,7 +777,7 @@ xdescribe('Form', () => {
                                         <input {...getInputProps()} />
                                     </div>
                                 )}
-                            </ElementController>
+                            </Form.TextInputController>
                             <button type="submit">Submit</button>
                         </div>
                     );
@@ -815,7 +812,7 @@ xdescribe('Form', () => {
                 {() => {
                     return (
                         <div>
-                            <ElementController
+                            <Form.TextInputController
                                 name="testInput"
                                 validators={[
                                     validator(
@@ -836,8 +833,8 @@ xdescribe('Form', () => {
                                         />
                                     </div>
                                 )}
-                            </ElementController>
-                            <ElementController name="testInput2">
+                            </Form.TextInputController>
+                            <Form.TextInputController name="testInput2">
                                 {({ getInputProps, getLabelProps }) => (
                                     <div>
                                         <label {...getLabelProps()}>
@@ -846,7 +843,7 @@ xdescribe('Form', () => {
                                         <input {...getInputProps()} />
                                     </div>
                                 )}
-                            </ElementController>
+                            </Form.TextInputController>
                             <button type="submit">Submit</button>
                         </div>
                     );
@@ -884,7 +881,7 @@ xdescribe('Form', () => {
                 {() => {
                     return (
                         <div>
-                            <ElementController
+                            <Form.TextInputController
                                 name="testInput"
                                 validators={[
                                     validator(
@@ -905,8 +902,8 @@ xdescribe('Form', () => {
                                         />
                                     </div>
                                 )}
-                            </ElementController>
-                            <ElementController name="testInput2">
+                            </Form.TextInputController>
+                            <Form.TextInputController name="testInput2">
                                 {({ getInputProps, getLabelProps }) => (
                                     <div>
                                         <label {...getLabelProps()}>
@@ -915,7 +912,7 @@ xdescribe('Form', () => {
                                         <input {...getInputProps()} />
                                     </div>
                                 )}
-                            </ElementController>
+                            </Form.TextInputController>
                             <button type="submit">Submit</button>
                         </div>
                     );

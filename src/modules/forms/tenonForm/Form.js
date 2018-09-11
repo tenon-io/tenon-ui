@@ -64,6 +64,8 @@ import {
  *
  * Context also contains a registerErrors boolean what can be used
  * by the consumers to decide when to show errors.
+ *
+ * This component is compound and also exposes the form controllers.
  * */
 class Form extends Component {
     static TextInputController = TextInputController;
@@ -128,7 +130,7 @@ class Form extends Component {
      * parameters.
      *
      * @param {string} name - The unique name.
-     * @param {string} controlId - The unique DOM id.
+     * @param {string} controlId - The unique DOM id for the focusable element.
      * @param {string} value - The string value.
      * @param {boolean} validity - The validation validity.
      * @param {string} errorText - The validation error message.
