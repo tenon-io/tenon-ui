@@ -22,6 +22,11 @@
 
         li {
             margin-top: 1rem;
+
+            //Fix for VoiceOver bug: https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-type#Accessibility_concerns
+            &::before {
+                content: '\200B';
+            }
         }
 
         a {

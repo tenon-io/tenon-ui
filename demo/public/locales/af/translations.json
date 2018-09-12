@@ -10,6 +10,16 @@
         "p1":
             "Welkom by ons biblioteek van toegankelike komponente. Kies asseblief een van die komponente onder die Komponent Biblioteek kieslys om verder te gaan."
     },
+    "focusCatcher": {
+        "heading": "Fokus vanger component",
+        "example": {
+            "heading": "Werkende voorbeeld",
+            "withoutCatcherHeading": "Sonder FocusCatcher",
+            "withoutCatcherLabel": "Klik op my",
+            "withCatcherHeading": "Met FocusCatcher",
+            "withCatcherLabel": "Klik op my"
+        }
+    },
     "forms": {
         "demo": {
             "heading": "Vorm komponente",

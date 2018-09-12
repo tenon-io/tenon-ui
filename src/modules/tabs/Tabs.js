@@ -6,6 +6,7 @@ import deepEqual from 'lodash.isequal';
 import Heading from '../layout/Heading';
 import { keyNames } from '../utils/constants/keyCodes';
 import { getKey } from '../utils/helpers/eventHelpers';
+import FocusCatcher from '../utils/components/FocusCatcher';
 
 /**
  * @component
@@ -56,16 +57,10 @@ export const Tab = forwardRef(
                     aria-describedby={tabId}
                     hidden={isHidden ? 'hidden' : null}
                 >
-                    <div
-                        tabIndex="-1"
-                        onFocus={e => {
-                            e.stopPropagation();
-                        }}
-                        style={{ outline: 'none' }}
-                    >
+                    <FocusCatcher>
                         {noHeading ? null : <Heading.H>{title}</Heading.H>}
                         {children}
-                    </div>
+                    </FocusCatcher>
                 </section>
             </Heading.LevelBoundary>
         );

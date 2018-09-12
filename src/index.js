@@ -14,6 +14,7 @@ export Notification from './modules/notifications/Notification';
 export Spinner from './modules/notifications/Spinner';
 export SpinnerButton from './modules/forms/SpinnerButton';
 export Tabs, { Tab } from './modules/tabs/Tabs';
+export FocusCatcher from './modules/utils/components/FocusCatcher';
 
 export * from './modules/utils/data/validation';
 export * from './modules/utils/helpers/validationHelpers';

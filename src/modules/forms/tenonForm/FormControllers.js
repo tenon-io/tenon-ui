@@ -221,8 +221,9 @@ class FormController extends Component {
      * @param {object} props
      * @returns {object}
      */
-    getLegendProps = () => ({
-        id: this.legendId
+    getLegendProps = (props = {}) => ({
+        id: this.legendId,
+        ...props
     });
 
     /**
@@ -334,7 +335,6 @@ class FormController extends Component {
 
         return {
             'aria-disabled': props['disabled'] ? 'true' : null,
-            'aria-readonly': props['readOnly'] ? 'true' : null,
             name,
             id: `${this.controlId}${value ? `-${value}` : ''}`,
             type: 'radio',
@@ -434,6 +434,30 @@ class FormController extends Component {
         );
     };
 
+    getTypeSpecificRenderProps = type => {
+        switch (type) {
+            case controllerType.textarea:
+                return {
+                    getTextareaProps: this.getTextareaProps
+                };
+            case controllerType.select:
+                return {
+                    getSelectProps: this.getSelectProps
+                };
+            case controllerType.radioGroup:
+                return {
+                    getLegendProps: this.getLegendProps,
+                    getRadioButtonProps: this.getRadioButtonProps,
+                    getRadioGroupProps: this.getRadioGroupProps
+                };
+            case controllerType.input:
+            default:
+                return {
+                    getInputProps: this.getInputProps
+                };
+        }
+    };
+
     /**
      * @function
      * Composes the object to send to the render function for each
@@ -441,39 +465,12 @@ class FormController extends Component {
      *
      * Memoized so as to only recalculate if the type changes.
      */
-    buildRenderObject = memoize(type => {
-        const generalRenderObject = {
-            getLabelProps: this.getLabelProps,
-            getErrorProps: this.getErrorProps,
-            getContentHintProps: this.getContentHintProps
-        };
-
-        switch (type) {
-            case controllerType.textarea:
-                return {
-                    getTextareaProps: this.getTextareaProps,
-                    ...generalRenderObject
-                };
-            case controllerType.select:
-                return {
-                    getSelectProps: this.getSelectProps,
-                    ...generalRenderObject
-                };
-            case controllerType.radioGroup:
-                return {
-                    getLegendProps: this.getLegendProps,
-                    getRadioButtonProps: this.getRadioButtonProps,
-                    getRadioGroupProps: this.getRadioGroupProps,
-                    ...generalRenderObject
-                };
-            case controllerType.input:
-            default:
-                return {
-                    getInputProps: this.getInputProps,
-                    ...generalRenderObject
-                };
-        }
-    });
+    buildRenderObject = memoize(type => ({
+        getLabelProps: this.getLabelProps,
+        getErrorProps: this.getErrorProps,
+        getContentHintProps: this.getContentHintProps,
+        ...this.getTypeSpecificRenderProps(type)
+    }));
 
     render() {
         const {

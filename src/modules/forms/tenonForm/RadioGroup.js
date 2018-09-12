@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import FocusCatcher from '../../utils/components/FocusCatcher';
 
 /**
  * @component
@@ -62,13 +63,7 @@ const RadioGroup = ({
                 required: required || null
             })}
         >
-            <div
-                tabIndex="-1"
-                onFocus={e => {
-                    e.stopPropagation();
-                }}
-                style={{ outline: 'none' }}
-            >
+            <FocusCatcher>
                 {Object.keys(options).map(option => (
                     <Fragment key={option}>
                         <input
@@ -85,7 +80,7 @@ const RadioGroup = ({
                         </label>
                     </Fragment>
                 ))}
-            </div>
+            </FocusCatcher>
         </div>
         {contentHintText && getContentHintProps ? (
             <div className="info-wrapper">

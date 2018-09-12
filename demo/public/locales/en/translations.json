@@ -10,6 +10,16 @@
         "p1":
             "Welcome to the our accessible components library. Please select one of the components from the Components Library menu to go further."
     },
+    "focusCatcher": {
+        "heading": "Focus catcher component",
+        "example": {
+            "heading": "Working example",
+            "withoutCatcherHeading": "Without FocusCatcher",
+            "withoutCatcherLabel": "Click me",
+            "withCatcherHeading": "With FocusCatcher",
+            "withCatcherLabel": "Click me"
+        }
+    },
     "forms": {
         "demo": {
             "heading": "Form components",

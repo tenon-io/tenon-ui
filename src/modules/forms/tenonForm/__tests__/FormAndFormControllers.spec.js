@@ -1,6 +1,8 @@
+import classNames from 'classnames';
+
 jest.mock('uuid/v4');
 
-import React from 'react';
+import React, { Fragment } from 'react';
 import { cleanup, fireEvent, render } from 'react-testing-library';
 import 'jest-dom/extend-expect';
 import Form from '../Form';
@@ -8,8 +10,6 @@ import { validator } from '../../../utils/helpers/validationHelpers';
 import { isLongerThan, isRequired } from '../../../utils/data/validation';
 import uuidv4 from 'uuid/v4';
 
-//Tests for TextInputController registering with Form and the
-//Form functionality supporting that.
 describe('Form.TextInputController', () => {
     beforeEach(() => {
         jest.clearAllMocks();
@@ -1158,6 +1158,1148 @@ describe('Form.TextareaController', () => {
         );
 
         expect(getByLabelText('Test textarea')).toHaveAttribute(
+            'aria-describedby',
+            'contentHintId errorId'
+        );
+
+        expect(queryByTestId('errorContainer')).not.toBeNull();
+    });
+});
+
+describe('Form.SelectController', () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+        uuidv4
+            .mockReturnValueOnce('selectId')
+            .mockReturnValueOnce('contentHintId')
+            .mockReturnValueOnce('errorId');
+    });
+
+    afterEach(cleanup);
+
+    it('should render a standard select and label and decorate with standard props', () => {
+        const { getByLabelText, getByText, debug } = render(
+            <Form onSubmit={jest.fn()}>
+                {() => (
+                    <Form.SelectController name="testSelect">
+                        {({ getSelectProps, getLabelProps }) => (
+                            <div>
+                                <label {...getLabelProps()}>Test select</label>
+                                <select {...getSelectProps()}>
+                                    <option value="1">One</option>
+                                    <option value="2">One</option>
+                                </select>
+                            </div>
+                        )}
+                    </Form.SelectController>
+                )}
+            </Form>
+        );
+
+        const testLabel = getByText('Test select');
+        expect(testLabel).toHaveAttribute('for', 'selectId');
+        expect(testLabel.attributes.length).toBe(1);
+
+        const testSelect = getByLabelText('Test select');
+        expect(testSelect).toHaveAttribute('id', 'selectId');
+        expect(testSelect).toHaveAttribute('name', 'testSelect');
+        expect(testSelect.value).toBe('1');
+        expect(testSelect.attributes.length).toBe(2);
+    });
+
+    it('should spawn standard and ARIA props for a disabled select', () => {
+        const { getByLabelText } = render(
+            <Form onSubmit={jest.fn()}>
+                {() => (
+                    <Form.SelectController name="testSelect">
+                        {({ getSelectProps, getLabelProps }) => (
+                            <div>
+                                <label {...getLabelProps()}>Test select</label>
+                                <select
+                                    {...getSelectProps({
+                                        disabled: 'disabled'
+                                    })}
+                                >
+                                    <option value="1">One</option>
+                                    <option value="2">One</option>
+                                </select>
+                            </div>
+                        )}
+                    </Form.SelectController>
+                )}
+            </Form>
+        );
+
+        const testSelect = getByLabelText('Test select');
+        expect(testSelect).toHaveAttribute('disabled');
+        expect(testSelect).toHaveAttribute('aria-disabled', 'true');
+        expect(testSelect.attributes.length).toBe(4);
+    });
+
+    it('should spawn standard and ARIA props for a required select', () => {
+        const { getByLabelText } = render(
+            <Form onSubmit={jest.fn()}>
+                {() => (
+                    <Form.SelectController name="testSelect">
+                        {({ getSelectProps, getLabelProps }) => (
+                            <div>
+                                <label {...getLabelProps()}>Test select</label>
+                                <select
+                                    {...getSelectProps({
+                                        required: 'required'
+                                    })}
+                                >
+                                    <option value="1">One</option>
+                                    <option value="2">One</option>
+                                </select>
+                            </div>
+                        )}
+                    </Form.SelectController>
+                )}
+            </Form>
+        );
+
+        const testSelect = getByLabelText('Test select');
+        expect(testSelect).toHaveAttribute('required');
+        expect(testSelect).toHaveAttribute('aria-required', 'true');
+        expect(testSelect.attributes.length).toBe(4);
+    });
+
+    it('should validate a select and set an error text when appropriate', () => {
+        const { getByLabelText, getByTestId, getByText } = render(
+            <Form onSubmit={jest.fn()}>
+                {() => (
+                    <div>
+                        <Form.SelectController
+                            name="testSelect"
+                            validators={[
+                                validator(isRequired, 'This field is required.')
+                            ]}
+                        >
+                            {({
+                                getSelectProps,
+                                getLabelProps,
+                                getErrorProps,
+                                showError,
+                                errorText
+                            }) => {
+                                return (
+                                    <div>
+                                        <label {...getLabelProps()}>
+                                            Test select
+                                        </label>
+                                        <select
+                                            {...getSelectProps({
+                                                required: 'required'
+                                            })}
+                                        >
+                                            <option value="">Default</option>
+                                            <option value="1">One</option>
+                                            <option value="2">One</option>
+                                        </select>
+                                        <div data-testid="errorContainer">
+                                            {showError ? (
+                                                <span {...getErrorProps()}>
+                                                    {errorText}
+                                                </span>
+                                            ) : null}
+                                        </div>
+                                    </div>
+                                );
+                            }}
+                        </Form.SelectController>
+                        <button type="submit">Submit</button>
+                    </div>
+                )}
+            </Form>
+        );
+
+        fireEvent.click(getByText('Submit'));
+
+        const select = getByLabelText('Test select');
+
+        expect(getByTestId('errorContainer').firstChild).toHaveTextContent(
+            'This field is required.'
+        );
+
+        expect(getByTestId('errorContainer').firstChild).toHaveAttribute(
+            'id',
+            'errorId'
+        );
+
+        expect(select).toHaveAttribute('aria-describedby', 'errorId');
+
+        select.value = '1';
+        fireEvent.change(select);
+        expect(getByTestId('errorContainer')).toBeEmpty();
+        expect(select).not.toHaveAttribute('aria-describedby');
+    });
+
+    it('should allow a validator to be ignored', () => {
+        const { getByLabelText, getByTestId, getByText } = render(
+            <Form onSubmit={jest.fn()}>
+                {() => (
+                    <div>
+                        <Form.SelectController
+                            name="testSelect"
+                            validators={[
+                                validator(
+                                    isRequired,
+                                    'This field is required.',
+                                    true
+                                )
+                            ]}
+                        >
+                            {({
+                                getSelectProps,
+                                getLabelProps,
+                                getErrorProps,
+                                showError,
+                                errorText
+                            }) => {
+                                return (
+                                    <div>
+                                        <label {...getLabelProps()}>
+                                            Test select
+                                        </label>
+                                        <select
+                                            {...getSelectProps({
+                                                required: 'required'
+                                            })}
+                                        >
+                                            <option value="1">One</option>
+                                            <option value="2">One</option>
+                                        </select>
+                                        <div data-testid="errorContainer">
+                                            {showError ? (
+                                                <span {...getErrorProps()}>
+                                                    {errorText}
+                                                </span>
+                                            ) : null}
+                                        </div>
+                                    </div>
+                                );
+                            }}
+                        </Form.SelectController>
+                        <button type="submit">Submit</button>
+                    </div>
+                )}
+            </Form>
+        );
+
+        fireEvent.click(getByText('Submit'));
+        expect(getByTestId('errorContainer')).toBeEmpty();
+        expect(getByLabelText('Test select')).not.toHaveAttribute(
+            'aria-describedby'
+        );
+    });
+
+    it('should allow the user to specify a content hint', () => {
+        const { getByLabelText, getByTestId } = render(
+            <Form onSubmit={jest.fn()}>
+                {() => (
+                    <Form.SelectController name="testSelect">
+                        {({
+                            getSelectProps,
+                            getLabelProps,
+                            getContentHintProps
+                        }) => {
+                            return (
+                                <div>
+                                    <label {...getLabelProps()}>
+                                        Test select
+                                    </label>
+                                    <select
+                                        {...getSelectProps({
+                                            required: 'required'
+                                        })}
+                                    >
+                                        <option value="1">One</option>
+                                        <option value="2">One</option>
+                                    </select>
+                                    <div data-testid="contentHintContainer">
+                                        <span {...getContentHintProps()}>
+                                            Some content hint
+                                        </span>
+                                    </div>
+                                </div>
+                            );
+                        }}
+                    </Form.SelectController>
+                )}
+            </Form>
+        );
+
+        expect(getByLabelText('Test select')).toHaveAttribute(
+            'aria-describedby',
+            'contentHintId'
+        );
+        expect(getByTestId('contentHintContainer').firstChild).toHaveAttribute(
+            'id',
+            'contentHintId'
+        );
+    });
+
+    it('should properly link both a content hint and an error message accessibly', () => {
+        const { getByLabelText, getByText } = render(
+            <Form onSubmit={jest.fn()}>
+                {() => (
+                    <div>
+                        <Form.SelectController
+                            name="testSelect"
+                            validators={[
+                                validator(isRequired, 'It is required')
+                            ]}
+                        >
+                            {({
+                                getSelectProps,
+                                getLabelProps,
+                                getErrorProps,
+                                getContentHintProps,
+                                errorText,
+                                showError
+                            }) => {
+                                return (
+                                    <div>
+                                        <label {...getLabelProps()}>
+                                            Test select
+                                        </label>
+                                        <select
+                                            {...getSelectProps({
+                                                required: 'required'
+                                            })}
+                                        >
+                                            <option value="">Default</option>
+                                            <option value="1">One</option>
+                                            <option value="2">One</option>
+                                        </select>
+                                        <div data-testid="contentHintContainer">
+                                            <span {...getContentHintProps()}>
+                                                Some content hint
+                                            </span>
+                                        </div>
+                                        {showError ? (
+                                            <div data-testid="errorContainer">
+                                                <span {...getErrorProps()}>
+                                                    {errorText}
+                                                </span>
+                                            </div>
+                                        ) : null}
+                                    </div>
+                                );
+                            }}
+                        </Form.SelectController>
+                        <button type="submit">Submit</button>
+                    </div>
+                )}
+            </Form>
+        );
+
+        fireEvent.click(getByText('Submit'));
+
+        expect(getByLabelText('Test select')).toHaveAttribute(
+            'aria-describedby',
+            'contentHintId errorId'
+        );
+
+        const select = getByLabelText('Test select');
+        select.value = '1';
+        fireEvent.change(select);
+
+        expect(getByLabelText('Test select')).toHaveAttribute(
+            'aria-describedby',
+            'contentHintId'
+        );
+    });
+
+    it('should should only display errors after one submit attempt', () => {
+        const { getByLabelText, getByText, queryByTestId } = render(
+            <Form onSubmit={jest.fn()}>
+                {() => (
+                    <div>
+                        <Form.SelectController
+                            name="testSelect"
+                            validators={[
+                                validator(isRequired, 'It is required')
+                            ]}
+                        >
+                            {({
+                                getSelectProps,
+                                getLabelProps,
+                                getErrorProps,
+                                getContentHintProps,
+                                errorText,
+                                showError
+                            }) => {
+                                return (
+                                    <div>
+                                        <label {...getLabelProps()}>
+                                            Test select
+                                        </label>
+                                        <select
+                                            {...getSelectProps({
+                                                required: 'required'
+                                            })}
+                                        >
+                                            <option value="">Default</option>
+                                            <option value="1">One</option>
+                                            <option value="2">One</option>
+                                        </select>
+                                        <div data-testid="contentHintContainer">
+                                            <span {...getContentHintProps()}>
+                                                Some content hint
+                                            </span>
+                                        </div>
+                                        {showError ? (
+                                            <div data-testid="errorContainer">
+                                                <span {...getErrorProps()}>
+                                                    {errorText}
+                                                </span>
+                                            </div>
+                                        ) : null}
+                                    </div>
+                                );
+                            }}
+                        </Form.SelectController>
+                        <button type="submit">Submit</button>
+                    </div>
+                )}
+            </Form>
+        );
+
+        expect(getByLabelText('Test select')).toHaveAttribute(
+            'aria-describedby',
+            'contentHintId'
+        );
+
+        expect(queryByTestId('errorContainer')).toBeNull();
+
+        fireEvent.click(getByText('Submit'));
+
+        expect(getByLabelText('Test select')).toHaveAttribute(
+            'aria-describedby',
+            'contentHintId errorId'
+        );
+
+        expect(queryByTestId('errorContainer')).not.toBeNull();
+    });
+
+    it('should should display errors always when alwaysShowErrors is on', () => {
+        const { getByLabelText, queryByTestId } = render(
+            <Form onSubmit={jest.fn()} alwaysShowErrors={true}>
+                {() => (
+                    <div>
+                        <Form.SelectController
+                            name="testSelect"
+                            validators={[
+                                validator(isRequired, 'It is required')
+                            ]}
+                        >
+                            {({
+                                getSelectProps,
+                                getLabelProps,
+                                getErrorProps,
+                                getContentHintProps,
+                                errorText,
+                                showError
+                            }) => {
+                                return (
+                                    <div>
+                                        <label {...getLabelProps()}>
+                                            Test select
+                                        </label>
+                                        <select
+                                            {...getSelectProps({
+                                                required: 'required'
+                                            })}
+                                        >
+                                            <option value="">Default</option>
+                                            <option value="1">One</option>
+                                            <option value="2">One</option>
+                                        </select>
+                                        <div data-testid="contentHintContainer">
+                                            <span {...getContentHintProps()}>
+                                                Some content hint
+                                            </span>
+                                        </div>
+                                        {showError ? (
+                                            <div data-testid="errorContainer">
+                                                <span {...getErrorProps()}>
+                                                    {errorText}
+                                                </span>
+                                            </div>
+                                        ) : null}
+                                    </div>
+                                );
+                            }}
+                        </Form.SelectController>
+                        <button type="submit">Submit</button>
+                    </div>
+                )}
+            </Form>
+        );
+
+        expect(getByLabelText('Test select')).toHaveAttribute(
+            'aria-describedby',
+            'contentHintId errorId'
+        );
+
+        expect(queryByTestId('errorContainer')).not.toBeNull();
+    });
+});
+
+describe('Form.RadioGroupController', () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+        uuidv4
+            .mockReturnValueOnce('inputLabelId')
+            .mockReturnValueOnce('contentHintId')
+            .mockReturnValueOnce('errorId')
+            .mockReturnValueOnce('legendId')
+            .mockReturnValueOnce('containerId');
+    });
+
+    afterEach(cleanup);
+
+    it('should render a standard radiogroup and decorate with standard props', () => {
+        const { container, getByLabelText, getByText } = render(
+            <Form onSubmit={jest.fn()}>
+                {() => (
+                    <Form.RadioGroupController name="testRadio">
+                        {({
+                            getRadioButtonProps,
+                            getRadioGroupProps,
+                            getLegendProps,
+                            getLabelProps
+                        }) => (
+                            <fieldset>
+                                <legend {...getLegendProps()}>
+                                    Test radio
+                                </legend>
+                                <div {...getRadioGroupProps()}>
+                                    <input
+                                        {...getRadioButtonProps({
+                                            value: 'one'
+                                        })}
+                                    />
+                                    <label
+                                        {...getLabelProps({
+                                            autoIdPostfix: 'one'
+                                        })}
+                                    >
+                                        One
+                                    </label>
+                                    <input
+                                        {...getRadioButtonProps({
+                                            value: 'two'
+                                        })}
+                                    />
+                                    <label
+                                        {...getLabelProps({
+                                            autoIdPostfix: 'two'
+                                        })}
+                                    >
+                                        Two
+                                    </label>
+                                </div>
+                            </fieldset>
+                        )}
+                    </Form.RadioGroupController>
+                )}
+            </Form>
+        );
+
+        const legend = getByText('Test radio');
+        expect(legend).toHaveAttribute('id', 'legendId');
+
+        const radioGroup = container.querySelector('[role="radiogroup"]');
+        expect(radioGroup).toHaveAttribute('aria-labelledby', 'legendId');
+        expect(radioGroup).toHaveAttribute('id', 'containerId');
+        expect(radioGroup).toHaveAttribute('tabindex', '-1');
+        expect(radioGroup.attributes.length).toBe(4);
+
+        const inputOne = getByLabelText('One');
+        expect(inputOne).toHaveAttribute('id', 'inputLabelId-one');
+        expect(inputOne).toHaveAttribute('name', 'testRadio');
+        expect(inputOne).toHaveAttribute('value', 'one');
+        expect(inputOne.attributes.length).toBe(4);
+
+        const inputTwo = getByLabelText('Two');
+        expect(inputTwo).toHaveAttribute('id', 'inputLabelId-two');
+        expect(inputTwo).toHaveAttribute('name', 'testRadio');
+        expect(inputTwo).toHaveAttribute('value', 'two');
+        expect(inputTwo.attributes.length).toBe(4);
+    });
+
+    it('should spawn standard and ARIA props for a disabled radio button', () => {
+        const { getByLabelText } = render(
+            <Form onSubmit={jest.fn()}>
+                {() => (
+                    <Form.RadioGroupController name="testRadio">
+                        {({
+                            getRadioButtonProps,
+                            getRadioGroupProps,
+                            getLegendProps,
+                            getLabelProps
+                        }) => (
+                            <fieldset>
+                                <legend {...getLegendProps()}>
+                                    Test radio
+                                </legend>
+                                <div {...getRadioGroupProps()}>
+                                    <input
+                                        {...getRadioButtonProps({
+                                            value: 'one',
+                                            disabled: 'disabled'
+                                        })}
+                                    />
+                                    <label
+                                        {...getLabelProps({
+                                            autoIdPostfix: 'one'
+                                        })}
+                                    >
+                                        One
+                                    </label>
+                                    <input
+                                        {...getRadioButtonProps({
+                                            value: 'two'
+                                        })}
+                                    />
+                                    <label
+                                        {...getLabelProps({
+                                            autoIdPostfix: 'two'
+                                        })}
+                                    >
+                                        Two
+                                    </label>
+                                </div>
+                            </fieldset>
+                        )}
+                    </Form.RadioGroupController>
+                )}
+            </Form>
+        );
+
+        const inputOne = getByLabelText('One');
+        expect(inputOne).toHaveAttribute('disabled');
+        expect(inputOne).toHaveAttribute('aria-disabled', 'true');
+        expect(inputOne.attributes.length).toBe(6);
+
+        const inputTwo = getByLabelText('Two');
+        expect(inputTwo).not.toHaveAttribute('disabled');
+        expect(inputTwo).not.toHaveAttribute('aria-disabled');
+        expect(inputTwo.attributes.length).toBe(4);
+    });
+
+    it('should spawn standard and ARIA props for a required radio group', () => {
+        const { container } = render(
+            <Form onSubmit={jest.fn()}>
+                {() => (
+                    <Form.RadioGroupController name="testRadio">
+                        {({
+                            getRadioButtonProps,
+                            getRadioGroupProps,
+                            getLegendProps,
+                            getLabelProps
+                        }) => (
+                            <fieldset>
+                                <legend {...getLegendProps()}>
+                                    Test radio
+                                </legend>
+                                <div
+                                    {...getRadioGroupProps({
+                                        required: 'required'
+                                    })}
+                                >
+                                    <input
+                                        {...getRadioButtonProps({
+                                            value: 'one'
+                                        })}
+                                    />
+                                    <label
+                                        {...getLabelProps({
+                                            autoIdPostfix: 'one'
+                                        })}
+                                    >
+                                        One
+                                    </label>
+                                    <input
+                                        {...getRadioButtonProps({
+                                            value: 'two'
+                                        })}
+                                    />
+                                    <label
+                                        {...getLabelProps({
+                                            autoIdPostfix: 'two'
+                                        })}
+                                    >
+                                        Two
+                                    </label>
+                                </div>
+                            </fieldset>
+                        )}
+                    </Form.RadioGroupController>
+                )}
+            </Form>
+        );
+
+        const radioGroup = container.querySelector('[role="radiogroup"]');
+        expect(radioGroup).toHaveAttribute('required');
+        expect(radioGroup).toHaveAttribute('aria-required', 'true');
+        expect(radioGroup.attributes.length).toBe(6);
+    });
+
+    xit('should validate an input and set an error text when appropriate', () => {
+        const { getByLabelText, getByTestId, getByText } = render(
+            <Form onSubmit={jest.fn()}>
+                {() => (
+                    <div>
+                        <Form.TextInputController
+                            name="testInput"
+                            validators={[
+                                validator(isRequired, 'This field is required.')
+                            ]}
+                        >
+                            {({
+                                getInputProps,
+                                getLabelProps,
+                                getErrorProps,
+                                showError,
+                                errorText
+                            }) => {
+                                return (
+                                    <div>
+                                        <label {...getLabelProps()}>
+                                            Test input
+                                        </label>
+                                        <input
+                                            {...getInputProps({
+                                                required: 'required'
+                                            })}
+                                        />
+                                        <div data-testid="errorContainer">
+                                            {showError ? (
+                                                <span {...getErrorProps()}>
+                                                    {errorText}
+                                                </span>
+                                            ) : null}
+                                        </div>
+                                    </div>
+                                );
+                            }}
+                        </Form.TextInputController>
+                        <button type="submit">Submit</button>
+                    </div>
+                )}
+            </Form>
+        );
+
+        fireEvent.click(getByText('Submit'));
+
+        const input = getByLabelText('Test input');
+
+        expect(getByTestId('errorContainer').firstChild).toHaveTextContent(
+            'This field is required.'
+        );
+
+        expect(getByTestId('errorContainer').firstChild).toHaveAttribute(
+            'id',
+            'errorId'
+        );
+
+        expect(input).toHaveAttribute('aria-describedby', 'errorId');
+
+        input.value = 'S';
+        fireEvent.change(input);
+        expect(getByTestId('errorContainer')).toBeEmpty();
+        expect(input).not.toHaveAttribute('aria-describedby');
+
+        input.value = 'Some text';
+        fireEvent.change(input);
+        expect(getByTestId('errorContainer')).toBeEmpty();
+        expect(input).not.toHaveAttribute('aria-describedby');
+
+        input.value = '';
+        fireEvent.change(input);
+        expect(getByTestId('errorContainer').firstChild).toHaveTextContent(
+            'This field is required.'
+        );
+        expect(input).toHaveAttribute('aria-describedby', 'errorId');
+    });
+
+    xit('should run input validators in sequence to allow for hierarchical control of validation', () => {
+        const { getByLabelText, getByTestId, getByText } = render(
+            <Form onSubmit={jest.fn()}>
+                {() => (
+                    <div>
+                        <Form.TextInputController
+                            name="testInput"
+                            validators={[
+                                validator(
+                                    isRequired,
+                                    'This field is required.'
+                                ),
+                                validator(
+                                    isLongerThan(5),
+                                    'The entry text should be longer than 5 characters'
+                                )
+                            ]}
+                        >
+                            {({
+                                getInputProps,
+                                getLabelProps,
+                                getErrorProps,
+                                showError,
+                                errorText
+                            }) => {
+                                return (
+                                    <div>
+                                        <label {...getLabelProps()}>
+                                            Test input
+                                        </label>
+                                        <input
+                                            {...getInputProps({
+                                                required: 'required'
+                                            })}
+                                        />
+                                        <div data-testid="errorContainer">
+                                            {showError ? (
+                                                <span {...getErrorProps()}>
+                                                    {errorText}
+                                                </span>
+                                            ) : null}
+                                        </div>
+                                    </div>
+                                );
+                            }}
+                        </Form.TextInputController>
+                        <button type="submit">Submit</button>
+                    </div>
+                )}
+            </Form>
+        );
+
+        fireEvent.click(getByText('Submit'));
+
+        expect(getByTestId('errorContainer').firstChild).toHaveTextContent(
+            'This field is required.'
+        );
+
+        const input = getByLabelText('Test input');
+        input.value = 'A';
+        fireEvent.change(input);
+        expect(getByTestId('errorContainer').firstChild).toHaveTextContent(
+            'The entry text should be longer than 5 characters'
+        );
+
+        input.value = 'Abcde';
+        fireEvent.change(input);
+        expect(getByTestId('errorContainer').firstChild).toHaveTextContent(
+            'The entry text should be longer than 5 characters'
+        );
+
+        input.value = 'Abcdef';
+        fireEvent.change(input);
+        expect(getByTestId('errorContainer')).toBeEmpty();
+    });
+
+    xit('should allow a specific validator to be ignored', () => {
+        const { getByLabelText, getByTestId, getByText } = render(
+            <Form onSubmit={jest.fn()}>
+                {() => (
+                    <div>
+                        <Form.TextInputController
+                            name="testInput"
+                            validators={[
+                                validator(
+                                    isRequired,
+                                    'This field is required.',
+                                    true
+                                ),
+                                validator(
+                                    isLongerThan(5),
+                                    'The entry text should be longer than 5 characters'
+                                )
+                            ]}
+                        >
+                            {({
+                                getInputProps,
+                                getLabelProps,
+                                getErrorProps,
+                                showError,
+                                errorText
+                            }) => {
+                                return (
+                                    <div>
+                                        <label {...getLabelProps()}>
+                                            Test input
+                                        </label>
+                                        <input
+                                            {...getInputProps({
+                                                required: 'required'
+                                            })}
+                                        />
+                                        <div data-testid="errorContainer">
+                                            {showError ? (
+                                                <span {...getErrorProps()}>
+                                                    {errorText}
+                                                </span>
+                                            ) : null}
+                                        </div>
+                                    </div>
+                                );
+                            }}
+                        </Form.TextInputController>
+                        <button type="submit">Submit</button>
+                    </div>
+                )}
+            </Form>
+        );
+
+        fireEvent.click(getByText('Submit'));
+        expect(getByTestId('errorContainer')).toBeEmpty();
+
+        const input = getByLabelText('Test input');
+        input.value = 'A';
+        fireEvent.change(input);
+        expect(getByTestId('errorContainer').firstChild).toHaveTextContent(
+            'The entry text should be longer than 5 characters'
+        );
+    });
+
+    xit('should allow the user to specify a content hint', () => {
+        const { getByLabelText, getByTestId } = render(
+            <Form onSubmit={jest.fn()}>
+                {() => (
+                    <Form.TextInputController name="testInput">
+                        {({
+                            getInputProps,
+                            getLabelProps,
+                            getContentHintProps
+                        }) => {
+                            return (
+                                <div>
+                                    <label {...getLabelProps()}>
+                                        Test input
+                                    </label>
+                                    <input
+                                        {...getInputProps({
+                                            required: 'required'
+                                        })}
+                                    />
+                                    <div data-testid="contentHintContainer">
+                                        <span {...getContentHintProps()}>
+                                            Some content hint
+                                        </span>
+                                    </div>
+                                </div>
+                            );
+                        }}
+                    </Form.TextInputController>
+                )}
+            </Form>
+        );
+
+        expect(getByLabelText('Test input')).toHaveAttribute(
+            'aria-describedby',
+            'contentHintId'
+        );
+        expect(getByTestId('contentHintContainer').firstChild).toHaveAttribute(
+            'id',
+            'contentHintId'
+        );
+    });
+
+    xit('should properly link both a content hint and an error message accessibly', () => {
+        const { getByLabelText, getByText } = render(
+            <Form onSubmit={jest.fn()}>
+                {() => (
+                    <div>
+                        <Form.TextInputController
+                            name="testInput"
+                            validators={[
+                                validator(isRequired, 'It is required')
+                            ]}
+                        >
+                            {({
+                                getInputProps,
+                                getLabelProps,
+                                getErrorProps,
+                                getContentHintProps,
+                                errorText,
+                                showError
+                            }) => {
+                                return (
+                                    <div>
+                                        <label {...getLabelProps()}>
+                                            Test input
+                                        </label>
+                                        <input
+                                            {...getInputProps({
+                                                required: 'required'
+                                            })}
+                                        />
+                                        <div data-testid="contentHintContainer">
+                                            <span {...getContentHintProps()}>
+                                                Some content hint
+                                            </span>
+                                        </div>
+                                        {showError ? (
+                                            <div data-testid="errorContainer">
+                                                <span {...getErrorProps()}>
+                                                    {errorText}
+                                                </span>
+                                            </div>
+                                        ) : null}
+                                    </div>
+                                );
+                            }}
+                        </Form.TextInputController>
+                        <button type="submit">Submit</button>
+                    </div>
+                )}
+            </Form>
+        );
+
+        fireEvent.click(getByText('Submit'));
+
+        expect(getByLabelText('Test input')).toHaveAttribute(
+            'aria-describedby',
+            'contentHintId errorId'
+        );
+
+        const input = getByLabelText('Test input');
+        input.value = 'A';
+        fireEvent.change(input);
+
+        expect(getByLabelText('Test input')).toHaveAttribute(
+            'aria-describedby',
+            'contentHintId'
+        );
+    });
+
+    xit('should should only display errors after one submit attempt', () => {
+        const { getByLabelText, getByText, queryByTestId } = render(
+            <Form onSubmit={jest.fn()}>
+                {() => (
+                    <div>
+                        {' '}
+                        <Form.TextInputController
+                            name="testInput"
+                            validators={[
+                                validator(isRequired, 'It is required')
+                            ]}
+                        >
+                            {({
+                                getInputProps,
+                                getLabelProps,
+                                getErrorProps,
+                                getContentHintProps,
+                                errorText,
+                                showError
+                            }) => {
+                                return (
+                                    <div>
+                                        <label {...getLabelProps()}>
+                                            Test input
+                                        </label>
+                                        <input
+                                            {...getInputProps({
+                                                required: 'required'
+                                            })}
+                                        />
+                                        <div data-testid="contentHintContainer">
+                                            <span {...getContentHintProps()}>
+                                                Some content hint
+                                            </span>
+                                        </div>
+                                        {showError ? (
+                                            <div data-testid="errorContainer">
+                                                <span {...getErrorProps()}>
+                                                    {errorText}
+                                                </span>
+                                            </div>
+                                        ) : null}
+                                    </div>
+                                );
+                            }}
+                        </Form.TextInputController>
+                        <button type="submit">Submit</button>
+                    </div>
+                )}
+            </Form>
+        );
+
+        expect(getByLabelText('Test input')).toHaveAttribute(
+            'aria-describedby',
+            'contentHintId'
+        );
+
+        expect(queryByTestId('errorContainer')).toBeNull();
+
+        fireEvent.click(getByText('Submit'));
+
+        expect(getByLabelText('Test input')).toHaveAttribute(
+            'aria-describedby',
+            'contentHintId errorId'
+        );
+
+        expect(queryByTestId('errorContainer')).not.toBeNull();
+    });
+
+    xit('should should display errors always when alwaysShowErrors is on', () => {
+        const { getByLabelText, queryByTestId } = render(
+            <Form onSubmit={jest.fn()} alwaysShowErrors={true}>
+                {() => (
+                    <div>
+                        {' '}
+                        <Form.TextInputController
+                            name="testInput"
+                            validators={[
+                                validator(isRequired, 'It is required')
+                            ]}
+                        >
+                            {({
+                                getInputProps,
+                                getLabelProps,
+                                getErrorProps,
+                                getContentHintProps,
+                                errorText,
+                                showError
+                            }) => {
+                                return (
+                                    <div>
+                                        <label {...getLabelProps()}>
+                                            Test input
+                                        </label>
+                                        <input
+                                            {...getInputProps({
+                                                required: 'required'
+                                            })}
+                                        />
+                                        <div data-testid="contentHintContainer">
+                                            <span {...getContentHintProps()}>
+                                                Some content hint
+                                            </span>
+                                        </div>
+                                        {showError ? (
+                                            <div data-testid="errorContainer">
+                                                <span {...getErrorProps()}>
+                                                    {errorText}
+                                                </span>
+                                            </div>
+                                        ) : null}
+                                    </div>
+                                );
+                            }}
+                        </Form.TextInputController>
+                        <button type="submit">Submit</button>
+                    </div>
+                )}
+            </Form>
+        );
+
+        expect(getByLabelText('Test input')).toHaveAttribute(
             'aria-describedby',
             'contentHintId errorId'
         );
