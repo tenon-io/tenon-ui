@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import FormContext from './FormContext';
 import memoize from 'memoize-one';
+import {
+    RadioGroupController,
+    SelectController,
+    TextareaController,
+    TextInputController
+} from './FormControllers';
 
 /**
  * @component
@@ -33,10 +39,11 @@ import memoize from 'memoize-one';
  * called with every submit attempt of the form with the raw form data
  * and validity flag. This can be handy if something had to happen during
  * invalid form submit phases.
- * @example
- * {
- *     [controlName]:[value]
- * }
+ * @prop {boolean} alwaysShowErrors - An optional boolean indicating
+ * whether the form should always display errors, and not only once submit has
+ * been clicked.
+ * @prop {string} className - An optional class string to transfer to the
+ * className prop of the form element.
  *
  * This component exposes functionality through React Context that is
  * meant to be used by Tenon-ui smart form controls. The functions
@@ -57,13 +64,21 @@ import memoize from 'memoize-one';
  *
  * Context also contains a registerErrors boolean what can be used
  * by the consumers to decide when to show errors.
+ *
+ * This component is compound and also exposes the form controllers.
  * */
 class Form extends Component {
+    static TextInputController = TextInputController;
+    static TextareaController = TextareaController;
+    static SelectController = SelectController;
+    static RadioGroupController = RadioGroupController;
+
     static propTypes = {
         children: PropTypes.func.isRequired,
         onSubmit: PropTypes.func.isRequired,
         onRawSubmit: PropTypes.func,
-        alwaysShowErrors: PropTypes.bool
+        alwaysShowErrors: PropTypes.bool,
+        className: PropTypes.string
     };
 
     static displayName = 'Form';
@@ -115,7 +130,7 @@ class Form extends Component {
      * parameters.
      *
      * @param {string} name - The unique name.
-     * @param {string} controlId - The unique DOM id.
+     * @param {string} controlId - The unique DOM id for the focusable element.
      * @param {string} value - The string value.
      * @param {boolean} validity - The validation validity.
      * @param {string} errorText - The validation error message.
@@ -267,12 +282,16 @@ class Form extends Component {
     }));
 
     render() {
-        const { alwaysShowErrors } = this.props;
+        const { alwaysShowErrors, className } = this.props;
         const { formControls, validity, hasSubmitted } = this.state;
         const context = this.getContext(alwaysShowErrors || hasSubmitted);
         return (
             <FormContext.Provider value={context}>
-                <form noValidate={true} onSubmit={this.onSubmitHandler}>
+                <form
+                    noValidate={true}
+                    onSubmit={this.onSubmitHandler}
+                    className={className || null}
+                >
                     {this.props.children({
                         formControls,
                         validity,

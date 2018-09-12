@@ -10,12 +10,23 @@ exports[`Input should render a content hint if given 1`] = `
     <label
       for="foo"
     >
-      Test input
+      Test select
     </label>
-    <input
+    <select
       aria-describedby="bar"
       id="foo"
-    />
+    >
+      <option
+        value="one"
+      >
+        One
+      </option>
+      <option
+        value="two"
+      >
+        Two
+      </option>
+    </select>
   </div>
   <div
     class="info-wrapper"
@@ -39,13 +50,24 @@ exports[`Input should render an error text when invalid 1`] = `
     <label
       for="foo"
     >
-      Test input
+      Test select
     </label>
-    <input
+    <select
       aria-describedby="bar"
       class="has-error"
       id="foo"
-    />
+    >
+      <option
+        value="one"
+      >
+        One
+      </option>
+      <option
+        value="two"
+      >
+        Two
+      </option>
+    </select>
   </div>
   <div
     class="error-wrapper"
@@ -69,11 +91,22 @@ exports[`Input should render an input and label only 1`] = `
     <label
       for="foo"
     >
-      Test input
+      Test select
     </label>
-    <input
+    <select
       id="foo"
-    />
+    >
+      <option
+        value="one"
+      >
+        One
+      </option>
+      <option
+        value="two"
+      >
+        Two
+      </option>
+    </select>
   </div>
 </div>
 `;

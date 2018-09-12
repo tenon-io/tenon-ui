@@ -3,10 +3,20 @@ import PropTypes from 'prop-types';
 import uuidv4 from 'uuid/v4';
 import FormContext from './FormContext';
 import { callAll } from '../../utils/helpers/functionHelpers';
+import memoize from 'memoize-one';
+
+const controllerType = {
+    input: 'input',
+    textarea: 'textarea',
+    select: 'select',
+    radioGroup: 'radioGroup'
+};
 
 /**
  * @component
- * Controller component for a tenon-ui smart input control.
+ * Controller components for tenon-ui smart controls.
+ *
+ * Exports a controlling functions for each of the controls in the tenon-ui toolkit.
  *
  * @prop required {function} children - The standard React children have been overridden to
  * accept render functions. This render function gets called with an object containing
@@ -14,6 +24,7 @@ import { callAll } from '../../utils/helpers/functionHelpers';
  * and a display flag for the error container.
  *
  * @example
+ * This is an example for the TextInputController call.
  * {
  *      getLabelProps: function,
  *      getInputProps: function,
@@ -41,7 +52,7 @@ import { callAll } from '../../utils/helpers/functionHelpers';
  *                  validator helper function.
  * @prop required {string} name: The unique name of the control.
  */
-class InnerInputController extends Component {
+class FormController extends Component {
     static propTypes = {
         children: PropTypes.func.isRequired,
         deregisterControl: PropTypes.func.isRequired,
@@ -56,11 +67,13 @@ class InnerInputController extends Component {
         registerErrors: PropTypes.bool
     };
 
-    static displayName = 'InnerInputController';
+    static displayName = 'FormController';
 
     /**
      * @constructor
      * Initializes the internal component ID's
+     *
+     * If the type is radioGroup, extra id's are required.
      *
      * @param props
      */
@@ -70,6 +83,11 @@ class InnerInputController extends Component {
         this.controlId = uuidv4();
         this.contentHintId = uuidv4();
         this.errorId = uuidv4();
+
+        if (props.type === controllerType.radioGroup) {
+            this.legendId = uuidv4();
+            this.containerId = uuidv4();
+        }
 
         this.state = {
             contentHintId: ''
@@ -87,19 +105,25 @@ class InnerInputController extends Component {
      * states.
      *
      * The control is registered with a unique generated ID,
-     * the give name and the current validation state.
+     * the given name and the current validation state. The
+     * ID is that of the focusable element, and therefore the
+     * ID if the container is supplied in the case of a
+     * radiogroup.
      */
     componentDidMount() {
         const {
             registerControl,
             getControlValue,
             setControlValidity,
-            name
+            name,
+            type
         } = this.props;
         const validationObject = this.runValidation('');
         registerControl(
             name,
-            this.controlId,
+            type === controllerType.radioGroup
+                ? this.containerId
+                : this.controlId,
             '',
             validationObject.validity,
             validationObject.errorText
@@ -175,11 +199,30 @@ class InnerInputController extends Component {
      * Composes the given prop configuration object with the
      * standard control props object.
      *
+     * If an autoIdPostfix config property is provided, this
+     * will be appended to the automatically generated Id. This
+     * is required for radio button collections.
+     *
      * @param {object} props
      * @returns {object}
      */
-    getLabelProps = (props = {}) => ({
-        htmlFor: this.controlId,
+    getLabelProps = ({ autoIdPostfix, ...props } = {}) => ({
+        htmlFor: `${this.controlId}${autoIdPostfix ? `-${autoIdPostfix}` : ''}`,
+        ...props
+    });
+
+    /**
+     * @function
+     * Prop getter for the legend element.
+     *
+     * Composes the given prop configuration object with the
+     * standard control props object.
+     *
+     * @param {object} props
+     * @returns {object}
+     */
+    getLegendProps = (props = {}) => ({
+        id: this.legendId,
         ...props
     });
 
@@ -235,6 +278,94 @@ class InnerInputController extends Component {
             onChange: callAll(onChange, this.onChangeHandler),
             type: 'text',
             value: getControlValue(name),
+            ...props
+        };
+    };
+
+    /**
+     * @function
+     * Prop getter for the <textarea>.
+     *
+     * Composes the given prop configuration object with the
+     * standard control props object.
+     *
+     * @param {object} props
+     * @returns {object}
+     */
+    getTextareaProps = (props = {}) => {
+        const { type, ...rest } = this.getInputProps(props);
+        return rest;
+    };
+
+    /**
+     * @function
+     * Prop getter for the <select>.
+     *
+     * Composes the given prop configuration object with the
+     * standard control props object.
+     *
+     * Direct re-export of the getInputProps function as a
+     * <select> takes the same props as an <input>. This
+     * is done to make the usage more declarative.
+     *
+     * @param {object} props
+     * @returns {object}
+     */
+    getSelectProps = (props = {}) => {
+        const { type, ...rest } = this.getInputProps(props);
+        return rest;
+    };
+
+    /**
+     * @function
+     * Prop getter for every <input> of a group of radio buttons.
+     *
+     * Composes the given prop configuration object with the
+     * standard control props object.
+     *
+     * Requires a value config property as this is used to
+     * set the value of the radio button as well as determine
+     * if the radio button is checked.
+     *
+     * @param {object} props
+     * @returns {object}
+     */
+    getRadioButtonProps = ({ value, onChange, ...props }) => {
+        const { name, getControlValue } = this.props;
+
+        return {
+            'aria-disabled': props['disabled'] ? 'true' : null,
+            name,
+            id: `${this.controlId}-${value}`,
+            type: 'radio',
+            onChange: callAll(onChange, this.onChangeHandler),
+            value,
+            checked: getControlValue(name) === value,
+            ...props
+        };
+    };
+
+    /**
+     * @function
+     * Prop getter for the radiogroup container element.
+     *
+     * Composes the given prop configuration object with the
+     * standard control props object.
+     *
+     * @param {object} props
+     * @returns {object}
+     */
+    getRadioGroupProps = (props = {}) => {
+        const { name, getControlValidity, registerErrors } = this.props;
+        const isValid = registerErrors ? getControlValidity(name) : true;
+        return {
+            id: this.containerId,
+            tabIndex: '-1',
+            'aria-describedby': this.getAriaDescribedBy(isValid),
+            'aria-invalid': isValid ? null : 'true',
+            'aria-required': props['required'] ? 'true' : null,
+            'aria-labelledby': this.legendId,
+            role: 'radiogroup',
             ...props
         };
     };
@@ -303,50 +434,142 @@ class InnerInputController extends Component {
         );
     };
 
+    getTypeSpecificRenderProps = type => {
+        switch (type) {
+            case controllerType.textarea:
+                return {
+                    getTextareaProps: this.getTextareaProps
+                };
+            case controllerType.select:
+                return {
+                    getSelectProps: this.getSelectProps
+                };
+            case controllerType.radioGroup:
+                return {
+                    getLegendProps: this.getLegendProps,
+                    getRadioButtonProps: this.getRadioButtonProps,
+                    getRadioGroupProps: this.getRadioGroupProps
+                };
+            case controllerType.input:
+            default:
+                return {
+                    getInputProps: this.getInputProps
+                };
+        }
+    };
+
+    /**
+     * @function
+     * Composes the object to send to the render function for each
+     * controller type.
+     *
+     * Memoized so as to only recalculate if the type changes.
+     */
+    buildRenderObject = memoize(type => ({
+        getLabelProps: this.getLabelProps,
+        getErrorProps: this.getErrorProps,
+        getContentHintProps: this.getContentHintProps,
+        ...this.getTypeSpecificRenderProps(type)
+    }));
+
     render() {
         const {
             children,
+            type,
             getControlValidity,
             getControlErrorText,
             name,
             registerErrors
         } = this.props;
         return children({
-            getLabelProps: this.getLabelProps,
-            getInputProps: this.getInputProps,
-            getErrorProps: this.getErrorProps,
-            getContentHintProps: this.getContentHintProps,
             showError: registerErrors ? !getControlValidity(name) : false,
-            errorText: getControlErrorText(name)
+            errorText: getControlErrorText(name),
+            ...this.buildRenderObject(type)
         });
     }
 }
 
 /**
- * @component
- * Wrapper component for InnerInputController to fetch the
+ * @function
+ * Function to return the controller based on type. Fetches the
  * React Context exposed functionality from the smart form
  * containing the Context provider and expose it as props
- * to InnerInputController.
+ * to the controllers.
  *
  * @props props
  */
-const InputController = props => (
+const getController = (props, type) => (
     <FormContext.Consumer>
         {contextProps => (
-            <InnerInputController {...props} {...contextProps}>
+            <FormController {...props} {...contextProps} type={type}>
                 {props.children}
-            </InnerInputController>
+            </FormController>
         )}
     </FormContext.Consumer>
 );
 
-InputController.propTypes = {
+const controllerPropTypes = {
     children: PropTypes.func.isRequired,
     validators: PropTypes.arrayOf(PropTypes.object),
     name: PropTypes.string.isRequired
 };
 
-InputController.displayName = 'InputController';
+/**
+ * @component
+ * Text input controller
+ *
+ * @prop required {function} children - Render function for the
+ * text input view.
+ * @prop required {string} name - The name to register the control
+ * with, with the smartform.
+ * @validators {array} validators - Array of validator functions to
+ * run
+ */
+export const TextInputController = props =>
+    getController(props, controllerType.input);
+TextInputController.propTypes = controllerPropTypes;
 
-export default InputController;
+/**
+ * @component
+ * Textarea controller
+ *
+ * @prop required {function} children - Render function for the
+ * text input view.
+ * @prop required {string} name - The name to register the control
+ * with, with the smartform.
+ * @validators {array} validators - Array of validator functions to
+ * run
+ */
+export const TextareaController = props =>
+    getController(props, controllerType.textarea);
+TextareaController.propTypes = controllerPropTypes;
+
+/**
+ * @component
+ * Select controller
+ *
+ * @prop required {function} children - Render function for the
+ * text input view.
+ * @prop required {string} name - The name to register the control
+ * with, with the smartform.
+ * @validators {array} validators - Array of validator functions to
+ * run
+ */
+export const SelectController = props =>
+    getController(props, controllerType.select);
+SelectController.propTypes = controllerPropTypes;
+
+/**
+ * @component
+ * Radiogroup controller
+ *
+ * @prop required {function} children - Render function for the
+ * text input view.
+ * @prop required {string} name - The name to register the control
+ * with, with the smartform.
+ * @validators {array} validators - Array of validator functions to
+ * run
+ */
+export const RadioGroupController = props =>
+    getController(props, controllerType.radioGroup);
+RadioGroupController.propTypes = controllerPropTypes;

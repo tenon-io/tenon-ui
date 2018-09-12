@@ -1,6 +1,6 @@
 {
     "name": "@tenon-io/tenon-ui",
-    "version": "1.0.0-beta.1",
+    "version": "1.0.0-beta.2",
     "description": "Tenon ui components library",
     "contributors": [
         "Karl Groves <karl@tenon.io>",
@@ -26,9 +26,10 @@
     "scripts": {
         "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
         "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
-        "build": "npm-run-all lint lint-demo build-css build-js",
-        "build-js": "nwb build-react-component",
+        "build": "npm-run-all lint lint-demo build-css build-js clean-deploy",
+        "build-js": "nwb build-react-component --copy-files ",
         "clean": "nwb clean-module && nwb clean-demo",
+        "clean-deploy":"rimraf {es,lib}/modules/**/{__tests__,__mocks__}",
         "start": "npm-run-all -p watch-css start-js",
         "start-js": "nwb serve-react-demo",
         "test": "node scripts/test.js --env=jsdom --coverage",
@@ -40,9 +41,11 @@
         "lint-demo": "eslint *.js demo"
     },
     "dependencies": {
+        "classnames": "2.2.6",
         "lodash.isequal": "4.5.0",
         "memoize-one": "4.0.0",
-        "uuid": "3.3.2"
+        "uuid": "3.3.2",
+        "vanilla-framework": "1.8.0"
     },
     "peerDependencies": {
         "react": "^16.3.x"
@@ -70,11 +73,12 @@
         "nwb": "0.22.0",
         "prettier": "1.13.7",
         "prop-types": "15.6.2",
-        "react": "16.4.1",
-        "react-dom": "16.4.1",
+        "react": "16.5.0",
+        "react-dom": "16.5.0",
         "react-i18next": "^7.10.1",
         "react-loadable": "^5.5.0",
-        "react-testing-library": "4.1.5"
+        "react-testing-library": "4.1.5",
+        "rimraf": "^2.6.2"
     },
     "jest": {
         "collectCoverageFrom": [

@@ -5,6 +5,21 @@
         "nav": "Komponent biblioteek",
         "lang": "Taal opsies"
     },
+    "welcome": {
+        "heading": "Die Tenon.io React komponente biblioteek",
+        "p1":
+            "Welkom by ons biblioteek van toegankelike komponente. Kies asseblief een van die komponente onder die Komponent Biblioteek kieslys om verder te gaan."
+    },
+    "focusCatcher": {
+        "heading": "Fokus vanger component",
+        "example": {
+            "heading": "Werkende voorbeeld",
+            "withoutCatcherHeading": "Sonder FocusCatcher",
+            "withoutCatcherLabel": "Klik op my",
+            "withCatcherHeading": "Met FocusCatcher",
+            "withCatcherLabel": "Klik op my"
+        }
+    },
     "forms": {
         "demo": {
             "heading": "Vorm komponente",
@@ -16,22 +31,37 @@
                 "reset": "Die forms voorbeeld kode is geherstel",
                 "resetAction": "Sluit berig"
             },
-            "userName": {
-                "label": "Gebruikersnaam",
+            "petName": {
+                "label": "Troeteldier naam",
                 "contentHint":
-                    "Die gebruikersnaam moet langer as 5 karakters wees",
-                "errorMessageRequired": "Die gebruikersnaam is verplig",
-                "errorMessageTooShort": "Die gebruikersnaam is te kort"
+                    "Die troeteldier se naam moet langer as 5 karakters wees",
+                "errorMessageRequired": "Die troedeldier het 'n naam nodig",
+                "errorMessageTooShort": "Die troeteldier se naam is te kort"
             },
-            "password": {
-                "label": "Wagwoord",
-                "errorMessageRequired": "Die wagwoord is verplig"
+            "petType": {
+                "label": "Troeteldier soort",
+                "errorMessageRequired": "Die troeteldier het 'n soort nodig"
             },
-            "description": {
+            "petWeight": {
+                "label": "Troeteldier de gewig",
+                "errorMessageRequired": "Kies asseblief 'n gewig kategorie",
+                "defaultOption": "'n Gewigskategorie is noodsaaklik",
+                "weightClass1": "0-3kg",
+                "weightClass2": "3-7kg",
+                "weightClass3": "Baie swaar!"
+            },
+            "petColour": {
+                "legend": "Watse kleur is jou troeteldier?",
+                "errorMessageRequired": "Kies asseblief 'n kleur",
+                "blackOption": "Swart",
+                "whiteOption": "Wit",
+                "brownOption": "Bruin"
+            },
+            "petDescription": {
                 "label": "Beskrywing"
             },
             "submitButton": {
-                "label": "Teken aan"
+                "label": "Bewaar jou troeteldier"
             }
         }
     },

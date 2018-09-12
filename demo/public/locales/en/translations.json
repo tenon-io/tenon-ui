@@ -5,6 +5,21 @@
         "nav": "Component library",
         "lang": "Language options"
     },
+    "welcome": {
+        "heading": "The Tenon.io React components library",
+        "p1":
+            "Welcome to the our accessible components library. Please select one of the components from the Components Library menu to go further."
+    },
+    "focusCatcher": {
+        "heading": "Focus catcher component",
+        "example": {
+            "heading": "Working example",
+            "withoutCatcherHeading": "Without FocusCatcher",
+            "withoutCatcherLabel": "Click me",
+            "withCatcherHeading": "With FocusCatcher",
+            "withCatcherLabel": "Click me"
+        }
+    },
     "forms": {
         "demo": {
             "heading": "Form components",
@@ -16,22 +31,37 @@
                 "reset": "The forms example code was reset",
                 "resetAction": "Dismiss"
             },
-            "userName": {
-                "label": "Username",
-                "contentHint": "Username must be longer than 5 characters",
-                "errorMessageRequired": "Username is required",
-                "errorMessageTooShort":
-                    "Username must be longer than 5 characters"
+            "petName": {
+                "label": "Name of pet",
+                "contentHint":
+                    "The pet's name must be longer than 5 characters",
+                "errorMessageRequired": "A name is required for your pet",
+                "errorMessageTooShort": "The pet's name is too short"
             },
-            "password": {
-                "label": "Password",
-                "errorMessageRequired": "Password is required"
+            "petType": {
+                "label": "Type of pet",
+                "errorMessageRequired": "A type of pet is required"
             },
-            "description": {
+            "petDescription": {
                 "label": "Description"
             },
+            "petWeight": {
+                "label": "Pet's weight",
+                "errorMessageRequired": "Please select a weight category",
+                "defaultOption": "No weight category selected",
+                "weightClass1": "0-3kg",
+                "weightClass2": "3-7kg",
+                "weightClass3": "Really heavy!"
+            },
+            "petColour": {
+                "legend": "What colour is your pet?",
+                "errorMessageRequired": "Please select a colour",
+                "blackOption": "Black",
+                "whiteOption": "White",
+                "brownOption": "Brown"
+            },
             "submitButton": {
-                "label": "Login"
+                "label": "Save"
             }
         }
     },

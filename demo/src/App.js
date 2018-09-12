@@ -25,6 +25,9 @@ const SpinnerButtonGuideAsync = AsyncLoader({
 const SpinnerGuideAsync = AsyncLoader({
     loader: () => import('./guides/SpinnerGuide')
 });
+const FocusCatcherGuideAsync = AsyncLoader({
+    loader: () => import('./guides/FocusCatcherGuide')
+});
 
 class App extends Component {
     render() {
@@ -33,17 +36,17 @@ class App extends Component {
                 <I18n>
                     {(t, { i18n }) => (
                         <Heading.LevelBoundary levelOverride={1}>
-                            <header className="App">
+                            <header className="app">
                                 <a className="skip-link" href="#main">
                                     {t('skipText')}
                                 </a>
-                                <header className="App-header">
+                                <header className="app-header">
                                     <img
                                         src={logo}
-                                        className="App-logo"
+                                        className="app-logo"
                                         alt="logo"
                                     />
-                                    <Heading.H className="App-title">
+                                    <Heading.H className="app-title">
                                         {t('titles.main')}
                                     </Heading.H>
                                 </header>
@@ -63,6 +66,7 @@ class App extends Component {
                                                 {t('titles.lang')}
                                             </Heading.H>
                                             <button
+                                                className="secondary"
                                                 onClick={() =>
                                                     i18n.changeLanguage('af')
                                                 }
@@ -70,6 +74,7 @@ class App extends Component {
                                                 Afrikaans
                                             </button>
                                             <button
+                                                className="secondary"
                                                 onClick={() =>
                                                     i18n.changeLanguage('en')
                                                 }
@@ -77,6 +82,7 @@ class App extends Component {
                                                 English
                                             </button>
                                             <button
+                                                className="secondary"
                                                 onClick={() =>
                                                     i18n.changeLanguage(
                                                         'pseudo'
@@ -97,6 +103,7 @@ class App extends Component {
                                         <NotificationGuideAsync path="/notification" />
                                         <SpinnerButtonGuideAsync path="/spinner-button" />
                                         <SpinnerGuideAsync path="/spinner" />
+                                        <FocusCatcherGuideAsync path="/focus-catcher" />
                                     </Router>
                                 </main>
                             </div>

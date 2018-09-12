@@ -3,28 +3,32 @@ import ErrorBlock from '../../../../src/modules/forms/ErrorBlock';
 import {
     Form,
     Input,
-    TextArea,
-    InputController,
     isLongerThan,
     isRequired,
+    TextArea,
+    Select,
+    RadioGroup,
     validator
 } from '@tenon-io/tenon-ui';
-import React from 'react';
-import { TextArea } from '../../../../src';
 
 const FormsExample = () => (
     <Form onSubmit={this.onSubmitHandler}>
-        {({ formControls, validity }) => (
+        {({ formControls, validity, hasSubmitted }) => (
             <Fragment>
-                {!validity ? <ErrorBlock formControls={formControls} /> : null}
-                <InputController
-                    name="userName"
+                {!validity && hasSubmitted ? (
+                    <ErrorBlock formControls={formControls} />
+                ) : null}
+
+                <Form.TextInputController
+                    name="petName"
                     validators={[
-                        validator(isRequired, 'A user name is required'),
                         validator(
-                            isLongerThan,
-                            'The given user name is too short',
-                            5
+                            isRequired,
+                            'A name is required for your pet'
+                        ),
+                        validator(
+                            isLongerThan(5),
+                            "The pet's name is too short"
                         )
                     ]}
                 >
@@ -32,37 +36,78 @@ const FormsExample = () => (
                         <Input
                             {...props}
                             required="required"
-                            contentHintText="Please enter more than 5 characters"
-                            labelText="User name"
+                            contentHintText="The pet's name must be longer than 5 characters"
+                            labelText="Name of pet"
                         />
                     )}
-                </InputController>
-                <InputController
-                    name="password"
+                </Form.TextInputController>
+
+                <Form.TextInputController
+                    name="petType"
                     validators={[
-                        validator(isRequired, 'A password is required')
+                        validator(isRequired, 'A type of pet is required')
                     ]}
                 >
                     {props => (
                         <Input
                             {...props}
                             require="required"
-                            labelText="Password"
+                            labelText="Type of pet"
                         />
                     )}
-                </InputController>
-                <InputController name="description">
+                </Form.TextInputController>
+
+                <Form.TextareaController name="petDescription">
                     {props => (
                         <TextArea
                             {...props}
                             rows="10"
-                            labelText="Description"
+                            labelText="Type of pet"
                         />
                     )}
-                </InputController>
-                <button type="submit" onClick={this.onClickHandler}>
-                    'Submit'
-                </button>
+                </Form.TextareaController>
+
+                <Form.SelectController
+                    name="petWeight"
+                    validators={[
+                        validator(isRequired, 'Please select a weight category')
+                    ]}
+                >
+                    {props => (
+                        <Select
+                            {...props}
+                            labelText="Pet's weight"
+                            required="required"
+                        >
+                            <option>No weight category selected</option>
+                            <option value="weightClass1">0-3kg</option>
+                            <option value="weightClass2">3-7kg</option>
+                            <option value="weightClass3">Really heavy!</option>
+                        </Select>
+                    )}
+                </Form.SelectController>
+
+                <Form.RadioGroupController
+                    name="radioSet"
+                    validators={[
+                        validator(isRequired, 'Please select an option')
+                    ]}
+                >
+                    {props => (
+                        <RadioGroup
+                            {...props}
+                            legend="Please select an option"
+                            required="required"
+                            options={{
+                                option1: 'Option 1',
+                                option2: 'Option 2',
+                                option3: 'Option 3'
+                            }}
+                        />
+                    )}
+                </Form.RadioGroupController>
+
+                <button type="submit">'Save your pet'</button>
             </Fragment>
         )}
     </Form>

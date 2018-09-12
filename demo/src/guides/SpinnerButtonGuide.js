@@ -26,6 +26,7 @@ class SpinnerButtonGuide extends Component {
                             heading={t('spinnerButton.demo.example.heading')}
                         >
                             <SpinnerButton
+                                className="primary spinner-button"
                                 onClick={this.onClickHandler}
                                 onBusyClick={() => {
                                     alert(

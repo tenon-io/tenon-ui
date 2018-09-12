@@ -2,10 +2,10 @@
 
 exports[`TextArea should render a content hint if given 1`] = `
 <div
-  class="group"
+  class="form-group"
 >
   <div
-    class="fieldwrapper"
+    class="field-wrapper"
   >
     <label
       for="foo"
@@ -18,7 +18,7 @@ exports[`TextArea should render a content hint if given 1`] = `
     />
   </div>
   <div
-    class="infoWrapper"
+    class="info-wrapper"
   >
     <span
       id="bar"
@@ -31,10 +31,10 @@ exports[`TextArea should render a content hint if given 1`] = `
 
 exports[`TextArea should render a textarea and label only 1`] = `
 <div
-  class="group"
+  class="form-group"
 >
   <div
-    class="fieldwrapper"
+    class="field-wrapper"
   >
     <label
       for="foo"
@@ -50,10 +50,10 @@ exports[`TextArea should render a textarea and label only 1`] = `
 
 exports[`TextArea should render an error text when invalid 1`] = `
 <div
-  class="group"
+  class="form-group"
 >
   <div
-    class="fieldwrapper"
+    class="field-wrapper"
   >
     <label
       for="foo"
@@ -62,11 +62,12 @@ exports[`TextArea should render an error text when invalid 1`] = `
     </label>
     <textarea
       aria-describedby="bar"
+      class="has-error"
       id="foo"
     />
   </div>
   <div
-    class="errorWrapper"
+    class="error-wrapper"
   >
     <span
       id="bar"

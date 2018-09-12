@@ -1,0 +1,39 @@
+.form-group {
+    margin-bottom: 1rem;
+
+    [role='radiogroup'] {
+        margin-bottom: 0.5rem;
+    }
+
+    .error-wrapper {
+        color: $color-negative;
+    }
+
+    .info-wrapper {
+        margin-bottom: 0.5rem;
+        color: $color-information;
+    }
+}
+
+.error-block {
+    ul {
+        list-style-type: none;
+        padding-left: 0;
+
+        li {
+            margin-top: 1rem;
+
+            //Fix for VoiceOver bug: https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-type#Accessibility_concerns
+            &::before {
+                content: '\200B';
+            }
+        }
+
+        a {
+            color: $color-negative;
+        }
+    }
+
+    border: 1px solid $color-negative;
+    background-color: lighten($color-negative, 70%);
+}

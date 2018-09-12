@@ -28,20 +28,29 @@ class NotificationGuide extends Component {
                         >
                             <Notification
                                 isActive={this.state.showInfoMessage}
-                                type="info"
+                                type="error"
                             >
-                                <span>
-                                    {t('notification.demo.example.infoText')}
-                                </span>
-                                <button
-                                    type="button"
-                                    className="dismiss-button"
-                                    onClick={this.onDismissHandler}
-                                >
-                                    {t('notification.demo.example.infoDismiss')}
-                                </button>
+                                <div className="notification-container">
+                                    <span>
+                                        {t(
+                                            'notification.demo.example.infoText'
+                                        )}
+                                    </span>
+                                    <button
+                                        type="button"
+                                        className="secondary"
+                                        onClick={this.onDismissHandler}
+                                    >
+                                        {t(
+                                            'notification.demo.example.infoDismiss'
+                                        )}
+                                    </button>
+                                </div>
                             </Notification>
-                            <button onClick={this.onClickHandler}>
+                            <button
+                                className="primary"
+                                onClick={this.onClickHandler}
+                            >
                                 {t('notification.demo.example.showInfo')}
                             </button>
                         </WorkingExample>

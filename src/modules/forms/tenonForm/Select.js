@@ -5,21 +5,21 @@ import PropTypes from 'prop-types';
 /**
  * @component
  * A default view component to use with the tenon-ui
- * textarea controller.
+ * smart select controller.
  *
  * @prop {string} contentHintText - Text to show as content
- *                hint of the textarea.
+ *                hint of the select.
  * @prop {string} errorText - Text to show as error message
- *                of the textarea.
+ *                of the select.
  * @prop required {function} getLabelProps - Prop getter function
- *              from the smart textarea controller for the <label>.
- * @prop required {function} getInputProps - Prop getter function
- *              from the smart textarea controller for the <textarea>.
+ *              from the smart select controller for the <label>.
+ * @prop required {function} getSelectProps - Prop getter function
+ *              from the smart select controller for the <select>.
  * @prop {function} getErrorProps - Prop getter function
- *              from the smart textarea controller for the
+ *              from the smart select controller for the
  *              error message container.
  * @prop {function} getContentHintProps - Prop getter
- *              function from the smart textarea controller
+ *              function from the smart select controller
  *              for the content hint container.
  * @prop required {string} labelText
  * @prop {object} labelProps - Control prop collection
@@ -27,37 +27,42 @@ import PropTypes from 'prop-types';
  * @prop {boolean} showError - A flag to indicate when the
  *              error container should be displayed.
  * @prop {string} className - An optional class string to transfer to the
- *              className prop of the textarea element.
+ *              className prop of the select element.
+ * @prop required {React element} children - The <option> tags to render for the
+ *              <select> element.
  *
- * NOTE: All props given to this textarea that does not
- * satisfy one of the above will be passed into the
- * prop getter function of the textarea to enrich the textarea or
+ * NOTE: All props given to this select that does not
+ * satisfy one of the above will be passed into the the
+ * prop getter function of the input to enrich the select or
  * override already configured default props. Providing
  * extraneous properties that should not be rendered on an
- * <textarea> in the DOM can create run time errors.
+ * <select> in the DOM can create run time errors.
  */
-const TextArea = ({
+const Select = ({
     contentHintText,
     errorText,
     getLabelProps,
-    getTextareaProps,
+    getSelectProps,
     getErrorProps,
     getContentHintProps,
     labelText,
     labelProps,
     showError,
     className,
+    children,
     ...rest
 }) => (
     <div className="form-group">
         <div className="field-wrapper">
             <label {...getLabelProps(labelProps)}>{labelText}</label>
-            <textarea
+            <select
                 className={
                     classNames(className, { 'has-error': showError }) || null
                 }
-                {...getTextareaProps(rest)}
-            />
+                {...getSelectProps(rest)}
+            >
+                {children}
+            </select>
         </div>
         {contentHintText && getContentHintProps ? (
             <div className="info-wrapper">
@@ -72,13 +77,14 @@ const TextArea = ({
     </div>
 );
 
-TextArea.displayName = 'TextArea';
+Select.displayName = 'Select';
 
-TextArea.propTypes = {
+Select.propTypes = {
+    children: PropTypes.node.isRequired,
     contentHintText: PropTypes.string,
     errorText: PropTypes.string,
     getLabelProps: PropTypes.func.isRequired,
-    getTextareaProps: PropTypes.func.isRequired,
+    getSelectProps: PropTypes.func.isRequired,
     getErrorProps: PropTypes.func,
     getContentHintProps: PropTypes.func,
     labelText: PropTypes.string.isRequired,
@@ -87,4 +93,4 @@ TextArea.propTypes = {
     className: PropTypes.string
 };
 
-export default TextArea;
+export default Select;

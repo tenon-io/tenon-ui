@@ -2,10 +2,11 @@ import React, { Component, Fragment } from 'react';
 import {
     Form,
     Input,
-    TextArea,
-    InputController,
     isLongerThan,
     isRequired,
+    RadioGroup,
+    Select,
+    TextArea,
     validator
 } from '../../../src/index';
 import ErrorBlock from '../../../src/modules/forms/ErrorBlock';
@@ -35,20 +36,19 @@ class FormsGuide extends Component {
                                                 formControls={formControls}
                                             />
                                         ) : null}
-
-                                        <InputController
-                                            name="userName"
+                                        <Form.TextInputController
+                                            name="petName"
                                             validators={[
                                                 validator(
                                                     isRequired,
                                                     t(
-                                                        'forms.demo.userName.errorMessageRequired'
+                                                        'forms.demo.petName.errorMessageRequired'
                                                     )
                                                 ),
                                                 validator(
                                                     isLongerThan(5),
                                                     t(
-                                                        'forms.demo.userName.errorMessageTooShort'
+                                                        'forms.demo.petName.errorMessageTooShort'
                                                     )
                                                 )
                                             ]}
@@ -58,21 +58,21 @@ class FormsGuide extends Component {
                                                     {...props}
                                                     required="required"
                                                     contentHintText={t(
-                                                        'forms.demo.userName.contentHint'
+                                                        'forms.demo.petName.contentHint'
                                                     )}
                                                     labelText={t(
-                                                        'forms.demo.userName.label'
+                                                        'forms.demo.petName.label'
                                                     )}
                                                 />
                                             )}
-                                        </InputController>
-                                        <InputController
-                                            name="password"
+                                        </Form.TextInputController>
+                                        <Form.TextInputController
+                                            name="petType"
                                             validators={[
                                                 validator(
                                                     isRequired,
                                                     t(
-                                                        'forms.demo.password.errorMessageRequired'
+                                                        'forms.demo.petType.errorMessageRequired'
                                                     )
                                                 )
                                             ]}
@@ -82,22 +82,97 @@ class FormsGuide extends Component {
                                                     {...props}
                                                     require="required"
                                                     labelText={t(
-                                                        'forms.demo.password.label'
+                                                        'forms.demo.petType.label'
                                                     )}
                                                 />
                                             )}
-                                        </InputController>
-                                        <InputController name="description">
+                                        </Form.TextInputController>
+                                        <Form.TextareaController name="petDescription">
                                             {props => (
                                                 <TextArea
                                                     {...props}
                                                     rows="10"
                                                     labelText={t(
-                                                        'forms.demo.description.label'
+                                                        'forms.demo.petDescription.label'
                                                     )}
                                                 />
                                             )}
-                                        </InputController>
+                                        </Form.TextareaController>
+                                        <Form.SelectController
+                                            name="petWeight"
+                                            validators={[
+                                                validator(
+                                                    isRequired,
+                                                    t(
+                                                        'forms.demo.petWeight.errorMessageRequired'
+                                                    )
+                                                )
+                                            ]}
+                                        >
+                                            {props => (
+                                                <Select
+                                                    {...props}
+                                                    labelText={t(
+                                                        'forms.demo.petWeight.label'
+                                                    )}
+                                                    required="required"
+                                                >
+                                                    <option>
+                                                        {t(
+                                                            'forms.demo.petWeight.defaultOption'
+                                                        )}
+                                                    </option>
+                                                    <option value="weightClass1">
+                                                        {t(
+                                                            'forms.demo.petWeight.weightClass1'
+                                                        )}
+                                                    </option>
+                                                    <option value="weightClass2">
+                                                        {t(
+                                                            'forms.demo.petWeight.weightClass2'
+                                                        )}
+                                                    </option>
+                                                    <option value="weightClass3">
+                                                        {t(
+                                                            'forms.demo.petWeight.weightClass3'
+                                                        )}
+                                                    </option>
+                                                </Select>
+                                            )}
+                                        </Form.SelectController>
+                                        <Form.RadioGroupController
+                                            name="petColour"
+                                            validators={[
+                                                validator(
+                                                    isRequired,
+                                                    t(
+                                                        'forms.demo.petColour.errorMessageRequired'
+                                                    )
+                                                )
+                                            ]}
+                                        >
+                                            {props => (
+                                                <RadioGroup
+                                                    {...props}
+                                                    legend={t(
+                                                        'forms.demo.petColour.legend'
+                                                    )}
+                                                    required="required"
+                                                    options={{
+                                                        black: t(
+                                                            'forms.demo.petColour.blackOption'
+                                                        ),
+                                                        white: t(
+                                                            'forms.demo.petColour.whiteOption'
+                                                        ),
+                                                        brown: t(
+                                                            'forms.demo.petColour.brownOption'
+                                                        )
+                                                    }}
+                                                />
+                                            )}
+                                        </Form.RadioGroupController>
+
                                         <button type="submit">
                                             {t('forms.demo.submitButton.label')}
                                         </button>

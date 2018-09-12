@@ -35,7 +35,7 @@ class CodeExample extends Component {
                     <span>{resetMessage}</span>
                     <button
                         type="button"
-                        className="dismiss-button"
+                        className="dismiss"
                         onClick={this.onClickHandler}
                     >
                         {resetActionText}

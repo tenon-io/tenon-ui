@@ -1,18 +1,21 @@
 import React from 'react';
 import { render, cleanup } from 'react-testing-library';
 import 'jest-dom/extend-expect';
-import TextArea from '../TextArea';
+import Select from '../Select';
 
-describe('TextArea', () => {
+describe('Input', () => {
     afterEach(cleanup);
 
-    it('should render a textarea and label only', () => {
+    it('should render an input and label only', () => {
         const { container } = render(
-            <TextArea
+            <Select
                 getLabelProps={() => ({ htmlFor: 'foo' })}
-                getTextareaProps={() => ({ id: 'foo' })}
-                labelText="Test textarea"
-            />
+                getSelectProps={() => ({ id: 'foo' })}
+                labelText="Test select"
+            >
+                <option value="one">One</option>
+                <option value="two">Two</option>
+            </Select>
         );
 
         expect(container.firstChild).toMatchSnapshot();
@@ -20,17 +23,20 @@ describe('TextArea', () => {
 
     it('should render an error text when invalid', () => {
         const { container } = render(
-            <TextArea
+            <Select
                 getLabelProps={() => ({ htmlFor: 'foo' })}
-                getTextareaProps={() => ({
+                getSelectProps={() => ({
                     id: 'foo',
                     'aria-describedby': 'bar'
                 })}
                 getErrorProps={() => ({ id: 'bar' })}
-                labelText="Test textarea"
+                labelText="Test select"
                 errorText="Test error"
                 showError={true}
-            />
+            >
+                <option value="one">One</option>
+                <option value="two">Two</option>
+            </Select>
         );
 
         expect(container.firstChild).toMatchSnapshot();
@@ -38,16 +44,19 @@ describe('TextArea', () => {
 
     it('should render a content hint if given', () => {
         const { container } = render(
-            <TextArea
+            <Select
                 contentHintText="Content hint test"
                 getLabelProps={() => ({ htmlFor: 'foo' })}
-                getTextareaProps={() => ({
+                getSelectProps={() => ({
                     id: 'foo',
                     'aria-describedby': 'bar'
                 })}
                 getContentHintProps={() => ({ id: 'bar' })}
-                labelText="Test textarea"
-            />
+                labelText="Test select"
+            >
+                <option value="one">One</option>
+                <option value="two">Two</option>
+            </Select>
         );
 
         expect(container.firstChild).toMatchSnapshot();
@@ -55,16 +64,20 @@ describe('TextArea', () => {
 
     it('should allow for easy overriding of default props', () => {
         const { getByLabelText, getByText } = render(
-            <TextArea
+            <Select
                 getLabelProps={() => ({ htmlFor: 'foo' })}
-                getTextareaProps={() => ({ id: 'foo' })}
-                labelText="Test textarea"
+                getSelectProps={() => ({ id: 'foo' })}
+                labelText="Test select"
                 id="foo"
                 labelProps={{ htmlFor: 'foo' }}
-            />
+            >
+                {' '}
+                <option value="one">One</option>
+                <option value="two">Two</option>
+            </Select>
         );
 
-        expect(getByLabelText('Test textarea')).toHaveAttribute('id', 'foo');
-        expect(getByText('Test textarea')).toHaveAttribute('for', 'foo');
+        expect(getByLabelText('Test select')).toHaveAttribute('id', 'foo');
+        expect(getByText('Test select')).toHaveAttribute('for', 'foo');
     });
 });
