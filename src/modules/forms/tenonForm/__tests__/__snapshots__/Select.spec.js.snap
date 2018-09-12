@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input should render a content hint if given 1`] = `
+<div
+  class="form-group"
+>
+  <div
+    class="field-wrapper"
+  >
+    <label
+      for="foo"
+    >
+      Test select
+    </label>
+    <select
+      aria-describedby="bar"
+      id="foo"
+    >
+      <option
+        value="one"
+      >
+        One
+      </option>
+      <option
+        value="two"
+      >
+        Two
+      </option>
+    </select>
+  </div>
+  <div
+    class="info-wrapper"
+  >
+    <span
+      id="bar"
+    >
+      Content hint test
+    </span>
+  </div>
+</div>
+`;
+
+exports[`Input should render an error text when invalid 1`] = `
+<div
+  class="form-group"
+>
+  <div
+    class="field-wrapper"
+  >
+    <label
+      for="foo"
+    >
+      Test select
+    </label>
+    <select
+      aria-describedby="bar"
+      class="has-error"
+      id="foo"
+    >
+      <option
+        value="one"
+      >
+        One
+      </option>
+      <option
+        value="two"
+      >
+        Two
+      </option>
+    </select>
+  </div>
+  <div
+    class="error-wrapper"
+  >
+    <span
+      id="bar"
+    >
+      Test error
+    </span>
+  </div>
+</div>
+`;
+
+exports[`Input should render an input and label only 1`] = `
+<div
+  class="form-group"
+>
+  <div
+    class="field-wrapper"
+  >
+    <label
+      for="foo"
+    >
+      Test select
+    </label>
+    <select
+      id="foo"
+    >
+      <option
+        value="one"
+      >
+        One
+      </option>
+      <option
+        value="two"
+      >
+        Two
+      </option>
+    </select>
+  </div>
+</div>
+`;

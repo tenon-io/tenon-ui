@@ -1,0 +1,141 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input should render a content hint if given 1`] = `
+<fieldset
+  class="form-group"
+>
+  <legend
+    id="bar"
+  >
+    Test radio group
+  </legend>
+  <div
+    aria-describedby="inf"
+    aria-labelledby="bar"
+    role="radiogroup"
+  >
+    <div>
+      <span>
+        FocusCatcher
+      </span>
+      <input
+        id="foo-one"
+        value="one"
+      />
+      <label
+        for="foo-one"
+      >
+        One
+      </label>
+      <input
+        id="foo-two"
+        value="two"
+      />
+      <label
+        for="foo-two"
+      >
+        Two
+      </label>
+    </div>
+  </div>
+  <div
+    class="info-wrapper"
+  >
+    <span
+      id="inf"
+    >
+      Content hint test
+    </span>
+  </div>
+</fieldset>
+`;
+
+exports[`Input should render an error text when invalid 1`] = `
+<fieldset
+  class="form-group"
+>
+  <legend
+    id="bar"
+  >
+    Test radio group
+  </legend>
+  <div
+    aria-describedby="err"
+    aria-labelledby="bar"
+    role="radiogroup"
+  >
+    <div>
+      <span>
+        FocusCatcher
+      </span>
+      <input
+        id="foo-one"
+        value="one"
+      />
+      <label
+        for="foo-one"
+      >
+        One
+      </label>
+      <input
+        id="foo-two"
+        value="two"
+      />
+      <label
+        for="foo-two"
+      >
+        Two
+      </label>
+    </div>
+  </div>
+  <div
+    class="error-wrapper"
+  >
+    <span
+      id="err"
+    >
+      Test error
+    </span>
+  </div>
+</fieldset>
+`;
+
+exports[`Input should render an input and label only 1`] = `
+<fieldset
+  class="form-group"
+>
+  <legend
+    id="bar"
+  >
+    Test radio group
+  </legend>
+  <div
+    aria-labelledby="bar"
+    role="radiogroup"
+  >
+    <div>
+      <span>
+        FocusCatcher
+      </span>
+      <input
+        id="foo-one"
+        value="one"
+      />
+      <label
+        for="foo-one"
+      >
+        One
+      </label>
+      <input
+        id="foo-two"
+        value="two"
+      />
+      <label
+        for="foo-two"
+      >
+        Two
+      </label>
+    </div>
+  </div>
+</fieldset>
+`;

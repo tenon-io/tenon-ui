@@ -330,13 +330,13 @@ class FormController extends Component {
      * @param {object} props
      * @returns {object}
      */
-    getRadioButtonProps = ({ onChange, value, ...props } = {}) => {
+    getRadioButtonProps = ({ value, onChange, ...props }) => {
         const { name, getControlValue } = this.props;
 
         return {
             'aria-disabled': props['disabled'] ? 'true' : null,
             name,
-            id: `${this.controlId}${value ? `-${value}` : ''}`,
+            id: `${this.controlId}-${value}`,
             type: 'radio',
             onChange: callAll(onChange, this.onChangeHandler),
             value,

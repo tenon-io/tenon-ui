@@ -455,7 +455,7 @@ describe('Form.TextInputController', () => {
         );
     });
 
-    it('should should only display errors after one submit attempt', () => {
+    it('should only display errors after one submit attempt', () => {
         const { getByLabelText, getByText, queryByTestId } = render(
             <Form onSubmit={jest.fn()}>
                 {() => (
@@ -524,7 +524,7 @@ describe('Form.TextInputController', () => {
         expect(queryByTestId('errorContainer')).not.toBeNull();
     });
 
-    it('should should display errors always when alwaysShowErrors is on', () => {
+    it('should display errors always when alwaysShowErrors is on', () => {
         const { getByLabelText, queryByTestId } = render(
             <Form onSubmit={jest.fn()} alwaysShowErrors={true}>
                 {() => (
@@ -1038,7 +1038,7 @@ describe('Form.TextareaController', () => {
         );
     });
 
-    it('should should only display errors after one submit attempt', () => {
+    it('should only display errors after one submit attempt', () => {
         const { getByLabelText, getByText, queryByTestId } = render(
             <Form onSubmit={jest.fn()}>
                 {() => (
@@ -1106,7 +1106,7 @@ describe('Form.TextareaController', () => {
         expect(queryByTestId('errorContainer')).not.toBeNull();
     });
 
-    it('should should display errors always when alwaysShowErrors is on', () => {
+    it('should display errors always when alwaysShowErrors is on', () => {
         const { getByLabelText, queryByTestId } = render(
             <Form onSubmit={jest.fn()} alwaysShowErrors={true}>
                 {() => (
@@ -1512,7 +1512,7 @@ describe('Form.SelectController', () => {
         );
     });
 
-    it('should should only display errors after one submit attempt', () => {
+    it('should only display errors after one submit attempt', () => {
         const { getByLabelText, getByText, queryByTestId } = render(
             <Form onSubmit={jest.fn()}>
                 {() => (
@@ -1584,7 +1584,7 @@ describe('Form.SelectController', () => {
         expect(queryByTestId('errorContainer')).not.toBeNull();
     });
 
-    it('should should display errors always when alwaysShowErrors is on', () => {
+    it('should display errors always when alwaysShowErrors is on', () => {
         const { getByLabelText, queryByTestId } = render(
             <Form onSubmit={jest.fn()} alwaysShowErrors={true}>
                 {() => (
@@ -1849,45 +1849,70 @@ describe('Form.RadioGroupController', () => {
         expect(radioGroup.attributes.length).toBe(6);
     });
 
-    xit('should validate an input and set an error text when appropriate', () => {
-        const { getByLabelText, getByTestId, getByText } = render(
+    it('should validate a radiogroup and set an error text when appropriate', () => {
+        const { container, getByLabelText, getByText, getByTestId } = render(
             <Form onSubmit={jest.fn()}>
                 {() => (
                     <div>
-                        <Form.TextInputController
-                            name="testInput"
+                        <Form.RadioGroupController
+                            name="testRadio"
                             validators={[
                                 validator(isRequired, 'This field is required.')
                             ]}
                         >
                             {({
-                                getInputProps,
+                                getRadioButtonProps,
+                                getRadioGroupProps,
+                                getLegendProps,
                                 getLabelProps,
                                 getErrorProps,
-                                showError,
-                                errorText
-                            }) => {
-                                return (
-                                    <div>
-                                        <label {...getLabelProps()}>
-                                            Test input
-                                        </label>
+                                errorText,
+                                showError
+                            }) => (
+                                <fieldset>
+                                    <legend {...getLegendProps()}>
+                                        Test radio
+                                    </legend>
+                                    <div
+                                        {...getRadioGroupProps({
+                                            required: 'required'
+                                        })}
+                                    >
                                         <input
-                                            {...getInputProps({
-                                                required: 'required'
+                                            {...getRadioButtonProps({
+                                                value: 'one'
                                             })}
                                         />
-                                        <div data-testid="errorContainer">
-                                            {showError ? (
-                                                <span {...getErrorProps()}>
-                                                    {errorText}
-                                                </span>
-                                            ) : null}
-                                        </div>
+                                        <label
+                                            {...getLabelProps({
+                                                autoIdPostfix: 'one'
+                                            })}
+                                        >
+                                            One
+                                        </label>
+                                        <input
+                                            {...getRadioButtonProps({
+                                                value: 'two'
+                                            })}
+                                        />
+                                        <label
+                                            {...getLabelProps({
+                                                autoIdPostfix: 'two'
+                                            })}
+                                        >
+                                            Two
+                                        </label>
                                     </div>
-                                );
-                            }}
-                        </Form.TextInputController>
+                                    <div data-testid="errorContainer">
+                                        {showError ? (
+                                            <span {...getErrorProps()}>
+                                                {errorText}
+                                            </span>
+                                        ) : null}
+                                    </div>
+                                </fieldset>
+                            )}
+                        </Form.RadioGroupController>
                         <button type="submit">Submit</button>
                     </div>
                 )}
@@ -1896,7 +1921,7 @@ describe('Form.RadioGroupController', () => {
 
         fireEvent.click(getByText('Submit'));
 
-        const input = getByLabelText('Test input');
+        const radioGroup = container.querySelector('[role="radiogroup"]');
 
         expect(getByTestId('errorContainer').firstChild).toHaveTextContent(
             'This field is required.'
@@ -1907,149 +1932,81 @@ describe('Form.RadioGroupController', () => {
             'errorId'
         );
 
-        expect(input).toHaveAttribute('aria-describedby', 'errorId');
+        expect(radioGroup).toHaveAttribute('aria-describedby', 'errorId');
 
-        input.value = 'S';
-        fireEvent.change(input);
+        fireEvent.click(getByLabelText('One'));
         expect(getByTestId('errorContainer')).toBeEmpty();
-        expect(input).not.toHaveAttribute('aria-describedby');
-
-        input.value = 'Some text';
-        fireEvent.change(input);
-        expect(getByTestId('errorContainer')).toBeEmpty();
-        expect(input).not.toHaveAttribute('aria-describedby');
-
-        input.value = '';
-        fireEvent.change(input);
-        expect(getByTestId('errorContainer').firstChild).toHaveTextContent(
-            'This field is required.'
-        );
-        expect(input).toHaveAttribute('aria-describedby', 'errorId');
+        expect(radioGroup).not.toHaveAttribute('aria-describedby');
     });
 
-    xit('should run input validators in sequence to allow for hierarchical control of validation', () => {
-        const { getByLabelText, getByTestId, getByText } = render(
+    it('should allow a specific validator to be ignored', () => {
+        const { container, getByText, getByTestId } = render(
             <Form onSubmit={jest.fn()}>
                 {() => (
                     <div>
-                        <Form.TextInputController
-                            name="testInput"
-                            validators={[
-                                validator(
-                                    isRequired,
-                                    'This field is required.'
-                                ),
-                                validator(
-                                    isLongerThan(5),
-                                    'The entry text should be longer than 5 characters'
-                                )
-                            ]}
-                        >
-                            {({
-                                getInputProps,
-                                getLabelProps,
-                                getErrorProps,
-                                showError,
-                                errorText
-                            }) => {
-                                return (
-                                    <div>
-                                        <label {...getLabelProps()}>
-                                            Test input
-                                        </label>
-                                        <input
-                                            {...getInputProps({
-                                                required: 'required'
-                                            })}
-                                        />
-                                        <div data-testid="errorContainer">
-                                            {showError ? (
-                                                <span {...getErrorProps()}>
-                                                    {errorText}
-                                                </span>
-                                            ) : null}
-                                        </div>
-                                    </div>
-                                );
-                            }}
-                        </Form.TextInputController>
-                        <button type="submit">Submit</button>
-                    </div>
-                )}
-            </Form>
-        );
-
-        fireEvent.click(getByText('Submit'));
-
-        expect(getByTestId('errorContainer').firstChild).toHaveTextContent(
-            'This field is required.'
-        );
-
-        const input = getByLabelText('Test input');
-        input.value = 'A';
-        fireEvent.change(input);
-        expect(getByTestId('errorContainer').firstChild).toHaveTextContent(
-            'The entry text should be longer than 5 characters'
-        );
-
-        input.value = 'Abcde';
-        fireEvent.change(input);
-        expect(getByTestId('errorContainer').firstChild).toHaveTextContent(
-            'The entry text should be longer than 5 characters'
-        );
-
-        input.value = 'Abcdef';
-        fireEvent.change(input);
-        expect(getByTestId('errorContainer')).toBeEmpty();
-    });
-
-    xit('should allow a specific validator to be ignored', () => {
-        const { getByLabelText, getByTestId, getByText } = render(
-            <Form onSubmit={jest.fn()}>
-                {() => (
-                    <div>
-                        <Form.TextInputController
-                            name="testInput"
+                        <Form.RadioGroupController
+                            name="testRadio"
                             validators={[
                                 validator(
                                     isRequired,
                                     'This field is required.',
                                     true
-                                ),
-                                validator(
-                                    isLongerThan(5),
-                                    'The entry text should be longer than 5 characters'
                                 )
                             ]}
                         >
                             {({
-                                getInputProps,
+                                getRadioButtonProps,
+                                getRadioGroupProps,
+                                getLegendProps,
                                 getLabelProps,
                                 getErrorProps,
-                                showError,
-                                errorText
-                            }) => {
-                                return (
-                                    <div>
-                                        <label {...getLabelProps()}>
-                                            Test input
-                                        </label>
+                                errorText,
+                                showError
+                            }) => (
+                                <fieldset>
+                                    <legend {...getLegendProps()}>
+                                        Test radio
+                                    </legend>
+                                    <div
+                                        {...getRadioGroupProps({
+                                            required: 'required'
+                                        })}
+                                    >
                                         <input
-                                            {...getInputProps({
-                                                required: 'required'
+                                            {...getRadioButtonProps({
+                                                value: 'one'
                                             })}
                                         />
-                                        <div data-testid="errorContainer">
-                                            {showError ? (
-                                                <span {...getErrorProps()}>
-                                                    {errorText}
-                                                </span>
-                                            ) : null}
-                                        </div>
+                                        <label
+                                            {...getLabelProps({
+                                                autoIdPostfix: 'one'
+                                            })}
+                                        >
+                                            One
+                                        </label>
+                                        <input
+                                            {...getRadioButtonProps({
+                                                value: 'two'
+                                            })}
+                                        />
+                                        <label
+                                            {...getLabelProps({
+                                                autoIdPostfix: 'two'
+                                            })}
+                                        >
+                                            Two
+                                        </label>
                                     </div>
-                                );
-                            }}
-                        </Form.TextInputController>
+                                    <div data-testid="errorContainer">
+                                        {showError ? (
+                                            <span {...getErrorProps()}>
+                                                {errorText}
+                                            </span>
+                                        ) : null}
+                                    </div>
+                                </fieldset>
+                            )}
+                        </Form.RadioGroupController>
                         <button type="submit">Submit</button>
                     </div>
                 )}
@@ -2057,50 +2014,74 @@ describe('Form.RadioGroupController', () => {
         );
 
         fireEvent.click(getByText('Submit'));
-        expect(getByTestId('errorContainer')).toBeEmpty();
 
-        const input = getByLabelText('Test input');
-        input.value = 'A';
-        fireEvent.change(input);
-        expect(getByTestId('errorContainer').firstChild).toHaveTextContent(
-            'The entry text should be longer than 5 characters'
-        );
+        const radioGroup = container.querySelector('[role="radiogroup"]');
+        expect(getByTestId('errorContainer')).toBeEmpty();
+        expect(radioGroup).not.toHaveAttribute('aria-describedby');
     });
 
-    xit('should allow the user to specify a content hint', () => {
-        const { getByLabelText, getByTestId } = render(
+    it('should allow the user to specify a content hint', () => {
+        const { container, getByTestId } = render(
             <Form onSubmit={jest.fn()}>
                 {() => (
-                    <Form.TextInputController name="testInput">
-                        {({
-                            getInputProps,
-                            getLabelProps,
-                            getContentHintProps
-                        }) => {
-                            return (
-                                <div>
-                                    <label {...getLabelProps()}>
-                                        Test input
-                                    </label>
-                                    <input
-                                        {...getInputProps({
+                    <div>
+                        <Form.RadioGroupController name="testRadio">
+                            {({
+                                getRadioButtonProps,
+                                getRadioGroupProps,
+                                getLegendProps,
+                                getLabelProps,
+                                getContentHintProps
+                            }) => (
+                                <fieldset>
+                                    <legend {...getLegendProps()}>
+                                        Test radio
+                                    </legend>
+                                    <div
+                                        {...getRadioGroupProps({
                                             required: 'required'
                                         })}
-                                    />
+                                    >
+                                        <input
+                                            {...getRadioButtonProps({
+                                                value: 'one'
+                                            })}
+                                        />
+                                        <label
+                                            {...getLabelProps({
+                                                autoIdPostfix: 'one'
+                                            })}
+                                        >
+                                            One
+                                        </label>
+                                        <input
+                                            {...getRadioButtonProps({
+                                                value: 'two'
+                                            })}
+                                        />
+                                        <label
+                                            {...getLabelProps({
+                                                autoIdPostfix: 'two'
+                                            })}
+                                        >
+                                            Two
+                                        </label>
+                                    </div>
                                     <div data-testid="contentHintContainer">
                                         <span {...getContentHintProps()}>
                                             Some content hint
                                         </span>
                                     </div>
-                                </div>
-                            );
-                        }}
-                    </Form.TextInputController>
+                                </fieldset>
+                            )}
+                        </Form.RadioGroupController>
+                        <button type="submit">Submit</button>
+                    </div>
                 )}
             </Form>
         );
 
-        expect(getByLabelText('Test input')).toHaveAttribute(
+        expect(container.querySelector('[role="radiogroup"]')).toHaveAttribute(
             'aria-describedby',
             'contentHintId'
         );
@@ -2110,51 +2091,76 @@ describe('Form.RadioGroupController', () => {
         );
     });
 
-    xit('should properly link both a content hint and an error message accessibly', () => {
-        const { getByLabelText, getByText } = render(
+    it('should properly link both a content hint and an error message accessibly', () => {
+        const { container, getByText, getByLabelText } = render(
             <Form onSubmit={jest.fn()}>
                 {() => (
                     <div>
-                        <Form.TextInputController
-                            name="testInput"
+                        <Form.RadioGroupController
+                            name="testRadio"
                             validators={[
-                                validator(isRequired, 'It is required')
+                                validator(isRequired, 'This field is required.')
                             ]}
                         >
                             {({
-                                getInputProps,
+                                getRadioButtonProps,
+                                getRadioGroupProps,
+                                getLegendProps,
                                 getLabelProps,
-                                getErrorProps,
                                 getContentHintProps,
+                                getErrorProps,
                                 errorText,
                                 showError
-                            }) => {
-                                return (
-                                    <div>
-                                        <label {...getLabelProps()}>
-                                            Test input
-                                        </label>
+                            }) => (
+                                <fieldset>
+                                    <legend {...getLegendProps()}>
+                                        Test radio
+                                    </legend>
+                                    <div
+                                        {...getRadioGroupProps({
+                                            required: 'required'
+                                        })}
+                                    >
                                         <input
-                                            {...getInputProps({
-                                                required: 'required'
+                                            {...getRadioButtonProps({
+                                                value: 'one'
                                             })}
                                         />
-                                        <div data-testid="contentHintContainer">
-                                            <span {...getContentHintProps()}>
-                                                Some content hint
-                                            </span>
-                                        </div>
+                                        <label
+                                            {...getLabelProps({
+                                                autoIdPostfix: 'one'
+                                            })}
+                                        >
+                                            One
+                                        </label>
+                                        <input
+                                            {...getRadioButtonProps({
+                                                value: 'two'
+                                            })}
+                                        />
+                                        <label
+                                            {...getLabelProps({
+                                                autoIdPostfix: 'two'
+                                            })}
+                                        >
+                                            Two
+                                        </label>
+                                    </div>
+                                    <div data-testid="contentHintContainer">
+                                        <span {...getContentHintProps()}>
+                                            Some content hint
+                                        </span>
+                                    </div>
+                                    <div data-testid="errorContainer">
                                         {showError ? (
-                                            <div data-testid="errorContainer">
-                                                <span {...getErrorProps()}>
-                                                    {errorText}
-                                                </span>
-                                            </div>
+                                            <span {...getErrorProps()}>
+                                                {errorText}
+                                            </span>
                                         ) : null}
                                     </div>
-                                );
-                            }}
-                        </Form.TextInputController>
+                                </fieldset>
+                            )}
+                        </Form.RadioGroupController>
                         <button type="submit">Submit</button>
                     </div>
                 )}
@@ -2163,148 +2169,188 @@ describe('Form.RadioGroupController', () => {
 
         fireEvent.click(getByText('Submit'));
 
-        expect(getByLabelText('Test input')).toHaveAttribute(
+        expect(container.querySelector('[role="radiogroup"]')).toHaveAttribute(
             'aria-describedby',
             'contentHintId errorId'
         );
 
-        const input = getByLabelText('Test input');
-        input.value = 'A';
-        fireEvent.change(input);
+        fireEvent.click(getByLabelText('One'));
 
-        expect(getByLabelText('Test input')).toHaveAttribute(
+        expect(container.querySelector('[role="radiogroup"]')).toHaveAttribute(
             'aria-describedby',
             'contentHintId'
         );
     });
 
-    xit('should should only display errors after one submit attempt', () => {
-        const { getByLabelText, getByText, queryByTestId } = render(
+    it('should only display errors after one submit attempt', () => {
+        const { container, getByText } = render(
             <Form onSubmit={jest.fn()}>
                 {() => (
                     <div>
-                        {' '}
-                        <Form.TextInputController
-                            name="testInput"
+                        <Form.RadioGroupController
+                            name="testRadio"
                             validators={[
-                                validator(isRequired, 'It is required')
+                                validator(isRequired, 'This field is required.')
                             ]}
                         >
                             {({
-                                getInputProps,
+                                getRadioButtonProps,
+                                getRadioGroupProps,
+                                getLegendProps,
                                 getLabelProps,
-                                getErrorProps,
                                 getContentHintProps,
+                                getErrorProps,
                                 errorText,
                                 showError
-                            }) => {
-                                return (
-                                    <div>
-                                        <label {...getLabelProps()}>
-                                            Test input
-                                        </label>
+                            }) => (
+                                <fieldset>
+                                    <legend {...getLegendProps()}>
+                                        Test radio
+                                    </legend>
+                                    <div
+                                        {...getRadioGroupProps({
+                                            required: 'required'
+                                        })}
+                                    >
                                         <input
-                                            {...getInputProps({
-                                                required: 'required'
+                                            {...getRadioButtonProps({
+                                                value: 'one'
                                             })}
                                         />
-                                        <div data-testid="contentHintContainer">
-                                            <span {...getContentHintProps()}>
-                                                Some content hint
-                                            </span>
-                                        </div>
+                                        <label
+                                            {...getLabelProps({
+                                                autoIdPostfix: 'one'
+                                            })}
+                                        >
+                                            One
+                                        </label>
+                                        <input
+                                            {...getRadioButtonProps({
+                                                value: 'two'
+                                            })}
+                                        />
+                                        <label
+                                            {...getLabelProps({
+                                                autoIdPostfix: 'two'
+                                            })}
+                                        >
+                                            Two
+                                        </label>
+                                    </div>
+                                    <div data-testid="contentHintContainer">
+                                        <span {...getContentHintProps()}>
+                                            Some content hint
+                                        </span>
+                                    </div>
+                                    <div data-testid="errorContainer">
                                         {showError ? (
-                                            <div data-testid="errorContainer">
-                                                <span {...getErrorProps()}>
-                                                    {errorText}
-                                                </span>
-                                            </div>
+                                            <span {...getErrorProps()}>
+                                                {errorText}
+                                            </span>
                                         ) : null}
                                     </div>
-                                );
-                            }}
-                        </Form.TextInputController>
+                                </fieldset>
+                            )}
+                        </Form.RadioGroupController>
                         <button type="submit">Submit</button>
                     </div>
                 )}
             </Form>
         );
 
-        expect(getByLabelText('Test input')).toHaveAttribute(
+        expect(container.querySelector('[role="radiogroup"]')).toHaveAttribute(
             'aria-describedby',
             'contentHintId'
         );
 
-        expect(queryByTestId('errorContainer')).toBeNull();
-
         fireEvent.click(getByText('Submit'));
 
-        expect(getByLabelText('Test input')).toHaveAttribute(
+        expect(container.querySelector('[role="radiogroup"]')).toHaveAttribute(
             'aria-describedby',
             'contentHintId errorId'
         );
-
-        expect(queryByTestId('errorContainer')).not.toBeNull();
     });
 
-    xit('should should display errors always when alwaysShowErrors is on', () => {
-        const { getByLabelText, queryByTestId } = render(
+    it('should display errors always when alwaysShowErrors is on', () => {
+        const { container } = render(
             <Form onSubmit={jest.fn()} alwaysShowErrors={true}>
                 {() => (
                     <div>
-                        {' '}
-                        <Form.TextInputController
-                            name="testInput"
+                        <Form.RadioGroupController
+                            name="testRadio"
                             validators={[
-                                validator(isRequired, 'It is required')
+                                validator(isRequired, 'This field is required.')
                             ]}
                         >
                             {({
-                                getInputProps,
+                                getRadioButtonProps,
+                                getRadioGroupProps,
+                                getLegendProps,
                                 getLabelProps,
-                                getErrorProps,
                                 getContentHintProps,
+                                getErrorProps,
                                 errorText,
                                 showError
-                            }) => {
-                                return (
-                                    <div>
-                                        <label {...getLabelProps()}>
-                                            Test input
-                                        </label>
+                            }) => (
+                                <fieldset>
+                                    <legend {...getLegendProps()}>
+                                        Test radio
+                                    </legend>
+                                    <div
+                                        {...getRadioGroupProps({
+                                            required: 'required'
+                                        })}
+                                    >
                                         <input
-                                            {...getInputProps({
-                                                required: 'required'
+                                            {...getRadioButtonProps({
+                                                value: 'one'
                                             })}
                                         />
-                                        <div data-testid="contentHintContainer">
-                                            <span {...getContentHintProps()}>
-                                                Some content hint
-                                            </span>
-                                        </div>
+                                        <label
+                                            {...getLabelProps({
+                                                autoIdPostfix: 'one'
+                                            })}
+                                        >
+                                            One
+                                        </label>
+                                        <input
+                                            {...getRadioButtonProps({
+                                                value: 'two'
+                                            })}
+                                        />
+                                        <label
+                                            {...getLabelProps({
+                                                autoIdPostfix: 'two'
+                                            })}
+                                        >
+                                            Two
+                                        </label>
+                                    </div>
+                                    <div data-testid="contentHintContainer">
+                                        <span {...getContentHintProps()}>
+                                            Some content hint
+                                        </span>
+                                    </div>
+                                    <div data-testid="errorContainer">
                                         {showError ? (
-                                            <div data-testid="errorContainer">
-                                                <span {...getErrorProps()}>
-                                                    {errorText}
-                                                </span>
-                                            </div>
+                                            <span {...getErrorProps()}>
+                                                {errorText}
+                                            </span>
                                         ) : null}
                                     </div>
-                                );
-                            }}
-                        </Form.TextInputController>
+                                </fieldset>
+                            )}
+                        </Form.RadioGroupController>
                         <button type="submit">Submit</button>
                     </div>
                 )}
             </Form>
         );
 
-        expect(getByLabelText('Test input')).toHaveAttribute(
+        expect(container.querySelector('[role="radiogroup"]')).toHaveAttribute(
             'aria-describedby',
             'contentHintId errorId'
         );
-
-        expect(queryByTestId('errorContainer')).not.toBeNull();
     });
 });
 
