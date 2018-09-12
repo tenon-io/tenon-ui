@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import RequiredLabel from '../RequiredLabel';
 
 /**
  * @component
@@ -47,11 +48,17 @@ const Input = ({
     labelProps,
     showError,
     className,
+    requiredText,
     ...rest
 }) => (
     <div className="form-group">
         <div className="field-wrapper">
-            <label {...getLabelProps(labelProps)}>{labelText}</label>
+            <RequiredLabel
+                requiredText={requiredText || null}
+                {...getLabelProps(labelProps)}
+            >
+                {labelText}
+            </RequiredLabel>
             <input
                 className={
                     classNames(className, { 'has-error': showError }) || null
@@ -84,7 +91,8 @@ Input.propTypes = {
     labelText: PropTypes.string.isRequired,
     labelProps: PropTypes.object,
     showError: PropTypes.bool,
-    className: PropTypes.string
+    className: PropTypes.string,
+    requiredText: PropTypes.string
 };
 
 export default Input;

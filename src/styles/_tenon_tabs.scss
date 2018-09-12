@@ -25,12 +25,10 @@
         top: 0;
         width: 1rem;
         z-index: 10;
-
         @media screen and (min-width: $breakpoint-medium) {
             display: none;
         }
     }
-
     [role='tablist'] {
         @extend %vf-pseudo-border--bottom;
         display: flex;
@@ -42,7 +40,6 @@
         white-space: nowrap;
         width: 100%;
     }
-
     li[role='presentation'] {
         display: inline-block;
         float: none;
@@ -50,13 +47,11 @@
         margin: 0;
         padding: 0;
         width: auto;
-
         &:last-child {
             margin-right: $sp-xxx-large;
         }
     }
 }
-
 [role='tab'] {
     color: $color-x-dark;
     display: inline-block;
@@ -64,7 +59,6 @@
     border-top: 2px solid transparent;
     border-right: 2px solid transparent;
     border-left: 2px solid transparent;
-
     &:visited,
     &:active,
     &:hover {
@@ -72,12 +66,10 @@
         text-decoration: none;
         cursor: pointer;
     }
-
     &:hover,
     &[aria-selected='true'] {
         @include vf-highlight-bar($color-tabs-active-bar, bottom, true);
     }
-
     &:focus {
         outline: 0;
         border-top: 2px solid $color-focus;
@@ -85,11 +77,9 @@
         border-left: 2px solid $color-focus;
     }
 }
-
 [role='tabpanel'] {
     padding: 0.5rem;
     border: 2px solid transparent;
-
     &:focus {
         border: 2px solid $color-focus;
     }

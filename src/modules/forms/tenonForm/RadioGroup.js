@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import FocusCatcher from '../../utils/components/FocusCatcher';
+import RequiredLegend from '../RequiredLegend';
 
 /**
  * @component
@@ -40,6 +41,8 @@ import FocusCatcher from '../../utils/components/FocusCatcher';
  *              radiogroup container as required.
  * @prop {string} className - An optional class string to transfer to the
  *              className prop of the select element.
+ * @prop {string} requiredText - An optional text to display next to the
+ *              legend if the group is required.
  */
 const RadioGroup = ({
     legend,
@@ -54,10 +57,16 @@ const RadioGroup = ({
     getContentHintProps,
     showError,
     required,
+    requiredText,
     className
 }) => (
     <fieldset className={classNames('form-group', className)}>
-        <legend {...getLegendProps()}>{legend}</legend>
+        <RequiredLegend
+            requiredText={requiredText || null}
+            {...getLegendProps()}
+        >
+            {legend}
+        </RequiredLegend>
         <div
             {...getRadioGroupProps({
                 required: required || null
@@ -110,7 +119,8 @@ RadioGroup.propTypes = {
     contentHintText: PropTypes.string,
     errorText: PropTypes.string,
     showError: PropTypes.bool,
-    className: PropTypes.string
+    className: PropTypes.string,
+    requiredText: PropTypes.string
 };
 
 export default RadioGroup;

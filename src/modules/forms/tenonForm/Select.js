@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import RequiredLabel from '../RequiredLabel';
 
 /**
  * @component
@@ -30,6 +31,8 @@ import PropTypes from 'prop-types';
  *              className prop of the select element.
  * @prop required {React element} children - The <option> tags to render for the
  *              <select> element.
+ * @prop {string} requiredText - An optional text to display next to the
+ *              select label if the field is required.
  *
  * NOTE: All props given to this select that does not
  * satisfy one of the above will be passed into the the
@@ -49,12 +52,18 @@ const Select = ({
     labelProps,
     showError,
     className,
+    requiredText,
     children,
     ...rest
 }) => (
     <div className="form-group">
         <div className="field-wrapper">
-            <label {...getLabelProps(labelProps)}>{labelText}</label>
+            <RequiredLabel
+                requiredText={requiredText || null}
+                {...getLabelProps(labelProps)}
+            >
+                {labelText}
+            </RequiredLabel>
             <select
                 className={
                     classNames(className, { 'has-error': showError }) || null
@@ -90,7 +99,8 @@ Select.propTypes = {
     labelText: PropTypes.string.isRequired,
     labelProps: PropTypes.object,
     showError: PropTypes.bool,
-    className: PropTypes.string
+    className: PropTypes.string,
+    requiredText: PropTypes.string
 };
 
 export default Select;

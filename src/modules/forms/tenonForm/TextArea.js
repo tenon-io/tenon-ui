@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import RequiredLabel from '../RequiredLabel';
 
 /**
  * @component
@@ -28,6 +29,8 @@ import PropTypes from 'prop-types';
  *              error container should be displayed.
  * @prop {string} className - An optional class string to transfer to the
  *              className prop of the textarea element.
+ * @prop {string} requiredText - An optional text to display next to the
+ *              textarea label if the field is required.
  *
  * NOTE: All props given to this textarea that does not
  * satisfy one of the above will be passed into the
@@ -46,12 +49,18 @@ const TextArea = ({
     labelText,
     labelProps,
     showError,
+    requiredText,
     className,
     ...rest
 }) => (
     <div className="form-group">
         <div className="field-wrapper">
-            <label {...getLabelProps(labelProps)}>{labelText}</label>
+            <RequiredLabel
+                requiredText={requiredText || null}
+                {...getLabelProps(labelProps)}
+            >
+                {labelText}
+            </RequiredLabel>
             <textarea
                 className={
                     classNames(className, { 'has-error': showError }) || null
@@ -84,7 +93,8 @@ TextArea.propTypes = {
     labelText: PropTypes.string.isRequired,
     labelProps: PropTypes.object,
     showError: PropTypes.bool,
-    className: PropTypes.string
+    className: PropTypes.string,
+    requiredText: PropTypes.string
 };
 
 export default TextArea;

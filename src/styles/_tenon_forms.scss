@@ -6,12 +6,60 @@
     }
 
     .error-wrapper {
+        &::before {
+            content: '';
+            display: inline;
+            padding: 0.4em;
+            margin: 0.3em;
+            background-size: contain;
+            @extend %icon;
+            @include vf-icon-error($color-negative);
+            position: relative;
+            top: -0.25em;
+        }
+
         color: $color-negative;
     }
 
     .info-wrapper {
+        &::before {
+            content: '';
+            display: inline;
+            padding: 0.4em;
+            margin: 0.3em;
+            background-size: contain;
+            @extend %icon;
+            @include vf-icon-info($color-information);
+            position: relative;
+            top: -0.25em;
+        }
+
         margin-bottom: 0.5rem;
         color: $color-information;
+    }
+}
+
+legend.required {
+    position: relative;
+
+    span.required {
+        font-size: small;
+        position: absolute;
+        top: -0.6rem;
+        margin-left: 0.5rem;
+        white-space: nowrap;
+    }
+}
+
+label.required {
+    position: relative;
+
+    span.required {
+        font-size: small;
+        position: absolute;
+        top: -0.1rem;
+        margin-left: 0.5rem;
+        white-space: nowrap;
     }
 }
 

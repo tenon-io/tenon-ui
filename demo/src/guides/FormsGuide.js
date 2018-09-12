@@ -80,7 +80,7 @@ class FormsGuide extends Component {
                                             {props => (
                                                 <Input
                                                     {...props}
-                                                    require="required"
+                                                    required="required"
                                                     labelText={t(
                                                         'forms.demo.petType.label'
                                                     )}
