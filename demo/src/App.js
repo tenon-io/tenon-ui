@@ -66,7 +66,7 @@ class App extends Component {
                                                 {t('titles.lang')}
                                             </Heading.H>
                                             <button
-                                                className="button-secondary"
+                                                className="secondary"
                                                 onClick={() =>
                                                     i18n.changeLanguage('af')
                                                 }
@@ -74,7 +74,7 @@ class App extends Component {
                                                 Afrikaans
                                             </button>
                                             <button
-                                                className="button-secondary"
+                                                className="secondary"
                                                 onClick={() =>
                                                     i18n.changeLanguage('en')
                                                 }
@@ -82,7 +82,7 @@ class App extends Component {
                                                 English
                                             </button>
                                             <button
-                                                className="button-secondary"
+                                                className="secondary"
                                                 onClick={() =>
                                                     i18n.changeLanguage(
                                                         'pseudo'

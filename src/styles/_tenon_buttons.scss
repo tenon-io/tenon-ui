@@ -26,11 +26,11 @@
     margin-bottom: 0;
 }
 
-.button-primary {
+button.primary {
     @include buttonPrimary();
 }
 
-.button-secondary {
+button.secondary {
     @include buttonSecondary();
 }
 

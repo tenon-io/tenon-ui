@@ -38,7 +38,7 @@ class NotificationGuide extends Component {
                                     </span>
                                     <button
                                         type="button"
-                                        className="button-secondary dismiss-button"
+                                        className="secondary"
                                         onClick={this.onDismissHandler}
                                     >
                                         {t(
@@ -48,7 +48,7 @@ class NotificationGuide extends Component {
                                 </div>
                             </Notification>
                             <button
-                                className="button-primary"
+                                className="primary"
                                 onClick={this.onClickHandler}
                             >
                                 {t('notification.demo.example.showInfo')}
