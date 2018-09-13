@@ -6,6 +6,17 @@
     }
 
     .error {
+        .icon {
+            display: inline;
+            padding: 0.4em;
+            margin: 0.3em;
+            background-size: contain;
+            @extend %icon;
+            @include vf-icon-error($color-negative);
+            position: relative;
+            top: -0.15em;
+        }
+
         border-color: $color-negative;
         background-color: lighten($color-negative, 68%);
         color: $color-x-dark;

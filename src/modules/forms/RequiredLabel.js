@@ -2,6 +2,18 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
+/**
+ * @component
+ * A label component that autodetects if the linked form control
+ * has the required attribute. If so, the given required text
+ * is also shown in the label.
+ *
+ * @prop required {React nodes} children - The normal content
+ * of a label.
+ * @prop {string} requiredText - The text to show when the field
+ * is required.
+ * @prop {string} className - The class to put on the label.
+ */
 class RequiredLabel extends Component {
     static propTypes = {
         children: PropTypes.node.isRequired,

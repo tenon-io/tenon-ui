@@ -41,6 +41,7 @@ describe('Notification', () => {
 
         const liveRegion = container.querySelector('div.notification');
         expect(liveRegion).toHaveAttribute('role', 'alert');
+        expect(liveRegion).toHaveAttribute('aria-live', 'assertive');
         expect(liveRegion.querySelector('div')).toHaveAttribute(
             'class',
             'error'
@@ -56,6 +57,7 @@ describe('Notification', () => {
 
         const liveRegion = container.querySelector('div.notification');
         expect(liveRegion).toHaveAttribute('role', 'status');
+        expect(liveRegion).toHaveAttribute('aria-live', 'polite');
         expect(liveRegion.querySelector('div')).toHaveAttribute(
             'class',
             'warning'
@@ -71,6 +73,7 @@ describe('Notification', () => {
 
         const liveRegion = container.querySelector('div.notification');
         expect(liveRegion).toHaveAttribute('role', 'status');
+        expect(liveRegion).toHaveAttribute('aria-live', 'polite');
         expect(liveRegion.querySelector('div')).toHaveAttribute(
             'class',
             'success'
@@ -86,6 +89,7 @@ describe('Notification', () => {
 
         const liveRegion = container.querySelector('div.notification');
         expect(liveRegion).toHaveAttribute('role', 'status');
+        expect(liveRegion).toHaveAttribute('aria-live', 'polite');
         expect(liveRegion.querySelector('div')).toHaveAttribute(
             'class',
             'info'
