@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import { render, cleanup } from 'react-testing-library';
 import 'jest-dom/extend-expect';
 import Select from '../Select';
@@ -79,5 +79,23 @@ describe('Select', () => {
 
         expect(getByLabelText('Test select')).toHaveAttribute('id', 'foo');
         expect(getByText('Test select')).toHaveAttribute('for', 'foo');
+    });
+
+    it('should allow easy focus of the internal select', () => {
+        const selectRef = createRef();
+
+        const { getByLabelText } = render(
+            <Select
+                ref={selectRef}
+                getLabelProps={() => ({ htmlFor: 'foo' })}
+                getSelectProps={() => ({ id: 'foo' })}
+                labelText="Test select"
+            >
+                <option value="one">One</option>
+                <option value="two">Two</option>
+            </Select>
+        );
+
+        expect(getByLabelText('Test select')).toEqual(selectRef.current);
     });
 });

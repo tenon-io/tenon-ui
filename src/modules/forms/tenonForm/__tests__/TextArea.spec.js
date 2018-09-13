@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import { render, cleanup } from 'react-testing-library';
 import 'jest-dom/extend-expect';
 import TextArea from '../TextArea';
@@ -66,5 +66,20 @@ describe('TextArea', () => {
 
         expect(getByLabelText('Test textarea')).toHaveAttribute('id', 'foo');
         expect(getByText('Test textarea')).toHaveAttribute('for', 'foo');
+    });
+
+    it('should allow easy focus of the internal textarea', () => {
+        const textareaRef = createRef();
+
+        const { getByLabelText } = render(
+            <TextArea
+                ref={textareaRef}
+                getLabelProps={() => ({ htmlFor: 'foo' })}
+                getTextareaProps={() => ({ id: 'foo' })}
+                labelText="Test textarea"
+            />
+        );
+
+        expect(getByLabelText('Test textarea')).toEqual(textareaRef.current);
     });
 });

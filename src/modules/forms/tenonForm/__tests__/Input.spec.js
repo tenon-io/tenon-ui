@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import { render, cleanup } from 'react-testing-library';
 import 'jest-dom/extend-expect';
 import Input from '../Input';
@@ -60,5 +60,20 @@ describe('Input', () => {
 
         expect(getByLabelText('Test input')).toHaveAttribute('id', 'foo');
         expect(getByText('Test input')).toHaveAttribute('for', 'foo');
+    });
+
+    it('should allow easy focus of the internal input', () => {
+        const inPutRef = createRef();
+
+        const { getByLabelText } = render(
+            <Input
+                ref={inPutRef}
+                getLabelProps={() => ({ htmlFor: 'foo' })}
+                getInputProps={() => ({ id: 'foo' })}
+                labelText="Test input"
+            />
+        );
+
+        expect(getByLabelText('Test input')).toEqual(inPutRef.current);
     });
 });
