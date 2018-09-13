@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Input should render a content hint if given 1`] = `
+exports[`RadioGroup should render a content hint if given 1`] = `
 <fieldset
   class="form-group"
 >
@@ -42,6 +42,9 @@ exports[`Input should render a content hint if given 1`] = `
     class="info-wrapper"
   >
     <span
+      class="icon"
+    />
+    <span
       id="inf"
     >
       Content hint test
@@ -50,7 +53,7 @@ exports[`Input should render a content hint if given 1`] = `
 </fieldset>
 `;
 
-exports[`Input should render an error text when invalid 1`] = `
+exports[`RadioGroup should render an error text when invalid 1`] = `
 <fieldset
   class="form-group"
 >
@@ -92,6 +95,9 @@ exports[`Input should render an error text when invalid 1`] = `
     class="error-wrapper"
   >
     <span
+      class="icon"
+    />
+    <span
       id="err"
     >
       Test error
@@ -100,7 +106,7 @@ exports[`Input should render an error text when invalid 1`] = `
 </fieldset>
 `;
 
-exports[`Input should render an input and label only 1`] = `
+exports[`RadioGroup should render an input and label only 1`] = `
 <fieldset
   class="form-group"
 >

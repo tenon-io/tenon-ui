@@ -20,7 +20,8 @@ class SpinnerButtonExample extends Component {
                 onBusyClick={() => {
                     alert('The button is still busy.');
                 }}
-                busyText="Working"
+                busyText="The action started."
+                completeText="The action is complete."
                 isBusy={this.state.showSpinner}
             >
                 Click me

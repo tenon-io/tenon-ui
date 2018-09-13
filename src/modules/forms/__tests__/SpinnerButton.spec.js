@@ -23,13 +23,18 @@ describe('SpinnerButton', () => {
         );
 
         expect(container.querySelector('button').innerHTML).toBe('Press me');
-        expect(container.querySelector('div.visually-hidden')).toHaveAttribute(
-            'role',
-            'status'
-        );
-        expect(container.querySelector('div.visually-hidden').innerHTML).toBe(
-            ''
-        );
+        const firstLiveRegion = container.querySelectorAll(
+            'div.visually-hidden'
+        )[0];
+        const secondLiveRegion = container.querySelectorAll(
+            'div.visually-hidden'
+        )[1];
+        expect(firstLiveRegion).toHaveAttribute('role', 'status');
+        expect(firstLiveRegion).toHaveAttribute('aria-live', 'polite');
+        expect(firstLiveRegion).toHaveAttribute('aria-atomic', 'true');
+        expect(secondLiveRegion).toHaveAttribute('role', 'status');
+        expect(secondLiveRegion).toHaveAttribute('aria-live', 'polite');
+        expect(secondLiveRegion).toHaveAttribute('aria-atomic', 'true');
     });
 
     it('should switch to a visually spinning state after a delay of 100ms', () => {
@@ -135,6 +140,99 @@ describe('SpinnerButton', () => {
         const button = getByText('Press me');
 
         fireEvent.click(button);
+    });
+
+    it('should clear the spinners when done', () => {
+        const { container, rerender } = render(
+            <SpinnerButton
+                isBusy={false}
+                busyText="Working"
+                onClick={jest.fn()}
+                onBusyClick={jest.fn()}
+            >
+                Press me
+            </SpinnerButton>
+        );
+
+        rerender(
+            <SpinnerButton
+                isBusy={true}
+                busyText="Working"
+                onClick={jest.fn()}
+                onBusyClick={jest.fn()}
+            >
+                Press me
+            </SpinnerButton>
+        );
+
+        rerender(
+            <SpinnerButton
+                isBusy={false}
+                busyText="Working"
+                onClick={jest.fn()}
+                onBusyClick={jest.fn()}
+            >
+                Press me
+            </SpinnerButton>
+        );
+
+        const firstLiveRegion = container.querySelectorAll(
+            'div.visually-hidden'
+        )[0];
+        const secondLiveRegion = container.querySelectorAll(
+            'div.visually-hidden'
+        )[1];
+        expect(container.querySelector('button').innerHTML).toBe('Press me');
+        expect(firstLiveRegion.innerHTML).toBe('');
+        expect(secondLiveRegion.innerHTML).toBe('');
+    });
+
+    it('should broadcast a complete message if given', () => {
+        const { container, rerender } = render(
+            <SpinnerButton
+                isBusy={false}
+                busyText="Working"
+                completeText="Done"
+                onClick={jest.fn()}
+                onBusyClick={jest.fn()}
+            >
+                Press me
+            </SpinnerButton>
+        );
+
+        rerender(
+            <SpinnerButton
+                isBusy={true}
+                busyText="Working"
+                completeText="Done"
+                onClick={jest.fn()}
+                onBusyClick={jest.fn()}
+            >
+                Press me
+            </SpinnerButton>
+        );
+
+        rerender(
+            <SpinnerButton
+                isBusy={false}
+                busyText="Working"
+                completeText="Done"
+                onClick={jest.fn()}
+                onBusyClick={jest.fn()}
+            >
+                Press me
+            </SpinnerButton>
+        );
+
+        const firstLiveRegion = container.querySelectorAll(
+            'div.visually-hidden'
+        )[0];
+        const secondLiveRegion = container.querySelectorAll(
+            'div.visually-hidden'
+        )[1];
+        expect(container.querySelector('button').innerHTML).toBe('Press me');
+        expect(firstLiveRegion.innerHTML).toBe('');
+        expect(secondLiveRegion.innerHTML).toBe('Done');
     });
 
     it('should call the onBusyClick handler if busy', () => {

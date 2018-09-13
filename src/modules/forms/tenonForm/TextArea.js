@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import RequiredLabel from '../RequiredLabel';
+import FeedbackBlock from './FeedbackBlock';
 
 /**
  * @component
@@ -28,6 +30,8 @@ import PropTypes from 'prop-types';
  *              error container should be displayed.
  * @prop {string} className - An optional class string to transfer to the
  *              className prop of the textarea element.
+ * @prop {string} requiredText - An optional text to display next to the
+ *              textarea label if the field is required.
  *
  * NOTE: All props given to this textarea that does not
  * satisfy one of the above will be passed into the
@@ -36,40 +40,50 @@ import PropTypes from 'prop-types';
  * extraneous properties that should not be rendered on an
  * <textarea> in the DOM can create run time errors.
  */
-const TextArea = ({
-    contentHintText,
-    errorText,
-    getLabelProps,
-    getTextareaProps,
-    getErrorProps,
-    getContentHintProps,
-    labelText,
-    labelProps,
-    showError,
-    className,
-    ...rest
-}) => (
-    <div className="form-group">
-        <div className="field-wrapper">
-            <label {...getLabelProps(labelProps)}>{labelText}</label>
-            <textarea
-                className={
-                    classNames(className, { 'has-error': showError }) || null
-                }
-                {...getTextareaProps(rest)}
+const TextArea = forwardRef(
+    (
+        {
+            contentHintText,
+            errorText,
+            getLabelProps,
+            getTextareaProps,
+            getErrorProps,
+            getContentHintProps,
+            labelText,
+            labelProps,
+            showError,
+            requiredText,
+            className,
+            ...rest
+        },
+        ref
+    ) => (
+        <div className="form-group">
+            <div className="field-wrapper">
+                <RequiredLabel
+                    requiredText={requiredText || null}
+                    {...getLabelProps(labelProps)}
+                >
+                    {labelText}
+                </RequiredLabel>
+                <textarea
+                    ref={ref}
+                    className={
+                        classNames(className, { 'has-error': showError }) ||
+                        null
+                    }
+                    {...getTextareaProps(rest)}
+                />
+            </div>
+            <FeedbackBlock
+                getContentHintProps={getContentHintProps}
+                getErrorProps={getErrorProps}
+                errorText={errorText}
+                contentHintText={contentHintText}
+                showError={showError}
             />
         </div>
-        {contentHintText && getContentHintProps ? (
-            <div className="info-wrapper">
-                <span {...getContentHintProps()}>{contentHintText}</span>
-            </div>
-        ) : null}
-        {showError && getErrorProps ? (
-            <div className="error-wrapper">
-                <span {...getErrorProps()}>{errorText}</span>
-            </div>
-        ) : null}
-    </div>
+    )
 );
 
 TextArea.displayName = 'TextArea';
@@ -84,7 +98,8 @@ TextArea.propTypes = {
     labelText: PropTypes.string.isRequired,
     labelProps: PropTypes.object,
     showError: PropTypes.bool,
-    className: PropTypes.string
+    className: PropTypes.string,
+    requiredText: PropTypes.string
 };
 
 export default TextArea;

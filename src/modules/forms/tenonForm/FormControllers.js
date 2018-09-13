@@ -434,6 +434,10 @@ class FormController extends Component {
         );
     };
 
+    /**
+     * @function
+     * Return the render props object per type.
+     */
     getTypeSpecificRenderProps = type => {
         switch (type) {
             case controllerType.textarea:

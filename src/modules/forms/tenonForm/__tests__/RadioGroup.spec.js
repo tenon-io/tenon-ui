@@ -1,11 +1,11 @@
 jest.mock('../../../utils/components/FocusCatcher');
 
-import React from 'react';
+import React, { createRef } from 'react';
 import { render, cleanup } from 'react-testing-library';
 import 'jest-dom/extend-expect';
 import RadioGroup from '../RadioGroup';
 
-describe('Input', () => {
+describe('RadioGroup', () => {
     afterEach(cleanup);
 
     it('should render an input and label only', () => {
@@ -99,5 +99,38 @@ describe('Input', () => {
         );
 
         expect(container.firstChild).toMatchSnapshot();
+    });
+
+    it('should allow easy focus of the internal radio group', () => {
+        const radioGroupRef = createRef();
+
+        const { container } = render(
+            <RadioGroup
+                ref={radioGroupRef}
+                legend="Test radio group"
+                options={{
+                    one: 'One',
+                    two: 'Two'
+                }}
+                getLegendProps={() => ({ id: 'bar' })}
+                getLabelProps={props => ({
+                    htmlFor: `foo-${props.autoIdPostfix}`
+                })}
+                getRadioButtonProps={({ value }) => ({
+                    id: `foo-${value}`,
+                    value,
+                    onChange: jest.fn()
+                })}
+                getRadioGroupProps={conf => ({
+                    'aria-labelledby': 'bar',
+                    role: 'radiogroup',
+                    tabIndex: '-1',
+                    value: conf.value
+                })}
+            />
+        );
+        expect(container.querySelector('[role="radiogroup"]')).toEqual(
+            radioGroupRef.current
+        );
     });
 });

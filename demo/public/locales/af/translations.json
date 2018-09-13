@@ -26,6 +26,8 @@
             "example": {
                 "heading": "Werkende voorbeeld"
             },
+            "errorBlock": { "heading": "Daar is foute in die vorm" },
+            "requiredText": "( verplig )",
             "code": {
                 "heading": "Voorbeeld kode",
                 "reset": "Die forms voorbeeld kode is geherstel",
@@ -117,7 +119,8 @@
                 "heading": "Werkende voorbeeld",
                 "text": "Kliek op my",
                 "isBusy": "Die knop is nog besig",
-                "busyText": "Besig"
+                "busyText": "Die kliek aksie word uitgevoer",
+                "completeText": "Die kliek aksie is klaar"
             },
             "code": {
                 "heading": "Voorbeeld kode",

@@ -6,27 +6,84 @@
     }
 
     .error-wrapper {
+        .icon {
+            display: inline;
+            padding: 0.4em;
+            margin: 0.3em;
+            background-size: contain;
+            @extend %icon;
+            @include vf-icon-error($color-negative);
+            position: relative;
+            top: -0.25em;
+        }
+
         color: $color-negative;
     }
 
     .info-wrapper {
+        .icon {
+            display: inline;
+            padding: 0.4em;
+            margin: 0.3em;
+            background-size: contain;
+            @extend %icon;
+            @include vf-icon-info($color-information);
+            position: relative;
+            top: -0.25em;
+        }
+
         margin-bottom: 0.5rem;
         color: $color-information;
     }
 }
 
+legend.required {
+    position: relative;
+
+    span.required {
+        font-size: small;
+        position: absolute;
+        top: -0.6rem;
+        margin-left: 0.5rem;
+        white-space: nowrap;
+    }
+}
+
+label.required {
+    position: relative;
+
+    span.required {
+        font-size: small;
+        position: absolute;
+        top: -0.1rem;
+        margin-left: 0.5rem;
+        white-space: nowrap;
+    }
+}
+
 .error-block {
+    .block-heading {
+        font-weight: bold;
+        font-size: 1.2rem;
+        color: $color-negative;
+
+        .icon {
+            display: inline;
+            padding: 0.4em;
+            margin: 0.3em;
+            background-size: contain;
+            @extend %icon;
+            @include vf-icon-error($color-negative);
+            position: relative;
+            top: -0.15em;
+        }
+    }
+
     ul {
-        list-style-type: none;
-        padding-left: 0;
+        padding-left: 1.5rem;
 
         li {
             margin-top: 1rem;
-
-            //Fix for VoiceOver bug: https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-type#Accessibility_concerns
-            &::before {
-                content: '\200B';
-            }
         }
 
         a {
@@ -36,4 +93,6 @@
 
     border: 1px solid $color-negative;
     background-color: lighten($color-negative, 70%);
+    margin-bottom: 1em;
+    padding: 1.5rem;
 }

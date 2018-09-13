@@ -1,7 +1,9 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, forwardRef } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import FocusCatcher from '../../utils/components/FocusCatcher';
+import RequiredLegend from '../RequiredLegend';
+import FeedbackBlock from './FeedbackBlock';
 
 /**
  * @component
@@ -40,59 +42,70 @@ import FocusCatcher from '../../utils/components/FocusCatcher';
  *              radiogroup container as required.
  * @prop {string} className - An optional class string to transfer to the
  *              className prop of the select element.
+ * @prop {string} requiredText - An optional text to display next to the
+ *              legend if the group is required.
  */
-const RadioGroup = ({
-    legend,
-    options,
-    getRadioButtonProps,
-    getLabelProps,
-    getLegendProps,
-    getRadioGroupProps,
-    contentHintText,
-    errorText,
-    getErrorProps,
-    getContentHintProps,
-    showError,
-    required,
-    className
-}) => (
-    <fieldset className={classNames('form-group', className)}>
-        <legend {...getLegendProps()}>{legend}</legend>
-        <div
-            {...getRadioGroupProps({
-                required: required || null
-            })}
-        >
-            <FocusCatcher>
-                {Object.keys(options).map(option => (
-                    <Fragment key={option}>
-                        <input
-                            {...getRadioButtonProps({
-                                value: option
-                            })}
-                        />
-                        <label
-                            {...getLabelProps({
-                                autoIdPostfix: option
-                            })}
-                        >
-                            {options[option]}
-                        </label>
-                    </Fragment>
-                ))}
-            </FocusCatcher>
-        </div>
-        {contentHintText && getContentHintProps ? (
-            <div className="info-wrapper">
-                <span {...getContentHintProps()}>{contentHintText}</span>
+const RadioGroup = forwardRef(
+    (
+        {
+            legend,
+            options,
+            getRadioButtonProps,
+            getLabelProps,
+            getLegendProps,
+            getRadioGroupProps,
+            contentHintText,
+            errorText,
+            getErrorProps,
+            getContentHintProps,
+            showError,
+            required,
+            requiredText,
+            className
+        },
+        ref
+    ) => (
+        <fieldset className={classNames('form-group', className)}>
+            <RequiredLegend
+                requiredText={requiredText || null}
+                {...getLegendProps()}
+            >
+                {legend}
+            </RequiredLegend>
+            <div
+                ref={ref}
+                {...getRadioGroupProps({
+                    required: required || null
+                })}
+            >
+                <FocusCatcher>
+                    {Object.keys(options).map(option => (
+                        <Fragment key={option}>
+                            <input
+                                {...getRadioButtonProps({
+                                    value: option
+                                })}
+                            />
+                            <label
+                                {...getLabelProps({
+                                    autoIdPostfix: option
+                                })}
+                            >
+                                {options[option]}
+                            </label>
+                        </Fragment>
+                    ))}
+                </FocusCatcher>
             </div>
-        ) : null}
-        {showError && getErrorProps ? (
-            <div className="error-wrapper">
-                <span {...getErrorProps()}>{errorText}</span>
-            </div>
-        ) : null}
-    </fieldset>
+            <FeedbackBlock
+                getContentHintProps={getContentHintProps}
+                getErrorProps={getErrorProps}
+                errorText={errorText}
+                contentHintText={contentHintText}
+                showError={showError}
+            />
+        </fieldset>
+    )
 );
 
 RadioGroup.displayName = 'RadioGroup';
@@ -110,7 +123,8 @@ RadioGroup.propTypes = {
     contentHintText: PropTypes.string,
     errorText: PropTypes.string,
     showError: PropTypes.bool,
-    className: PropTypes.string
+    className: PropTypes.string,
+    requiredText: PropTypes.string
 };
 
 export default RadioGroup;
