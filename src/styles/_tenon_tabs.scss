@@ -68,7 +68,19 @@
     }
     &:hover,
     &[aria-selected='true'] {
-        @include vf-highlight-bar($color-tabs-active-bar, bottom, true);
+        position: relative;
+
+        &::before {
+            bottom: 0;
+            border-bottom: $bar-thickness solid $color-tabs-active-bar;
+            content: '';
+            position: absolute;
+            height: $bar-thickness;
+            width: auto;
+            left: -1px;
+            right: -1px;
+            z-index: 1;
+        }
     }
     &:focus {
         outline: 0;

@@ -119,7 +119,8 @@
                 "heading": "Werkende voorbeeld",
                 "text": "Kliek op my",
                 "isBusy": "Die knop is nog besig",
-                "busyText": "Besig"
+                "busyText": "Die kliek aksie word uitgevoer",
+                "completeText": "Die kliek aksie is klaar"
             },
             "code": {
                 "heading": "Voorbeeld kode",

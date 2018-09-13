@@ -16,7 +16,10 @@ const FormsExample = () => (
         {({ formControls, validity, hasSubmitted }) => (
             <Fragment>
                 {!validity && hasSubmitted ? (
-                    <ErrorBlock formControls={formControls} />
+                    <ErrorBlock
+                        formControls={formControls}
+                        headingText="The form contains errors"
+                    />
                 ) : null}
 
                 <Form.TextInputController

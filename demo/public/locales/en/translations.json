@@ -120,7 +120,8 @@
                 "heading": "Working example",
                 "text": "Click me",
                 "isBusy": "The button is still busy",
-                "busyText": "Working"
+                "busyText": "The button action is being processed.",
+                "completeText": "The button action is complete."
             },
             "code": {
                 "heading": "Code example",

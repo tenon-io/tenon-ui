@@ -38,6 +38,7 @@ class SpinnerButton extends Component {
     static propTypes = {
         isBusy: PropTypes.bool.isRequired,
         busyText: PropTypes.string.isRequired,
+        completeText: PropTypes.string,
         onClick: PropTypes.func,
         onBusyClick: PropTypes.func,
         spinnerImgSrc: PropTypes.string
@@ -45,7 +46,8 @@ class SpinnerButton extends Component {
 
     state = {
         showVisualSpinner: false,
-        statusMessage: ''
+        busyMessage: '',
+        completeMessage: ''
     };
 
     /**
@@ -59,17 +61,20 @@ class SpinnerButton extends Component {
      * If the spinner is deactivated before activation the
      * activation is cancelled.
      *
+     * A done message is broadcast if provided.
+     *
      * @param {Object} prevProps
      */
     componentDidUpdate(prevProps) {
-        const { isBusy, busyText } = this.props;
+        const { isBusy, busyText, completeText } = this.props;
 
         if (isBusy !== prevProps.isBusy) {
             if (isBusy) {
                 this.starterTimeout = setTimeout(() => {
                     this.setState({
                         showVisualSpinner: true,
-                        statusMessage: busyText
+                        busyMessage: busyText,
+                        completeMessage: ''
                     });
                 }, 100);
             } else {
@@ -77,7 +82,8 @@ class SpinnerButton extends Component {
                 this.starterTimeout = null;
                 this.setState({
                     showVisualSpinner: false,
-                    statusMessage: ''
+                    completeMessage: completeText ? completeText : '',
+                    busyMessage: ''
                 });
             }
         }
@@ -109,16 +115,30 @@ class SpinnerButton extends Component {
             busyText,
             spinnerImgSrc,
             children,
+            completeText,
             onClick,
             isBusy,
             onBusyClick,
             ...rest
         } = this.props;
-        const { showVisualSpinner, statusMessage } = this.state;
+        const { showVisualSpinner, busyMessage, completeMessage } = this.state;
         return (
             <Fragment>
-                <div className="visually-hidden" role="status">
-                    {statusMessage}
+                <div
+                    className="visually-hidden"
+                    role="status"
+                    aria-live="polite"
+                    aria-atomic="true"
+                >
+                    {busyMessage}
+                </div>
+                <div
+                    className="visually-hidden"
+                    role="status"
+                    aria-live="polite"
+                    aria-atomic="true"
+                >
+                    {completeMessage}
                 </div>
                 <button {...rest} onClick={this.onClickHandler}>
                     {children}
