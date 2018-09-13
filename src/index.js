@@ -5,6 +5,7 @@ export {
     SelectController,
     RadioGroupController
 } from './modules/forms/tenonForm/FormControllers';
+export ErrorBlock from './modules/forms/ErrorBlock';
 export Heading, { LevelBoundary, H } from './modules/layout/Heading';
 export Input from './modules/forms/tenonForm/Input';
 export TextArea from './modules/forms/tenonForm/TextArea';

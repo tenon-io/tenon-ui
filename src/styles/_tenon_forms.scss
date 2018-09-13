@@ -6,8 +6,7 @@
     }
 
     .error-wrapper {
-        &::before {
-            content: '';
+        .icon {
             display: inline;
             padding: 0.4em;
             margin: 0.3em;
@@ -22,8 +21,7 @@
     }
 
     .info-wrapper {
-        &::before {
-            content: '';
+        .icon {
             display: inline;
             padding: 0.4em;
             margin: 0.3em;
@@ -64,17 +62,28 @@ label.required {
 }
 
 .error-block {
+    .block-heading {
+        font-weight: bold;
+        font-size: 1.2rem;
+        color: $color-negative;
+
+        .icon {
+            display: inline;
+            padding: 0.4em;
+            margin: 0.3em;
+            background-size: contain;
+            @extend %icon;
+            @include vf-icon-error($color-negative);
+            position: relative;
+            top: -0.15em;
+        }
+    }
+
     ul {
-        list-style-type: none;
-        padding-left: 0;
+        padding-left: 1.5rem;
 
         li {
             margin-top: 1rem;
-
-            //Fix for VoiceOver bug: https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-type#Accessibility_concerns
-            &::before {
-                content: '\200B';
-            }
         }
 
         a {
@@ -84,4 +93,6 @@ label.required {
 
     border: 1px solid $color-negative;
     background-color: lighten($color-negative, 70%);
+    margin-bottom: 1em;
+    padding: 1.5rem;
 }

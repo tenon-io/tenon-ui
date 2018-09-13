@@ -3,7 +3,7 @@ import { render, cleanup } from 'react-testing-library';
 import 'jest-dom/extend-expect';
 import Select from '../Select';
 
-describe('Input', () => {
+describe('Select', () => {
     afterEach(cleanup);
 
     it('should render an input and label only', () => {

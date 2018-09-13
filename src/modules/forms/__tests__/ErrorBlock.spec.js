@@ -3,7 +3,7 @@ import { render, cleanup } from 'react-testing-library';
 import 'jest-dom/extend-expect';
 import ErrorBlock from '../ErrorBlock';
 
-describe('ErrorBlock', () => {
+xdescribe('ErrorBlock', () => {
     afterEach(cleanup);
 
     it('should render as an unordered list to track the number of items', () => {

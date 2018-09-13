@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import RequiredLabel from '../RequiredLabel';
+import FeedbackBlock from './FeedbackBlock';
 
 /**
  * @component
@@ -37,46 +38,50 @@ import RequiredLabel from '../RequiredLabel';
  * extraneous properties that should not be rendered on an
  * <input> in the DOM can create run time errors.
  */
-const Input = ({
-    contentHintText,
-    errorText,
-    getLabelProps,
-    getInputProps,
-    getErrorProps,
-    getContentHintProps,
-    labelText,
-    labelProps,
-    showError,
-    className,
-    requiredText,
-    ...rest
-}) => (
-    <div className="form-group">
-        <div className="field-wrapper">
-            <RequiredLabel
-                requiredText={requiredText || null}
-                {...getLabelProps(labelProps)}
-            >
-                {labelText}
-            </RequiredLabel>
-            <input
-                className={
-                    classNames(className, { 'has-error': showError }) || null
-                }
-                {...getInputProps(rest)}
+const Input = forwardRef(
+    (
+        {
+            contentHintText,
+            errorText,
+            getLabelProps,
+            getInputProps,
+            getErrorProps,
+            getContentHintProps,
+            labelText,
+            labelProps,
+            showError,
+            className,
+            requiredText,
+            ...rest
+        },
+        ref
+    ) => (
+        <div className="form-group">
+            <div className="field-wrapper">
+                <RequiredLabel
+                    requiredText={requiredText || null}
+                    {...getLabelProps(labelProps)}
+                >
+                    {labelText}
+                </RequiredLabel>
+                <input
+                    ref={ref}
+                    className={
+                        classNames(className, { 'has-error': showError }) ||
+                        null
+                    }
+                    {...getInputProps(rest)}
+                />
+            </div>
+            <FeedbackBlock
+                getContentHintProps={getContentHintProps}
+                getErrorProps={getErrorProps}
+                errorText={errorText}
+                contentHintText={contentHintText}
+                showError={showError}
             />
         </div>
-        {contentHintText && getContentHintProps ? (
-            <div className="info-wrapper">
-                <span {...getContentHintProps()}>{contentHintText}</span>
-            </div>
-        ) : null}
-        {showError && getErrorProps ? (
-            <div className="error-wrapper">
-                <span {...getErrorProps()}>{errorText}</span>
-            </div>
-        ) : null}
-    </div>
+    )
 );
 
 Input.displayName = 'Input';

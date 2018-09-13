@@ -1,6 +1,7 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment, createRef } from 'react';
 import {
     Form,
+    ErrorBlock,
     Input,
     isLongerThan,
     isRequired,
@@ -9,15 +10,28 @@ import {
     TextArea,
     validator
 } from '../../../src/index';
-import ErrorBlock from '../../../src/modules/forms/ErrorBlock';
 import { I18n } from 'react-i18next';
 import Pane from '../Pane';
 import WorkingExample from '../WorkingExample';
 import CodeExample from '../CodeExample';
 
 class FormsGuide extends Component {
+    constructor(props) {
+        super(props);
+
+        this.errorBlockRef = createRef();
+    }
+
     onSubmitHandler = submitData => {
         alert(`Data: ${JSON.stringify(submitData)}`);
+    };
+
+    onRawSubmitHandler = (formControls, validity) => {
+        if (!validity) {
+            setTimeout(() => {
+                this.errorBlockRef.current.focus();
+            });
+        }
     };
 
     render() {
@@ -28,11 +42,18 @@ class FormsGuide extends Component {
                         <WorkingExample
                             heading={t('forms.demo.example.heading')}
                         >
-                            <Form onSubmit={this.onSubmitHandler}>
+                            <Form
+                                onSubmit={this.onSubmitHandler}
+                                onRawSubmit={this.onRawSubmitHandler}
+                            >
                                 {({ formControls, validity, hasSubmitted }) => (
                                     <Fragment>
                                         {!validity && hasSubmitted ? (
                                             <ErrorBlock
+                                                headingText={t(
+                                                    'forms.demo.errorBlock.heading'
+                                                )}
+                                                ref={this.errorBlockRef}
                                                 formControls={formControls}
                                             />
                                         ) : null}

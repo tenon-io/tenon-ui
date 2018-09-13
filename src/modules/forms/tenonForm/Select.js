@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import RequiredLabel from '../RequiredLabel';
+import FeedbackBlock from './FeedbackBlock';
 
 /**
  * @component
@@ -41,49 +42,53 @@ import RequiredLabel from '../RequiredLabel';
  * extraneous properties that should not be rendered on an
  * <select> in the DOM can create run time errors.
  */
-const Select = ({
-    contentHintText,
-    errorText,
-    getLabelProps,
-    getSelectProps,
-    getErrorProps,
-    getContentHintProps,
-    labelText,
-    labelProps,
-    showError,
-    className,
-    requiredText,
-    children,
-    ...rest
-}) => (
-    <div className="form-group">
-        <div className="field-wrapper">
-            <RequiredLabel
-                requiredText={requiredText || null}
-                {...getLabelProps(labelProps)}
-            >
-                {labelText}
-            </RequiredLabel>
-            <select
-                className={
-                    classNames(className, { 'has-error': showError }) || null
-                }
-                {...getSelectProps(rest)}
-            >
-                {children}
-            </select>
+const Select = forwardRef(
+    (
+        {
+            contentHintText,
+            errorText,
+            getLabelProps,
+            getSelectProps,
+            getErrorProps,
+            getContentHintProps,
+            labelText,
+            labelProps,
+            showError,
+            className,
+            requiredText,
+            children,
+            ...rest
+        },
+        ref
+    ) => (
+        <div className="form-group">
+            <div className="field-wrapper">
+                <RequiredLabel
+                    requiredText={requiredText || null}
+                    {...getLabelProps(labelProps)}
+                >
+                    {labelText}
+                </RequiredLabel>
+                <select
+                    ref={ref}
+                    className={
+                        classNames(className, { 'has-error': showError }) ||
+                        null
+                    }
+                    {...getSelectProps(rest)}
+                >
+                    {children}
+                </select>
+            </div>
+            <FeedbackBlock
+                getContentHintProps={getContentHintProps}
+                getErrorProps={getErrorProps}
+                errorText={errorText}
+                contentHintText={contentHintText}
+                showError={showError}
+            />
         </div>
-        {contentHintText && getContentHintProps ? (
-            <div className="info-wrapper">
-                <span {...getContentHintProps()}>{contentHintText}</span>
-            </div>
-        ) : null}
-        {showError && getErrorProps ? (
-            <div className="error-wrapper">
-                <span {...getErrorProps()}>{errorText}</span>
-            </div>
-        ) : null}
-    </div>
+    )
 );
 
 Select.displayName = 'Select';

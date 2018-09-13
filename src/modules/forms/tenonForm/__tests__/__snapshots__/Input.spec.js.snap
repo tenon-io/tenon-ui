@@ -21,6 +21,9 @@ exports[`Input should render a content hint if given 1`] = `
     class="info-wrapper"
   >
     <span
+      class="icon"
+    />
+    <span
       id="bar"
     >
       Content hint test
@@ -50,6 +53,9 @@ exports[`Input should render an error text when invalid 1`] = `
   <div
     class="error-wrapper"
   >
+    <span
+      class="icon"
+    />
     <span
       id="bar"
     >

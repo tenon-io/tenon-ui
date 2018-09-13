@@ -8,7 +8,7 @@
     "welcome": {
         "heading": "The Tenon.io React components library",
         "p1":
-            "Welcome to the our accessible components library. Please select one of the components from the Components Library menu to go further."
+        "Welcome to the our accessible components library. Please select one of the components from the Components Library menu to go further."
     },
     "focusCatcher": {
         "heading": "Focus catcher component",
@@ -26,6 +26,7 @@
             "example": {
                 "heading": "Working example"
             },
+            "errorBlock": { "heading": "The form contains errors" },
             "code": {
                 "heading": "Code example",
                 "reset": "The forms example code was reset",
@@ -34,7 +35,7 @@
             "petName": {
                 "label": "Name of pet",
                 "contentHint":
-                    "The pet's name must be longer than 5 characters",
+                "The pet's name must be longer than 5 characters",
                 "errorMessageRequired": "A name is required for your pet",
                 "errorMessageTooShort": "The pet's name is too short"
             },
@@ -113,7 +114,7 @@
     "spinnerButton": {
         "demo": {
             "heading":
-                "Spinner button component with screen reader announcement",
+            "Spinner button component with screen reader announcement",
             "example": {
                 "heading": "Working example",
                 "text": "Click me",
