@@ -33,7 +33,7 @@ class RequiredLabel extends Component {
                 {children}
                 {isRequired ? (
                     <span aria-hidden="true" className="required">
-                        {requiredText || '( required )'}
+                        {requiredText || ''}
                     </span>
                 ) : null}
             </label>

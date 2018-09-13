@@ -27,6 +27,7 @@
                 "heading": "Working example"
             },
             "errorBlock": { "heading": "The form contains errors" },
+            "requiredText": "( required )",
             "code": {
                 "heading": "Code example",
                 "reset": "The forms example code was reset",

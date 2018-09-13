@@ -36,7 +36,7 @@ class RequiredLegend extends Component {
                 {children}
                 {isRequired ? (
                     <span aria-hidden="true" className="required">
-                        {requiredText || '( required )'}
+                        {requiredText || ''}
                     </span>
                 ) : null}
             </legend>

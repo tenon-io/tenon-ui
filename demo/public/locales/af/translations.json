@@ -27,6 +27,7 @@
                 "heading": "Werkende voorbeeld"
             },
             "errorBlock": { "heading": "Daar is foute in die vorm" },
+            "requiredText": "( verplig )",
             "code": {
                 "heading": "Voorbeeld kode",
                 "reset": "Die forms voorbeeld kode is geherstel",

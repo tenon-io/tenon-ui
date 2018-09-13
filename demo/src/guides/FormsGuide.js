@@ -78,6 +78,9 @@ class FormsGuide extends Component {
                                                 <Input
                                                     {...props}
                                                     required="required"
+                                                    requiredText={t(
+                                                        'forms.demo.requiredText'
+                                                    )}
                                                     contentHintText={t(
                                                         'forms.demo.petName.contentHint'
                                                     )}
@@ -102,6 +105,9 @@ class FormsGuide extends Component {
                                                 <Input
                                                     {...props}
                                                     required="required"
+                                                    requiredText={t(
+                                                        'forms.demo.requiredText'
+                                                    )}
                                                     labelText={t(
                                                         'forms.demo.petType.label'
                                                     )}
@@ -137,6 +143,9 @@ class FormsGuide extends Component {
                                                         'forms.demo.petWeight.label'
                                                     )}
                                                     required="required"
+                                                    requiredText={t(
+                                                        'forms.demo.requiredText'
+                                                    )}
                                                 >
                                                     <option>
                                                         {t(
@@ -179,6 +188,9 @@ class FormsGuide extends Component {
                                                         'forms.demo.petColour.legend'
                                                     )}
                                                     required="required"
+                                                    requiredText={t(
+                                                        'forms.demo.requiredText'
+                                                    )}
                                                     options={{
                                                         black: t(
                                                             'forms.demo.petColour.blackOption'

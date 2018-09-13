@@ -1,10 +1,18 @@
+jest.mock('uuid/v4');
+
 import React from 'react';
 import { render, cleanup } from 'react-testing-library';
 import 'jest-dom/extend-expect';
 import ErrorBlock from '../ErrorBlock';
+import uuidv4 from 'uuid/v4';
 
-xdescribe('ErrorBlock', () => {
+describe('ErrorBlock', () => {
     afterEach(cleanup);
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+        uuidv4.mockReturnValueOnce('sectionId');
+    });
 
     it('should render as an unordered list to track the number of items', () => {
         const mockControls = {
@@ -15,14 +23,13 @@ xdescribe('ErrorBlock', () => {
             }
         };
         const { container, getByText } = render(
-            <ErrorBlock formControls={mockControls} />
+            <ErrorBlock formControls={mockControls} headingText="Some errors" />
         );
         expect(getByText('User name is required.')).toHaveAttribute(
             'href',
             '#usernameControl'
         );
-        const list = container.querySelector('ul');
-        expect(list).toMatchSnapshot();
+        expect(container).toMatchSnapshot();
     });
 
     it('should render the error text and a hash href for each link', () => {
@@ -39,7 +46,7 @@ xdescribe('ErrorBlock', () => {
             }
         };
         const { getByText } = render(
-            <ErrorBlock formControls={mockControls} />
+            <ErrorBlock formControls={mockControls} headingText="Some errors" />
         );
         expect(getByText('Your password is too short.')).toHaveAttribute(
             'href',
@@ -75,7 +82,7 @@ xdescribe('ErrorBlock', () => {
             }
         };
         const { container, getByText } = render(
-            <ErrorBlock formControls={mockControls} />
+            <ErrorBlock formControls={mockControls} headingText="Some errors" />
         );
         expect(getByText('Your password is too short.')).toBeInTheDocument();
         expect(getByText('Please enter a TFA token.')).toBeInTheDocument();
@@ -86,7 +93,7 @@ xdescribe('ErrorBlock', () => {
     it('should not render for an empty object to avoid polluting the DOM with an empty ul', () => {
         const { container } = render(
             <div>
-                <ErrorBlock formControls={{}} />
+                <ErrorBlock formControls={{}} headingText="Some errors" />
             </div>
         );
         expect(container.firstChild).toBeEmpty();

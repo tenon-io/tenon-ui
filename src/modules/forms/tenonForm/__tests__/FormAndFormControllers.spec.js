@@ -1,8 +1,6 @@
-import classNames from 'classnames';
-
 jest.mock('uuid/v4');
 
-import React, { Fragment } from 'react';
+import React from 'react';
 import { cleanup, fireEvent, render } from 'react-testing-library';
 import 'jest-dom/extend-expect';
 import Form from '../Form';
