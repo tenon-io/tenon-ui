@@ -69,7 +69,6 @@
     &:hover,
     &[aria-selected='true'] {
         position: relative;
-
         &::before {
             bottom: 0;
             border-bottom: $bar-thickness solid $color-tabs-active-bar;

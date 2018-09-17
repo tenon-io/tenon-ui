@@ -8,6 +8,8 @@ import {
     RadioGroup,
     Select,
     TextArea,
+    Checkbox,
+    CheckboxGroup,
     validator
 } from '../../../src/index';
 import { I18n } from 'react-i18next';
@@ -205,6 +207,50 @@ class FormsGuide extends Component {
                                                 />
                                             )}
                                         </Form.RadioGroupController>
+
+                                        <Form.CheckboxController
+                                            name="signUp"
+                                            validators={[
+                                                validator(
+                                                    value => value === true,
+                                                    'You must agree to the terms and conditions'
+                                                )
+                                            ]}
+                                        >
+                                            {props => (
+                                                <Checkbox
+                                                    {...props}
+                                                    required="required"
+                                                    requiredText="( required )"
+                                                    labelText="I agree to the terms and conditions"
+                                                />
+                                            )}
+                                        </Form.CheckboxController>
+
+                                        <Form.CheckboxGroupController
+                                            name="checkGroup1"
+                                            validators={[
+                                                validator(
+                                                    value => value.length > 0,
+                                                    'You must select at least one checkbox'
+                                                )
+                                            ]}
+                                        >
+                                            {props => (
+                                                <CheckboxGroup
+                                                    legend="Test group"
+                                                    contentHintText="Please select an option"
+                                                    options={{
+                                                        check1: 'Check 1',
+                                                        check2: 'Check 2',
+                                                        check3: 'Check 3'
+                                                    }}
+                                                    required="required"
+                                                    requiredText="( required )"
+                                                    {...props}
+                                                />
+                                            )}
+                                        </Form.CheckboxGroupController>
 
                                         <button type="submit">
                                             {t('forms.demo.submitButton.label')}

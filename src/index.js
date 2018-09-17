@@ -11,6 +11,8 @@ export Input from './modules/forms/tenonForm/Input';
 export TextArea from './modules/forms/tenonForm/TextArea';
 export Select from './modules/forms/tenonForm/Select';
 export RadioGroup from './modules/forms/tenonForm/RadioGroup';
+export Checkbox from './modules/forms/tenonForm/Checkbox';
+export CheckboxGroup from './modules/forms/tenonForm/CheckboxGroup';
 export Notification from './modules/notifications/Notification';
 export Spinner from './modules/notifications/Spinner';
 export SpinnerButton from './modules/forms/SpinnerButton';

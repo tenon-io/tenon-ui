@@ -26,7 +26,7 @@ describe('RequiredLegend', () => {
     });
 
     it('should render with the required indicator', () => {
-        const { container, rerender } = render(
+        const { container, rerender, debug } = render(
             <div>
                 <RequiredLegend
                     id="legendId"
@@ -35,7 +35,7 @@ describe('RequiredLegend', () => {
                 >
                     Test legend
                 </RequiredLegend>
-                <div aria-labelledby="legendId" required />
+                <div aria-labelledby="legendId" aria-required="true" />
             </div>
         );
 
@@ -50,7 +50,7 @@ describe('RequiredLegend', () => {
                 >
                     Test legend
                 </RequiredLegend>
-                <div aria-labelledby="legendId" required />
+                <div aria-labelledby="legendId" aria-required="true" />
             </div>
         );
 
@@ -67,7 +67,7 @@ describe('RequiredLegend', () => {
                 <RequiredLegend id="legendId" className="label-class">
                     Test legend
                 </RequiredLegend>
-                <div aria-labelledby="legendId" required />
+                <div aria-labelledby="legendId" aria-required="false" />
             </div>
         );
 
@@ -78,12 +78,12 @@ describe('RequiredLegend', () => {
                 <RequiredLegend id="legendId" className="label-class">
                     Test legend
                 </RequiredLegend>
-                <div aria-labelledby="legendId" required />
+                <div aria-labelledby="legendId" aria-required="false" />
             </div>
         );
 
         expect(
-            container.querySelector('legend.label-class.required').innerHTML
-        ).toBe('Test legend<span aria-hidden="true" class="required"></span>');
+            container.querySelector('legend.label-class.required')
+        ).toBeNull();
     });
 });

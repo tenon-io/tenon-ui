@@ -1718,13 +1718,13 @@ describe('Form.RadioGroupController', () => {
 
         const inputOne = getByLabelText('One');
         expect(inputOne).toHaveAttribute('id', 'inputLabelId-one');
-        expect(inputOne).toHaveAttribute('name', 'testRadio');
+        expect(inputOne).toHaveAttribute('name', 'testRadio-one');
         expect(inputOne).toHaveAttribute('value', 'one');
         expect(inputOne.attributes.length).toBe(4);
 
         const inputTwo = getByLabelText('Two');
         expect(inputTwo).toHaveAttribute('id', 'inputLabelId-two');
-        expect(inputTwo).toHaveAttribute('name', 'testRadio');
+        expect(inputTwo).toHaveAttribute('name', 'testRadio-two');
         expect(inputTwo).toHaveAttribute('value', 'two');
         expect(inputTwo.attributes.length).toBe(4);
     });
@@ -1842,9 +1842,8 @@ describe('Form.RadioGroupController', () => {
         );
 
         const radioGroup = container.querySelector('[role="radiogroup"]');
-        expect(radioGroup).toHaveAttribute('required');
         expect(radioGroup).toHaveAttribute('aria-required', 'true');
-        expect(radioGroup.attributes.length).toBe(6);
+        expect(radioGroup.attributes.length).toBe(5);
     });
 
     it('should validate a radiogroup and set an error text when appropriate', () => {

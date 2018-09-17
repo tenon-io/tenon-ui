@@ -13,12 +13,16 @@ import PropTypes from 'prop-types';
  * @prop {string} requiredText - The text to show when the field
  * is required.
  * @prop {string} className - The class to put on the legend.
+ * @prop {boolean} isRequired - An override value for the automatic
+ * check for the required flag. This is done as checkbox groups
+ * cannot take the aria-required.
  */
 class RequiredLegend extends Component {
     static propTypes = {
         children: PropTypes.node.isRequired,
         requiredText: PropTypes.string,
-        className: PropTypes.string
+        className: PropTypes.string,
+        isRequired: PropTypes.bool
     };
 
     state = {
@@ -31,7 +35,10 @@ class RequiredLegend extends Component {
         );
         return {
             isRequired:
-                linkedContainer && linkedContainer.hasAttribute('required')
+                props.isRequired === false || props.isRequired === true
+                    ? props.isRequired
+                    : linkedContainer &&
+                      linkedContainer.getAttribute('aria-required') === 'true'
         };
     }
 

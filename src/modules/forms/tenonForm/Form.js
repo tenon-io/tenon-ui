@@ -6,7 +6,9 @@ import {
     RadioGroupController,
     SelectController,
     TextareaController,
-    TextInputController
+    TextInputController,
+    CheckboxController,
+    CheckboxGroupController
 } from './FormControllers';
 
 /**
@@ -72,6 +74,8 @@ class Form extends Component {
     static TextareaController = TextareaController;
     static SelectController = SelectController;
     static RadioGroupController = RadioGroupController;
+    static CheckboxController = CheckboxController;
+    static CheckboxGroupController = CheckboxGroupController;
 
     static propTypes = {
         children: PropTypes.func.isRequired,

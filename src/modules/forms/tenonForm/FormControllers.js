@@ -9,7 +9,18 @@ const controllerType = {
     input: 'input',
     textarea: 'textarea',
     select: 'select',
-    radioGroup: 'radioGroup'
+    radioGroup: 'radioGroup',
+    checkbox: 'checkbox',
+    checkboxGroup: 'checkboxGroup'
+};
+
+const defaultValues = {
+    input: '',
+    textarea: '',
+    select: '',
+    radioGroup: '',
+    checkbox: false,
+    checkboxGroup: []
 };
 
 /**
@@ -84,7 +95,10 @@ class FormController extends Component {
         this.contentHintId = uuidv4();
         this.errorId = uuidv4();
 
-        if (props.type === controllerType.radioGroup) {
+        if (
+            props.type === controllerType.radioGroup ||
+            props.type === controllerType.checkboxGroup
+        ) {
             this.legendId = uuidv4();
             this.containerId = uuidv4();
         }
@@ -118,13 +132,14 @@ class FormController extends Component {
             name,
             type
         } = this.props;
-        const validationObject = this.runValidation('');
+        const validationObject = this.runValidation(defaultValues[type]);
         registerControl(
             name,
-            type === controllerType.radioGroup
+            type === controllerType.radioGroup ||
+            type === controllerType.checkboxGroup
                 ? this.containerId
                 : this.controlId,
-            '',
+            defaultValues[type],
             validationObject.validity,
             validationObject.errorText
         );
@@ -188,8 +203,34 @@ class FormController extends Component {
      * @param {SyntheticKeyboardEvent} e
      */
     onChangeHandler = e => {
-        const { setControlValue, name } = this.props;
-        setControlValue(name, e.currentTarget.value);
+        const { setControlValue, name, type } = this.props;
+        setControlValue(
+            name,
+            type === controllerType.checkbox ? e.target.checked : e.target.value
+        );
+    };
+
+    /**
+     * @function
+     * Event handler for the onchange event of the connected
+     * <input type="checkbox">
+     *
+     * Sets the current value in the smart form state.
+     *
+     * This event is only used for checkboxes in a checkbox
+     * group.
+     *
+     * @param {SyntheticKeyboardEvent} e
+     */
+    onGroupCheckboxChangeHandler = e => {
+        const { getControlValue, setControlValue, name } = this.props;
+        const currentValue = getControlValue(name);
+        setControlValue(
+            name,
+            e.target.checked
+                ? [...currentValue, e.target.name]
+                : currentValue.filter(value => value !== e.target.name)
+        );
     };
 
     /**
@@ -250,6 +291,31 @@ class FormController extends Component {
 
     /**
      * @function
+     * Returns the duplicated input control props used in both
+     * a text input as well as a checkbox input.
+     *
+     * @param required {object} props - Object with the given
+     * props to configure the input.
+     *
+     * @returns {object}
+     */
+    getBaseInputProps = ({ onChange, ...props }) => {
+        const { name, getControlValidity, registerErrors } = this.props;
+        const isValid = registerErrors ? getControlValidity(name) : true;
+
+        return {
+            'aria-describedby': this.getAriaDescribedBy(isValid),
+            'aria-disabled': props['disabled'] ? 'true' : null,
+            'aria-invalid': isValid ? null : 'true',
+            'aria-required': props['required'] ? 'true' : null,
+            id: this.controlId,
+            name,
+            onChange: callAll(onChange, this.onChangeHandler)
+        };
+    };
+
+    /**
+     * @function
      * Prop getter for the <input>.
      *
      * Composes the given prop configuration object with the
@@ -258,24 +324,12 @@ class FormController extends Component {
      * @param {object} props
      * @returns {object}
      */
-    getInputProps = ({ onChange, ...props } = {}) => {
-        const {
-            name,
-            getControlValue,
-            getControlValidity,
-            registerErrors
-        } = this.props;
-        const isValid = registerErrors ? getControlValidity(name) : true;
+    getInputProps = (props = {}) => {
+        const { name, getControlValue } = this.props;
 
         return {
-            'aria-describedby': this.getAriaDescribedBy(isValid),
-            'aria-disabled': props['disabled'] ? 'true' : null,
-            'aria-invalid': isValid ? null : 'true',
+            ...this.getBaseInputProps(props),
             'aria-readonly': props['readOnly'] ? 'true' : null,
-            'aria-required': props['required'] ? 'true' : null,
-            id: this.controlId,
-            name,
-            onChange: callAll(onChange, this.onChangeHandler),
             type: 'text',
             value: getControlValue(name),
             ...props
@@ -318,6 +372,77 @@ class FormController extends Component {
 
     /**
      * @function
+     * Prop getter for the <input type="checkbox">.
+     *
+     * Composes the given prop configuration object with the
+     * standard control props object.
+     *
+     * @param {object} props
+     * @returns {object}
+     */
+    getCheckboxProps = (props = {}) => {
+        const { name, getControlValue } = this.props;
+
+        return {
+            ...this.getBaseInputProps(props),
+            type: 'checkbox',
+            checked: getControlValue(name),
+            ...props
+        };
+    };
+
+    /**
+     * @function
+     * Prop getter for the <input type="checkbox"> when used
+     * inside a checkbox group. As the checkbox group now
+     * manages the combined data as one entry in the smart
+     * form, these differ from a checkbox used by itself.
+     *
+     * Composes the given prop configuration object with the
+     * standard control props object.
+     *
+     * @param {object} props
+     * @returns {object}
+     */
+    getGroupCheckboxProps = ({ onChange, name, ...props } = {}) => {
+        const { getControlValue, name: controllerName } = this.props;
+        return {
+            'aria-disabled': props['disabled'] ? 'true' : null,
+            name,
+            id: `${this.controlId}-${name}`,
+            type: 'checkbox',
+            onChange: callAll(onChange, this.onGroupCheckboxChangeHandler),
+            checked: getControlValue(controllerName).indexOf(name) !== -1,
+            ...props
+        };
+    };
+
+    /**
+     * @function
+     * Prop getter for the checkbox group container element.
+     *
+     * Composes the given prop configuration object with the
+     * standard control props object.
+     *
+     * @param {object} props
+     * @returns {object}
+     */
+    getCheckboxGroupProps = ({ required, ...props } = {}) => {
+        const { name, getControlValidity, registerErrors } = this.props;
+        const isValid = registerErrors ? getControlValidity(name) : true;
+        return {
+            id: this.containerId,
+            tabIndex: '-1',
+            'aria-describedby': this.getAriaDescribedBy(isValid),
+            'aria-invalid': isValid ? null : 'true',
+            'aria-labelledby': this.legendId,
+            role: 'group',
+            ...props
+        };
+    };
+
+    /**
+     * @function
      * Prop getter for every <input> of a group of radio buttons.
      *
      * Composes the given prop configuration object with the
@@ -335,7 +460,7 @@ class FormController extends Component {
 
         return {
             'aria-disabled': props['disabled'] ? 'true' : null,
-            name,
+            name: `${name}-${value}`,
             id: `${this.controlId}-${value}`,
             type: 'radio',
             onChange: callAll(onChange, this.onChangeHandler),
@@ -355,7 +480,7 @@ class FormController extends Component {
      * @param {object} props
      * @returns {object}
      */
-    getRadioGroupProps = (props = {}) => {
+    getRadioGroupProps = ({ required, props } = {}) => {
         const { name, getControlValidity, registerErrors } = this.props;
         const isValid = registerErrors ? getControlValidity(name) : true;
         return {
@@ -363,7 +488,7 @@ class FormController extends Component {
             tabIndex: '-1',
             'aria-describedby': this.getAriaDescribedBy(isValid),
             'aria-invalid': isValid ? null : 'true',
-            'aria-required': props['required'] ? 'true' : null,
+            'aria-required': required ? 'true' : null,
             'aria-labelledby': this.legendId,
             role: 'radiogroup',
             ...props
@@ -447,6 +572,16 @@ class FormController extends Component {
             case controllerType.select:
                 return {
                     getSelectProps: this.getSelectProps
+                };
+            case controllerType.checkbox:
+                return {
+                    getCheckboxProps: this.getCheckboxProps
+                };
+            case controllerType.checkboxGroup:
+                return {
+                    getLegendProps: this.getLegendProps,
+                    getCheckboxProps: this.getGroupCheckboxProps,
+                    getCheckboxGroupProps: this.getCheckboxGroupProps
                 };
             case controllerType.radioGroup:
                 return {
@@ -577,3 +712,33 @@ SelectController.propTypes = controllerPropTypes;
 export const RadioGroupController = props =>
     getController(props, controllerType.radioGroup);
 RadioGroupController.propTypes = controllerPropTypes;
+
+/**
+ * @component
+ * Single checkbox controller
+ *
+ * @prop required {function} children - Render function for the
+ * text input view.
+ * @prop required {string} name - The name to register the control
+ * with, with the smartform.
+ * @validators {array} validators - Array of validator functions to
+ * run
+ */
+export const CheckboxController = props =>
+    getController(props, controllerType.checkbox);
+CheckboxController.propTypes = controllerPropTypes;
+
+/**
+ * @component
+ * Checkbox group controller
+ *
+ * @prop required {function} children - Render function for the
+ * text input view.
+ * @prop required {string} name - The name to register the control
+ * with, with the smartform.
+ * @validators {array} validators - Array of validator functions to
+ * run
+ */
+export const CheckboxGroupController = props =>
+    getController(props, controllerType.checkboxGroup);
+CheckboxGroupController.propTypes = controllerPropTypes;
