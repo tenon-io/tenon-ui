@@ -43,7 +43,13 @@ class RequiredLegend extends Component {
     }
 
     render() {
-        const { children, requiredText, className, ...props } = this.props;
+        const {
+            children,
+            requiredText,
+            className,
+            isRequired: requiredProp,
+            ...props
+        } = this.props;
         const { isRequired } = this.state;
         return (
             <legend

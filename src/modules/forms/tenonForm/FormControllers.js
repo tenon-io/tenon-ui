@@ -224,12 +224,14 @@ class FormController extends Component {
      */
     onGroupCheckboxChangeHandler = e => {
         const { getControlValue, setControlValue, name } = this.props;
-        const currentValue = getControlValue(name);
+        // The value is first stripped to ensure any double
+        //invocations of the handler is idempotent.
+        const strippedValue = getControlValue(name).filter(
+            value => value !== e.target.name
+        );
         setControlValue(
             name,
-            e.target.checked
-                ? [...currentValue, e.target.name]
-                : currentValue.filter(value => value !== e.target.name)
+            e.target.checked ? [...strippedValue, e.target.name] : strippedValue
         );
     };
 
@@ -404,7 +406,7 @@ class FormController extends Component {
      * @param {object} props
      * @returns {object}
      */
-    getGroupCheckboxProps = ({ onChange, name, ...props } = {}) => {
+    getGroupCheckboxProps = ({ onChange, name, ...props }) => {
         const { getControlValue, name: controllerName } = this.props;
         return {
             'aria-disabled': props['disabled'] ? 'true' : null,

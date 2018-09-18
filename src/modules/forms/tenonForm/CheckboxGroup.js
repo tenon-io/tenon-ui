@@ -107,12 +107,12 @@ const CheckboxGroup = forwardRef(
     )
 );
 
-CheckboxGroup.displayName = 'RadioGroup';
+CheckboxGroup.displayName = 'CheckboxGroup';
 
 CheckboxGroup.propTypes = {
     legend: PropTypes.string.isRequired,
     options: PropTypes.object.isRequired,
-    getGroupCheckboxProps: PropTypes.func.isRequired,
+    getCheckboxProps: PropTypes.func.isRequired,
     getLegendProps: PropTypes.func.isRequired,
     getCheckboxGroupProps: PropTypes.func.isRequired,
     getLabelProps: PropTypes.func.isRequired,

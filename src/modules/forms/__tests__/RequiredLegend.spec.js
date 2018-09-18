@@ -26,7 +26,7 @@ describe('RequiredLegend', () => {
     });
 
     it('should render with the required indicator', () => {
-        const { container, rerender, debug } = render(
+        const { container, rerender } = render(
             <div>
                 <RequiredLegend
                     id="legendId"
@@ -64,26 +64,18 @@ describe('RequiredLegend', () => {
     it('should render with no requiredText', () => {
         const { container, rerender } = render(
             <div>
-                <RequiredLegend id="legendId" className="label-class">
+                <RequiredLegend
+                    id="legendId"
+                    className="label-class"
+                    isRequired={true}
+                >
                     Test legend
                 </RequiredLegend>
-                <div aria-labelledby="legendId" aria-required="false" />
-            </div>
-        );
-
-        //The tenon-ui elements will always update at least once when the
-        //controllers update their props.
-        rerender(
-            <div>
-                <RequiredLegend id="legendId" className="label-class">
-                    Test legend
-                </RequiredLegend>
-                <div aria-labelledby="legendId" aria-required="false" />
             </div>
         );
 
         expect(
-            container.querySelector('legend.label-class.required')
-        ).toBeNull();
+            container.querySelector('legend.label-class.required').innerHTML
+        ).toBe('Test legend<span aria-hidden="true" class="required"></span>');
     });
 });
