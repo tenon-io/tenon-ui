@@ -10,6 +10,7 @@ import {
     RadioGroup,
     validator
 } from '@tenon-io/tenon-ui';
+import { Checkbox, CheckboxGroup } from '../../../../src';
 
 const FormsExample = () => (
     <Form onSubmit={this.onSubmitHandler}>
@@ -39,6 +40,7 @@ const FormsExample = () => (
                         <Input
                             {...props}
                             required="required"
+                            requiredText="( required )"
                             contentHintText="The pet's name must be longer than 5 characters"
                             labelText="Name of pet"
                         />
@@ -55,6 +57,7 @@ const FormsExample = () => (
                         <Input
                             {...props}
                             require="required"
+                            requiredText="( required )"
                             labelText="Type of pet"
                         />
                     )}
@@ -81,6 +84,7 @@ const FormsExample = () => (
                             {...props}
                             labelText="Pet's weight"
                             required="required"
+                            requiredText="( required )"
                         >
                             <option>No weight category selected</option>
                             <option value="weightClass1">0-3kg</option>
@@ -101,6 +105,7 @@ const FormsExample = () => (
                             {...props}
                             legend="Please select an option"
                             required="required"
+                            requiredText="( required )"
                             options={{
                                 option1: 'Option 1',
                                 option2: 'Option 2',
@@ -109,6 +114,50 @@ const FormsExample = () => (
                         />
                     )}
                 </Form.RadioGroupController>
+
+                <Form.CheckboxGroupController
+                    name="petEat"
+                    validators={[
+                        validator(
+                            value => value.length > 0,
+                            'You need to select an eating time'
+                        )
+                    ]}
+                >
+                    {props => (
+                        <CheckboxGroup
+                            legend="When does your pet eat"
+                            contentHintText="Please select at least one"
+                            options={{
+                                morning: 'Morning',
+                                noon: 'Noon',
+                                night: 'Night'
+                            }}
+                            required="required"
+                            requiredText="( required )"
+                            {...props}
+                        />
+                    )}
+                </Form.CheckboxGroupController>
+
+                <Form.CheckboxController
+                    name="confirmInfo"
+                    validators={[
+                        validator(
+                            value => value === true,
+                            "You must confirm your pet's information"
+                        )
+                    ]}
+                >
+                    {props => (
+                        <Checkbox
+                            {...props}
+                            required="required"
+                            requiredText="( required )"
+                            labelText="I confirm that my pet's information is true"
+                        />
+                    )}
+                </Form.CheckboxController>
 
                 <button type="submit">'Save your pet'</button>
             </Fragment>

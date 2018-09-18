@@ -208,12 +208,53 @@ class FormsGuide extends Component {
                                             )}
                                         </Form.RadioGroupController>
 
+                                        <Form.CheckboxGroupController
+                                            name="petEat"
+                                            validators={[
+                                                validator(
+                                                    value => value.length > 0,
+                                                    t(
+                                                        'forms.demo.petLove.errorMessageRequired'
+                                                    )
+                                                )
+                                            ]}
+                                        >
+                                            {props => (
+                                                <CheckboxGroup
+                                                    legend={t(
+                                                        'forms.demo.petLove.legend'
+                                                    )}
+                                                    contentHintText={t(
+                                                        'forms.demo.petLove.contentHint'
+                                                    )}
+                                                    options={{
+                                                        morning: t(
+                                                            'forms.demo.petLove.morningOption'
+                                                        ),
+                                                        noon: t(
+                                                            'forms.demo.petLove.noonOption'
+                                                        ),
+                                                        night: t(
+                                                            'forms.demo.petLove.nightOption'
+                                                        )
+                                                    }}
+                                                    required="required"
+                                                    requiredText={t(
+                                                        'forms.demo.requiredText'
+                                                    )}
+                                                    {...props}
+                                                />
+                                            )}
+                                        </Form.CheckboxGroupController>
+
                                         <Form.CheckboxController
-                                            name="signUp"
+                                            name="confirmInfo"
                                             validators={[
                                                 validator(
                                                     value => value === true,
-                                                    'You must agree to the terms and conditions'
+                                                    t(
+                                                        'forms.demo.confirmInfo.errorMessageRequired'
+                                                    )
                                                 )
                                             ]}
                                         >
@@ -221,36 +262,15 @@ class FormsGuide extends Component {
                                                 <Checkbox
                                                     {...props}
                                                     required="required"
-                                                    requiredText="( required )"
-                                                    labelText="I agree to the terms and conditions"
+                                                    requiredText={t(
+                                                        'forms.demo.requiredText'
+                                                    )}
+                                                    labelText={t(
+                                                        'forms.demo.confirmInfo.label'
+                                                    )}
                                                 />
                                             )}
                                         </Form.CheckboxController>
-
-                                        <Form.CheckboxGroupController
-                                            name="checkGroup1"
-                                            validators={[
-                                                validator(
-                                                    value => value.length > 0,
-                                                    'You must select at least one checkbox'
-                                                )
-                                            ]}
-                                        >
-                                            {props => (
-                                                <CheckboxGroup
-                                                    legend="Test group"
-                                                    contentHintText="Please select an option"
-                                                    options={{
-                                                        check1: 'Check 1',
-                                                        check2: 'Check 2',
-                                                        check3: 'Check 3'
-                                                    }}
-                                                    required="required"
-                                                    requiredText="( required )"
-                                                    {...props}
-                                                />
-                                            )}
-                                        </Form.CheckboxGroupController>
 
                                         <button type="submit">
                                             {t('forms.demo.submitButton.label')}

@@ -7,8 +7,7 @@
     },
     "welcome": {
         "heading": "The Tenon.io React components library",
-        "p1":
-        "Welcome to the our accessible components library. Please select one of the components from the Components Library menu to go further."
+        "p1": "Welcome to the our accessible components library. Please select one of the components from the Components Library menu to go further."
     },
     "focusCatcher": {
         "heading": "Focus catcher component",
@@ -35,8 +34,7 @@
             },
             "petName": {
                 "label": "Name of pet",
-                "contentHint":
-                "The pet's name must be longer than 5 characters",
+                "contentHint": "The pet's name must be longer than 5 characters",
                 "errorMessageRequired": "A name is required for your pet",
                 "errorMessageTooShort": "The pet's name is too short"
             },
@@ -61,6 +59,18 @@
                 "blackOption": "Black",
                 "whiteOption": "White",
                 "brownOption": "Brown"
+            },
+            "petLove": {
+                "legend": "When does your pet eat",
+                "errorMessageRequired": "You need so select an eating time",
+                "contentHint": "Please select at least one",
+                "morningOption": "Morning",
+                "noonOption": "Noon",
+                "nightOption": "Night"
+            },
+            "confirmInfo": {
+                "label": "I confirm that my pet's information is true",
+                "errorMessageRequired": "You must confirm your pet's information"
             },
             "submitButton": {
                 "label": "Save"
@@ -114,8 +124,7 @@
     },
     "spinnerButton": {
         "demo": {
-            "heading":
-            "Spinner button component with screen reader announcement",
+            "heading": "Spinner button component with screen reader announcement",
             "example": {
                 "heading": "Working example",
                 "text": "Click me",
