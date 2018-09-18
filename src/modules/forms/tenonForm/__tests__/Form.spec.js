@@ -383,4 +383,292 @@ describe('Form', () => {
             }
         });
     });
+
+    it('should allow loading of form data on mount', () => {
+        const { getByLabelText } = render(
+            <Form
+                onSubmit={jest.fn()}
+                formData={{
+                    testInput: 'value one',
+                    testInput2: 'value two'
+                }}
+            >
+                {() => (
+                    <div>
+                        <Form.TextInputController name="testInput">
+                            {({ getInputProps, getLabelProps }) => (
+                                <div>
+                                    <label {...getLabelProps()}>
+                                        Test input
+                                    </label>
+                                    <input {...getInputProps()} />
+                                </div>
+                            )}
+                        </Form.TextInputController>
+                        <Form.TextInputController name="testInput2">
+                            {({ getInputProps, getLabelProps }) => (
+                                <div>
+                                    <label {...getLabelProps()}>
+                                        Test input 2
+                                    </label>
+                                    <input {...getInputProps()} />
+                                </div>
+                            )}
+                        </Form.TextInputController>
+                    </div>
+                )}
+            </Form>
+        );
+
+        expect(getByLabelText('Test input')).toHaveAttribute(
+            'value',
+            'value one'
+        );
+        expect(getByLabelText('Test input 2')).toHaveAttribute(
+            'value',
+            'value two'
+        );
+    });
+
+    it('should allow loading of form data as a prop update', () => {
+        const formData = {
+            testInput: 'value one',
+            testInput2: 'value two'
+        };
+
+        const { getByLabelText, rerender } = render(
+            <Form onSubmit={jest.fn()} formData={{}}>
+                {() => (
+                    <div>
+                        <Form.TextInputController name="testInput">
+                            {({ getInputProps, getLabelProps }) => (
+                                <div>
+                                    <label {...getLabelProps()}>
+                                        Test input
+                                    </label>
+                                    <input {...getInputProps()} />
+                                </div>
+                            )}
+                        </Form.TextInputController>
+                        <Form.TextInputController name="testInput2">
+                            {({ getInputProps, getLabelProps }) => (
+                                <div>
+                                    <label {...getLabelProps()}>
+                                        Test input 2
+                                    </label>
+                                    <input {...getInputProps()} />
+                                </div>
+                            )}
+                        </Form.TextInputController>
+                    </div>
+                )}
+            </Form>
+        );
+
+        expect(getByLabelText('Test input')).toHaveAttribute('value', '');
+        expect(getByLabelText('Test input 2')).toHaveAttribute('value', '');
+
+        rerender(
+            <Form onSubmit={jest.fn()} formData={formData}>
+                {() => (
+                    <div>
+                        <Form.TextInputController name="testInput">
+                            {({ getInputProps, getLabelProps }) => (
+                                <div>
+                                    <label {...getLabelProps()}>
+                                        Test input
+                                    </label>
+                                    <input {...getInputProps()} />
+                                </div>
+                            )}
+                        </Form.TextInputController>
+                        <Form.TextInputController name="testInput2">
+                            {({ getInputProps, getLabelProps }) => (
+                                <div>
+                                    <label {...getLabelProps()}>
+                                        Test input 2
+                                    </label>
+                                    <input {...getInputProps()} />
+                                </div>
+                            )}
+                        </Form.TextInputController>
+                    </div>
+                )}
+            </Form>
+        );
+
+        expect(getByLabelText('Test input')).toHaveAttribute(
+            'value',
+            'value one'
+        );
+        expect(getByLabelText('Test input 2')).toHaveAttribute(
+            'value',
+            'value two'
+        );
+    });
+
+    it('should allow loading partial updates', () => {
+        const formData = {
+            testInput2: 'value two'
+        };
+
+        const { getByLabelText, rerender } = render(
+            <Form onSubmit={jest.fn()} formData={{}}>
+                {() => (
+                    <div>
+                        <Form.TextInputController name="testInput">
+                            {({ getInputProps, getLabelProps }) => (
+                                <div>
+                                    <label {...getLabelProps()}>
+                                        Test input
+                                    </label>
+                                    <input {...getInputProps()} />
+                                </div>
+                            )}
+                        </Form.TextInputController>
+                        <Form.TextInputController name="testInput2">
+                            {({ getInputProps, getLabelProps }) => (
+                                <div>
+                                    <label {...getLabelProps()}>
+                                        Test input 2
+                                    </label>
+                                    <input {...getInputProps()} />
+                                </div>
+                            )}
+                        </Form.TextInputController>
+                    </div>
+                )}
+            </Form>
+        );
+
+        expect(getByLabelText('Test input')).toHaveAttribute('value', '');
+        expect(getByLabelText('Test input 2')).toHaveAttribute('value', '');
+
+        rerender(
+            <Form onSubmit={jest.fn()} formData={formData}>
+                {() => (
+                    <div>
+                        <Form.TextInputController name="testInput">
+                            {({ getInputProps, getLabelProps }) => (
+                                <div>
+                                    <label {...getLabelProps()}>
+                                        Test input
+                                    </label>
+                                    <input {...getInputProps()} />
+                                </div>
+                            )}
+                        </Form.TextInputController>
+                        <Form.TextInputController name="testInput2">
+                            {({ getInputProps, getLabelProps }) => (
+                                <div>
+                                    <label {...getLabelProps()}>
+                                        Test input 2
+                                    </label>
+                                    <input {...getInputProps()} />
+                                </div>
+                            )}
+                        </Form.TextInputController>
+                    </div>
+                )}
+            </Form>
+        );
+
+        expect(getByLabelText('Test input')).toHaveAttribute('value', '');
+        expect(getByLabelText('Test input 2')).toHaveAttribute(
+            'value',
+            'value two'
+        );
+    });
+
+    it('should recalc validation if data is pushed into the form', () => {
+        let formIsValid = null;
+        const formData = {
+            testInput: 'value one',
+            testInput2: 'value two'
+        };
+
+        const { rerender } = render(
+            <Form onSubmit={jest.fn()} formData={{}}>
+                {({ validity }) => {
+                    formIsValid = validity;
+                    return (
+                        <div>
+                            <Form.TextInputController
+                                name="testInput"
+                                validators={[
+                                    validator(
+                                        isRequired,
+                                        'A value is required.'
+                                    )
+                                ]}
+                            >
+                                {({ getInputProps, getLabelProps }) => (
+                                    <div>
+                                        <label {...getLabelProps()}>
+                                            Test input
+                                        </label>
+                                        <input {...getInputProps()} />
+                                    </div>
+                                )}
+                            </Form.TextInputController>
+                            <Form.TextInputController name="testInput2">
+                                {({ getInputProps, getLabelProps }) => (
+                                    <div>
+                                        <label {...getLabelProps()}>
+                                            Test input 2
+                                        </label>
+                                        <input {...getInputProps()} />
+                                    </div>
+                                )}
+                            </Form.TextInputController>
+                        </div>
+                    );
+                }}
+            </Form>
+        );
+
+        expect(formIsValid).toBe(false);
+
+        rerender(
+            <Form onSubmit={jest.fn()} formData={formData}>
+                {({ validity }) => {
+                    formIsValid = validity;
+                    return (
+                        <div>
+                            <Form.TextInputController
+                                name="testInput"
+                                validators={[
+                                    validator(
+                                        isRequired,
+                                        'A value is required.'
+                                    )
+                                ]}
+                            >
+                                {({ getInputProps, getLabelProps }) => (
+                                    <div>
+                                        <label {...getLabelProps()}>
+                                            Test input
+                                        </label>
+                                        <input {...getInputProps()} />
+                                    </div>
+                                )}
+                            </Form.TextInputController>
+                            <Form.TextInputController name="testInput2">
+                                {({ getInputProps, getLabelProps }) => (
+                                    <div>
+                                        <label {...getLabelProps()}>
+                                            Test input 2
+                                        </label>
+                                        <input {...getInputProps()} />
+                                    </div>
+                                )}
+                            </Form.TextInputController>
+                        </div>
+                    );
+                }}
+            </Form>
+        );
+
+        expect(formIsValid).toBe(true);
+    });
 });
