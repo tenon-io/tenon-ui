@@ -62,7 +62,7 @@
             },
             "petLove": {
                 "legend": "When does your pet eat",
-                "errorMessageRequired": "You need so select an eating time",
+                "errorMessageRequired": "You need to select an eating time",
                 "contentHint": "Please select at least one",
                 "morningOption": "Morning",
                 "noonOption": "Noon",
@@ -74,6 +74,12 @@
             },
             "submitButton": {
                 "label": "Save"
+            },
+            "loadDataButton": {
+                "label": "Load form data"
+            },
+            "loadPartialDataButton": {
+                "label": "Load partial form data"
             }
         }
     },

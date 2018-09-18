@@ -74,6 +74,12 @@
             },
             "submitButton": {
                 "label": "Bewaar jou troeteldier"
+            },
+            "loadDataButton": {
+                "label": "Laai vorm data"
+            },
+            "loadPartialDataButton": {
+                "label": "Laai gedeeltelike vorm data"
             }
         }
     },

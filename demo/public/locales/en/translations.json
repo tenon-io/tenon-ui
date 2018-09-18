@@ -74,6 +74,12 @@
             },
             "submitButton": {
                 "label": "Save"
+            },
+            "loadDataButton": {
+                "label": "Load form data"
+            },
+            "loadPartialDataButton": {
+                "label": "Load partial form data"
             }
         }
     },
