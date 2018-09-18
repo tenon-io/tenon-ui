@@ -5,6 +5,32 @@
         margin-bottom: 0.5rem;
     }
 
+    input[type='radio'] {
+        margin-top: 0.8rem;
+        height: auto;
+
+        &:focus {
+            outline-offset: 2px;
+        }
+    }
+
+    input[type='checkbox'] {
+        + label::before {
+            border-color: $color-mid-dark;
+        }
+
+        + label::after {
+            top: 13px;
+        }
+
+        &:focus {
+            + label::before {
+                outline: 2px solid $color-focus;
+                outline-offset: 2px;
+            }
+        }
+    }
+
     .error-wrapper {
         .icon {
             display: inline;

@@ -44,7 +44,7 @@ class App extends Component {
                                     <img
                                         src={logo}
                                         className="app-logo"
-                                        alt="logo"
+                                        alt="Logo of Tenon.io"
                                     />
                                     <Heading.H className="app-title">
                                         {t('titles.main')}

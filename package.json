@@ -1,6 +1,6 @@
 {
     "name": "@tenon-io/tenon-ui",
-    "version": "1.0.0-beta.3",
+    "version": "1.0.0-beta.4",
     "description": "Tenon ui components library",
     "contributors": [
         "Karl Groves <karl@tenon.io>",
@@ -71,10 +71,10 @@
         "node-sass-chokidar": "1.3.3",
         "npm-run-all": "4.1.3",
         "nwb": "0.22.0",
-        "prettier": "1.13.7",
+        "prettier": "1.14.2",
         "prop-types": "15.6.2",
-        "react": "16.5.0",
-        "react-dom": "16.5.0",
+        "react": "16.5.1",
+        "react-dom": "16.5.1",
         "react-i18next": "^7.10.1",
         "react-loadable": "^5.5.0",
         "react-testing-library": "4.1.5",

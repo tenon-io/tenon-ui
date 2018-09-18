@@ -7,8 +7,7 @@
     },
     "welcome": {
         "heading": "Die Tenon.io React komponente biblioteek",
-        "p1":
-            "Welkom by ons biblioteek van toegankelike komponente. Kies asseblief een van die komponente onder die Komponent Biblioteek kieslys om verder te gaan."
+        "p1": "Welkom by ons biblioteek van toegankelike komponente. Kies asseblief een van die komponente onder die Komponent Biblioteek kieslys om verder te gaan."
     },
     "focusCatcher": {
         "heading": "Fokus vanger component",
@@ -35,8 +34,7 @@
             },
             "petName": {
                 "label": "Troeteldier naam",
-                "contentHint":
-                    "Die troeteldier se naam moet langer as 5 karakters wees",
+                "contentHint": "Die troeteldier se naam moet langer as 5 karakters wees",
                 "errorMessageRequired": "Die troedeldier het 'n naam nodig",
                 "errorMessageTooShort": "Die troeteldier se naam is te kort"
             },
@@ -61,6 +59,18 @@
             },
             "petDescription": {
                 "label": "Beskrywing"
+            },
+            "petLove": {
+                "legend": "Wanneer eet jou troeteldier",
+                "errorMessageRequired": "Jy moet 'n eettyd kies",
+                "contentHint": "Kies ten minste een",
+                "morningOption": "Oggend",
+                "noonOption": "Middag",
+                "nightOption": "Aand"
+            },
+            "confirmInfo": {
+                "label": "Ek bevestig dat my troeteldier se informasie korrek is",
+                "errorMessageRequired": "Jy moet jou troeteldier se informasie bevestig"
             },
             "submitButton": {
                 "label": "Bewaar jou troeteldier"

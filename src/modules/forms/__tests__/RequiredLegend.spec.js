@@ -35,7 +35,7 @@ describe('RequiredLegend', () => {
                 >
                     Test legend
                 </RequiredLegend>
-                <div aria-labelledby="legendId" required />
+                <div aria-labelledby="legendId" aria-required="true" />
             </div>
         );
 
@@ -50,7 +50,7 @@ describe('RequiredLegend', () => {
                 >
                     Test legend
                 </RequiredLegend>
-                <div aria-labelledby="legendId" required />
+                <div aria-labelledby="legendId" aria-required="true" />
             </div>
         );
 
@@ -64,21 +64,13 @@ describe('RequiredLegend', () => {
     it('should render with no requiredText', () => {
         const { container, rerender } = render(
             <div>
-                <RequiredLegend id="legendId" className="label-class">
+                <RequiredLegend
+                    id="legendId"
+                    className="label-class"
+                    isRequired={true}
+                >
                     Test legend
                 </RequiredLegend>
-                <div aria-labelledby="legendId" required />
-            </div>
-        );
-
-        //The tenon-ui elements will always update at least once when the
-        //controllers update their props.
-        rerender(
-            <div>
-                <RequiredLegend id="legendId" className="label-class">
-                    Test legend
-                </RequiredLegend>
-                <div aria-labelledby="legendId" required />
             </div>
         );
 
