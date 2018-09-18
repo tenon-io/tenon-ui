@@ -21,8 +21,36 @@ class FormsGuide extends Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            formData: {}
+        };
+
         this.errorBlockRef = createRef();
     }
+
+    onDataChangeHandler = () => {
+        this.setState({
+            formData: {
+                petName: 'Dogter Who',
+                petType: 'Dog',
+                petDescription: 'A little brown dog that eats a lot!',
+                petWeight: 'weightClass2',
+                petColour: 'brown',
+                petEat: ['morning', 'noon', 'night']
+            }
+        });
+    };
+
+    onPartialDataChangeHandler = () => {
+        this.setState({
+            formData: {
+                petType: 'Cat',
+                petWeight: 'weightClass1',
+                petColour: 'black',
+                petEat: ['morning', 'night']
+            }
+        });
+    };
 
     onSubmitHandler = submitData => {
         alert(`Data: ${JSON.stringify(submitData)}`);
@@ -37,6 +65,7 @@ class FormsGuide extends Component {
     };
 
     render() {
+        const { formData } = this.state;
         return (
             <I18n>
                 {t => (
@@ -45,6 +74,7 @@ class FormsGuide extends Component {
                             heading={t('forms.demo.example.heading')}
                         >
                             <Form
+                                formData={formData}
                                 onSubmit={this.onSubmitHandler}
                                 onRawSubmit={this.onRawSubmitHandler}
                             >
@@ -274,6 +304,26 @@ class FormsGuide extends Component {
 
                                         <button type="submit">
                                             {t('forms.demo.submitButton.label')}
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="secondary"
+                                            onClick={this.onDataChangeHandler}
+                                        >
+                                            {t(
+                                                'forms.demo.loadDataButton.label'
+                                            )}
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="secondary"
+                                            onClick={
+                                                this.onPartialDataChangeHandler
+                                            }
+                                        >
+                                            {t(
+                                                'forms.demo.loadPartialDataButton.label'
+                                            )}
                                         </button>
                                     </Fragment>
                                 )}

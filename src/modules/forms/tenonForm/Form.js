@@ -10,6 +10,7 @@ import {
     CheckboxController,
     CheckboxGroupController
 } from './FormControllers';
+import deepEqual from 'lodash.isequal';
 
 /**
  * @component
@@ -41,6 +42,10 @@ import {
  * called with every submit attempt of the form with the raw form data
  * and validity flag. This can be handy if something had to happen during
  * invalid form submit phases.
+ * @prop {object} formData - An object mirroring the form's submit data
+ * object. If provided this is used to prefill the form with data. If changed
+ * the new data will overwrite what is currently in the form. Partial updates
+ * are possible.
  * @prop {boolean} alwaysShowErrors - An optional boolean indicating
  * whether the form should always display errors, and not only once submit has
  * been clicked.
@@ -80,6 +85,7 @@ class Form extends Component {
     static propTypes = {
         children: PropTypes.func.isRequired,
         onSubmit: PropTypes.func.isRequired,
+        formData: PropTypes.object,
         onRawSubmit: PropTypes.func,
         alwaysShowErrors: PropTypes.bool,
         className: PropTypes.string
@@ -92,6 +98,28 @@ class Form extends Component {
         validity: true,
         hasSubmitted: false
     };
+
+    /**
+     * @function
+     * Update lifecycle hook of the the component. Exists primarily
+     * to check if the formData exists and has been modified. If so
+     * that data is mapped into the form state to prefill the
+     * form controls.
+     *
+     * @param {object} prevProps
+     */
+    componentDidUpdate(prevProps) {
+        const { formData } = this.props;
+        if (formData && !deepEqual(prevProps.formData, formData)) {
+            const copyState = { ...this.state.formControls };
+            for (const control in formData) {
+                copyState[control].value = formData[control];
+            }
+            this.setState({
+                formControls: copyState
+            });
+        }
+    }
 
     /**
      * @function
@@ -133,6 +161,9 @@ class Form extends Component {
      * Registers a control with the smart form with the given state
      * parameters.
      *
+     * If the formData prop exists and contains data for the name
+     * being registered, this data is used over the default value.
+     *
      * @param {string} name - The unique name.
      * @param {string} controlId - The unique DOM id for the focusable element.
      * @param {string} value - The string value.
@@ -140,11 +171,15 @@ class Form extends Component {
      * @param {string} errorText - The validation error message.
      */
     registerControl = (name, controlId, value, validity, errorText) => {
+        const { formData } = this.props;
         this.setState(prevState => ({
             formControls: Object.assign({}, prevState.formControls, {
                 [name]: {
                     controlId,
-                    value,
+                    value:
+                        formData && formData.hasOwnProperty(name)
+                            ? formData[name]
+                            : value,
                     validity,
                     errorText
                 }

@@ -132,7 +132,6 @@ class FormController extends Component {
             name,
             type
         } = this.props;
-        const validationObject = this.runValidation(defaultValues[type]);
         registerControl(
             name,
             type === controllerType.radioGroup ||
@@ -140,8 +139,8 @@ class FormController extends Component {
                 ? this.containerId
                 : this.controlId,
             defaultValues[type],
-            validationObject.validity,
-            validationObject.errorText
+            true,
+            ''
         );
         setControlValidity(name, this.runValidation(getControlValue(name)));
     }
