@@ -461,7 +461,7 @@ class FormController extends Component {
 
         return {
             'aria-disabled': props['disabled'] ? 'true' : null,
-            name: `${name}-${value}`,
+            name,
             id: `${this.controlId}-${value}`,
             type: 'radio',
             onChange: callAll(onChange, this.onChangeHandler),

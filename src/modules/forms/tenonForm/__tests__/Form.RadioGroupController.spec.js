@@ -80,13 +80,13 @@ describe('Form.RadioGroupController', () => {
 
         const inputOne = getByLabelText('One');
         expect(inputOne).toHaveAttribute('id', 'inputLabelId-one');
-        expect(inputOne).toHaveAttribute('name', 'testRadio-one');
+        expect(inputOne).toHaveAttribute('name', 'testRadio');
         expect(inputOne).toHaveAttribute('value', 'one');
         expect(inputOne.attributes.length).toBe(4);
 
         const inputTwo = getByLabelText('Two');
         expect(inputTwo).toHaveAttribute('id', 'inputLabelId-two');
-        expect(inputTwo).toHaveAttribute('name', 'testRadio-two');
+        expect(inputTwo).toHaveAttribute('name', 'testRadio');
         expect(inputTwo).toHaveAttribute('value', 'two');
         expect(inputTwo.attributes.length).toBe(4);
     });
