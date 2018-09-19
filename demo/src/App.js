@@ -28,6 +28,9 @@ const SpinnerGuideAsync = AsyncLoader({
 const FocusCatcherGuideAsync = AsyncLoader({
     loader: () => import('./guides/FocusCatcherGuide')
 });
+const DataTableGuideAsync = AsyncLoader({
+    loader: () => import('./guides/DataTableGuide')
+});
 
 class App extends Component {
     render() {
@@ -104,6 +107,7 @@ class App extends Component {
                                         <SpinnerButtonGuideAsync path="/spinner-button" />
                                         <SpinnerGuideAsync path="/spinner" />
                                         <FocusCatcherGuideAsync path="/focus-catcher" />
+                                        <DataTableGuideAsync path="/data-table" />
                                     </Router>
                                 </main>
                             </div>

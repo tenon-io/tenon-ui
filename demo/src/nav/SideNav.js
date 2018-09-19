@@ -5,6 +5,9 @@ const SideNav = () => (
     <nav>
         <ul>
             <li>
+                <Link to="/data-table">Data Table</Link>
+            </li>
+            <li>
                 <Link to="/focus-catcher">Focus Catcher</Link>
             </li>
             <li>
