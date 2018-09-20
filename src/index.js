@@ -3,7 +3,9 @@ export {
     TextInputController,
     TextareaController,
     SelectController,
-    RadioGroupController
+    RadioGroupController,
+    CheckboxController,
+    CheckboxGroupController
 } from './modules/forms/tenonForm/FormControllers';
 export ErrorBlock from './modules/forms/ErrorBlock';
 export Heading, { LevelBoundary, H } from './modules/layout/Heading';
@@ -18,6 +20,11 @@ export Spinner from './modules/notifications/Spinner';
 export SpinnerButton from './modules/forms/SpinnerButton';
 export Tabs, { Tab } from './modules/tabs/Tabs';
 export FocusCatcher from './modules/utils/components/FocusCatcher';
+export DataTable from './modules/dataTable/DataTable';
+export THead from './modules/dataTable/THead';
+export TBody from './modules/dataTable/TBody';
+export Th from './modules/dataTable/Th';
+export Td from './modules/dataTable/Td';
 
 export * from './modules/utils/data/validation';
 export * from './modules/utils/helpers/validationHelpers';
