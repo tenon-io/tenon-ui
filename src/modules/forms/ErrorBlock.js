@@ -51,13 +51,13 @@ class ErrorBlock extends Component {
         const { formControls, headingText, forwardedRef } = this.props;
         const controlNameArray = Object.keys(formControls);
         return controlNameArray.length > 0 ? (
-            <section
-                className="error-block"
-                tabIndex="-1"
-                ref={forwardedRef}
-                aria-labelledby={this.headingId}
-            >
-                <Heading.H id={this.headingId} className="block-heading">
+            <section className="error-block" aria-labelledby={this.headingId}>
+                <Heading.H
+                    id={this.headingId}
+                    className="block-heading"
+                    tabIndex="-1"
+                    ref={forwardedRef}
+                >
                     <span className="icon" />
                     {headingText}
                 </Heading.H>

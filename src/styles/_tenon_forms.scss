@@ -15,12 +15,18 @@
     }
 
     input[type='checkbox'] {
-        + label::before {
-            border-color: $color-mid-dark;
-        }
+        z-index: 5;
 
-        + label::after {
-            top: 13px;
+        + label {
+            display: inline-block;
+
+            &::before {
+                border-color: $color-mid-dark;
+            }
+
+            &::after {
+                top: 13px;
+            }
         }
 
         &:focus {

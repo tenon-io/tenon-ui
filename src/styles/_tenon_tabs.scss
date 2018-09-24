@@ -4,31 +4,6 @@
     padding: 0;
     position: relative;
 
-    &::before {
-        background: linear-gradient(
-            to right,
-            $color-transparent 0%,
-            $color-x-light 45%,
-            $color-x-light 100%
-        );
-        color: $color-mid-dark;
-        content: '\203A';
-        display: block;
-        font-size: 2rem;
-        line-height: calc(100% + 1rem - #{$bar-thickness});
-        padding-left: 1.5rem;
-        padding-right: $sp-large;
-        pointer-events: none;
-        position: absolute;
-        right: 0;
-        text-align: right;
-        top: 0;
-        width: 1rem;
-        z-index: 10;
-        @media screen and (min-width: $breakpoint-medium) {
-            display: none;
-        }
-    }
     [role='tablist'] {
         @extend %vf-pseudo-border--bottom;
         display: flex;
@@ -69,17 +44,7 @@
     &:hover,
     &[aria-selected='true'] {
         position: relative;
-        &::before {
-            bottom: 0;
-            border-bottom: $bar-thickness solid $color-tabs-active-bar;
-            content: '';
-            position: absolute;
-            height: $bar-thickness;
-            width: auto;
-            left: -1px;
-            right: -1px;
-            z-index: 1;
-        }
+        border-bottom: $bar-thickness solid $color-tabs-active-bar;
     }
     &:focus {
         outline: 0;

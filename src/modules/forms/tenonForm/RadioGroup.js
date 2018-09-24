@@ -83,7 +83,7 @@ const RadioGroup = forwardRef(
             >
                 <FocusCatcher>
                     {Object.keys(options).map(option => (
-                        <Fragment key={option}>
+                        <div className="radio-wrapper" key={option}>
                             <input
                                 {...getRadioButtonProps({
                                     value: option
@@ -96,7 +96,7 @@ const RadioGroup = forwardRef(
                             >
                                 {options[option]}
                             </label>
-                        </Fragment>
+                        </div>
                     ))}
                 </FocusCatcher>
             </div>

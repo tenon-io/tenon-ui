@@ -5,7 +5,7 @@ import { render, cleanup } from 'react-testing-library';
 import 'jest-dom/extend-expect';
 import RadioGroup from '../RadioGroup';
 
-describe('RadioGroup', () => {
+xdescribe('RadioGroup', () => {
     afterEach(cleanup);
 
     it('should render an input and label only', () => {

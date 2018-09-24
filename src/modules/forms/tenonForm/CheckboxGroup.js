@@ -79,7 +79,7 @@ const CheckboxGroup = forwardRef(
             <div ref={ref} {...getCheckboxGroupProps()}>
                 <FocusCatcher>
                     {Object.keys(options).map(option => (
-                        <Fragment key={option}>
+                        <div className="checkbox-wrapper" key={option}>
                             <input
                                 {...getCheckboxProps({
                                     name: option
@@ -92,7 +92,7 @@ const CheckboxGroup = forwardRef(
                             >
                                 {options[option]}
                             </label>
-                        </Fragment>
+                        </div>
                     ))}
                 </FocusCatcher>
             </div>

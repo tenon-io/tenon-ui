@@ -28,7 +28,7 @@ class NotificationGuide extends Component {
                         >
                             <Notification
                                 isActive={this.state.showInfoMessage}
-                                type="info"
+                                type="error"
                             >
                                 <div className="notification-container">
                                     <span>
