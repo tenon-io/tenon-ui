@@ -78,22 +78,26 @@ const CheckboxGroup = forwardRef(
             </RequiredLegend>
             <div ref={ref} {...getCheckboxGroupProps()}>
                 <FocusCatcher>
-                    {Object.keys(options).map(option => (
-                        <div className="checkbox-wrapper" key={option}>
-                            <input
-                                {...getCheckboxProps({
-                                    name: option
-                                })}
-                            />
-                            <label
-                                {...getLabelProps({
-                                    autoIdPostfix: option
-                                })}
-                            >
-                                {options[option]}
-                            </label>
-                        </div>
-                    ))}
+                    <ul>
+                        {Object.keys(options).map(option => (
+                            <li key={option}>
+                                <div className="checkbox-wrapper">
+                                    <input
+                                        {...getCheckboxProps({
+                                            name: option
+                                        })}
+                                    />
+                                    <label
+                                        {...getLabelProps({
+                                            autoIdPostfix: option
+                                        })}
+                                    >
+                                        {options[option]}
+                                    </label>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
                 </FocusCatcher>
             </div>
             <FeedbackBlock

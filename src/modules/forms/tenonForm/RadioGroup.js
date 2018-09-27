@@ -82,22 +82,26 @@ const RadioGroup = forwardRef(
                 })}
             >
                 <FocusCatcher>
-                    {Object.keys(options).map(option => (
-                        <div className="radio-wrapper" key={option}>
-                            <input
-                                {...getRadioButtonProps({
-                                    value: option
-                                })}
-                            />
-                            <label
-                                {...getLabelProps({
-                                    autoIdPostfix: option
-                                })}
-                            >
-                                {options[option]}
-                            </label>
-                        </div>
-                    ))}
+                    <ul>
+                        {Object.keys(options).map(option => (
+                            <li key={option}>
+                                <div className="radio-wrapper">
+                                    <input
+                                        {...getRadioButtonProps({
+                                            value: option
+                                        })}
+                                    />
+                                    <label
+                                        {...getLabelProps({
+                                            autoIdPostfix: option
+                                        })}
+                                    >
+                                        {options[option]}
+                                    </label>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
                 </FocusCatcher>
             </div>
             <FeedbackBlock
