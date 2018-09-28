@@ -41,8 +41,11 @@ import FeedbackBlock from './FeedbackBlock';
  *              checkbox group container as required.
  * @prop {string} className - An optional class string to transfer to the
  *              className prop of the select element.
- * @prop {string} requiredText - An optional text to display next to the
- *              legend if the group is required.
+ * @prop {string} requiredText - And optional string value to display
+ *              after the legend indicating a required situation.
+ *@prop {boolean} required - An optional boolean value indicating whether
+ *              the current view component is attached to a required
+ *              data model.
  */
 const CheckboxGroup = forwardRef(
     (

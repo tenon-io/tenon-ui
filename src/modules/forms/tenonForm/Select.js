@@ -31,8 +31,11 @@ import FeedbackBlock from './FeedbackBlock';
  *              className prop of the select element.
  * @prop required {React element} children - The <option> tags to render for the
  *              <select> element.
- * @prop {string} requiredText - An optional text to display next to the
- *              select label if the field is required.
+ * @prop {string} requiredText - And optional string value to display
+ *              after the label indicating a required situation.
+ *@prop {boolean} required - An optional boolean value indicating whether
+ *              the current view component is attached to a required
+ *              data model.
  *
  * NOTE: All props given to this select that does not
  * satisfy one of the above will be passed into the the
