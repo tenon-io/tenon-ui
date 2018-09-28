@@ -1,7 +1,6 @@
 import React, { forwardRef } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import RequiredLabel from '../RequiredLabel';
 import FeedbackBlock from './FeedbackBlock';
 
 /**
@@ -52,6 +51,7 @@ const Checkbox = forwardRef(
             labelProps,
             showError,
             className,
+            required,
             requiredText,
             ...rest
         },
@@ -67,12 +67,15 @@ const Checkbox = forwardRef(
                     }
                     {...getCheckboxProps(rest)}
                 />
-                <RequiredLabel
-                    requiredText={requiredText || null}
-                    {...getLabelProps(labelProps)}
-                >
+                <label {...getLabelProps(labelProps)}>
                     {labelText}
-                </RequiredLabel>
+                    {required ? (
+                        <span aria-hidden="true" className="required">
+                            &nbsp;
+                            {requiredText || '*'}
+                        </span>
+                    ) : null}
+                </label>
             </div>
             <FeedbackBlock
                 getContentHintProps={getContentHintProps}
@@ -98,6 +101,7 @@ Checkbox.propTypes = {
     labelProps: PropTypes.object,
     showError: PropTypes.bool,
     className: PropTypes.string,
+    required: PropTypes.bool,
     requiredText: PropTypes.string
 };
 

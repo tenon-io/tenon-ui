@@ -1,7 +1,6 @@
 import React, { forwardRef } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import RequiredLabel from '../RequiredLabel';
 import FeedbackBlock from './FeedbackBlock';
 
 /**
@@ -52,18 +51,22 @@ const Input = forwardRef(
             showError,
             className,
             requiredText,
+            required,
             ...rest
         },
         ref
     ) => (
         <div className="form-group">
             <div className="field-wrapper">
-                <RequiredLabel
-                    requiredText={requiredText || null}
-                    {...getLabelProps(labelProps)}
-                >
+                <label {...getLabelProps(labelProps)}>
                     {labelText}
-                </RequiredLabel>
+                    {required ? (
+                        <span aria-hidden="true" className="required">
+                            &nbsp;
+                            {requiredText || '*'}
+                        </span>
+                    ) : null}
+                </label>
                 <input
                     ref={ref}
                     className={
@@ -97,6 +100,7 @@ Input.propTypes = {
     labelProps: PropTypes.object,
     showError: PropTypes.bool,
     className: PropTypes.string,
+    required: PropTypes.bool,
     requiredText: PropTypes.string
 };
 

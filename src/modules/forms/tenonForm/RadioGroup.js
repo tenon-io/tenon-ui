@@ -1,8 +1,7 @@
-import React, { Fragment, forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import FocusCatcher from '../../utils/components/FocusCatcher';
-import RequiredLegend from '../RequiredLegend';
 import FeedbackBlock from './FeedbackBlock';
 
 /**
@@ -23,16 +22,13 @@ import FeedbackBlock from './FeedbackBlock';
  *              of the group. The autoIdPostfix config option should
  *              be set with the value of the radiobutton input or the id
  *              linkage will fail.
- * @prop required {function} getLegendProps - Prop getter function
- *              from the smart radiogroup controller for the <legend>
- *              of the group.
- * @prop required {function} getRadioButtonProps - Prop getter function
+ * @prop required {function} getFieldsetProps - Prop getter function
  *              from the smart radiogroup controller for each <input>
  *              of the group. It is required to se the value in this
  *              function or the component will fail.
- * @prop required {function} getRadioGroupProps - Prop getter function
- *              from the smart radiogroup controller for the grouping
- *              element carrying the 'radiogroup' role.
+ * @prop required {function} getRadioFieldsetProps - Prop getter function
+ *              from the smart radiogroup controller for the fiedset
+ *              element.
  * @prop {function} getErrorProps - Prop getter function
  *              from the smart radiogroup controller for the
  *              error message container.
@@ -55,12 +51,9 @@ const RadioGroup = forwardRef(
             options,
             getRadioButtonProps,
             getLabelProps,
-            getLegendProps,
-            getRadioGroupProps,
+            getFieldsetProps,
             contentHintText,
             errorText,
-            getErrorProps,
-            getContentHintProps,
             showError,
             required,
             requiredText,
@@ -68,48 +61,60 @@ const RadioGroup = forwardRef(
         },
         ref
     ) => (
-        <fieldset className={classNames('form-group', className)}>
-            <RequiredLegend
-                requiredText={requiredText || null}
-                {...getLegendProps()}
-            >
+        <fieldset
+            className={classNames('form-group', className)}
+            {...getFieldsetProps()}
+            ref={ref}
+        >
+            <legend>
                 {legend}
-            </RequiredLegend>
-            <div
-                ref={ref}
-                {...getRadioGroupProps({
-                    required: required || null
-                })}
-            >
-                <FocusCatcher>
-                    <ul>
-                        {Object.keys(options).map(option => (
-                            <li key={option}>
-                                <div className="radio-wrapper">
-                                    <input
-                                        {...getRadioButtonProps({
-                                            value: option
-                                        })}
-                                    />
-                                    <label
-                                        {...getLabelProps({
-                                            autoIdPostfix: option
-                                        })}
-                                    >
-                                        {options[option]}
-                                    </label>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
-                </FocusCatcher>
-            </div>
+                {required ? (
+                    <span className="required">
+                        &nbsp;
+                        {requiredText || '*'}
+                    </span>
+                ) : null}
+                {contentHintText && (
+                    <span className="visually-hidden">
+                        &nbsp;
+                        {contentHintText}
+                    </span>
+                )}
+                {errorText &&
+                    showError && (
+                        <span className="visually-hidden">
+                            &nbsp;
+                            {errorText}
+                        </span>
+                    )}
+            </legend>
+            <FocusCatcher>
+                <ul className="radio-container">
+                    {Object.keys(options).map(option => (
+                        <li key={option}>
+                            <div className="radio-wrapper">
+                                <input
+                                    {...getRadioButtonProps({
+                                        value: option
+                                    })}
+                                />
+                                <label
+                                    {...getLabelProps({
+                                        autoIdPostfix: option
+                                    })}
+                                >
+                                    {options[option]}
+                                </label>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            </FocusCatcher>
             <FeedbackBlock
-                getContentHintProps={getContentHintProps}
-                getErrorProps={getErrorProps}
                 errorText={errorText}
                 contentHintText={contentHintText}
                 showError={showError}
+                aria-hidden="true"
             />
         </fieldset>
     )
@@ -121,12 +126,11 @@ RadioGroup.propTypes = {
     legend: PropTypes.string.isRequired,
     options: PropTypes.object.isRequired,
     getRadioButtonProps: PropTypes.func.isRequired,
-    getLegendProps: PropTypes.func.isRequired,
-    getRadioGroupProps: PropTypes.func.isRequired,
+    getFieldsetProps: PropTypes.func.isRequired,
     getLabelProps: PropTypes.func.isRequired,
     getErrorProps: PropTypes.func,
     getContentHintProps: PropTypes.func,
-    required: PropTypes.string,
+    required: PropTypes.bool,
     contentHintText: PropTypes.string,
     errorText: PropTypes.string,
     showError: PropTypes.bool,

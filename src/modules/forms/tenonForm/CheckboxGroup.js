@@ -1,8 +1,7 @@
-import React, { Fragment, forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import FocusCatcher from '../../utils/components/FocusCatcher';
-import RequiredLegend from '../RequiredLegend';
 import FeedbackBlock from './FeedbackBlock';
 
 /**
@@ -23,16 +22,13 @@ import FeedbackBlock from './FeedbackBlock';
  *              of the group. The autoIdPostfix config option should
  *              be set with the name of the checkbox input or the id
  *              linkage will fail.
- * @prop required {function} getLegendProps - Prop getter function
- *              from the smart checkbox group controller for the <legend>
- *              of the group.
  * @prop required {function} getCheckboxProps - Prop getter function
  *              from the smart checkbox group controller for each <input>
  *              of the group. It is required to set a name here or the
  *              component will fail.
- * @prop required {function} getCheckboxGroupProps - Prop getter function
- *              from the smart checkbox group controller for the grouping
- *              element carrying the 'group' role.
+ * @prop required {function} getFieldsetProps - Prop getter function
+ *              from the smart checkbox group controller for the fieldset
+ *              element.
  * @prop {function} getErrorProps - Prop getter function
  *              from the smart checkbox group controller for the
  *              error message container.
@@ -55,8 +51,7 @@ const CheckboxGroup = forwardRef(
             options,
             getCheckboxProps,
             getLabelProps,
-            getLegendProps,
-            getCheckboxGroupProps,
+            getFieldsetProps,
             contentHintText,
             errorText,
             getErrorProps,
@@ -68,44 +63,60 @@ const CheckboxGroup = forwardRef(
         },
         ref
     ) => (
-        <fieldset className={classNames('form-group', className)}>
-            <RequiredLegend
-                requiredText={requiredText || null}
-                isRequired={!!required}
-                {...getLegendProps()}
-            >
+        <fieldset
+            className={classNames('form-group', className)}
+            ref={ref}
+            {...getFieldsetProps()}
+        >
+            <legend>
                 {legend}
-            </RequiredLegend>
-            <div ref={ref} {...getCheckboxGroupProps()}>
-                <FocusCatcher>
-                    <ul>
-                        {Object.keys(options).map(option => (
-                            <li key={option}>
-                                <div className="checkbox-wrapper">
-                                    <input
-                                        {...getCheckboxProps({
-                                            name: option
-                                        })}
-                                    />
-                                    <label
-                                        {...getLabelProps({
-                                            autoIdPostfix: option
-                                        })}
-                                    >
-                                        {options[option]}
-                                    </label>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
-                </FocusCatcher>
-            </div>
+                {required ? (
+                    <span className="required">
+                        &nbsp;
+                        {requiredText || '*'}
+                    </span>
+                ) : null}
+                {contentHintText && (
+                    <span className="visually-hidden">
+                        &nbsp;
+                        {contentHintText}
+                    </span>
+                )}
+                {errorText &&
+                    showError && (
+                        <span className="visually-hidden">
+                            &nbsp;
+                            {errorText}
+                        </span>
+                    )}
+            </legend>
+            <FocusCatcher>
+                <ul className="checkbox-container">
+                    {Object.keys(options).map(option => (
+                        <li key={option}>
+                            <div className="checkbox-wrapper">
+                                <input
+                                    {...getCheckboxProps({
+                                        name: option
+                                    })}
+                                />
+                                <label
+                                    {...getLabelProps({
+                                        autoIdPostfix: option
+                                    })}
+                                >
+                                    {options[option]}
+                                </label>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            </FocusCatcher>
             <FeedbackBlock
-                getContentHintProps={getContentHintProps}
-                getErrorProps={getErrorProps}
                 errorText={errorText}
                 contentHintText={contentHintText}
                 showError={showError}
+                aria-hidden="true"
             />
         </fieldset>
     )
@@ -117,8 +128,7 @@ CheckboxGroup.propTypes = {
     legend: PropTypes.string.isRequired,
     options: PropTypes.object.isRequired,
     getCheckboxProps: PropTypes.func.isRequired,
-    getLegendProps: PropTypes.func.isRequired,
-    getCheckboxGroupProps: PropTypes.func.isRequired,
+    getFieldsetProps: PropTypes.func.isRequired,
     getLabelProps: PropTypes.func.isRequired,
     getErrorProps: PropTypes.func,
     getContentHintProps: PropTypes.func,

@@ -8,7 +8,7 @@ import { validator } from '../../../utils/helpers/validationHelpers';
 import { isLongerThan, isRequired } from '../../../utils/data/validation';
 import uuidv4 from 'uuid/v4';
 
-describe('Form.TextInputController', () => {
+xdescribe('Form.TextInputController', () => {
     beforeEach(() => {
         jest.clearAllMocks();
         uuidv4

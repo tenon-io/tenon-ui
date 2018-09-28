@@ -75,6 +75,10 @@ class FormController extends Component {
         getControlErrorText: PropTypes.func.isRequired,
         validators: PropTypes.arrayOf(PropTypes.object),
         name: PropTypes.string.isRequired,
+        required: PropTypes.oneOfType([
+            PropTypes.bool,
+            PropTypes.oneOf(['true', 'false'])
+        ]),
         registerErrors: PropTypes.bool
     };
 
@@ -99,7 +103,6 @@ class FormController extends Component {
             props.type === controllerType.radioGroup ||
             props.type === controllerType.checkboxGroup
         ) {
-            this.legendId = uuidv4();
             this.containerId = uuidv4();
         }
 
@@ -254,21 +257,6 @@ class FormController extends Component {
     });
 
     /**
-     * @function
-     * Prop getter for the legend element.
-     *
-     * Composes the given prop configuration object with the
-     * standard control props object.
-     *
-     * @param {object} props
-     * @returns {object}
-     */
-    getLegendProps = (props = {}) => ({
-        id: this.legendId,
-        ...props
-    });
-
-    /**
      * Calculates the aria-describedby property of the <input> tag.
      *
      * @param {boolean} isValid
@@ -301,14 +289,20 @@ class FormController extends Component {
      * @returns {object}
      */
     getBaseInputProps = ({ onChange, ...props }) => {
-        const { name, getControlValidity, registerErrors } = this.props;
+        const {
+            name,
+            getControlValidity,
+            registerErrors,
+            required
+        } = this.props;
         const isValid = registerErrors ? getControlValidity(name) : true;
 
         return {
             'aria-describedby': this.getAriaDescribedBy(isValid),
             'aria-disabled': props['disabled'] ? 'true' : null,
             'aria-invalid': isValid ? null : 'true',
-            'aria-required': props['required'] ? 'true' : null,
+            'aria-required':
+                required === true || required === 'true' ? 'true' : null,
             id: this.controlId,
             name,
             onChange: callAll(onChange, this.onChangeHandler)
@@ -420,7 +414,7 @@ class FormController extends Component {
 
     /**
      * @function
-     * Prop getter for the checkbox group container element.
+     * Prop getter for the fieldset element.
      *
      * Composes the given prop configuration object with the
      * standard control props object.
@@ -428,19 +422,11 @@ class FormController extends Component {
      * @param {object} props
      * @returns {object}
      */
-    getCheckboxGroupProps = ({ required, ...props } = {}) => {
-        const { name, getControlValidity, registerErrors } = this.props;
-        const isValid = registerErrors ? getControlValidity(name) : true;
-        return {
-            id: this.containerId,
-            tabIndex: '-1',
-            'aria-describedby': this.getAriaDescribedBy(isValid),
-            'aria-invalid': isValid ? null : 'true',
-            'aria-labelledby': this.legendId,
-            role: 'group',
-            ...props
-        };
-    };
+    getFieldsetProps = (props = {}) => ({
+        id: this.containerId,
+        tabIndex: '-1',
+        ...props
+    });
 
     /**
      * @function
@@ -467,31 +453,6 @@ class FormController extends Component {
             onChange: callAll(onChange, this.onChangeHandler),
             value,
             checked: getControlValue(name) === value,
-            ...props
-        };
-    };
-
-    /**
-     * @function
-     * Prop getter for the radiogroup container element.
-     *
-     * Composes the given prop configuration object with the
-     * standard control props object.
-     *
-     * @param {object} props
-     * @returns {object}
-     */
-    getRadioGroupProps = ({ required, props } = {}) => {
-        const { name, getControlValidity, registerErrors } = this.props;
-        const isValid = registerErrors ? getControlValidity(name) : true;
-        return {
-            id: this.containerId,
-            tabIndex: '-1',
-            'aria-describedby': this.getAriaDescribedBy(isValid),
-            'aria-invalid': isValid ? null : 'true',
-            'aria-required': required ? 'true' : null,
-            'aria-labelledby': this.legendId,
-            role: 'radiogroup',
             ...props
         };
     };
@@ -565,34 +526,48 @@ class FormController extends Component {
      * Return the render props object per type.
      */
     getTypeSpecificRenderProps = type => {
+        const commonRenderProps = {
+            getLabelProps: this.getLabelProps,
+            getErrorProps: this.getErrorProps,
+            getContentHintProps: this.getContentHintProps
+        };
+
         switch (type) {
             case controllerType.textarea:
                 return {
-                    getTextareaProps: this.getTextareaProps
+                    getTextareaProps: this.getTextareaProps,
+                    ...commonRenderProps
                 };
             case controllerType.select:
                 return {
-                    getSelectProps: this.getSelectProps
+                    getSelectProps: this.getSelectProps,
+                    ...commonRenderProps
                 };
             case controllerType.checkbox:
                 return {
+                    getLabelProps: this.getLabelProps,
+                    getErrorProps: this.getErrorProps,
+                    getContentHintProps: this.getContentHintProps,
                     getCheckboxProps: this.getCheckboxProps
                 };
             case controllerType.checkboxGroup:
                 return {
-                    getLegendProps: this.getLegendProps,
+                    getLabelProps: this.getLabelProps,
                     getCheckboxProps: this.getGroupCheckboxProps,
-                    getCheckboxGroupProps: this.getCheckboxGroupProps
+                    getFieldsetProps: this.getFieldsetProps
                 };
             case controllerType.radioGroup:
                 return {
-                    getLegendProps: this.getLegendProps,
+                    getLabelProps: this.getLabelProps,
                     getRadioButtonProps: this.getRadioButtonProps,
-                    getRadioGroupProps: this.getRadioGroupProps
+                    getFieldsetProps: this.getFieldsetProps
                 };
             case controllerType.input:
             default:
                 return {
+                    getLabelProps: this.getLabelProps,
+                    getErrorProps: this.getErrorProps,
+                    getContentHintProps: this.getContentHintProps,
                     getInputProps: this.getInputProps
                 };
         }
@@ -605,12 +580,7 @@ class FormController extends Component {
      *
      * Memoized so as to only recalculate if the type changes.
      */
-    buildRenderObject = memoize(type => ({
-        getLabelProps: this.getLabelProps,
-        getErrorProps: this.getErrorProps,
-        getContentHintProps: this.getContentHintProps,
-        ...this.getTypeSpecificRenderProps(type)
-    }));
+    buildRenderObject = memoize(type => this.getTypeSpecificRenderProps(type));
 
     render() {
         const {
@@ -619,11 +589,13 @@ class FormController extends Component {
             getControlValidity,
             getControlErrorText,
             name,
+            required,
             registerErrors
         } = this.props;
         return children({
             showError: registerErrors ? !getControlValidity(name) : false,
             errorText: getControlErrorText(name),
+            required: required === true || required === 'true',
             ...this.buildRenderObject(type)
         });
     }

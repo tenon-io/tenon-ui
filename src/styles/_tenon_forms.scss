@@ -1,19 +1,25 @@
 .form-group {
     margin-bottom: 1rem;
 
-    [role='radiogroup'] {
-        margin-bottom: 0.5rem;
-    }
-
     input + label {
         display: inline-block;
         width: auto;
+    }
+
+    label .required,
+    legend .required {
+        font-size: small;
+        font-weight: bold;
     }
 
     ul {
         list-style: none;
         margin: 0;
         padding: 0;
+
+        &.radio-container {
+            margin-bottom: 0.5rem;
+        }
 
         li {
             .radio-wrapper,
@@ -85,30 +91,6 @@
 
         margin-bottom: 0.5rem;
         color: $color-information;
-    }
-}
-
-legend.required {
-    position: relative;
-
-    span.required {
-        font-size: small;
-        position: absolute;
-        top: -0.6rem;
-        margin-left: 0.5rem;
-        white-space: nowrap;
-    }
-}
-
-label.required {
-    position: relative;
-
-    span.required {
-        font-size: small;
-        position: absolute;
-        top: -0.1rem;
-        margin-left: 0.5rem;
-        white-space: nowrap;
     }
 }
 

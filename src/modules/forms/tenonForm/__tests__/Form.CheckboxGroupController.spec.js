@@ -7,7 +7,7 @@ import Form from '../Form';
 import { validator } from '../../../utils/helpers/validationHelpers';
 import uuidv4 from 'uuid/v4';
 
-describe('Form.CheckboxGroupController', () => {
+xdescribe('Form.CheckboxGroupController', () => {
     beforeEach(() => {
         jest.clearAllMocks();
         uuidv4
