@@ -54,7 +54,6 @@ const CheckboxGroup = forwardRef(
             options,
             getCheckboxProps,
             getLabelProps,
-            getFieldsetProps,
             contentHintText,
             errorText,
             getErrorProps,
@@ -66,11 +65,7 @@ const CheckboxGroup = forwardRef(
         },
         ref
     ) => (
-        <fieldset
-            className={classNames('form-group', className)}
-            ref={ref}
-            {...getFieldsetProps()}
-        >
+        <fieldset className={classNames('form-group', className)}>
             <legend>
                 {legend}
                 {required ? (
@@ -95,17 +90,19 @@ const CheckboxGroup = forwardRef(
             </legend>
             <FocusCatcher>
                 <ul className="checkbox-container">
-                    {Object.keys(options).map(option => (
+                    {Object.keys(options).map((option, i) => (
                         <li key={option}>
                             <div className="checkbox-wrapper">
                                 <input
                                     {...getCheckboxProps({
-                                        name: option
+                                        name: option,
+                                        focusElement: i === 0,
+                                        ref: i === 0 ? ref : null
                                     })}
                                 />
                                 <label
                                     {...getLabelProps({
-                                        autoIdPostfix: option
+                                        autoIdPostfix: i === 0 ? '' : option
                                     })}
                                 >
                                     {options[option]}
@@ -131,11 +128,10 @@ CheckboxGroup.propTypes = {
     legend: PropTypes.string.isRequired,
     options: PropTypes.object.isRequired,
     getCheckboxProps: PropTypes.func.isRequired,
-    getFieldsetProps: PropTypes.func.isRequired,
     getLabelProps: PropTypes.func.isRequired,
     getErrorProps: PropTypes.func,
     getContentHintProps: PropTypes.func,
-    required: PropTypes.string,
+    required: PropTypes.bool,
     contentHintText: PropTypes.string,
     errorText: PropTypes.string,
     showError: PropTypes.bool,

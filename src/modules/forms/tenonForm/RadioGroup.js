@@ -64,11 +64,7 @@ const RadioGroup = forwardRef(
         },
         ref
     ) => (
-        <fieldset
-            className={classNames('form-group', className)}
-            {...getFieldsetProps()}
-            ref={ref}
-        >
+        <fieldset className={classNames('form-group', className)}>
             <legend>
                 {legend}
                 {required ? (
@@ -93,17 +89,19 @@ const RadioGroup = forwardRef(
             </legend>
             <FocusCatcher>
                 <ul className="radio-container">
-                    {Object.keys(options).map(option => (
+                    {Object.keys(options).map((option, i) => (
                         <li key={option}>
                             <div className="radio-wrapper">
                                 <input
                                     {...getRadioButtonProps({
-                                        value: option
+                                        value: option,
+                                        focusElement: i === 0,
+                                        ref: i === 0 ? ref : null
                                     })}
                                 />
                                 <label
                                     {...getLabelProps({
-                                        autoIdPostfix: option
+                                        autoIdPostfix: i === 0 ? '' : option
                                     })}
                                 >
                                     {options[option]}
@@ -129,7 +127,6 @@ RadioGroup.propTypes = {
     legend: PropTypes.string.isRequired,
     options: PropTypes.object.isRequired,
     getRadioButtonProps: PropTypes.func.isRequired,
-    getFieldsetProps: PropTypes.func.isRequired,
     getLabelProps: PropTypes.func.isRequired,
     getErrorProps: PropTypes.func,
     getContentHintProps: PropTypes.func,
