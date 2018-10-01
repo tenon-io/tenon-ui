@@ -20,7 +20,7 @@ describe('Form.CheckboxGroupController', () => {
 
     afterEach(cleanup);
 
-    it('should render a standard checkbox group and decorate with standard props', () => {
+    it('should render a standard checkbox group, provide a focus element and decorate with standard props', () => {
         const { getByLabelText } = render(
             <Form onSubmit={jest.fn()}>
                 {() => (
@@ -31,16 +31,11 @@ describe('Form.CheckboxGroupController', () => {
                                 <div>
                                     <input
                                         {...getCheckboxProps({
-                                            name: 'one'
+                                            name: 'one',
+                                            focusElement: true
                                         })}
                                     />
-                                    <label
-                                        {...getLabelProps({
-                                            autoIdPostfix: 'one'
-                                        })}
-                                    >
-                                        One
-                                    </label>
+                                    <label {...getLabelProps()}>One</label>
                                     <input
                                         {...getCheckboxProps({
                                             name: 'two'
@@ -62,7 +57,7 @@ describe('Form.CheckboxGroupController', () => {
         );
 
         const inputOne = getByLabelText('One');
-        expect(inputOne).toHaveAttribute('id', 'inputLabelId-one');
+        expect(inputOne).toHaveAttribute('id', 'inputLabelId');
         expect(inputOne).toHaveAttribute('name', 'one');
         expect(inputOne).toHaveAttribute('type', 'checkbox');
         expect(inputOne.attributes.length).toBe(3);

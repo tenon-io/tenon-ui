@@ -21,8 +21,8 @@ describe('Form.RadioGroupController', () => {
 
     afterEach(cleanup);
 
-    it('should render a standard radiogroup and decorate with standard props', () => {
-        const { container, getByLabelText, getByText } = render(
+    it('should render a standard radiogroup, provide a focus element and decorate with standard props', () => {
+        const { getByLabelText } = render(
             <Form onSubmit={jest.fn()}>
                 {() => (
                     <Form.RadioGroupController name="testRadio">
@@ -32,16 +32,11 @@ describe('Form.RadioGroupController', () => {
                                 <div>
                                     <input
                                         {...getRadioButtonProps({
-                                            value: 'one'
+                                            value: 'one',
+                                            focusElement: true
                                         })}
                                     />
-                                    <label
-                                        {...getLabelProps({
-                                            autoIdPostfix: 'one'
-                                        })}
-                                    >
-                                        One
-                                    </label>
+                                    <label {...getLabelProps()}>One</label>
                                     <input
                                         {...getRadioButtonProps({
                                             value: 'two'
@@ -63,7 +58,7 @@ describe('Form.RadioGroupController', () => {
         );
 
         const inputOne = getByLabelText('One');
-        expect(inputOne).toHaveAttribute('id', 'inputLabelId-one');
+        expect(inputOne).toHaveAttribute('id', 'inputLabelId');
         expect(inputOne).toHaveAttribute('name', 'testRadio');
         expect(inputOne).toHaveAttribute('value', 'one');
         expect(inputOne.attributes.length).toBe(4);

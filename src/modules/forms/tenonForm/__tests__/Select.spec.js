@@ -1,5 +1,5 @@
 import React, { createRef } from 'react';
-import { render, cleanup } from 'react-testing-library';
+import { cleanup, render } from 'react-testing-library';
 import 'jest-dom/extend-expect';
 import Select from '../Select';
 
@@ -97,5 +97,40 @@ describe('Select', () => {
         );
 
         expect(getByLabelText('Test select')).toEqual(selectRef.current);
+    });
+
+    it('should render a required text with a fallback', () => {
+        const { container, rerender } = render(
+            <Select
+                getLabelProps={() => ({ htmlFor: 'foo' })}
+                getSelectProps={() => ({ id: 'foo' })}
+                labelText="Test select"
+                required={true}
+            >
+                <option value="one">One</option>
+                <option value="two">Two</option>
+            </Select>
+        );
+
+        expect(container.querySelector('span.required').innerHTML).toBe(
+            '&nbsp;*'
+        );
+
+        rerender(
+            <Select
+                getLabelProps={() => ({ htmlFor: 'foo' })}
+                getSelectProps={() => ({ id: 'foo' })}
+                labelText="Test select"
+                required={true}
+                requiredText="required"
+            >
+                <option value="one">One</option>
+                <option value="two">Two</option>
+            </Select>
+        );
+
+        expect(container.querySelector('span.required').innerHTML).toBe(
+            '&nbsp;required'
+        );
     });
 });
