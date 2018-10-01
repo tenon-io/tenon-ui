@@ -31,7 +31,7 @@ class Spinner extends Component {
                 role="img"
                 viewBox="0 0 58 58"
                 xmlns="http://www.w3.org/2000/svg"
-                aria-describedby={title ? this.svgTitleId : null}
+                aria-labelledby={title ? this.svgTitleId : null}
                 className={className ? className : null}
                 {...props}
             >

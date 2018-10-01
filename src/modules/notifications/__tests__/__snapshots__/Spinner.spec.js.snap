@@ -153,7 +153,7 @@ exports[`spinner should also render a spinner without a title 1`] = `
 exports[`spinner should render a spinner 1`] = `
 <div>
   <svg
-    aria-describedby="testId"
+    aria-labelledby="testId"
     role="img"
     viewBox="0 0 58 58"
     xmlns="http://www.w3.org/2000/svg"

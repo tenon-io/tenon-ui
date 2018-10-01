@@ -16,7 +16,7 @@ describe('spinner', () => {
 
         const svg = container.querySelector('svg');
 
-        expect(svg).toHaveAttribute('aria-describedby', 'testId');
+        expect(svg).toHaveAttribute('aria-labelledby', 'testId');
         expect(svg).toHaveAttribute('role', 'img');
 
         const title = svg.querySelector('title');
