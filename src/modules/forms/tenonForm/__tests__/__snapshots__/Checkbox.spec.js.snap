@@ -5,7 +5,7 @@ exports[`Checkbox should render a checkbox and label only 1`] = `
   class="form-group"
 >
   <div
-    class="field-wrapper"
+    class="checkbox-wrapper"
   >
     <input
       id="foo"
@@ -25,7 +25,7 @@ exports[`Checkbox should render a content hint if given 1`] = `
   class="form-group"
 >
   <div
-    class="field-wrapper"
+    class="checkbox-wrapper"
   >
     <input
       aria-describedby="bar"
@@ -58,7 +58,7 @@ exports[`Checkbox should render an error text when invalid 1`] = `
   class="form-group"
 >
   <div
-    class="field-wrapper"
+    class="checkbox-wrapper"
   >
     <input
       aria-describedby="bar"

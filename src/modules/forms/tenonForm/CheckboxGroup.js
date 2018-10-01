@@ -29,12 +29,6 @@ import FeedbackBlock from './FeedbackBlock';
  * @prop required {function} getFieldsetProps - Prop getter function
  *              from the smart checkbox group controller for the fieldset
  *              element.
- * @prop {function} getErrorProps - Prop getter function
- *              from the smart checkbox group controller for the
- *              error message container.
- * @prop {function} getContentHintProps - Prop getter
- *              function from the smart checkbox group controller
- *              for the content hint container.
  * @prop {boolean} showError - A flag to indicate when the
  *              error container should be displayed.
  * @prop {string} required - Set to 'required' to mark the
@@ -56,8 +50,6 @@ const CheckboxGroup = forwardRef(
             getLabelProps,
             contentHintText,
             errorText,
-            getErrorProps,
-            getContentHintProps,
             showError,
             required,
             requiredText,
@@ -96,9 +88,9 @@ const CheckboxGroup = forwardRef(
                                 <input
                                     {...getCheckboxProps({
                                         name: option,
-                                        focusElement: i === 0,
-                                        ref: i === 0 ? ref : null
+                                        focusElement: i === 0
                                     })}
+                                    ref={i === 0 ? ref : null}
                                 />
                                 <label
                                     {...getLabelProps({
@@ -129,8 +121,6 @@ CheckboxGroup.propTypes = {
     options: PropTypes.object.isRequired,
     getCheckboxProps: PropTypes.func.isRequired,
     getLabelProps: PropTypes.func.isRequired,
-    getErrorProps: PropTypes.func,
-    getContentHintProps: PropTypes.func,
     required: PropTypes.bool,
     contentHintText: PropTypes.string,
     errorText: PropTypes.string,

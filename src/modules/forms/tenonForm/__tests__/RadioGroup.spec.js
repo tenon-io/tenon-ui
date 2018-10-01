@@ -5,7 +5,7 @@ import { render, cleanup } from 'react-testing-library';
 import 'jest-dom/extend-expect';
 import RadioGroup from '../RadioGroup';
 
-xdescribe('RadioGroup', () => {
+describe('RadioGroup', () => {
     afterEach(cleanup);
 
     it('should render an input and label only', () => {
@@ -18,10 +18,12 @@ xdescribe('RadioGroup', () => {
                 }}
                 getLegendProps={() => ({ id: 'bar' })}
                 getLabelProps={props => ({
-                    htmlFor: `foo-${props.autoIdPostfix}`
+                    htmlFor: props.autoIdPostfix
+                        ? `foo-${props.autoIdPostfix}`
+                        : 'foo'
                 })}
-                getRadioButtonProps={({ value }) => ({
-                    id: `foo-${value}`,
+                getRadioButtonProps={({ value, focusElement }) => ({
+                    id: focusElement ? 'foo' : `foo-${value}`,
                     value,
                     onChange: jest.fn()
                 })}
@@ -48,10 +50,12 @@ xdescribe('RadioGroup', () => {
                 }}
                 getLegendProps={() => ({ id: 'bar' })}
                 getLabelProps={props => ({
-                    htmlFor: `foo-${props.autoIdPostfix}`
+                    htmlFor: props.autoIdPostfix
+                        ? `foo-${props.autoIdPostfix}`
+                        : 'foo'
                 })}
-                getRadioButtonProps={({ value }) => ({
-                    id: `foo-${value}`,
+                getRadioButtonProps={({ value, focusElement }) => ({
+                    id: focusElement ? 'foo' : `foo-${value}`,
                     value,
                     onChange: jest.fn()
                 })}
@@ -80,10 +84,12 @@ xdescribe('RadioGroup', () => {
                 }}
                 getLegendProps={() => ({ id: 'bar' })}
                 getLabelProps={props => ({
-                    htmlFor: `foo-${props.autoIdPostfix}`
+                    htmlFor: props.autoIdPostfix
+                        ? `foo-${props.autoIdPostfix}`
+                        : 'foo'
                 })}
-                getRadioButtonProps={({ value }) => ({
-                    id: `foo-${value}`,
+                getRadioButtonProps={({ value, focusElement }) => ({
+                    id: focusElement ? 'foo' : `foo-${value}`,
                     value,
                     onChange: jest.fn()
                 })}

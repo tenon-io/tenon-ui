@@ -8,7 +8,7 @@ import { validator } from '../../../utils/helpers/validationHelpers';
 import { isLongerThan, isRequired } from '../../../utils/data/validation';
 import uuidv4 from 'uuid/v4';
 
-xdescribe('Form.TextInputController', () => {
+describe('Form.TextInputController', () => {
     beforeEach(() => {
         jest.clearAllMocks();
         uuidv4
@@ -102,15 +102,11 @@ xdescribe('Form.TextInputController', () => {
         const { getByLabelText } = render(
             <Form onSubmit={jest.fn()}>
                 {() => (
-                    <Form.TextInputController name="testInput">
+                    <Form.TextInputController name="testInput" required={true}>
                         {({ getInputProps, getLabelProps }) => (
                             <div>
                                 <label {...getLabelProps()}>Test input</label>
-                                <input
-                                    {...getInputProps({
-                                        required: 'required'
-                                    })}
-                                />
+                                <input {...getInputProps()} />
                             </div>
                         )}
                     </Form.TextInputController>
@@ -119,9 +115,8 @@ xdescribe('Form.TextInputController', () => {
         );
 
         const testInput = getByLabelText('Test input');
-        expect(testInput).toHaveAttribute('required');
         expect(testInput).toHaveAttribute('aria-required', 'true');
-        expect(testInput.attributes.length).toBe(6);
+        expect(testInput.attributes.length).toBe(5);
     });
 
     it('should validate an input and set an error text when appropriate', () => {

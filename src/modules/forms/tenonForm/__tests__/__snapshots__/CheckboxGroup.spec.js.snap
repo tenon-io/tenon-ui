@@ -4,38 +4,47 @@ exports[`CheckboxGroup should render a basic checkbox group 1`] = `
 <fieldset
   class="form-group"
 >
-  <legend
-    id="bar"
-  >
+  <legend>
     Test checkbox group
   </legend>
-  <div
-    aria-labelledby="bar"
-    role="group"
-  >
-    <div>
-      <span>
-        FocusCatcher
-      </span>
-      <input
-        id="foo-one"
-        name="one"
-      />
-      <label
-        for="foo-one"
-      >
-        One
-      </label>
-      <input
-        id="foo-two"
-        name="two"
-      />
-      <label
-        for="foo-two"
-      >
-        Two
-      </label>
-    </div>
+  <div>
+    <span>
+      FocusCatcher
+    </span>
+    <ul
+      class="checkbox-container"
+    >
+      <li>
+        <div
+          class="checkbox-wrapper"
+        >
+          <input
+            id="foo"
+            name="one"
+          />
+          <label
+            for="foo"
+          >
+            One
+          </label>
+        </div>
+      </li>
+      <li>
+        <div
+          class="checkbox-wrapper"
+        >
+          <input
+            id="foo-two"
+            name="two"
+          />
+          <label
+            for="foo-two"
+          >
+            Two
+          </label>
+        </div>
+      </li>
+    </ul>
   </div>
 </fieldset>
 `;
@@ -44,49 +53,62 @@ exports[`CheckboxGroup should render a content hint if given 1`] = `
 <fieldset
   class="form-group"
 >
-  <legend
-    id="bar"
-  >
+  <legend>
     Test checkbox group
+    <span
+      class="visually-hidden"
+    >
+       
+      Content hint test
+    </span>
   </legend>
-  <div
-    aria-describedby="inf"
-    aria-labelledby="bar"
-    role="group"
-  >
-    <div>
-      <span>
-        FocusCatcher
-      </span>
-      <input
-        id="foo-one"
-        name="one"
-      />
-      <label
-        for="foo-one"
-      >
-        One
-      </label>
-      <input
-        id="foo-two"
-        name="two"
-      />
-      <label
-        for="foo-two"
-      >
-        Two
-      </label>
-    </div>
+  <div>
+    <span>
+      FocusCatcher
+    </span>
+    <ul
+      class="checkbox-container"
+    >
+      <li>
+        <div
+          class="checkbox-wrapper"
+        >
+          <input
+            id="foo"
+            name="one"
+          />
+          <label
+            for="foo"
+          >
+            One
+          </label>
+        </div>
+      </li>
+      <li>
+        <div
+          class="checkbox-wrapper"
+        >
+          <input
+            id="foo-two"
+            name="two"
+          />
+          <label
+            for="foo-two"
+          >
+            Two
+          </label>
+        </div>
+      </li>
+    </ul>
   </div>
   <div
+    aria-hidden="true"
     class="info-wrapper"
   >
     <span
       class="icon"
     />
-    <span
-      id="inf"
-    >
+    <span>
       Content hint test
     </span>
   </div>
@@ -97,49 +119,62 @@ exports[`CheckboxGroup should render an error text when invalid 1`] = `
 <fieldset
   class="form-group"
 >
-  <legend
-    id="bar"
-  >
+  <legend>
     Test checkbox group
+    <span
+      class="visually-hidden"
+    >
+       
+      Test error
+    </span>
   </legend>
-  <div
-    aria-describedby="err"
-    aria-labelledby="bar"
-    role="group"
-  >
-    <div>
-      <span>
-        FocusCatcher
-      </span>
-      <input
-        id="foo-one"
-        name="one"
-      />
-      <label
-        for="foo-one"
-      >
-        One
-      </label>
-      <input
-        id="foo-two"
-        name="two"
-      />
-      <label
-        for="foo-two"
-      >
-        Two
-      </label>
-    </div>
+  <div>
+    <span>
+      FocusCatcher
+    </span>
+    <ul
+      class="checkbox-container"
+    >
+      <li>
+        <div
+          class="checkbox-wrapper"
+        >
+          <input
+            id="foo"
+            name="one"
+          />
+          <label
+            for="foo"
+          >
+            One
+          </label>
+        </div>
+      </li>
+      <li>
+        <div
+          class="checkbox-wrapper"
+        >
+          <input
+            id="foo-two"
+            name="two"
+          />
+          <label
+            for="foo-two"
+          >
+            Two
+          </label>
+        </div>
+      </li>
+    </ul>
   </div>
   <div
+    aria-hidden="true"
     class="error-wrapper"
   >
     <span
       class="icon"
     />
-    <span
-      id="err"
-    >
+    <span>
       Test error
     </span>
   </div>

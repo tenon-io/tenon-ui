@@ -8,7 +8,7 @@ import { validator } from '../../../utils/helpers/validationHelpers';
 import { isRequired } from '../../../utils/data/validation';
 import uuidv4 from 'uuid/v4';
 
-xdescribe('Form.SelectController', () => {
+describe('Form.SelectController', () => {
     beforeEach(() => {
         jest.clearAllMocks();
         uuidv4
@@ -82,15 +82,11 @@ xdescribe('Form.SelectController', () => {
         const { getByLabelText } = render(
             <Form onSubmit={jest.fn()}>
                 {() => (
-                    <Form.SelectController name="testSelect">
+                    <Form.SelectController name="testSelect" required={true}>
                         {({ getSelectProps, getLabelProps }) => (
                             <div>
                                 <label {...getLabelProps()}>Test select</label>
-                                <select
-                                    {...getSelectProps({
-                                        required: 'required'
-                                    })}
-                                >
+                                <select {...getSelectProps()}>
                                     <option value="1">One</option>
                                     <option value="2">One</option>
                                 </select>
@@ -102,9 +98,8 @@ xdescribe('Form.SelectController', () => {
         );
 
         const testSelect = getByLabelText('Test select');
-        expect(testSelect).toHaveAttribute('required');
         expect(testSelect).toHaveAttribute('aria-required', 'true');
-        expect(testSelect.attributes.length).toBe(4);
+        expect(testSelect.attributes.length).toBe(3);
     });
 
     it('should validate a select and set an error text when appropriate', () => {

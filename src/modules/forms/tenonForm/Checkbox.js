@@ -63,7 +63,7 @@ const Checkbox = forwardRef(
         ref
     ) => (
         <div className="form-group">
-            <div className="field-wrapper checkbox-wrapper">
+            <div className="checkbox-wrapper">
                 <input
                     ref={ref}
                     className={

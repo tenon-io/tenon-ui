@@ -8,7 +8,7 @@ import { validator } from '../../../utils/helpers/validationHelpers';
 import { isLongerThan, isRequired } from '../../../utils/data/validation';
 import uuidv4 from 'uuid/v4';
 
-xdescribe('Form.TextareaController', () => {
+describe('Form.TextareaController', () => {
     beforeEach(() => {
         jest.clearAllMocks();
         uuidv4
@@ -108,17 +108,16 @@ xdescribe('Form.TextareaController', () => {
         const { getByLabelText } = render(
             <Form onSubmit={jest.fn()}>
                 {() => (
-                    <Form.TextareaController name="testTextarea">
+                    <Form.TextareaController
+                        name="testTextarea"
+                        required={true}
+                    >
                         {({ getTextareaProps, getLabelProps }) => (
                             <div>
                                 <label {...getLabelProps()}>
                                     Test textarea
                                 </label>
-                                <input
-                                    {...getTextareaProps({
-                                        required: 'required'
-                                    })}
-                                />
+                                <input {...getTextareaProps()} />
                             </div>
                         )}
                     </Form.TextareaController>
@@ -127,9 +126,8 @@ xdescribe('Form.TextareaController', () => {
         );
 
         const testTextarea = getByLabelText('Test textarea');
-        expect(testTextarea).toHaveAttribute('required');
         expect(testTextarea).toHaveAttribute('aria-required', 'true');
-        expect(testTextarea.attributes.length).toBe(5);
+        expect(testTextarea.attributes.length).toBe(4);
     });
 
     it('should validate a textarea and set an error text when appropriate', () => {

@@ -29,12 +29,6 @@ import FeedbackBlock from './FeedbackBlock';
  * @prop required {function} getRadioFieldsetProps - Prop getter function
  *              from the smart radiogroup controller for the fiedset
  *              element.
- * @prop {function} getErrorProps - Prop getter function
- *              from the smart radiogroup controller for the
- *              error message container.
- * @prop {function} getContentHintProps - Prop getter
- *              function from the smart radiogroup controller
- *              for the content hint container.
  * @prop {boolean} showError - A flag to indicate when the
  *              error container should be displayed.
  * @prop {string} required - Set to 'required' to mark the
@@ -128,8 +122,6 @@ RadioGroup.propTypes = {
     options: PropTypes.object.isRequired,
     getRadioButtonProps: PropTypes.func.isRequired,
     getLabelProps: PropTypes.func.isRequired,
-    getErrorProps: PropTypes.func,
-    getContentHintProps: PropTypes.func,
     required: PropTypes.bool,
     contentHintText: PropTypes.string,
     errorText: PropTypes.string,
