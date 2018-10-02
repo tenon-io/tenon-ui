@@ -25,6 +25,7 @@ const FormsExample = () => (
 
                 <Form.TextInputController
                     name="petName"
+                    required="true"
                     validators={[
                         validator(
                             isRequired,
@@ -39,7 +40,6 @@ const FormsExample = () => (
                     {props => (
                         <Input
                             {...props}
-                            required="required"
                             requiredText="( required )"
                             contentHintText="The pet's name must be longer than 5 characters"
                             labelText="Name of pet"
@@ -49,6 +49,7 @@ const FormsExample = () => (
 
                 <Form.TextInputController
                     name="petType"
+                    required="true"
                     validators={[
                         validator(isRequired, 'A type of pet is required')
                     ]}
@@ -56,7 +57,6 @@ const FormsExample = () => (
                     {props => (
                         <Input
                             {...props}
-                            require="required"
                             requiredText="( required )"
                             labelText="Type of pet"
                         />
@@ -75,6 +75,7 @@ const FormsExample = () => (
 
                 <Form.SelectController
                     name="petWeight"
+                    required="true"
                     validators={[
                         validator(isRequired, 'Please select a weight category')
                     ]}
@@ -83,7 +84,6 @@ const FormsExample = () => (
                         <Select
                             {...props}
                             labelText="Pet's weight"
-                            required="required"
                             requiredText="( required )"
                         >
                             <option>No weight category selected</option>
@@ -96,6 +96,7 @@ const FormsExample = () => (
 
                 <Form.RadioGroupController
                     name="radioSet"
+                    required="true"
                     validators={[
                         validator(isRequired, 'Please select an option')
                     ]}
@@ -104,7 +105,6 @@ const FormsExample = () => (
                         <RadioGroup
                             {...props}
                             legend="Please select an option"
-                            required="required"
                             requiredText="( required )"
                             options={{
                                 option1: 'Option 1',
@@ -117,6 +117,7 @@ const FormsExample = () => (
 
                 <Form.CheckboxGroupController
                     name="petEat"
+                    required="true"
                     validators={[
                         validator(
                             value => value.length > 0,
@@ -133,7 +134,6 @@ const FormsExample = () => (
                                 noon: 'Noon',
                                 night: 'Night'
                             }}
-                            required="required"
                             requiredText="( required )"
                             {...props}
                         />
@@ -142,6 +142,7 @@ const FormsExample = () => (
 
                 <Form.CheckboxController
                     name="confirmInfo"
+                    required="true"
                     validators={[
                         validator(
                             value => value === true,
@@ -152,7 +153,6 @@ const FormsExample = () => (
                     {props => (
                         <Checkbox
                             {...props}
-                            required="required"
                             requiredText="( required )"
                             labelText="I confirm that my pet's information is true"
                         />
