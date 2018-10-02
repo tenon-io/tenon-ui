@@ -1,5 +1,5 @@
 import React, { createRef } from 'react';
-import { render, cleanup } from 'react-testing-library';
+import { cleanup, render } from 'react-testing-library';
 import 'jest-dom/extend-expect';
 import Checkbox from '../Checkbox';
 
@@ -82,5 +82,34 @@ describe('Checkbox', () => {
         );
 
         expect(getByLabelText('Test checkbox')).toEqual(inPutRef.current);
+    });
+
+    it('should render a required text with a fallback', () => {
+        const { container, rerender } = render(
+            <Checkbox
+                getLabelProps={() => ({ htmlFor: 'foo' })}
+                getCheckboxProps={() => ({ id: 'foo', type: 'checkbox' })}
+                labelText="Test checkbox"
+                required={true}
+            />
+        );
+
+        expect(container.querySelector('span.required').innerHTML).toBe(
+            '&nbsp;*'
+        );
+
+        rerender(
+            <Checkbox
+                getLabelProps={() => ({ htmlFor: 'foo' })}
+                getCheckboxProps={() => ({ id: 'foo', type: 'checkbox' })}
+                labelText="Test checkbox"
+                required={true}
+                requiredText="required"
+            />
+        );
+
+        expect(container.querySelector('span.required').innerHTML).toBe(
+            '&nbsp;required'
+        );
     });
 });

@@ -1,3 +1,5 @@
+import Input from '../Input';
+
 jest.mock('../../../utils/components/FocusCatcher');
 
 import React, { createRef } from 'react';
@@ -18,10 +20,12 @@ describe('CheckboxGroup', () => {
                 }}
                 getLegendProps={() => ({ id: 'bar' })}
                 getLabelProps={props => ({
-                    htmlFor: `foo-${props.autoIdPostfix}`
+                    htmlFor: props.autoIdPostfix
+                        ? `foo-${props.autoIdPostfix}`
+                        : 'foo'
                 })}
-                getCheckboxProps={({ name }) => ({
-                    id: `foo-${name}`,
+                getCheckboxProps={({ name, focusElement }) => ({
+                    id: focusElement ? 'foo' : `foo-${name}`,
                     name,
                     onChange: jest.fn()
                 })}
@@ -45,10 +49,12 @@ describe('CheckboxGroup', () => {
                 }}
                 getLegendProps={() => ({ id: 'bar' })}
                 getLabelProps={props => ({
-                    htmlFor: `foo-${props.autoIdPostfix}`
+                    htmlFor: props.autoIdPostfix
+                        ? `foo-${props.autoIdPostfix}`
+                        : 'foo'
                 })}
-                getCheckboxProps={({ name }) => ({
-                    id: `foo-${name}`,
+                getCheckboxProps={({ name, focusElement }) => ({
+                    id: focusElement ? 'foo' : `foo-${name}`,
                     name,
                     onChange: jest.fn()
                 })}
@@ -76,10 +82,12 @@ describe('CheckboxGroup', () => {
                 }}
                 getLegendProps={() => ({ id: 'bar' })}
                 getLabelProps={props => ({
-                    htmlFor: `foo-${props.autoIdPostfix}`
+                    htmlFor: props.autoIdPostfix
+                        ? `foo-${props.autoIdPostfix}`
+                        : 'foo'
                 })}
-                getCheckboxProps={({ name }) => ({
-                    id: `foo-${name}`,
+                getCheckboxProps={({ name, focusElement }) => ({
+                    id: focusElement ? 'foo' : `foo-${name}`,
                     name,
                     onChange: jest.fn()
                 })}
@@ -99,7 +107,7 @@ describe('CheckboxGroup', () => {
     it('should allow easy focus of the internal radio group', () => {
         const checkboxGroupRef = createRef();
 
-        const { container } = render(
+        const { getByLabelText } = render(
             <CheckboxGroup
                 ref={checkboxGroupRef}
                 legend="Test radio group"
@@ -109,10 +117,12 @@ describe('CheckboxGroup', () => {
                 }}
                 getLegendProps={() => ({ id: 'bar' })}
                 getLabelProps={props => ({
-                    htmlFor: `foo-${props.autoIdPostfix}`
+                    htmlFor: props.autoIdPostfix
+                        ? `foo-${props.autoIdPostfix}`
+                        : 'foo'
                 })}
-                getCheckboxProps={({ name }) => ({
-                    id: `foo-${name}`,
+                getCheckboxProps={({ name, focusElement }) => ({
+                    id: focusElement ? 'foo' : `foo-${name}`,
                     name,
                     onChange: jest.fn()
                 })}
@@ -122,8 +132,70 @@ describe('CheckboxGroup', () => {
                 })}
             />
         );
-        expect(container.querySelector('[role="group"]')).toEqual(
-            checkboxGroupRef.current
+
+        expect(getByLabelText('One')).toEqual(checkboxGroupRef.current);
+    });
+
+    it('should render a required text with a fallback', () => {
+        const { container, rerender } = render(
+            <CheckboxGroup
+                legend="Test checkbox group"
+                required={true}
+                options={{
+                    one: 'One',
+                    two: 'Two'
+                }}
+                getLegendProps={() => ({ id: 'bar' })}
+                getLabelProps={props => ({
+                    htmlFor: props.autoIdPostfix
+                        ? `foo-${props.autoIdPostfix}`
+                        : 'foo'
+                })}
+                getCheckboxProps={({ name, focusElement }) => ({
+                    id: focusElement ? 'foo' : `foo-${name}`,
+                    name,
+                    onChange: jest.fn()
+                })}
+                getCheckboxGroupProps={() => ({
+                    'aria-labelledby': 'bar',
+                    role: 'group'
+                })}
+            />
+        );
+
+        expect(container.querySelector('span.required').innerHTML).toBe(
+            '&nbsp;*'
+        );
+
+        rerender(
+            <CheckboxGroup
+                legend="Test checkbox group"
+                required={true}
+                requiredText="required"
+                options={{
+                    one: 'One',
+                    two: 'Two'
+                }}
+                getLegendProps={() => ({ id: 'bar' })}
+                getLabelProps={props => ({
+                    htmlFor: props.autoIdPostfix
+                        ? `foo-${props.autoIdPostfix}`
+                        : 'foo'
+                })}
+                getCheckboxProps={({ name, focusElement }) => ({
+                    id: focusElement ? 'foo' : `foo-${name}`,
+                    name,
+                    onChange: jest.fn()
+                })}
+                getCheckboxGroupProps={() => ({
+                    'aria-labelledby': 'bar',
+                    role: 'group'
+                })}
+            />
+        );
+
+        expect(container.querySelector('span.required').innerHTML).toBe(
+            '&nbsp;required'
         );
     });
 });

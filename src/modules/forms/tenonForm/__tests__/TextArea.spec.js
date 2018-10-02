@@ -1,5 +1,5 @@
 import React, { createRef } from 'react';
-import { render, cleanup } from 'react-testing-library';
+import { cleanup, render } from 'react-testing-library';
 import 'jest-dom/extend-expect';
 import TextArea from '../TextArea';
 
@@ -81,5 +81,34 @@ describe('TextArea', () => {
         );
 
         expect(getByLabelText('Test textarea')).toEqual(textareaRef.current);
+    });
+
+    it('should render a required text with a fallback', () => {
+        const { container, rerender } = render(
+            <TextArea
+                getLabelProps={() => ({ htmlFor: 'foo' })}
+                getTextareaProps={() => ({ id: 'foo' })}
+                labelText="Test textarea"
+                required={true}
+            />
+        );
+
+        expect(container.querySelector('span.required').innerHTML).toBe(
+            '&nbsp;*'
+        );
+
+        rerender(
+            <TextArea
+                getLabelProps={() => ({ htmlFor: 'foo' })}
+                getTextareaProps={() => ({ id: 'foo' })}
+                labelText="Test textarea"
+                required={true}
+                requiredText="required"
+            />
+        );
+
+        expect(container.querySelector('span.required').innerHTML).toBe(
+            '&nbsp;required'
+        );
     });
 });

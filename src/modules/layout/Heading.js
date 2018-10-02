@@ -1,4 +1,4 @@
-import React, { createContext } from 'react';
+import React, { createContext, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 
 const LevelContext = createContext(1);
@@ -21,14 +21,14 @@ LevelBoundary.propTypes = {
     levelOverride: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
 
-export const H = props => (
+export const H = forwardRef((props, ref) => (
     <LevelContext.Consumer>
         {level => {
             const Heading = `h${Math.min(level, 6)}`;
-            return <Heading {...props} />;
+            return <Heading ref={ref} {...props} />;
         }}
     </LevelContext.Consumer>
-);
+));
 
 H.displayName = 'Heading.H';
 

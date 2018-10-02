@@ -1,6 +1,6 @@
 jest.mock('uuid/v4');
 
-import React from 'react';
+import React, { createRef } from 'react';
 import { render, cleanup } from 'react-testing-library';
 import 'jest-dom/extend-expect';
 import ErrorBlock from '../ErrorBlock';
@@ -97,5 +97,25 @@ describe('ErrorBlock', () => {
             </div>
         );
         expect(container.firstChild).toBeEmpty();
+    });
+
+    it('should focus the heading via the ref', () => {
+        const focusRef = createRef();
+        const mockControls = {
+            username: {
+                validity: false,
+                controlId: 'usernameControl',
+                errorText: 'User name is required.'
+            }
+        };
+        const { getByText } = render(
+            <ErrorBlock
+                formControls={mockControls}
+                headingText="Some errors"
+                ref={focusRef}
+            />
+        );
+
+        expect(focusRef.current).toEqual(getByText('Some errors'));
     });
 });

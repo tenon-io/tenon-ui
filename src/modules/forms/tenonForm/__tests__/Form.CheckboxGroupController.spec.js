@@ -20,34 +20,22 @@ describe('Form.CheckboxGroupController', () => {
 
     afterEach(cleanup);
 
-    it('should render a standard checkbox group and decorate with standard props', () => {
-        const { container, getByLabelText, getByText } = render(
+    it('should render a standard checkbox group, provide a focus element and decorate with standard props', () => {
+        const { getByLabelText } = render(
             <Form onSubmit={jest.fn()}>
                 {() => (
                     <Form.CheckboxGroupController name="textCheck">
-                        {({
-                            getCheckboxProps,
-                            getCheckboxGroupProps,
-                            getLegendProps,
-                            getLabelProps
-                        }) => (
+                        {({ getCheckboxProps, getLabelProps }) => (
                             <fieldset>
-                                <legend {...getLegendProps()}>
-                                    Test check
-                                </legend>
-                                <div {...getCheckboxGroupProps()}>
+                                <legend>Test check</legend>
+                                <div>
                                     <input
                                         {...getCheckboxProps({
-                                            name: 'one'
+                                            name: 'one',
+                                            focusElement: true
                                         })}
                                     />
-                                    <label
-                                        {...getLabelProps({
-                                            autoIdPostfix: 'one'
-                                        })}
-                                    >
-                                        One
-                                    </label>
+                                    <label {...getLabelProps()}>One</label>
                                     <input
                                         {...getCheckboxProps({
                                             name: 'two'
@@ -68,17 +56,8 @@ describe('Form.CheckboxGroupController', () => {
             </Form>
         );
 
-        const legend = getByText('Test check');
-        expect(legend).toHaveAttribute('id', 'legendId');
-
-        const checkGroup = container.querySelector('[role="group"]');
-        expect(checkGroup).toHaveAttribute('aria-labelledby', 'legendId');
-        expect(checkGroup).toHaveAttribute('id', 'containerId');
-        expect(checkGroup).toHaveAttribute('tabindex', '-1');
-        expect(checkGroup.attributes.length).toBe(4);
-
         const inputOne = getByLabelText('One');
-        expect(inputOne).toHaveAttribute('id', 'inputLabelId-one');
+        expect(inputOne).toHaveAttribute('id', 'inputLabelId');
         expect(inputOne).toHaveAttribute('name', 'one');
         expect(inputOne).toHaveAttribute('type', 'checkbox');
         expect(inputOne.attributes.length).toBe(3);
@@ -92,7 +71,7 @@ describe('Form.CheckboxGroupController', () => {
 
     it('should bundle checked boxes into an array of checked boxes by name', () => {
         let submitData = {};
-        const { container, getByLabelText, getByText } = render(
+        const { getByLabelText, getByText } = render(
             <Form
                 onSubmit={data => {
                     submitData = data;
@@ -100,17 +79,10 @@ describe('Form.CheckboxGroupController', () => {
             >
                 {() => (
                     <Form.CheckboxGroupController name="textCheck">
-                        {({
-                            getCheckboxProps,
-                            getCheckboxGroupProps,
-                            getLegendProps,
-                            getLabelProps
-                        }) => (
+                        {({ getCheckboxProps, getLabelProps }) => (
                             <fieldset>
-                                <legend {...getLegendProps()}>
-                                    Test check
-                                </legend>
-                                <div {...getCheckboxGroupProps()}>
+                                <legend>Test check</legend>
+                                <div>
                                     <input
                                         {...getCheckboxProps({
                                             name: 'one'
@@ -169,17 +141,10 @@ describe('Form.CheckboxGroupController', () => {
             <Form onSubmit={jest.fn()}>
                 {() => (
                     <Form.CheckboxGroupController name="testCheck">
-                        {({
-                            getCheckboxProps,
-                            getCheckboxGroupProps,
-                            getLegendProps,
-                            getLabelProps
-                        }) => (
+                        {({ getCheckboxProps, getLabelProps }) => (
                             <fieldset>
-                                <legend {...getLegendProps()}>
-                                    Test radio
-                                </legend>
-                                <div {...getCheckboxGroupProps()}>
+                                <legend>Test radio</legend>
+                                <div>
                                     <input
                                         {...getCheckboxProps({
                                             name: 'one',
@@ -224,329 +189,6 @@ describe('Form.CheckboxGroupController', () => {
         expect(inputTwo.attributes.length).toBe(3);
     });
 
-    it('should validate a checkbox group and set an error text when appropriate', () => {
-        const { container, getByLabelText, getByText, getByTestId } = render(
-            <Form onSubmit={jest.fn()}>
-                {() => (
-                    <div>
-                        <Form.CheckboxGroupController
-                            name="testCheck"
-                            validators={[
-                                validator(
-                                    value => value.length > 0,
-                                    'This field is required.'
-                                )
-                            ]}
-                        >
-                            {({
-                                getCheckboxProps,
-                                getCheckboxGroupProps,
-                                getLegendProps,
-                                getLabelProps,
-                                getErrorProps,
-                                errorText,
-                                showError
-                            }) => (
-                                <fieldset>
-                                    <legend {...getLegendProps()}>
-                                        Test check
-                                    </legend>
-                                    <div {...getCheckboxGroupProps()}>
-                                        <input
-                                            {...getCheckboxProps({
-                                                name: 'one'
-                                            })}
-                                        />
-                                        <label
-                                            {...getLabelProps({
-                                                autoIdPostfix: 'one'
-                                            })}
-                                        >
-                                            One
-                                        </label>
-                                        <input
-                                            {...getCheckboxProps({
-                                                name: 'two'
-                                            })}
-                                        />
-                                        <label
-                                            {...getLabelProps({
-                                                autoIdPostfix: 'two'
-                                            })}
-                                        >
-                                            Two
-                                        </label>
-                                    </div>
-                                    <div data-testid="errorContainer">
-                                        {showError ? (
-                                            <span {...getErrorProps()}>
-                                                {errorText}
-                                            </span>
-                                        ) : null}
-                                    </div>
-                                </fieldset>
-                            )}
-                        </Form.CheckboxGroupController>
-                        <button type="submit">Submit</button>
-                    </div>
-                )}
-            </Form>
-        );
-
-        fireEvent.click(getByText('Submit'));
-
-        const checkBoxGroup = container.querySelector('[role="group"]');
-
-        expect(getByTestId('errorContainer').firstChild).toHaveTextContent(
-            'This field is required.'
-        );
-
-        expect(getByTestId('errorContainer').firstChild).toHaveAttribute(
-            'id',
-            'errorId'
-        );
-
-        expect(checkBoxGroup).toHaveAttribute('aria-describedby', 'errorId');
-
-        fireEvent.click(getByLabelText('One'));
-        expect(getByTestId('errorContainer')).toBeEmpty();
-        expect(checkBoxGroup).not.toHaveAttribute('aria-describedby');
-    });
-
-    it('should allow a specific validator to be ignored', () => {
-        const { container, getByText, getByTestId } = render(
-            <Form onSubmit={jest.fn()}>
-                {() => (
-                    <div>
-                        <Form.CheckboxGroupController
-                            name="textCheck"
-                            validators={[
-                                validator(
-                                    value => value.length > 0,
-                                    'This field is required.',
-                                    true
-                                )
-                            ]}
-                        >
-                            {({
-                                getCheckboxProps,
-                                getCheckboxGroupProps,
-                                getLegendProps,
-                                getLabelProps,
-                                getErrorProps,
-                                errorText,
-                                showError
-                            }) => (
-                                <fieldset>
-                                    <legend {...getLegendProps()}>
-                                        Test radio
-                                    </legend>
-                                    <div {...getCheckboxGroupProps()}>
-                                        <input
-                                            {...getCheckboxProps({
-                                                name: 'one'
-                                            })}
-                                        />
-                                        <label
-                                            {...getLabelProps({
-                                                autoIdPostfix: 'one'
-                                            })}
-                                        >
-                                            One
-                                        </label>
-                                        <input
-                                            {...getCheckboxProps({
-                                                name: 'two'
-                                            })}
-                                        />
-                                        <label
-                                            {...getLabelProps({
-                                                autoIdPostfix: 'two'
-                                            })}
-                                        >
-                                            Two
-                                        </label>
-                                    </div>
-                                    <div data-testid="errorContainer">
-                                        {showError ? (
-                                            <span {...getErrorProps()}>
-                                                {errorText}
-                                            </span>
-                                        ) : null}
-                                    </div>
-                                </fieldset>
-                            )}
-                        </Form.CheckboxGroupController>
-                        <button type="submit">Submit</button>
-                    </div>
-                )}
-            </Form>
-        );
-
-        fireEvent.click(getByText('Submit'));
-
-        const checkboxGroup = container.querySelector('[role="group"]');
-        expect(getByTestId('errorContainer')).toBeEmpty();
-        expect(checkboxGroup).not.toHaveAttribute('aria-describedby');
-    });
-
-    it('should allow the user to specify a content hint', () => {
-        const { container, getByTestId } = render(
-            <Form onSubmit={jest.fn()}>
-                {() => (
-                    <div>
-                        <Form.CheckboxGroupController name="testCheck">
-                            {({
-                                getCheckboxProps,
-                                getCheckboxGroupProps,
-                                getLegendProps,
-                                getLabelProps,
-                                getContentHintProps
-                            }) => (
-                                <fieldset>
-                                    <legend {...getLegendProps()}>
-                                        Test radio
-                                    </legend>
-                                    <div {...getCheckboxGroupProps()}>
-                                        <input
-                                            {...getCheckboxProps({
-                                                name: 'one'
-                                            })}
-                                        />
-                                        <label
-                                            {...getLabelProps({
-                                                autoIdPostfix: 'one'
-                                            })}
-                                        >
-                                            One
-                                        </label>
-                                        <input
-                                            {...getCheckboxProps({
-                                                name: 'two'
-                                            })}
-                                        />
-                                        <label
-                                            {...getLabelProps({
-                                                autoIdPostfix: 'two'
-                                            })}
-                                        >
-                                            Two
-                                        </label>
-                                    </div>
-                                    <div data-testid="contentHintContainer">
-                                        <span {...getContentHintProps()}>
-                                            Some content hint
-                                        </span>
-                                    </div>
-                                </fieldset>
-                            )}
-                        </Form.CheckboxGroupController>
-                        <button type="submit">Submit</button>
-                    </div>
-                )}
-            </Form>
-        );
-
-        expect(container.querySelector('[role="group"]')).toHaveAttribute(
-            'aria-describedby',
-            'contentHintId'
-        );
-        expect(getByTestId('contentHintContainer').firstChild).toHaveAttribute(
-            'id',
-            'contentHintId'
-        );
-    });
-
-    it('should properly link both a content hint and an error message accessibly', () => {
-        const { container, getByText, getByLabelText } = render(
-            <Form onSubmit={jest.fn()}>
-                {() => (
-                    <div>
-                        <Form.CheckboxGroupController
-                            name="testCheck"
-                            validators={[
-                                validator(
-                                    value => value.length > 0,
-                                    'This field is required.'
-                                )
-                            ]}
-                        >
-                            {({
-                                getCheckboxProps,
-                                getCheckboxGroupProps,
-                                getLegendProps,
-                                getLabelProps,
-                                getContentHintProps,
-                                getErrorProps,
-                                errorText,
-                                showError
-                            }) => (
-                                <fieldset>
-                                    <legend {...getLegendProps()}>
-                                        Test radio
-                                    </legend>
-                                    <div {...getCheckboxGroupProps()}>
-                                        <input
-                                            {...getCheckboxProps({
-                                                name: 'one'
-                                            })}
-                                        />
-                                        <label
-                                            {...getLabelProps({
-                                                autoIdPostfix: 'one'
-                                            })}
-                                        >
-                                            One
-                                        </label>
-                                        <input
-                                            {...getCheckboxProps({
-                                                name: 'two'
-                                            })}
-                                        />
-                                        <label
-                                            {...getLabelProps({
-                                                autoIdPostfix: 'two'
-                                            })}
-                                        >
-                                            Two
-                                        </label>
-                                    </div>
-                                    <div data-testid="contentHintContainer">
-                                        <span {...getContentHintProps()}>
-                                            Some content hint
-                                        </span>
-                                    </div>
-                                    <div data-testid="errorContainer">
-                                        {showError ? (
-                                            <span {...getErrorProps()}>
-                                                {errorText}
-                                            </span>
-                                        ) : null}
-                                    </div>
-                                </fieldset>
-                            )}
-                        </Form.CheckboxGroupController>
-                        <button type="submit">Submit</button>
-                    </div>
-                )}
-            </Form>
-        );
-
-        fireEvent.click(getByText('Submit'));
-
-        expect(container.querySelector('[role="group"]')).toHaveAttribute(
-            'aria-describedby',
-            'contentHintId errorId'
-        );
-
-        fireEvent.click(getByLabelText('One'));
-
-        expect(container.querySelector('[role="group"]')).toHaveAttribute(
-            'aria-describedby',
-            'contentHintId'
-        );
-    });
-
     it('should only display errors after one submit attempt', () => {
         const { container, getByText } = render(
             <Form onSubmit={jest.fn()}>
@@ -563,19 +205,13 @@ describe('Form.CheckboxGroupController', () => {
                         >
                             {({
                                 getCheckboxProps,
-                                getCheckboxGroupProps,
-                                getLegendProps,
                                 getLabelProps,
-                                getContentHintProps,
-                                getErrorProps,
                                 errorText,
                                 showError
                             }) => (
                                 <fieldset>
-                                    <legend {...getLegendProps()}>
-                                        Test radio
-                                    </legend>
-                                    <div {...getCheckboxGroupProps()}>
+                                    <legend>Test radio</legend>
+                                    <div>
                                         <input
                                             {...getCheckboxProps({
                                                 name: 'one'
@@ -601,18 +237,11 @@ describe('Form.CheckboxGroupController', () => {
                                             Two
                                         </label>
                                     </div>
-                                    <div data-testid="contentHintContainer">
-                                        <span {...getContentHintProps()}>
-                                            Some content hint
+                                    {showError ? (
+                                        <span className="error-container">
+                                            {errorText}
                                         </span>
-                                    </div>
-                                    <div data-testid="errorContainer">
-                                        {showError ? (
-                                            <span {...getErrorProps()}>
-                                                {errorText}
-                                            </span>
-                                        ) : null}
-                                    </div>
+                                    ) : null}
                                 </fieldset>
                             )}
                         </Form.CheckboxGroupController>
@@ -622,16 +251,12 @@ describe('Form.CheckboxGroupController', () => {
             </Form>
         );
 
-        expect(container.querySelector('[role="group"]')).toHaveAttribute(
-            'aria-describedby',
-            'contentHintId'
-        );
+        expect(container.querySelector('span.error-container')).toBeNull();
 
         fireEvent.click(getByText('Submit'));
 
-        expect(container.querySelector('[role="group"]')).toHaveAttribute(
-            'aria-describedby',
-            'contentHintId errorId'
+        expect(container.querySelector('span.error-container').innerHTML).toBe(
+            'This field is required.'
         );
     });
 
@@ -651,19 +276,13 @@ describe('Form.CheckboxGroupController', () => {
                         >
                             {({
                                 getCheckboxProps,
-                                getCheckboxGroupProps,
-                                getLegendProps,
                                 getLabelProps,
-                                getContentHintProps,
-                                getErrorProps,
                                 errorText,
                                 showError
                             }) => (
                                 <fieldset>
-                                    <legend {...getLegendProps()}>
-                                        Test check
-                                    </legend>
-                                    <div {...getCheckboxGroupProps()}>
+                                    <legend>Test check</legend>
+                                    <div>
                                         <input
                                             {...getCheckboxProps({
                                                 name: 'one'
@@ -689,18 +308,11 @@ describe('Form.CheckboxGroupController', () => {
                                             Two
                                         </label>
                                     </div>
-                                    <div data-testid="contentHintContainer">
-                                        <span {...getContentHintProps()}>
-                                            Some content hint
+                                    {showError ? (
+                                        <span className="error-container">
+                                            {errorText}
                                         </span>
-                                    </div>
-                                    <div data-testid="errorContainer">
-                                        {showError ? (
-                                            <span {...getErrorProps()}>
-                                                {errorText}
-                                            </span>
-                                        ) : null}
-                                    </div>
+                                    ) : null}
                                 </fieldset>
                             )}
                         </Form.CheckboxGroupController>
@@ -710,9 +322,8 @@ describe('Form.CheckboxGroupController', () => {
             </Form>
         );
 
-        expect(container.querySelector('[role="group"]')).toHaveAttribute(
-            'aria-describedby',
-            'contentHintId errorId'
+        expect(container.querySelector('span.error-container').innerHTML).toBe(
+            'This field is required.'
         );
     });
 });

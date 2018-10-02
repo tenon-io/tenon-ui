@@ -671,4 +671,172 @@ describe('Form', () => {
 
         expect(formIsValid).toBe(true);
     });
+
+    it('should have required elements', () => {
+        //This test is in the Form tests as it is extremely common code amongst all
+        //controllers.
+        let isRequired = false;
+
+        render(
+            <Form onSubmit={jest.fn()}>
+                {() => {
+                    return (
+                        <div>
+                            <Form.TextInputController name="testInput">
+                                {({
+                                    required,
+                                    getLabelProps,
+                                    getInputProps
+                                }) => {
+                                    isRequired = required;
+                                    return (
+                                        <div>
+                                            <label {...getLabelProps()}>
+                                                Test input
+                                            </label>
+                                            <input {...getInputProps()} />
+                                        </div>
+                                    );
+                                }}
+                            </Form.TextInputController>
+                        </div>
+                    );
+                }}
+            </Form>
+        );
+
+        expect(isRequired).toBe(false);
+
+        render(
+            <Form onSubmit={jest.fn()}>
+                {() => {
+                    return (
+                        <div>
+                            <Form.TextInputController
+                                name="testInput"
+                                required={false}
+                            >
+                                {({
+                                    required,
+                                    getLabelProps,
+                                    getInputProps
+                                }) => {
+                                    isRequired = required;
+                                    return (
+                                        <div>
+                                            <label {...getLabelProps()}>
+                                                Test input
+                                            </label>
+                                            <input {...getInputProps()} />
+                                        </div>
+                                    );
+                                }}
+                            </Form.TextInputController>
+                        </div>
+                    );
+                }}
+            </Form>
+        );
+
+        expect(isRequired).toBe(false);
+
+        render(
+            <Form onSubmit={jest.fn()}>
+                {() => {
+                    return (
+                        <div>
+                            <Form.TextInputController
+                                name="testInput"
+                                required={true}
+                            >
+                                {({
+                                    required,
+                                    getLabelProps,
+                                    getInputProps
+                                }) => {
+                                    isRequired = required;
+                                    return (
+                                        <div>
+                                            <label {...getLabelProps()}>
+                                                Test input
+                                            </label>
+                                            <input {...getInputProps()} />
+                                        </div>
+                                    );
+                                }}
+                            </Form.TextInputController>
+                        </div>
+                    );
+                }}
+            </Form>
+        );
+
+        expect(isRequired).toBe(true);
+
+        render(
+            <Form onSubmit={jest.fn()}>
+                {() => {
+                    return (
+                        <div>
+                            <Form.TextInputController
+                                name="testInput"
+                                required="false"
+                            >
+                                {({
+                                    required,
+                                    getLabelProps,
+                                    getInputProps
+                                }) => {
+                                    isRequired = required;
+                                    return (
+                                        <div>
+                                            <label {...getLabelProps()}>
+                                                Test input
+                                            </label>
+                                            <input {...getInputProps()} />
+                                        </div>
+                                    );
+                                }}
+                            </Form.TextInputController>
+                        </div>
+                    );
+                }}
+            </Form>
+        );
+
+        expect(isRequired).toBe(false);
+
+        render(
+            <Form onSubmit={jest.fn()}>
+                {() => {
+                    return (
+                        <div>
+                            <Form.TextInputController
+                                name="testInput"
+                                required="true"
+                            >
+                                {({
+                                    required,
+                                    getLabelProps,
+                                    getInputProps
+                                }) => {
+                                    isRequired = required;
+                                    return (
+                                        <div>
+                                            <label {...getLabelProps()}>
+                                                Test input
+                                            </label>
+                                            <input {...getInputProps()} />
+                                        </div>
+                                    );
+                                }}
+                            </Form.TextInputController>
+                        </div>
+                    );
+                }}
+            </Form>
+        );
+
+        expect(isRequired).toBe(true);
+    });
 });

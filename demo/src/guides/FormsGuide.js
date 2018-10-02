@@ -91,6 +91,7 @@ class FormsGuide extends Component {
                                         ) : null}
                                         <Form.TextInputController
                                             name="petName"
+                                            required="true"
                                             validators={[
                                                 validator(
                                                     isRequired,
@@ -109,7 +110,6 @@ class FormsGuide extends Component {
                                             {props => (
                                                 <Input
                                                     {...props}
-                                                    required="required"
                                                     requiredText={t(
                                                         'forms.demo.requiredText'
                                                     )}
@@ -124,6 +124,7 @@ class FormsGuide extends Component {
                                         </Form.TextInputController>
                                         <Form.TextInputController
                                             name="petType"
+                                            required="true"
                                             validators={[
                                                 validator(
                                                     isRequired,
@@ -136,7 +137,6 @@ class FormsGuide extends Component {
                                             {props => (
                                                 <Input
                                                     {...props}
-                                                    required="required"
                                                     requiredText={t(
                                                         'forms.demo.requiredText'
                                                     )}
@@ -159,6 +159,7 @@ class FormsGuide extends Component {
                                         </Form.TextareaController>
                                         <Form.SelectController
                                             name="petWeight"
+                                            required="true"
                                             validators={[
                                                 validator(
                                                     isRequired,
@@ -174,7 +175,6 @@ class FormsGuide extends Component {
                                                     labelText={t(
                                                         'forms.demo.petWeight.label'
                                                     )}
-                                                    required="required"
                                                     requiredText={t(
                                                         'forms.demo.requiredText'
                                                     )}
@@ -204,6 +204,7 @@ class FormsGuide extends Component {
                                         </Form.SelectController>
                                         <Form.RadioGroupController
                                             name="petColour"
+                                            required="true"
                                             validators={[
                                                 validator(
                                                     isRequired,
@@ -219,7 +220,6 @@ class FormsGuide extends Component {
                                                     legend={t(
                                                         'forms.demo.petColour.legend'
                                                     )}
-                                                    required="required"
                                                     requiredText={t(
                                                         'forms.demo.requiredText'
                                                     )}
@@ -240,6 +240,7 @@ class FormsGuide extends Component {
 
                                         <Form.CheckboxGroupController
                                             name="petEat"
+                                            required="true"
                                             validators={[
                                                 validator(
                                                     value => value.length > 0,
@@ -268,7 +269,6 @@ class FormsGuide extends Component {
                                                             'forms.demo.petLove.nightOption'
                                                         )
                                                     }}
-                                                    required="required"
                                                     requiredText={t(
                                                         'forms.demo.requiredText'
                                                     )}
@@ -279,6 +279,7 @@ class FormsGuide extends Component {
 
                                         <Form.CheckboxController
                                             name="confirmInfo"
+                                            required="true"
                                             validators={[
                                                 validator(
                                                     value => value === true,
@@ -291,7 +292,6 @@ class FormsGuide extends Component {
                                             {props => (
                                                 <Checkbox
                                                     {...props}
-                                                    required="required"
                                                     requiredText={t(
                                                         'forms.demo.requiredText'
                                                     )}

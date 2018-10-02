@@ -1,12 +1,37 @@
 .form-group {
     margin-bottom: 1rem;
 
-    [role='radiogroup'] {
-        margin-bottom: 0.5rem;
+    input + label {
+        display: inline-block;
+        width: auto;
+    }
+
+    label .required,
+    legend .required {
+        font-size: small;
+        font-weight: bold;
+    }
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        &.radio-container {
+            margin-bottom: 0.5rem;
+        }
+
+        li {
+            .radio-wrapper,
+            .checkbox-wrapper {
+                display: flex;
+            }
+        }
     }
 
     input[type='radio'] {
         margin-top: 0.8rem;
+        margin-right: 0.8rem;
         height: auto;
 
         &:focus {
@@ -15,12 +40,18 @@
     }
 
     input[type='checkbox'] {
-        + label::before {
-            border-color: $color-mid-dark;
-        }
+        z-index: 5;
 
-        + label::after {
-            top: 13px;
+        + label {
+            display: inline-block;
+
+            &::before {
+                border-color: $color-mid-dark;
+            }
+
+            &::after {
+                top: 13px;
+            }
         }
 
         &:focus {
@@ -63,34 +94,11 @@
     }
 }
 
-legend.required {
-    position: relative;
-
-    span.required {
-        font-size: small;
-        position: absolute;
-        top: -0.6rem;
-        margin-left: 0.5rem;
-        white-space: nowrap;
-    }
-}
-
-label.required {
-    position: relative;
-
-    span.required {
-        font-size: small;
-        position: absolute;
-        top: -0.1rem;
-        margin-left: 0.5rem;
-        white-space: nowrap;
-    }
-}
-
 .error-block {
     .block-heading {
         font-weight: bold;
         font-size: 1.2rem;
+        padding: 0.6rem 0.5rem 0.5rem;
         color: $color-negative;
 
         .icon {

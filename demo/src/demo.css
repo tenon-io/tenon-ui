@@ -59,12 +59,16 @@
     clip: inherit;
 }
 
+.demo-spinner {
+    color: #002964;
+}
+
 .demo-spinner g {
-    stroke: #002964;
+    stroke: currentColor;
 }
 
 .demo-spinner circle {
-    fill: #002964;
+    fill: currentColor;
 }
 
 .language-container {

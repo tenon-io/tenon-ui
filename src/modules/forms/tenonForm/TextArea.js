@@ -1,7 +1,6 @@
 import React, { forwardRef } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import RequiredLabel from '../RequiredLabel';
 import FeedbackBlock from './FeedbackBlock';
 
 /**
@@ -30,8 +29,11 @@ import FeedbackBlock from './FeedbackBlock';
  *              error container should be displayed.
  * @prop {string} className - An optional class string to transfer to the
  *              className prop of the textarea element.
- * @prop {string} requiredText - An optional text to display next to the
- *              textarea label if the field is required.
+ * @prop {string} requiredText - And optional string value to display
+ *              after the label indicating a required situation.
+ *@prop {boolean} required - An optional boolean value indicating whether
+ *              the current view component is attached to a required
+ *              data model.
  *
  * NOTE: All props given to this textarea that does not
  * satisfy one of the above will be passed into the
@@ -52,6 +54,7 @@ const TextArea = forwardRef(
             labelText,
             labelProps,
             showError,
+            required,
             requiredText,
             className,
             ...rest
@@ -60,12 +63,15 @@ const TextArea = forwardRef(
     ) => (
         <div className="form-group">
             <div className="field-wrapper">
-                <RequiredLabel
-                    requiredText={requiredText || null}
-                    {...getLabelProps(labelProps)}
-                >
+                <label {...getLabelProps(labelProps)}>
                     {labelText}
-                </RequiredLabel>
+                    {required ? (
+                        <span aria-hidden="true" className="required">
+                            &nbsp;
+                            {requiredText || '*'}
+                        </span>
+                    ) : null}
+                </label>
                 <textarea
                     ref={ref}
                     className={
@@ -99,6 +105,7 @@ TextArea.propTypes = {
     labelProps: PropTypes.object,
     showError: PropTypes.bool,
     className: PropTypes.string,
+    required: PropTypes.bool,
     requiredText: PropTypes.string
 };
 

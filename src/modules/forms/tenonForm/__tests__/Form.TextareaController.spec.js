@@ -108,17 +108,16 @@ describe('Form.TextareaController', () => {
         const { getByLabelText } = render(
             <Form onSubmit={jest.fn()}>
                 {() => (
-                    <Form.TextareaController name="testTextarea">
+                    <Form.TextareaController
+                        name="testTextarea"
+                        required={true}
+                    >
                         {({ getTextareaProps, getLabelProps }) => (
                             <div>
                                 <label {...getLabelProps()}>
                                     Test textarea
                                 </label>
-                                <input
-                                    {...getTextareaProps({
-                                        required: 'required'
-                                    })}
-                                />
+                                <input {...getTextareaProps()} />
                             </div>
                         )}
                     </Form.TextareaController>
@@ -127,9 +126,8 @@ describe('Form.TextareaController', () => {
         );
 
         const testTextarea = getByLabelText('Test textarea');
-        expect(testTextarea).toHaveAttribute('required');
         expect(testTextarea).toHaveAttribute('aria-required', 'true');
-        expect(testTextarea.attributes.length).toBe(5);
+        expect(testTextarea.attributes.length).toBe(4);
     });
 
     it('should validate a textarea and set an error text when appropriate', () => {

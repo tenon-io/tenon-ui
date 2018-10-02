@@ -78,14 +78,13 @@ describe('Form.CheckboxController', () => {
         const { getByLabelText } = render(
             <Form onSubmit={jest.fn()}>
                 {() => (
-                    <Form.CheckboxController name="testCheckbox">
+                    <Form.CheckboxController
+                        name="testCheckbox"
+                        required={true}
+                    >
                         {({ getCheckboxProps, getLabelProps }) => (
                             <div>
-                                <input
-                                    {...getCheckboxProps({
-                                        required: 'required'
-                                    })}
-                                />
+                                <input {...getCheckboxProps()} />
                                 <label {...getLabelProps()}>
                                     Test checkbox
                                 </label>
@@ -97,9 +96,8 @@ describe('Form.CheckboxController', () => {
         );
 
         const testInput = getByLabelText('Test checkbox');
-        expect(testInput).toHaveAttribute('required');
         expect(testInput).toHaveAttribute('aria-required', 'true');
-        expect(testInput.attributes.length).toBe(5);
+        expect(testInput.attributes.length).toBe(4);
     });
 
     it('should validate a checkbox and set an error text when appropriate', () => {

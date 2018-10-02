@@ -1,5 +1,5 @@
 import React, { createRef } from 'react';
-import { render, cleanup } from 'react-testing-library';
+import { cleanup, render } from 'react-testing-library';
 import 'jest-dom/extend-expect';
 import Input from '../Input';
 
@@ -74,5 +74,34 @@ describe('Input', () => {
         );
 
         expect(getByLabelText('Test input')).toEqual(inPutRef.current);
+    });
+
+    it('should render a required text with a fallback', () => {
+        const { container, rerender } = render(
+            <Input
+                getLabelProps={() => ({ htmlFor: 'foo' })}
+                getInputProps={() => ({ id: 'foo' })}
+                labelText="Test input"
+                required={true}
+            />
+        );
+
+        expect(container.querySelector('span.required').innerHTML).toBe(
+            '&nbsp;*'
+        );
+
+        rerender(
+            <Input
+                getLabelProps={() => ({ htmlFor: 'foo' })}
+                getInputProps={() => ({ id: 'foo' })}
+                labelText="Test input"
+                required={true}
+                requiredText="required"
+            />
+        );
+
+        expect(container.querySelector('span.required').innerHTML).toBe(
+            '&nbsp;required'
+        );
     });
 });

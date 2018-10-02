@@ -4,7 +4,7 @@ import React from 'react';
 const TabsExample = () => (
     <Tabs>
         <Tabs.Tab title="Panel 1">
-            <p>"You are on panel 1."</p>
+            <p>You are on panel 1.</p>
         </Tabs.Tab>
         <Tabs.Tab title="Panel 2">
             <p>You are one panel 2.</p>

@@ -1,9 +1,9 @@
-jest.mock('../../../utils/components/FocusCatcher');
-
 import React, { createRef } from 'react';
-import { render, cleanup } from 'react-testing-library';
+import { cleanup, render } from 'react-testing-library';
 import 'jest-dom/extend-expect';
 import RadioGroup from '../RadioGroup';
+
+jest.mock('../../../utils/components/FocusCatcher');
 
 describe('RadioGroup', () => {
     afterEach(cleanup);
@@ -18,10 +18,12 @@ describe('RadioGroup', () => {
                 }}
                 getLegendProps={() => ({ id: 'bar' })}
                 getLabelProps={props => ({
-                    htmlFor: `foo-${props.autoIdPostfix}`
+                    htmlFor: props.autoIdPostfix
+                        ? `foo-${props.autoIdPostfix}`
+                        : 'foo'
                 })}
-                getRadioButtonProps={({ value }) => ({
-                    id: `foo-${value}`,
+                getRadioButtonProps={({ value, focusElement }) => ({
+                    id: focusElement ? 'foo' : `foo-${value}`,
                     value,
                     onChange: jest.fn()
                 })}
@@ -48,10 +50,12 @@ describe('RadioGroup', () => {
                 }}
                 getLegendProps={() => ({ id: 'bar' })}
                 getLabelProps={props => ({
-                    htmlFor: `foo-${props.autoIdPostfix}`
+                    htmlFor: props.autoIdPostfix
+                        ? `foo-${props.autoIdPostfix}`
+                        : 'foo'
                 })}
-                getRadioButtonProps={({ value }) => ({
-                    id: `foo-${value}`,
+                getRadioButtonProps={({ value, focusElement }) => ({
+                    id: focusElement ? 'foo' : `foo-${value}`,
                     value,
                     onChange: jest.fn()
                 })}
@@ -80,10 +84,12 @@ describe('RadioGroup', () => {
                 }}
                 getLegendProps={() => ({ id: 'bar' })}
                 getLabelProps={props => ({
-                    htmlFor: `foo-${props.autoIdPostfix}`
+                    htmlFor: props.autoIdPostfix
+                        ? `foo-${props.autoIdPostfix}`
+                        : 'foo'
                 })}
-                getRadioButtonProps={({ value }) => ({
-                    id: `foo-${value}`,
+                getRadioButtonProps={({ value, focusElement }) => ({
+                    id: focusElement ? 'foo' : `foo-${value}`,
                     value,
                     onChange: jest.fn()
                 })}
@@ -131,6 +137,71 @@ describe('RadioGroup', () => {
         );
         expect(container.querySelector('[role="radiogroup"]')).toEqual(
             radioGroupRef.current
+        );
+    });
+
+    it('should render a required text with a fallback', () => {
+        const { container, rerender } = render(
+            <RadioGroup
+                legend="Test radio group"
+                required={true}
+                options={{
+                    one: 'One',
+                    two: 'Two'
+                }}
+                getLegendProps={() => ({ id: 'bar' })}
+                getLabelProps={props => ({
+                    htmlFor: props.autoIdPostfix
+                        ? `foo-${props.autoIdPostfix}`
+                        : 'foo'
+                })}
+                getRadioButtonProps={({ value, focusElement }) => ({
+                    id: focusElement ? 'foo' : `foo-${value}`,
+                    value,
+                    onChange: jest.fn()
+                })}
+                getRadioGroupProps={conf => ({
+                    'aria-labelledby': 'bar',
+                    role: 'radiogroup',
+                    value: conf.value
+                })}
+            />
+        );
+
+        expect(container.querySelector('span.required').innerHTML).toBe(
+            '&nbsp;*'
+        );
+
+        rerender(
+            <RadioGroup
+                legend="Test radio group"
+                required={true}
+                requiredText="required"
+                options={{
+                    one: 'One',
+                    two: 'Two'
+                }}
+                getLegendProps={() => ({ id: 'bar' })}
+                getLabelProps={props => ({
+                    htmlFor: props.autoIdPostfix
+                        ? `foo-${props.autoIdPostfix}`
+                        : 'foo'
+                })}
+                getRadioButtonProps={({ value, focusElement }) => ({
+                    id: focusElement ? 'foo' : `foo-${value}`,
+                    value,
+                    onChange: jest.fn()
+                })}
+                getRadioGroupProps={conf => ({
+                    'aria-labelledby': 'bar',
+                    role: 'radiogroup',
+                    value: conf.value
+                })}
+            />
+        );
+
+        expect(container.querySelector('span.required').innerHTML).toBe(
+            '&nbsp;required'
         );
     });
 });

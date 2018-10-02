@@ -6,19 +6,34 @@ const FeedbackBlock = ({
     getErrorProps,
     showError,
     errorText,
-    contentHintText
+    contentHintText,
+    'aria-hidden': ariaHidden
 }) => (
     <Fragment>
-        {contentHintText && getContentHintProps ? (
-            <div className="info-wrapper">
+        {contentHintText ? (
+            <div
+                className="info-wrapper"
+                aria-hidden={ariaHidden ? ariaHidden : null}
+            >
                 <span className="icon" />
-                <span {...getContentHintProps()}>{contentHintText}</span>
+                {getContentHintProps ? (
+                    <span {...getContentHintProps()}>{contentHintText}</span>
+                ) : (
+                    <span>{contentHintText}</span>
+                )}
             </div>
         ) : null}
-        {showError && getErrorProps ? (
-            <div className="error-wrapper">
+        {showError ? (
+            <div
+                className="error-wrapper"
+                aria-hidden={ariaHidden ? ariaHidden : null}
+            >
                 <span className="icon" />
-                <span {...getErrorProps()}>{errorText}</span>
+                {getErrorProps ? (
+                    <span {...getErrorProps()}>{errorText}</span>
+                ) : (
+                    <span>{errorText}</span>
+                )}
             </div>
         ) : null}
     </Fragment>
@@ -31,7 +46,8 @@ FeedbackBlock.propTypes = {
     getErrorProps: PropTypes.func,
     showError: PropTypes.bool,
     errorText: PropTypes.string,
-    contentHintText: PropTypes.string
+    contentHintText: PropTypes.string,
+    'aria-hidden': PropTypes.oneOf(['true', 'false'])
 };
 
 export default FeedbackBlock;

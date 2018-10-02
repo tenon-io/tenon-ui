@@ -1,7 +1,6 @@
 import React, { forwardRef } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import RequiredLabel from '../RequiredLabel';
 import FeedbackBlock from './FeedbackBlock';
 
 /**
@@ -31,6 +30,11 @@ import FeedbackBlock from './FeedbackBlock';
  *              error container should be displayed.
  * @prop {string} className - An optional class string to transfer to the
  * className prop of the input element.
+ * @prop {string} requiredText - And optional string value to display
+ *              after the label indicating a required situation.
+ *@prop {boolean} required - An optional boolean value indicating whether
+ *              the current view component is attached to a required
+ *              data model.
  *
  * NOTE: All props given to this input that does not
  * satisfy one of the above will be passed into the the
@@ -52,13 +56,14 @@ const Checkbox = forwardRef(
             labelProps,
             showError,
             className,
+            required,
             requiredText,
             ...rest
         },
         ref
     ) => (
         <div className="form-group">
-            <div className="field-wrapper">
+            <div className="checkbox-wrapper">
                 <input
                     ref={ref}
                     className={
@@ -67,12 +72,15 @@ const Checkbox = forwardRef(
                     }
                     {...getCheckboxProps(rest)}
                 />
-                <RequiredLabel
-                    requiredText={requiredText || null}
-                    {...getLabelProps(labelProps)}
-                >
+                <label {...getLabelProps(labelProps)}>
                     {labelText}
-                </RequiredLabel>
+                    {required ? (
+                        <span aria-hidden="true" className="required">
+                            &nbsp;
+                            {requiredText || '*'}
+                        </span>
+                    ) : null}
+                </label>
             </div>
             <FeedbackBlock
                 getContentHintProps={getContentHintProps}
@@ -98,6 +106,7 @@ Checkbox.propTypes = {
     labelProps: PropTypes.object,
     showError: PropTypes.bool,
     className: PropTypes.string,
+    required: PropTypes.bool,
     requiredText: PropTypes.string
 };
 
