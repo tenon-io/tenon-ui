@@ -11,8 +11,6 @@ node_modules
 /demo/dist
 /es
 /lib
-/www/.cache
-/www/public
 
 src/**/*.css
 

@@ -36,7 +36,8 @@
         "watch": "node scripts/test.js --env=jsdom",
         "format-src": "prettier --write src/**/*.{js,scss}",
         "format-demo": "prettier --write demo/**/*.js !demo/dist/**",
-        "format": "npm-run-all format-src format-demo",
+        "format-www": "prettier --write www/**/*.js !www/.cache/** !www/public/**",
+        "format": "npm-run-all format-src format-demo format-www",
         "lint": "eslint *.js src",
         "lint-demo": "eslint *.js demo"
     },
