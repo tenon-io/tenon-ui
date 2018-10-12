@@ -5,11 +5,10 @@ import { graphql, StaticQuery } from 'gatsby';
 import Header from './header';
 import { MDXProvider } from '@mdx-js/tag';
 import ExampleBlock from '../components/ExampleBlock';
-import SideNav from '../../../demo/src/nav/SideNav';
-import Tabs from '../../../src/modules/tabs/Tabs'
+import SideNav from '../components/SideNav';
 
 import '@tenon-io/tenon-ui/lib/styles/tenon-ui.css';
-import '../../../demo/src/demo.css';
+import '../styles/ui-docs.scss';
 
 const Layout = ({ children }) => (
     <StaticQuery
@@ -37,7 +36,6 @@ const Layout = ({ children }) => (
                 <div className="main-panel">
                     <aside className="nav-panel">
                         <section>
-                            <h2>Components</h2>
                             <SideNav />
                         </section>
                     </aside>

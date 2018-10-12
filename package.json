@@ -29,7 +29,7 @@
         "build": "npm-run-all lint lint-demo build-css build-js clean-deploy",
         "build-js": "nwb build-react-component --copy-files ",
         "clean": "nwb clean-module && nwb clean-demo",
-        "clean-deploy":"rimraf {es,lib}/modules/**/{__tests__,__mocks__}",
+        "clean-deploy": "rimraf {es,lib}/modules/**/{__tests__,__mocks__}",
         "start": "npm-run-all -p watch-css start-js",
         "start-js": "nwb serve-react-demo",
         "test": "node scripts/test.js --env=jsdom --coverage",
@@ -43,6 +43,7 @@
     },
     "dependencies": {
         "classnames": "2.2.6",
+        "gatsby-plugin-sass": "^2.0.1",
         "lodash.isequal": "4.5.0",
         "memoize-one": "4.0.0",
         "uuid": "3.3.2",

@@ -24,6 +24,12 @@ module.exports = {
                 name: 'posts',
                 path: `${__dirname}/content/`
             }
+        },
+        {
+            resolve: `gatsby-plugin-sass`,
+            options: {
+                includePaths: ['node_modules']
+            }
         }
     ]
 };

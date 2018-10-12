@@ -5,6 +5,15 @@ const SideNav = () => (
     <nav>
         <ul>
             <li>
+                <h2>Tenon-ui</h2>
+            </li>
+            <li>
+                <h2>Components</h2>
+            </li>
+            <li>
+                <h2>Helper Components</h2>
+            </li>
+            <li>
                 <Link to="/focus-catcher">Focus Catcher</Link>
             </li>
             <li>
