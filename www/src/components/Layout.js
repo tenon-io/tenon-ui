@@ -43,9 +43,14 @@ const Layout = ({ children }) => (
                         <MDXProvider
                             components={{
                                 wrapper: 'section',
+                                strong: 'b',
                                 code: ({ children, className }) => (
                                     <ExampleBlock
-                                        language={className.split('-')[1]}
+                                        language={
+                                            className
+                                                ? className.split('-')[1]
+                                                : null
+                                        }
                                         resetMessage="Changes to this code block has been reset."
                                         resetActionText="Close message"
                                         codeString={children}
@@ -53,7 +58,7 @@ const Layout = ({ children }) => (
                                 )
                             }}
                         >
-                            {children}
+                            <>{children}</>
                         </MDXProvider>
                     </main>
                 </div>

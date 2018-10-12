@@ -1,3 +1,22 @@
+p {
+    max-width:100%;
+
+    + p {
+        margin-top: 0.5em !important;
+    }
+
+    code {
+        background-color: #237044;
+        border-radius: 4px;
+        padding: 2px 4px 2px 4px;
+        color: white;
+    }
+}
+
+h1,h2,h3,h4,h5,h6 {
+    font-weight: 600;
+}
+
 .app-logo {
     height: 80px;
 }
@@ -115,22 +134,29 @@
         padding: 0;
         margin: 0;
 
+        ul {
+            border: 1px solid #237044;
+            padding-left: 0.5em;
+            padding-right: 0.5em;
+            padding-bottom: 0.5em;
+        }
+
         a {
             display: block;
             margin-top: 0.5rem;
             padding: 0.5rem 0.5rem 0.5rem 0.5rem;
-            border: 1px solid #0047ab;
+
+            &[aria-current="page"]{
+                background-color: #237044;
+                color:white;
+            }
 
             &:focus,
             &:hover {
-                background-color: #002964;
+                background-color: #237044;
                 color: #fff;
             }
 
-            &[aria-current="page"]{
-                background-color: rgba(0, 91, 255, 0.13);
-                color:black;
-            }
         }
     }
 }
@@ -157,5 +183,6 @@
 
     .nav-panel {
         margin-left: 0;
+        padding: 0.5em;
     }
 }

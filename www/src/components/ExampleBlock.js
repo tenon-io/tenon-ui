@@ -50,7 +50,7 @@ class ExampleBlock extends Component {
                 <CodeBlock
                     codeString={codeString}
                     file={file}
-                    language={language}
+                    language={language || 'jsx'}
                     onReset={this.onResetHandler}
                 />
             </Fragment>

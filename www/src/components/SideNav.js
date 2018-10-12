@@ -5,7 +5,7 @@ const SideNav = () => (
     <nav>
         <ul>
             <li>
-                <h2>Tenon-ui</h2>
+                <h2>Information</h2>
                 <ul>
                     <li>
                         <Link to="/">Home page</Link>
