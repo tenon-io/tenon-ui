@@ -21,7 +21,7 @@ with the `Input` view component.
 ```
 import { Form, Input, validator } from '@tenon-io/tenon-ui';
 
-//Some code
+//...
 
 <Form.TextInputController
     name="petType"
@@ -42,7 +42,7 @@ import { Form, Input, validator } from '@tenon-io/tenon-ui';
     )}
 </Form.TextInputController>
 
-//Some more code
+//...
 ```
 
 This will render the following:
@@ -234,4 +234,246 @@ the component.
 
 ##### Other props
 Any other props given to this component will be passed onto the `<input>` element. 
+
+#### Overriding the input type
+By default an `<input type="text">` will be rendered. But this can also be overridden.
+
+The `TextInputController` will also play nice with other types.
+
+Override it like this:
+```
+{props => (
+    <Input
+        {...props}
+        labelText="Pet's age"
+        type="number"
+    />
+)}
+```
+
+#### Refs
+In some case you may want to create a [React ref](https://reactjs.org/docs/refs-and-the-dom.html)
+to the input field.
+
+In accessible applications, this is mostly done in cases where you want to set focus to a specific 
+element.
+
+The `Input` component will [forward your ref](https://reactjs.org/docs/forwarding-refs.html) to
+the `<input>` element. 
+
+```
+//...
+this.inputRef = React.createRef();
+//...
+{props => (
+    <Input
+        {...props}
+        labelText="Pet's age"
+        ref={this.inputRef}
+    />
+)}
+```
+
+If you then set focus with `this.inputRef.current.focus();`, the contained input will be focused, as expected.
+
+### Creating your own view
+
+Every view component on the `Tenon-UI` smart form is completely replaceable.
+
+If you want to create your own view simply make direct use of the `prop getter` functions 
+as well as other props provided by the `TextAreaController`.
+
+#### Available prop getters
+The `TextInputController` gives you access to the following prop getter functions:
+
+##### getLabelProps
+This prop getter generates the required props for the `<label>` element.
+
+##### getInputProps
+This prop getter generates the required props for the `<input>` element.
+
+##### getErrorProps
+This prop getter generates the required props for the container element of your
+displayed errors.
+
+##### getContentHintProps
+This prop getter generates the required props for the container element of your
+content hint text.
+
+#### Other props
+A number of other props are also exposed by the `TextInputController`. Refer to the 
+[smart controllers page](/forms-smart-controllers) to see how validators work:
+
+##### showError
+This boolean value will indicate to the view if an error should be shown. Normally, errors
+will only be shown after the first submit attempt unless overridden by the `alwaysShowErrors`
+prop of the [Form component](/forms-form-component).
+
+Use this to easily hide and show your error containers. 
+
+##### errorText
+This value contains the current actual error message text. For valid or non-validated fields
+this will be empty. Otherwise if will contain the text from the first failing validator as 
+specified on the `TextInputController`. 
+
+##### required
+This boolean value indicates if the `TextInputController` has been marked as `required`. This
+can be handy to decide when to render required indicators.
+
+#### Basic non-validated input
+If you only need a label you can write view code resembling this:
+
+```
+import { Form } from '@tenon-io/tenon-ui';
+
+//...
+
+<Form.TextInputController name="petName">
+    {({ getLabelProps, getInputProps }) => (
+        <React.Fragment>
+            <label {...getLabelProps()}>
+                Enter your pet's name:
+            </label>
+            <input
+                {...getInputProps()}
+            />
+        </React.Fragment>
+    )}
+</Form.TextInputController>
+```
+
+**Note**: that both the `getLabelProps` and the `getInputProps` prop getters can be called 
+with an object that can override and / or enrich the props object returned by these prop getters. 
+For example:
+
+```
+<input
+    {...getInputProps({
+        type: "number",
+        className: "some-custom-style"
+    })}
+/>
+```
+
+#### Required validated input
+For validation, you can make use of the `getErrorProps` prop getter as well.
+
+```
+import { Form, validator, isRequired } from '@tenon-io/tenon-ui';
+
+//...
+
+<Form.TextInputController
+    name="petName"
+    validators={[
+        validator(isRequired, 'A name is required.')
+    ]}
+    required="true"
+>
+    {({
+        getLabelProps,
+        getInputProps,
+        getErrorProps,
+        showError,
+        errorText,
+        required
+    }) => (
+        <React.Fragment>
+            <label {...getLabelProps()}>
+                Enter your pet's name:
+                {required && (
+                    <span
+                        aria-hidden="true"
+                    >
+                      ( required )
+                    </span>
+                )}
+            </label>
+            <input {...getInputProps()} />
+            {showError && (
+                <div
+                    {...getErrorProps({
+                        className: 'error-container'
+                    })}
+                >
+                    {errorText}
+                </div>
+            )}
+        </React.Fragment>
+    )}
+</Form.TextInputController>
+```
+
+Note in the example above that the visual `( required )` text is marked with `aria-hidden="true"`. This
+is because the `TextInputController` already marks the input as `required` with the 
+`aria-required` property. Therefore you need to make sure that this is not read out twice with
+screen readers.
+
+The prop getters will ensure that the error text field is linked to the input and that the input
+validity (`aria-valid`) is managed and read out by screen readers. 
+
+#### Input with a content hint
+Should you want to render a `content hint`, please make use of the `getContentHintProps` prop getter:
+
+```
+<Form.TextInputController
+    name="petName"
+    validators={[
+        validator(
+            isLongerThan(3),
+            'The name is not long enough.'
+        )
+    ]}
+>
+    {({
+        getLabelProps,
+        getInputProps,
+        getErrorProps,
+        getContentHintProps,
+        showError,
+        errorText
+    }) => (
+        <div>
+            <label {...getLabelProps()}>
+                Enter your pet's name:
+            </label>
+            <input {...getInputProps()} />
+            <div
+                {...getContentHintProps({
+                    className: 'content-hint-container'
+                })}
+            >
+                The name should be longer than 3
+                characters.
+            </div>
+            {showError && (
+                <div
+                    {...getErrorProps({
+                        className: 'error-container'
+                    })}
+                >
+                    {errorText}
+                </div>
+            )}
+        </div>
+    )}
+</Form.TextInputController>
+```
+
+The prop getter will ensure that the `content hint` is also linked to the `<input>` field so that
+screen readers are aware of this.
+
+As shown above you can easily combine this with an error field, although content hint can safely be
+rendered on its own. 
+
+#### Disclaimer
+The `TextInputController` provides all the function to create fully accessible `<input>` fields, however,
+this needs to be backed up with an accessible HTML view. We can unfortunately not guarantee that
+every view will be accessible unless the view component follows the same guidelines as our own view
+components. 
+
+Feel free to mix up the HTML but ensure that all elements are present and that the prop getters are 
+applied correctly.
+
+And be sure to test with screen readers. 
 

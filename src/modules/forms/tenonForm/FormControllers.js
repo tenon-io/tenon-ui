@@ -585,7 +585,11 @@ const getController = (props, type) => (
 const controllerPropTypes = {
     children: PropTypes.func.isRequired,
     validators: PropTypes.arrayOf(PropTypes.object),
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
+    required: PropTypes.oneOfType([
+        PropTypes.bool,
+        PropTypes.oneOf(['true', 'false'])
+    ])
 };
 
 /**
