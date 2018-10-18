@@ -8,18 +8,16 @@
 <form novalidate="">
     <div class="form-group">
         <div class="field-wrapper">
-            <label for="1bf08342-e063-4b6e-8768-1972fa03ee8e">
-                Pet type<span aria-hidden="true"
-                              class="required">
-                            &nbsp;( required )
-                        </span>
-            </label>
-            <input
-            aria-required="true"
-            id="1bf08342-e063-4b6e-8768-1972fa03ee8e"
-            name="petName"
-            type="text"
-            value=""></div>
+            <label for="e3c185aa-2e44-4aaa-81b9-8406c8e63c44">Pet description<span
+            aria-hidden="true" class="required">&nbsp;( required )</span></label><textarea aria-required="true"
+                                                                                           id="e3c185aa-2e44-4aaa-81b9-8406c8e63c44"
+                                                                                           name="petDescription"
+                                                                                           rows="10" class="has-error"
+                                                                                           aria-describedby="1b72f31a-d2d9-497d-bca5-b65b67290229"
+                                                                                           aria-invalid="true"></textarea>
+        </div>
+        <div class="error-wrapper"><span class="icon"></span><span id="1b72f31a-d2d9-497d-bca5-b65b67290229">A description of your pet is required</span>
+        </div>
     </div>
     <button type="submit">Submit</button>
 </form>

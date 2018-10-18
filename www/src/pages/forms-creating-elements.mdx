@@ -1,0 +1,178 @@
+import Helmet from "react-helmet";
+
+import Layout from '../components/layout';
+import Form from '../../../src/modules/forms/tenonForm/Form';
+import Input from '../../../src/modules/forms/tenonForm/Input';
+import Textarea from '../../../src/modules/forms/tenonForm/Textarea';
+import {validator} from '../../../src/modules/utils/helpers/validationHelpers';
+import {isRequired, isLongerThan} from '../../../src/modules/utils/data/validation';
+
+export default ({children}) => 
+<Layout>
+    <Helmet>
+        <title>Tenon-ui | Creating elements</title>
+    </Helmet>{children}
+</Layout>
+
+## Creating elements
+
+To create `Tenon-UI` form elements, please use the correct `controller` component in combination with
+its related `view component`.
+
+To create an `<input type="text">`, please use the the `TextInputController` in combination 
+with the `Input` view component.
+
+In the following section you will see the different controllers in action. You will see both code
+as well as working examples. Feel free to interact with the examples. You should see error messages
+upon trying to submit empty examples or an alert pop up if you submit after entering some data.
+
+### Creating an input
+
+Make use of the `TextInputController` and `Input` components:
+
+```
+import { Form, Input, validator } from '@tenon-io/tenon-ui';
+
+//...
+
+<Form.TextInputController
+    name="petType"
+    required="true"
+    validators={[
+        validator(
+            isRequired,
+            'A type of pet is required'
+        )
+    ]}
+>
+    {props => (
+        <Input
+            {...props}
+            requiredText="( required )"
+            labelText="Pet type"
+        />
+    )}
+</Form.TextInputController>
+
+//...
+```
+
+This code in action:
+
+<Form
+    onSubmit={submitData => {
+        alert(JSON.stringify(submitData));
+    }}
+>
+    {({ formControls }) => (
+    <>
+        <Form.TextInputController
+            name="petName"
+            required="true"
+            validators={[
+                validator(isRequired, 'A name is required for your pet')
+            ]}
+        >
+            {props => (
+                <Input
+                    {...props}
+                    requiredText="( required )"
+                    labelText="Pet type"
+                />
+            )}
+        </Form.TextInputController>
+        <button type="submit">Submit</button>
+     </>   
+    )}
+</Form>
+
+### Creating a textarea
+
+Make use of the `TextareaController` and `Textarea` components:
+
+```
+import { Form, Textarea, validator } from '@tenon-io/tenon-ui';
+
+//...
+
+<Form.TextareaController
+    name="petDescription"
+    required="true"
+    validators={[
+        validator(
+            isRequired,
+            'A description of your pet is required'
+        )
+    ]}
+>
+    {props => (
+        <Textarea
+            {...props}
+            requiredText="( required )"
+            labelText="Pet description"
+            rows="10"
+        />
+    )}
+</Form.TextareaController>
+
+//...
+```
+
+This code in action:
+
+<Form
+    onSubmit={submitData => {
+        alert(JSON.stringify(submitData));
+    }}
+>
+    {({ formControls }) => (
+    <>
+        <Form.TextareaController
+            name="petDescription"
+            required="true"
+            validators={[
+                validator(isRequired, 'A description of your pet is required')
+            ]}
+        >
+            {props => (
+                <Textarea
+                    {...props}
+                    requiredText="( required )"
+                    labelText="Pet description"
+                    rows="10"
+                />
+            )}
+        </Form.TextareaController>
+        <button type="submit">Submit</button>
+     </>   
+    )}
+</Form>
+
+### Accessible HTML
+
+If you open your browser inspector you will see that a lot of extra attributes appear. For example, have a look 
+at the HTML renders by the `TextInputController` and `Input` components:
+```
+<form novalidate="">
+    <div class="form-group">
+        <div class="field-wrapper">
+            <label for="1bf08342-e063-4b6e-8768-1972fa03ee8e">
+                Pet type<span aria-hidden="true"
+                              class="required">
+                            &nbsp;( required )
+                        </span>
+            </label>
+            <input
+            aria-required="true" 
+            id="1bf08342-e063-4b6e-8768-1972fa03ee8e" 
+            name="petName" 
+            type="text" 
+            value=""></div>
+    </div>
+    <button type="submit">Submit</button>
+</form>
+```
+
+You will notice that a lot is already calculated for you, for example a unique `id` value,
+so that you can use as many `Input` components on a page as you want. As well as some `aria=*`
+properties.

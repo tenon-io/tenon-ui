@@ -2,45 +2,51 @@ import Helmet from "react-helmet";
 
 import Layout from '../components/layout';
 import Form from '../../../src/modules/forms/tenonForm/Form';
-import Input from '../../../src/modules/forms/tenonForm/Input';
+import Textarea from '../../../src/modules/forms/tenonForm/Textarea';
 import {validator} from '../../../src/modules/utils/helpers/validationHelpers';
 import {isRequired, isLongerThan} from '../../../src/modules/utils/data/validation';
+
+
+import Input from '../../../src/modules/forms/tenonForm/Input';
 
 export default ({children}) => 
 <Layout>
     <Helmet>
-        <title>Tenon-ui | Text input</title>
+        <title>Tenon-ui | Textarea</title>
     </Helmet>{children}
 </Layout>
 
-## Text input
+## Textarea
 
-To create an `<input type="text">`, please use the the `TextInputController` in combination 
-with the `Input` view component.
+To create a `<textarea>`, please use the the `TextareaController` in combination 
+with the `Textarea` view component.
+
+These components mirror the functionality of the `text input` almost completely.
 
 ```
-import { Form, Input, validator } from '@tenon-io/tenon-ui';
+import { Form, Textarea, validator } from '@tenon-io/tenon-ui';
 
 //...
 
-<Form.TextInputController
-    name="petType"
+<Form.TextareaController
+    name="petDescription"
     required="true"
     validators={[
         validator(
             isRequired,
-            'A type of pet is required'
+            'A description of your pet is required'
         )
     ]}
 >
     {props => (
-        <Input
+        <Textarea
             {...props}
             requiredText="( required )"
-            labelText="Pet type"
+            labelText="Pet description"
+            rows="10"
         />
     )}
-</Form.TextInputController>
+</Form.TextareaController>
 
 //...
 ```
@@ -54,21 +60,22 @@ This will render the following:
 >
     {({ formControls }) => (
     <>
-        <Form.TextInputController
-            name="petName"
+        <Form.TextareaController
+            name="petDescription"
             required="true"
             validators={[
-                validator(isRequired, 'A name is required for your pet')
+                validator(isRequired, 'A description of your pet is required')
             ]}
         >
             {props => (
-                <Input
+                <Textarea
                     {...props}
                     requiredText="( required )"
-                    labelText="Pet type"
+                    labelText="Pet description"
+                    rows="10"
                 />
             )}
-        </Form.TextInputController>
+        </Form.TextareaController>
         <button type="submit">Submit</button>
      </>   
     )}
@@ -84,56 +91,56 @@ If you open your browser inspector you will see the following `HTML`:
     <div class="form-group">
         <div class="field-wrapper">
             <label for="1bf08342-e063-4b6e-8768-1972fa03ee8e">
-                Pet type<span aria-hidden="true"
-                              class="required">
-                            &nbsp;( required )
-                        </span>
+                Pet description<span aria-hidden="true"
+                                    class="required">
+                                    &nbsp;( required )
+                               </span>
             </label>
-            <input
+            <textarea
             aria-required="true" 
             id="1bf08342-e063-4b6e-8768-1972fa03ee8e" 
-            name="petName" 
-            type="text" 
-            value=""></div>
+            name="petDescription" 
+            rows="10"></div>
     </div>
     <button type="submit">Submit</button>
 </form>
 ```
 
 You will notice that a lot is already calculated for you, for example a unique `id` value,
-so that you can use as many `Input` components on a page as you want. As well as some `aria=*`
+so that you can use as many `Textarea` components on a page as you want. As well as some `aria=*`
 properties.
 
-### The Input view component
+### The Textarea view component
 
-The `Tenon-UI Input` component provides you with an accessible view component. We recommend 
-using this view component if you want to ensure that your `<input>` fields are accessible.
+The `Tenon-UI Textarea` component provides you with an accessible view component. We recommend 
+using this view component if you want to ensure that your `<textarea>` fields are accessible.
 
 If we look at the render function shown above, you can see how to use this component:
 
 ```
  {props => (
-    <Input
+    <Textarea
         {...props}
         requiredText="( required )"
-        labelText="Pet type"
+        labelText="Pet description"
+        rows="10"
     />
 )}
 ```
 
-It is **VERY** important to spread the props object from the render function of the `TextinputController`
-onto the `Input` component. This passes the required props into our view component, that you
+it is **VERY** important to spread the props object from the render function of the `TextareaController`
+onto the `Textarea` component. This passes the required props into our view component, that you
 would otherwise use when creating your own views.
 
-The reason for this syntax is that you can now also easily set the props of the `Input` component. Note
+The reason for this syntax is that you can now also easily set the props of the `Textarea` component. Note
 above how the `labelText` for this specific component was set.
 
-#### Input component props
+#### Textarea component props
 
 ##### labelText
 This prop is required.
 
-Every input needs a text label. With this prop you provide the text that will be rendered inside
+Every textarea needs a text label. With this prop you provide the text that will be rendered inside
 the `<label>` element.
 
 ##### labelProps
@@ -144,13 +151,14 @@ For example, if you want to add a specific `className` to the `<label>` element 
 
 ```
  {props => (
-    <Input
+    <Textarea
         {...props}
         requiredText="( required )"
         labelProps={{
             className: 'special-label-class'            
         }}
         labelText="Pet type"
+        rows="10"
     />
 )}
 ```

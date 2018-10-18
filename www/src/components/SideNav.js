@@ -40,8 +40,18 @@ const SideNav = () => (
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/forms-text-input">
-                                    Create a text input
+                                <Link to="/forms-creating-elements">
+                                    Creating elements
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/forms-view-components">
+                                    View component usage
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/create-your-own-view">
+                                    Create your own view
                                 </Link>
                             </li>
                         </ul>
