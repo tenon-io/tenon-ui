@@ -1,23 +1,15 @@
-<Form
-    onSubmit={submitData => {
-        alert(JSON.stringyfy(submitData));
-    }}
->
-    {({ formControls }) => (
-        <Form.TextInputController
-            name="petName"
-            required="true"
-            validators={[
-                validator(isRequired, 'A name is required for your pet')
-            ]}
-        >
-            {props => (
-                <Input
-                    {...props}
-                    requiredText="( required )"
-                    labelText="Pet type"
-                />
-            )}
-        </Form.TextInputController>
+import Form from '../../../src/modules/forms/tenonForm/Form';
+import React from 'react';
+
+<Form.TextInputController name="petName">
+    {({ getLabelProps, getInputProps }) => (
+        <div>
+            <label {...getLabelProps()}>Enter your pet's name:</label>
+            <input
+                {...getInputProps({
+                    className: 'some-class'
+                })}
+            />
+        </div>
     )}
-</Form>;
+</Form.TextInputController>;

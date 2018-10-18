@@ -23,6 +23,28 @@ const SideNav = () => (
                 <ul>
                     <li>
                         <Link to="/forms">Smart form components</Link>
+                        <ul className="sub-nav">
+                            <li>
+                                <Link to="/forms-knowledge">
+                                    Required knowledge
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/forms-form-component">
+                                    Form component
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/forms-smart-controllers">
+                                    Smart form element controllers
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/forms-text-input">
+                                    Create a text input
+                                </Link>
+                            </li>
+                        </ul>
                     </li>
                     <li>
                         <Link to="/headings">Headings</Link>

@@ -7,7 +7,6 @@ import { MDXProvider } from '@mdx-js/tag';
 import ExampleBlock from '../components/ExampleBlock';
 import SideNav from '../components/SideNav';
 
-import '@tenon-io/tenon-ui/lib/styles/tenon-ui.css';
 import '../styles/ui-docs.scss';
 
 const Layout = ({ children }) => (

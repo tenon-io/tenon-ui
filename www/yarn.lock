@@ -831,17 +831,6 @@
     axios "0.18.0"
     react-syntax-highlighter "8.0.1"
 
-"@tenon-io/tenon-ui@^1.0.0-RC.1":
-  version "1.0.0-RC.1"
-  resolved "https://registry.yarnpkg.com/@tenon-io/tenon-ui/-/tenon-ui-1.0.0-RC.1.tgz#517c330f9bed19f54be632b432a464d5f9e04893"
-  integrity sha512-Oc6EfkY50EFbFS92TLu79bPX7UQyyAqk+bMvj8a3waUqK3ZhFzLfcQ+d5ucIzw42xcCE6O+s/YCYvp9eV5JPvQ==
-  dependencies:
-    classnames "2.2.6"
-    lodash.isequal "4.5.0"
-    memoize-one "4.0.0"
-    uuid "3.3.2"
-    vanilla-framework "1.8.0"
-
 "@types/configstore@^2.1.1":
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/@types/configstore/-/configstore-2.1.1.tgz#cd1e8553633ad3185c3f2f239ecff5d2643e92b6"
@@ -2627,11 +2616,6 @@ class-utils@^0.3.5:
     define-property "^0.2.5"
     isobject "^3.0.0"
     static-extend "^0.1.1"
-
-classnames@2.2.6:
-  version "2.2.6"
-  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
-  integrity sha512-JR/iSQOSt+LQIWwrwEzJ9uk0xfN3mTVYMwt1Ir5mUcSN6pU+V4zQFFaJsclJbPuAUQH+yfWef6tm7l1quW3C8Q==
 
 cli-boxes@^1.0.0:
   version "1.0.0"
@@ -4849,10 +4833,10 @@ gatsby-source-filesystem@^2.0.3:
     valid-url "^1.0.9"
     xstate "^3.1.0"
 
-gatsby@^2.0.19:
-  version "2.0.21"
-  resolved "https://registry.yarnpkg.com/gatsby/-/gatsby-2.0.21.tgz#c182ad534f5f6cc19cc1dbf0ac6c267b39e42652"
-  integrity sha512-Wh8AsbzqrmQhI+VwZxRESN9/qtrwtSF8OIQZ1l14ydcH2vGcjsWws11Nbe15BITYfoT9cqVMxMVR8iDeR+6yPA==
+gatsby@^2.0.25:
+  version "2.0.25"
+  resolved "https://registry.yarnpkg.com/gatsby/-/gatsby-2.0.25.tgz#ec4ad24585a06b700b39fe81c197caf01f2e170d"
+  integrity sha512-OLj0PrywrFNxt3SglotvB/iNVVgI2QndpF43MXJfWWCGeMB6D8H81PSPj3H3d9DvJ3SE5k2pMZZH+pRYNSKofw==
   dependencies:
     "@babel/code-frame" "^7.0.0"
     "@babel/core" "^7.0.0"
@@ -6626,11 +6610,6 @@ lodash.foreach@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.foreach/-/lodash.foreach-4.5.0.tgz#1a6a35eace401280c7f06dddec35165ab27e3e53"
   integrity sha1-Gmo16s5AEoDH8G3d7DUWWrJ+PlM=
 
-lodash.isequal@4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
-  integrity sha1-QVxEePK8wwEgwizhDtMib30+GOA=
-
 lodash.kebabcase@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/lodash.kebabcase/-/lodash.kebabcase-4.1.1.tgz#8489b1cb0d29ff88195cceca448ff6d6cc295c36"
@@ -6900,11 +6879,6 @@ mem@^4.0.0:
     map-age-cleaner "^0.1.1"
     mimic-fn "^1.0.0"
     p-is-promise "^1.1.0"
-
-memoize-one@4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/memoize-one/-/memoize-one-4.0.0.tgz#fc5e2f1427a216676a62ec652cf7398cfad123db"
-  integrity sha512-wdpOJ4XBejprGn/xhd1i2XR8Dv1A25FJeIvR7syQhQlz9eXsv+06llcvcmBxlWVGv4C73QBsWA8kxvZozzNwiQ==
 
 memory-fs@^0.4.0, memory-fs@~0.4.1:
   version "0.4.1"
@@ -8419,11 +8393,6 @@ preserve@^0.2.0:
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
   integrity sha1-gV7R9uvGWSb4ZbMQwHE7yzMVzks=
 
-prettier@^1.14.2:
-  version "1.14.3"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.14.3.tgz#90238dd4c0684b7edce5f83b0fb7328e48bd0895"
-  integrity sha512-qZDVnCrnpsRJJq5nSsiHCE3BYMED2OtsI+cmzIzF1QIfqm5ALf8tEJcO27zV1gKNKRPdhjO0dNWnrzssDQ1tFg==
-
 pretty-bytes@^4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/pretty-bytes/-/pretty-bytes-4.0.2.tgz#b2bf82e7350d65c6c33aa95aaa5a4f6327f61cd9"
@@ -8702,7 +8671,7 @@ react-dev-utils@^4.2.1:
     strip-ansi "3.0.1"
     text-table "0.2.0"
 
-react-dom@^16.5.1:
+react-dom@^16.5.2:
   version "16.5.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.5.2.tgz#b69ee47aa20bab5327b2b9d7c1fe2a30f2cfa9d7"
   integrity sha512-RC8LDw8feuZOHVgzEf7f+cxBr/DnKdqp56VU0lAs1f4UfKc4cU8wU4fTq/mgnvynLQo8OtlPC19NUFh/zjZPuA==
@@ -8772,7 +8741,7 @@ react-syntax-highlighter@8.0.1:
     prismjs "^1.8.4"
     refractor "^2.4.1"
 
-react@^16.5.1:
+react@^16.5.2:
   version "16.5.2"
   resolved "https://registry.yarnpkg.com/react/-/react-16.5.2.tgz#19f6b444ed139baa45609eee6dc3d318b3895d42"
   integrity sha512-FDCSVd3DjVTmbEAjUNX6FgfAmQ+ypJfHUsqUJOYNCBUp1h8lqmtC+0mXJ+JjsWx4KAVTkk1vKd1hLQPvEviSuw==
@@ -10787,7 +10756,7 @@ utils-merge@1.0.1:
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
   integrity sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=
 
-uuid@3.3.2, uuid@^3.0.0, uuid@^3.0.1, uuid@^3.1.0, uuid@^3.3.2:
+uuid@^3.0.0, uuid@^3.0.1, uuid@^3.1.0, uuid@^3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.3.2.tgz#1b4af4955eb3077c501c23872fc6513811587131"
   integrity sha512-yXJmeNaw3DnnKAOKJE51sL/ZaYfWJRl1pK9dr19YFCu0ObS231AB1/LbqTKRAQ5kw8A90rA6fr4riOUpTZvQZA==
@@ -10810,7 +10779,7 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
 
-vanilla-framework@1.8.0:
+vanilla-framework@^1.8.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/vanilla-framework/-/vanilla-framework-1.8.0.tgz#b5aacc3ce60a521b8de8f160cb505807aadc7869"
   integrity sha512-IhaGZx7eiPcE+GqdSPDt5T81PkzUy6Em+isQuT1V9Y950trZ5wOW+3LK0ooDWcXVVTW1MqA+7arIEMdc5OrfyQ==

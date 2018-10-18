@@ -1,0 +1,86 @@
+import Helmet from "react-helmet";
+
+import Layout from '../components/layout';
+import Form from '../../../src/modules/forms/tenonForm/Form';
+import Input from '../../../src/modules/forms/tenonForm/Input';
+import {validator} from '../../../src/modules/utils/helpers/validationHelpers';
+import {isRequired} from '../../../src/modules/utils/data/validation';
+
+export default ({children}) => 
+<Layout>
+    <Helmet>
+        <title>Tenon-ui | Text input</title>
+    </Helmet>{children}
+</Layout>
+
+## Text input
+
+To create an `<input type="text">`, please use the the `TextInputController` in combination with the `Input` view component.
+
+```
+import { Form, Input, validator } from '@tenon-io/tenon-ui';
+
+//Some code
+
+<Form.TextInputController
+    name="petType"
+    required="true"
+    validators={[
+        validator(
+            isRequired,
+            'A type of pet is required'
+        )
+    ]}
+>
+    {props => (
+        <Input
+            {...props}
+            requiredText="( required )"
+            labelText="Pet type"
+        />
+    )}
+</Form.TextInputController>
+
+//Some more code
+```
+
+This will render the following:
+
+<Form
+    onSubmit={submitData => {
+        alert(JSON.stringify(submitData));
+    }}
+>
+    {({ formControls }) => (
+    <>
+        <Form.TextInputController
+            name="petName"
+            required="true"
+            validators={[
+                validator(isRequired, 'A name is required for your pet')
+            ]}
+        >
+            {props => (
+                <Input
+                    {...props}
+                    requiredText="( required )"
+                    labelText="Pet type"
+                />
+            )}
+        </Form.TextInputController>
+        <button type="submit">Submit</button>
+     </>   
+    )}
+</Form>
+
+### The Input view component
+
+Whereas the controllers provide a lot of accessibility information, correct HTML is of 
+utmost importance in creating accessible interfaces. Our view components are carefully
+constructed to provide this. Please strongly consider to just use our view components 
+if you are not completely comfortable with creating accessible `<input>` fields.
+
+
+
+
+
