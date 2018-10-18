@@ -1,6 +1,7 @@
 import Helmet from "react-helmet";
 
 import Layout from '../components/layout';
+import PageNav from '../components/PageNav';
 import Form from '../../../src/modules/forms/tenonForm/Form';
 import Input from '../../../src/modules/forms/tenonForm/Input';
 import Textarea from '../../../src/modules/forms/tenonForm/Textarea';
@@ -16,11 +17,23 @@ export default ({children}) =>
 
 ## The Tenon-UI view components
 
+<PageNav targets={
+    ['Usage',
+    'Common component props', 
+    'The Input component', 
+    'The Textarea component']
+    } />
+
 The `Tenon-UI` view components are accessible. We recommend using these view components if you
 want to ensure that your form fields are accessible.
 
 The section on [creating elemens](/forms-creating-elements) shows how to use the view components
 in the render prop functions of the smart controllers.
+
+
+
+- [The Input component](/forms-view-components/#the-input-component)
+- [The Textarea component](/forms-view-components/#the-textarea-component)
 
 ### Usage 
 

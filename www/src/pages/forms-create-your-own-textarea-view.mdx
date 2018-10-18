@@ -1,6 +1,7 @@
 import Helmet from "react-helmet";
 
 import Layout from '../components/layout';
+import PageNav from '../components/PageNav';
 
 export default ({children}) => 
 <Layout>
@@ -11,7 +12,15 @@ export default ({children}) =>
 
 ## Create your own Textarea view
 
-Here you will see how to create your own Textarea view.
+<PageNav targets={
+    ['Available prop getters from TextareaController',
+    'Other props from TextareaController', 
+    'Basic non-validated textarea',
+    'Required validated textarea',
+    'Textarea with a content hint']
+    } />
+
+Here you will see how to create your own `Textarea` view.
 
 ### Available prop getters from TextareaController
 The `TextareaController` gives you access to the following prop getter functions:

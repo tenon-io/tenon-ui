@@ -1,6 +1,7 @@
 import Helmet from "react-helmet";
 
 import Layout from '../components/layout';
+import PageNav from '../components/PageNav';
 import Form from '../../../src/modules/forms/tenonForm/Form';
 import Input from '../../../src/modules/forms/tenonForm/Input';
 import Textarea from '../../../src/modules/forms/tenonForm/Textarea';
@@ -15,6 +16,12 @@ export default ({children}) =>
 </Layout>
 
 ## Creating elements
+
+<PageNav targets={
+    ['Creating an input',
+    'Creating a textarea', 
+    'Accessible HTML']
+    } />
 
 To create `Tenon-UI` form elements, please use the correct `controller` component in combination with
 its related `view component`.

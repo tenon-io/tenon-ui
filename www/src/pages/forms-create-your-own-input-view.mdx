@@ -1,6 +1,7 @@
 import Helmet from "react-helmet";
 
 import Layout from '../components/layout';
+import PageNav from '../components/PageNav';
 
 export default ({children}) => 
 <Layout>
@@ -11,7 +12,15 @@ export default ({children}) =>
 
 ## Create your own Input view
 
-Here you will see how to create your own Input view.
+<PageNav targets={
+    ['Available prop getters from TextInputController',
+    'Other props from TextInputController', 
+    'Basic non-validated input',
+    'Required validated input',
+    'Input with a content hint']
+    } />
+
+Here you will see how to create your own `Input` view.
 
 ### Available prop getters from TextInputController
 The `TextInputController` gives you access to the following prop getter functions:

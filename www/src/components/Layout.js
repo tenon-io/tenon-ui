@@ -55,6 +55,20 @@ const Layout = ({ children }) => (
                                         codeString={children}
                                     />
                                 ),
+                                h3: ({ children, ...props }) => {
+                                    if (typeof children === 'string') {
+                                        const idString = children
+                                            .replace(/ /g, '-')
+                                            .toLowerCase();
+                                        return (
+                                            <h3 id={idString} {...props}>
+                                                {children}
+                                            </h3>
+                                        );
+                                    } else {
+                                        return <h3 {...props}>{children}</h3>;
+                                    }
+                                },
                                 a: ({ href, children, ...props }) => {
                                     if (
                                         href.indexOf('http') === -1 &&
