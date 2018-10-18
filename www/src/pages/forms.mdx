@@ -34,4 +34,26 @@ Follow these steps to create powerful, accessible forms with `Tenon-ui`:
 accessibility management. 
 1. Then lean how to [create form elements](/forms-creating-elements) with `Tenon-UI`.
 1. Finally see how you [use the view components](/forms-view-components).
-1. You can also [provide your own view](/forms-create-your-own-view).
+
+## Want to create your own view?
+
+Every view component on the `Tenon-UI` smart form is completely replaceable.
+ 
+If you want to create your own view simply make direct use of the `prop getter` functions 
+as well as other props provided by the `smart controllers`.
+
+You can create views for:
+
+1. [Input fields](/forms-create-your-own-input-view)
+
+ 
+### Disclaimer
+The `smart controllers` provide all the function to create fully accessible form controls, however,
+this needs to be backed up with an accessible HTML view. We can therefore not guarantee that
+every view rendered with `Tenon-UI` will be accessible unless the supplied view components are
+used or mimicked exactly in terms of HTML function.
+ 
+Feel free to mix up the HTML but ensure that all elements are present and that the prop getters are 
+applied correctly.
+ 
+And be sure to test with screen readers. 

@@ -50,8 +50,8 @@ const SideNav = () => (
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/create-your-own-view">
-                                    Create your own view
+                                <Link to="/forms-create-your-own-input-view">
+                                    Create your own Input view
                                 </Link>
                             </li>
                         </ul>
