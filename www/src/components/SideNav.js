@@ -54,6 +54,11 @@ const SideNav = () => (
                                     Create your own Input view
                                 </Link>
                             </li>
+                            <li>
+                                <Link to="/forms-create-your-own-textarea-view">
+                                    Create your own Textarea view
+                                </Link>
+                            </li>
                         </ul>
                     </li>
                     <li>
