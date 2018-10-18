@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
-import { graphql, StaticQuery } from 'gatsby';
+import { graphql, StaticQuery, Link } from 'gatsby';
 import Header from './header';
 import { MDXProvider } from '@mdx-js/tag';
 import ExampleBlock from '../components/ExampleBlock';
@@ -54,7 +54,25 @@ const Layout = ({ children }) => (
                                         resetActionText="Close message"
                                         codeString={children}
                                     />
-                                )
+                                ),
+                                a: ({ href, children, ...props }) => {
+                                    if (
+                                        href.indexOf('http') === -1 &&
+                                        href.indexOf('https') === -1
+                                    ) {
+                                        return (
+                                            <Link to={href} {...props}>
+                                                {children}
+                                            </Link>
+                                        );
+                                    } else {
+                                        return (
+                                            <a href={href} {...props}>
+                                                {children}
+                                            </a>
+                                        );
+                                    }
+                                }
                             }}
                         >
                             <>{children}</>

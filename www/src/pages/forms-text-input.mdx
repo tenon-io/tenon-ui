@@ -4,7 +4,7 @@ import Layout from '../components/layout';
 import Form from '../../../src/modules/forms/tenonForm/Form';
 import Input from '../../../src/modules/forms/tenonForm/Input';
 import {validator} from '../../../src/modules/utils/helpers/validationHelpers';
-import {isRequired} from '../../../src/modules/utils/data/validation';
+import {isRequired, isLongerThan} from '../../../src/modules/utils/data/validation';
 
 export default ({children}) => 
 <Layout>
@@ -15,7 +15,8 @@ export default ({children}) =>
 
 ## Text input
 
-To create an `<input type="text">`, please use the the `TextInputController` in combination with the `Input` view component.
+To create an `<input type="text">`, please use the the `TextInputController` in combination 
+with the `Input` view component.
 
 ```
 import { Form, Input, validator } from '@tenon-io/tenon-ui';
@@ -73,14 +74,164 @@ This will render the following:
     )}
 </Form>
 
+Try to enter some text and activate the `Submit` button. If no text is entered, you should see
+a validation message. Otherwise you will see an alert showing the data being submitted by the 
+surrounding form.
+
+If you open your browser inspector you will see the following `HTML`:
+```
+<form novalidate="">
+    <div class="form-group">
+        <div class="field-wrapper">
+            <label for="1bf08342-e063-4b6e-8768-1972fa03ee8e">
+                Pet type<span aria-hidden="true"
+                              class="required">
+                            &nbsp;( required )
+                        </span>
+            </label>
+            <input
+            aria-required="true" 
+            id="1bf08342-e063-4b6e-8768-1972fa03ee8e" 
+            name="petName" 
+            type="text" 
+            value=""></div>
+    </div>
+    <button type="submit">Submit</button>
+</form>
+```
+
+You will notice that a lot is already calculated for you, for example a unique `id` value,
+so that you can use as many `Input` components on a page as you want. As well as some `aria=*`
+properties.
+
 ### The Input view component
 
-Whereas the controllers provide a lot of accessibility information, correct HTML is of 
-utmost importance in creating accessible interfaces. Our view components are carefully
-constructed to provide this. Please strongly consider to just use our view components 
-if you are not completely comfortable with creating accessible `<input>` fields.
+The `Tenon-UI Input` component provides you with an accessible view component. We recommend 
+using this view component if you want to ensure that your `<input>` fields are accessible.
 
+If we look at the render function shown above, you can see how to use this component:
 
+```
+ {props => (
+    <Input
+        {...props}
+        requiredText="( required )"
+        labelText="Pet type"
+    />
+)}
+```
 
+If it **VERY** important to spread the props object from the render function of the `TextinputController`
+onto the `Input` component. This passes the required props into our view component, that you
+would otherwise use when creating your own views.
 
+The reason for this syntax is that you can now also easily set the props of the `Input` component. Note
+above how you the `labelText` for this specific component was set.
+
+#### Input component props
+
+##### labelText
+This prop is required.
+
+Every input needs a text label. With this prop you provide the text that will be rendered inside
+the `<label>` element.
+
+##### labelProps
+This is an optional object that can be used to override or enrich the props that passed to the 
+`<label>` element.
+
+For example, if you want to add a specific `className` to the `<label>` element you can do this:
+
+```
+ {props => (
+    <Input
+        {...props}
+        requiredText="( required )"
+        labelProps={{
+            className: 'special-label-class'            
+        }}
+        labelText="Pet type"
+    />
+)}
+```
+
+##### contentHintText
+Every `Input` can also have `content hint text`. This is text that describes what should be
+entered into the input. For example, that the input required at least five characters.
+
+The `<input> placeholder` attributes is often used for this, but this is **wrong**. The placeholder
+should **never** be used for this function as it causes difficulty for many users out there.
+
+Specify a content hint text as follows:
+
+```
+ {props => (
+    <Input
+        {...props}
+        requiredText="( required )"
+        labelText="Pet name"
+        contentHintText="The pet's name should be longer than three characters" 
+    />
+)}
+```
+
+Content hints are rendered as follows:
+
+<Form
+    onSubmit={submitData => {
+        alert(JSON.stringify(submitData));
+    }}
+>
+    {({ formControls }) => (
+    <>
+        <Form.TextInputController
+            name="petName"
+            required="true"
+            validators={[
+                validator(isRequired, 'A name is required for your pet'),
+                validator(
+                    isLongerThan(3), 
+                    'The name is too short'
+                )
+            ]}
+        >
+            {props => (
+                <Input
+                    {...props}
+                    requiredText="( required )"
+                    labelText="Pet type"
+                    contentHintText="The name should be longer than 3 characters"
+                />
+            )}
+        </Form.TextInputController>
+        <button type="submit">Submit</button>
+     </>   
+    )}
+</Form>
+
+Should you open the browser's HTML inspector, you will find that the content hint container
+is linked to the `<input>` element with the `aria-describedby` property. This is very important
+for screen readers.
+
+##### requiredText
+With this prop you can set the text that displays next to the `<label>` text for required fields.
+
+If you do not set this, a `*` will be shown for required fields as this is a standard pattern
+on the web. If you use this, please put a legend somewhere on your form that indicates that a
+`*` denotes a required field. 
+
+You don't have to do any more than that as `Tenon-UI` already marks required fields in a way
+that screen readers can interpret. 
+
+##### Tenon-UI specific props
+
+Should you look at the code for the `Input` component, you will see that it also expects a number 
+of other props. These are the props that is provided by the `TextInputController` component as
+seen in the examples above. 
+
+Please do not provide these props yourself as this will most probably break the functionality of
+the component.
+
+##### Other props
+Any other props given to this component will be passed onto the `<input>` element. 
 
