@@ -64,6 +64,11 @@ const SideNav = () => (
                                     Create your own Checkbox view
                                 </Link>
                             </li>
+                            <li>
+                                <Link to="/forms-create-your-own-checkboxgroup-view">
+                                    Create your own CheckboxGroup view
+                                </Link>
+                            </li>
                         </ul>
                     </li>
                     <li>

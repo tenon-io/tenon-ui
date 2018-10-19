@@ -1,0 +1,133 @@
+import Helmet from "react-helmet";
+
+import Layout from '../components/layout';
+import PageNav from '../components/PageNav';
+
+export default ({children}) => 
+<Layout>
+    <Helmet>
+        <title>Tenon-ui | Create your own CheckboxGroup view</title>
+    </Helmet>{children}
+</Layout>
+
+## Create your own CheckboxGroup view
+
+<PageNav targets={
+    ['Checkbox groups',
+    'Available prop getters from CheckboxGroupController',
+    'Other props from CheckboxGroupController', 
+    'Basic non-validated checkbox group',
+    'Required validated checkbox group',
+    'Checkbox group with a content hint']
+    } />
+
+Here you will see how to create your own `CheckboxGroup` view. When creating your own view inline, 
+you will use the `children render prop` of the `CheckboxGroupController`.
+
+### Checkbox groups
+Making a group of checkboxes accessible is surprisingly tricky. Please reconsider using the 
+`CheckboxGroup` component provided.
+
+If you still want to build your own view, please take into account the following:
+
+1. Groups of elements should go inside a `<fieldset>` element and be described by a `<legend>`.
+1. In order for most screen readers out there to recognise the `<legend>` is **HAS** to be
+the very next element after the `<fieldset>` opens. Please do not put any other HTML between the 
+opening tag of the `<fieldset>` and the `<legend>`.
+1. Unlike controls like the `<input>`, there is no reliable way to connect `error messages` or 
+`content hints` to a `<fieldset>`. These messages must therefore be rendered into the `<legend>` 
+element. Should this text not be visible, it can be hidden with a style that visually hides
+content.
+1. When setting focus to this group, focus should land on the first `<input type="checkbox">` of
+the group.
+
+The `CheckboxGroupController` does a lot to support you in this, but if your view does not support
+the points mentioned above, your resulting group of checkboxes will be almost certainly
+inaccessible.
+
+The visually hidden style mentioned above can be created like this:
+```
+.visually-hidden {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+}
+```
+
+Therefore we will once again urge you to use the `CheckboxGroup` component provided by
+`Tenon-UI` and change it with styling.
+
+Still not convinced? Then keep these points in mind in the following sections.
+
+### Available prop getters from CheckboxGroupController
+The `CheckboxGroupController` gives you access to the following prop getter functions:
+
+#### getLabelProps
+This prop getter generates the required props for each checkbox's `<label>` element.
+
+#### getCheckboxProps
+This prop getter generates the required props for the `<input>` elements of each checkbox.
+
+### Other props from CheckboxGroupController
+A number of other props are also exposed by the `CheckboxGroupController`. Refer to the 
+[smart controllers page](/forms-smart-controllers) to see how validators work:
+
+#### showError
+This boolean value will indicate to the view if an error should be shown. Normally, errors
+will only be shown after the first submit attempt unless overridden by the `alwaysShowErrors`
+prop of the [Form component](/forms-form-component).
+
+Use this to easily hide and show your error containers. 
+
+#### errorText
+This value contains the current actual error message text. For valid or non-validated fields
+this will be empty. Otherwise if will contain the text from the first failing validator as 
+specified on the `CheckboxGroupController`. 
+
+#### required
+This boolean value indicates if the `CheckboxGroupController` has been marked as `required`. This
+can be handy to decide when to render required indicators.
+
+### Basic non-validated checkbox group
+If you only need a group of checkboxes without validation you can write view code resembling this:
+
+```
+import { Form } from '@tenon-io/tenon-ui';
+
+//...
+
+<Form.CheckboxGroupController name="eatingTimes">
+    {({ getLabelProps, getCheckboxProps }) => (
+        <fieldset>
+            <legend>
+                When does your pet eat?
+            </legend>
+            <input
+                {...getCheckboxProps({
+                    name: 'morning',
+                    focusElement: true
+                })}
+            />
+            <label
+                {...getLabelProps()}
+            >
+                In the morning
+            </label>
+            <input
+                {...getCheckboxProps({
+                    name: 'night'
+                })}
+            />
+            <label
+                {...getLabelProps({
+                    autoIdPostfix: 'night'
+                })}
+            >
+                At night
+            </label>
+        </fieldset>
+    )}
+</Form.CheckboxGroupController>
+```
