@@ -82,7 +82,6 @@ class FormClass extends React.Component {
     }
 }
 ```
-
 ### Controller props
 Each controller has access to the same three props, although the render function of each controller differs slightly.
 
@@ -90,7 +89,69 @@ Each controller has access to the same three props, although the render function
 This prop is required.
 
 Every controller has to have a string name. This is the name with which it will register with the `Form` component. Subsequently,
-this is the name that will appear in the `Form` datasets mentioned above. 
+this is the name that will appear in the `Form` datasets mentioned above.
+
+#### component 
+While the controllers have been built to easily inject any custom view, often you will extract that
+view to another component. And `Tenon-UI` also provides a number of view components for you.
+ 
+Using these components in the render prop will lead the to following code being repeated:
+ 
+```
+{props => {
+    return <SomeViewComponent {...props} />
+}}
+```
+ 
+To avoid this, you can use the `component` prop instead:
+ ```
+<Form.[Contoller]
+    name="petName"
+    component={SomeViewComponent}
+/>    
+```
+
+Each controller will also pass any props not used in the controller itself through to 
+view component. This way you can still pass props, for instance a label text, to your
+view component.
+
+In this example, the `labelText` prop will be pass through to the `SomeViewComponent` 
+view component:
+ ```
+<Form.[Contoller]
+    name="petName"
+    labelText="Pet name"
+    component={SomeViewComponent}
+/>    
+```
+
+Finally, if the `component` prop is specified, the `children` of the controller component
+will be passed into the view component as its children. This can make it easier and more
+natural to create things like `<select>` boxes.
+
+ ```
+ //Inside SomeViewComponent
+ <select {...getSelectProps()}>
+    {this.props.children}
+ </select>
+ 
+//Then it can be use as: 
+<Form.SelectController
+    name="petAge"
+    labelText="Pet age"
+    component={SomeViewComponent}
+>
+    <option value="1">
+        One
+    </option>    
+    <option value="2">
+        Two
+    </option>
+</Form.SelectController>
+```
+
+Whenever a component is used as view in the docs, we will prefer using the `component` prop
+over using the render prop.
 
 #### required
 A form control can be marked as required by acivating this prop. This is important as it then passes important information 

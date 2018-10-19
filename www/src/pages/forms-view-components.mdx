@@ -37,32 +37,50 @@ in the render prop functions of the smart controllers.
 
 ### Usage 
 
-All view components are used in a similar way. Inside the `children render prop` of the smart
-controllers.
+All view components can be used in one of two ways.
 
-Here is an example of using the `Input` component to show how all view components can be 
-used:
+#### The component prop
+Here is an example of using the `Input` component by using the `component` prop of the controller.
 
 ```
-//...
+<Form.TextInputController
+    name="petName"
+    labelText="Name of pet"
+    component={Input}
+/>
+```
 
+Note that the `labelText` prop for the `view component` is added to the `controller component` which
+will then pass these props through to the `view component`. This **ONLY** happens when 
+you use the `component` prop.
+
+This method is recommended when using a view component, even if you have created it yourself,
+and will be used further on this page. 
+
+#### The children render prop
+You can still use the view components in the `children render prop` of the controllers.
+
+Here is an example of using the `Input` component to show how all view components can be 
+used inside the `children render prop` of each controller:
+
+```
+<Form.TextInputController
+    name="petName"
+    labelText="Name of pet"
+    component={Input}
+>
 {props => (
     <Input
         {...props}
-        requiredText="( required )"
         labelText="Pet type"
     />
 )}
-
-//...
+</Form.TextInputController>
 ```
 
 It is **VERY** important to spread the props object from the render function of the 
 `controller` onto the `view component`. This passes the required props into 
 our view components The same props you would otherwise use when creating your own views.
-
-The reason for this syntax is that you can now also easily set the props of the view 
-component. Note above how the `labelText` for this specific component was set.
 
 ### Common component props
 
@@ -82,20 +100,14 @@ For example, if you want to add a specific `className` to the `<label>` of the `
 you can do this:
 
 ```
-//...
-
-{props => (
-    <Textarea
-        {...props}
-        labelProps={{
-            className: 'special-label-class'            
-        }}
-        labelText="Pet description"
-    />
-)}
-
-//...
-
+<Form.TextareaController
+    name="petDescription"
+    labelText="Describe your pet"
+    labelProps={{
+        className: 'special-label-class'            
+    }}
+    component={Textarea}
+/>
 ```
 
 #### contentHintText
@@ -108,17 +120,12 @@ should **never** be used for this function as it causes difficulty for many user
 Specify a content hint text as follows:
 
 ```
-//..
-
-{props => (
-    <Input
-        {...props}
-        labelText="Pet name"
-        contentHintText="The pet's name should be longer than three characters" 
-    />
-)}
-
-//..
+<Form.TextInputController
+    name="petName"
+    labelText="Name of pet"
+    contentHintText="The pet's name should be longer than three characters" 
+    component={Input}
+/>
 ```
 
 Content hints are rendered as follows:
@@ -138,15 +145,10 @@ Content hints are rendered as follows:
                     'The name is too short'
                 )
             ]}
-        >
-            {props => (
-                <Input
-                    {...props}
-                    labelText="Pet name"
-                    contentHintText="The name should be longer than 3 characters"
-                />
-            )}
-        </Form.TextInputController>
+            labelText="Pet name"
+            contentHintText="The name should be longer than 3 characters"
+            component={Input}                    
+        />
         <button type="submit">Submit</button>
      </>   
     )}
@@ -203,6 +205,10 @@ this.inputRef = React.createRef();
 )}
 ```
 
+**Note**: If you want to create a `ref` to any of the view components, you **HAVE** to use
+the `children render prop` version. Otherwise you will get a reference to the instance of 
+the controller component class!
+
 ### The Input component
 
 As already illustrated above, the input component is used as:
@@ -220,15 +226,10 @@ import { Form, Input, validator } from '@tenon-io/tenon-ui';
             'A type of pet is required'
         )
     ]}
->
-    {props => (
-        <Input
-            {...props}
-            requiredText="( required )"
-            labelText="Pet type"
-        />
-    )}
-</Form.TextInputController>
+     requiredText="( required )"
+     labelText="Pet type"
+     componen={Input}           
+/>
 
 //...
 ```
@@ -251,15 +252,10 @@ This codes renders as:
                     'A type of pet is required'
                 )
             ]}
-        >
-            {props => (
-                <Input
-                    {...props}
-                    requiredText="( required )"
-                    labelText="Pet type"
-                />
-            )}
-        </Form.TextInputController>
+            requiredText="( required )"
+            labelText="Pet type"
+            component={Input}
+        />
         <button type="submit">Submit</button>
      </>   
     )}
@@ -272,13 +268,12 @@ The `TextInputController` will also play nice with other types.
 
 Override it like this:
 ```
-{props => (
-    <Input
-        {...props}
-        labelText="Pet's age"
-        type="number"
-    />
-)}
+<Form.TextInputController
+    name="petAge"
+    labelText="Age of pet"
+    type="number"
+    contentHintText="The pet's name should be longer than three characters" 
+/>
 ```
 
 ### The Textarea component
@@ -297,16 +292,11 @@ import { Form, Textarea, validator } from '@tenon-io/tenon-ui';
             'A description of your pet is required'
         )
     ]}
->
-    {props => (
-        <Textarea
-            {...props}
-            requiredText="( required )"
-            labelText="Pet description"
-            rows="10"
-        />
-    )}
-</Form.TextareaController>
+    requiredText="( required )"
+    labelText="Pet description"
+    rows="10"
+    component={Textarea}
+/>
 
 //...
 ```
@@ -326,16 +316,11 @@ This will render the following:
             validators={[
                 validator(isRequired, 'A description of your pet is required')
             ]}
-        >
-            {props => (
-                <Textarea
-                    {...props}
-                    requiredText="( required )"
-                    labelText="Pet description"
-                    rows="10"
-                />
-            )}
-        </Form.TextareaController>
+            requiredText="( required )"
+            labelText="Pet description"
+            rows="10"
+            component={Textarea}
+        />
         <button type="submit">Submit</button>
      </>   
     )}
