@@ -5,6 +5,10 @@ import PageNav from '../components/PageNav';
 import Form from '../../../src/modules/forms/tenonForm/Form';
 import Input from '../../../src/modules/forms/tenonForm/Input';
 import Textarea from '../../../src/modules/forms/tenonForm/Textarea';
+import Select from '../../../src/modules/forms/tenonForm/Select';
+import Checkbox from '../../../src/modules/forms/tenonForm/Checkbox';
+import CheckboxGroup from '../../../src/modules/forms/tenonForm/CheckboxGroup';
+import RadioGroup from '../../../src/modules/forms/tenonForm/RadioGroup';
 import {validator} from '../../../src/modules/utils/helpers/validationHelpers';
 import {isRequired, isLongerThan} from '../../../src/modules/utils/data/validation';
 
@@ -21,7 +25,11 @@ export default ({children}) =>
     ['Usage',
     'Common component props', 
     'The Input component', 
-    'The Textarea component']
+    'The Textarea component',
+    'The Select component',
+    'The Checkbox component',
+    'The CheckboxGroup component',
+    'The RadioGroup component']
     } />
 
 The `Tenon-UI` view components are accessible. We recommend using these view components if you
@@ -135,7 +143,7 @@ Content hints are rendered as follows:
         alert(JSON.stringify(submitData));
     }}
 >
-    {({ formControls }) => (
+    {() => (
     <>
         <Form.TextInputController
             name="petName"
@@ -234,14 +242,14 @@ import { Form, Input, validator } from '@tenon-io/tenon-ui';
 //...
 ```
 
-This codes renders as:
+Using this inside the `Form` compent gives:
 
 <Form
     onSubmit={submitData => {
         alert(JSON.stringify(submitData));
     }}
 >
-    {({ formControls }) => (
+    {() => (
     <>
         <Form.TextInputController
             name="petType"
@@ -301,14 +309,14 @@ import { Form, Textarea, validator } from '@tenon-io/tenon-ui';
 //...
 ```
 
-This will render the following:
+Using this inside the `Form` compent gives:
 
 <Form
     onSubmit={submitData => {
         alert(JSON.stringify(submitData));
     }}
 >
-    {({ formControls }) => (
+    {() => (
     <>
         <Form.TextareaController
             name="petDescription"
@@ -320,6 +328,319 @@ This will render the following:
             labelText="Pet description"
             rows="10"
             component={Textarea}
+        />
+        <button type="submit">Submit</button>
+     </>   
+    )}
+</Form>
+
+### The Select component
+
+The `Select` component needs `options` and those are provided as `children` of the component
+in the same way they would be coded in normal HTML.
+
+As we suggest passing it into the `component` prop of the `SelectController`, you can now 
+code the `<option>` elements as children of the controller as they are passed as `children` to
+the component injected into the `component` prop.
+
+```
+import { Form, Select, validator } from '@tenon-io/tenon-ui';
+
+//...
+
+<Form.SelectController
+    name="petNumber"
+    required="true"
+    validators={[
+        validator(isRequired, 'Please select a numer of pets')
+    ]}
+    requiredText="( required )"
+    labelText="How many pets do you have?"
+    component={Select}
+    >
+        <option>
+            Select a number
+        </option>
+        <option value="1">
+            One
+        </option>        
+        <option value="2">
+            Two
+        </option>
+        <option value="3">
+            Three
+        </option>
+</Form.SelectController>
+
+//...
+```
+
+Using this inside the `Form` component gives:
+
+<Form
+    onSubmit={submitData => {
+        alert(JSON.stringify(submitData));
+    }}
+>
+    {() => (
+    <>
+        <Form.SelectController
+            name="petNumber"
+            required="true"
+            validators={[
+                validator(isRequired, 'Please select a numer of pets')
+            ]}
+            requiredText="( required )"
+            labelText="How many pets do you have?"
+            component={Select}
+        >
+        <option>
+            Select a number
+        </option>
+        <option value="1">
+            One
+        </option>        
+        <option value="2">
+            Two
+        </option>
+        <option value="3">
+            Three
+        </option>
+        </Form.SelectController>
+        <button type="submit">Submit</button>
+     </>   
+    )}
+</Form>
+
+### The Checkbox component
+
+The `Checkbox` component should be used to render single checkboxes. Please do **NOT** use this
+to create groups of checkboxes related to the same choice, rather use the `CheckboxGroup`.
+
+Also note here how easy it is to create ad-hoc validations with `Tenon-UI`.
+
+```
+import { Form, Checkbox, validator } from '@tenon-io/tenon-ui';
+
+//...
+
+<Form.CheckboxContoller
+    name="acceptTerm"
+    required="true"
+    validators={[
+        validator(
+            value => value === true, 
+            'Please accept the terms and conditions'
+        )
+    ]}
+    requiredText="( required )"
+    labelText="Do you accept the terms and conditions?"
+    component={Checkbox}
+/>
+
+//...
+```
+
+Using this inside the `Form` component gives:
+
+<Form
+    onSubmit={submitData => {
+        alert(JSON.stringify(submitData));
+    }}
+>
+    {() => (
+    <>
+        <Form.CheckboxController
+            name="acceptTerm"
+            required="true"
+            validators={[
+                validator(value => value === true, 'Please accept the terms and conditions')
+            ]}
+            requiredText="( required )"
+            labelText="Do you accept the terms and conditions?"
+            component={Checkbox}
+        />
+        <button type="submit">Submit</button>
+     </>   
+    )}
+</Form>
+
+### The CheckboxGroup component
+
+Use this component if you want to render a group of related checkboxes.
+
+Aside from the standard props for `Tenon-UI` view components, this component also accepts the following.
+
+#### legend
+This prop is required.
+
+Use this to set the `<legend>` for the group of checkboxes. This acts as a grouping label.
+
+#### options
+This prop is required.
+
+Use this to provide an options object to the component. This will be used to automatically render 
+a group of checkboxes based on this object. The object is an indexer object:
+
+```
+{
+    morning: 'In the morning',
+    noon: 'In the noon',
+    night: 'In the night'
+}
+```
+
+When used, the property names will become the values of the checkboxes while the property
+values will become the labels of the checkboxes.
+
+#### Usage
+
+```
+import { Form, CheckboxGroup, validator } from '@tenon-io/tenon-ui';
+
+//...
+
+<Form.CheckboxGroupController
+    name="eatingTimes"
+    required="true"
+    validators={[
+        validator(
+            value => value.length > 0, 
+            'Please select at least one eating time.'
+        )
+    ]}
+    options ={{
+        morning: 'In the morning',
+        noon: 'In the noon',
+        night: 'In the night'
+    }}
+    requiredText="( required )"
+    labelText="When does your pet eat?"
+    component={CheckboxGroup}
+/>
+
+//...
+```
+
+Using this inside the `Form` component gives:
+ 
+<Form
+    onSubmit={submitData => {
+        alert(JSON.stringify(submitData));
+    }}
+>
+    {() => (
+    <>
+        <Form.CheckboxGroupController
+            name="eatingTimes"
+            required="true"
+            validators={[
+                validator(
+                    value => value.length > 0, 
+                    'Please select at least one eating time.'
+                )
+            ]}
+            options ={{
+                morning: 'In the morning',
+                noon: 'At noon',
+                night: 'At night'
+            }}
+            requiredText="( required )"
+            legend="When does your pet eat?"
+            component={CheckboxGroup}
+        />
+        <button type="submit">Submit</button>
+     </>   
+    )}
+</Form>
+
+If you try this example, you will notice that the `CheckboxGroupController` passes
+an array of values to the `Form` component. In this way the `CheckboxGroupController` differ
+from all other controllers in `Tenon-UI`.
+
+### The RadioGroup component
+
+Use this component if you want to render a group of radio buttons. 
+
+Aside from the standard props for `Tenon-UI` view components, this component also accepts the following.
+
+#### legend
+This prop is required.
+
+Use this to set the `<legend>` for the group of radio buttons. This acts as a grouping label.
+
+#### options
+This prop is required.
+
+Use this to provide an options object to the component. This will be used to automatically render 
+a group of radio buttons based on this object. The object is an indexer object:
+
+```
+{
+    black: 'Black',
+    white: 'White',
+    brown: 'Brown'
+}
+```
+
+When used, the property names will become the values of the radio buttons while the property
+values will become the labels of the radio buttons.
+
+#### Usage
+
+```
+import { Form, RadioGroup, validator } from '@tenon-io/tenon-ui';
+
+//...
+
+<Form.RadioGroupController
+    name="petColour"
+    required="true"
+    validators={[
+        validator(
+            isRequired, 
+            'Please select a colour.'
+        )
+    ]}
+    options ={{
+         black: 'Black',
+         white: 'White',
+         brown: 'Brown'
+    }}
+    requiredText="( required )"
+    legend="What colour is your pet?"
+    component={RadioGroup}
+/>
+
+//...
+```
+
+Using this inside the `Form` component gives:
+ 
+<Form
+    onSubmit={submitData => {
+        alert(JSON.stringify(submitData));
+    }}
+>
+    {() => (
+    <>
+        <Form.RadioGroupController
+            name="petColour"
+            required="true"
+            validators={[
+                validator(
+                    isRequired, 
+                    'Please select a colour.'
+                )
+            ]}
+            options ={{
+                 black: 'Black',
+                 white: 'White',
+                 brown: 'Brown'
+            }}
+            requiredText="( required )"
+            legend="What colour is your pet?"
+            component={RadioGroup}
         />
         <button type="submit">Submit</button>
      </>   
