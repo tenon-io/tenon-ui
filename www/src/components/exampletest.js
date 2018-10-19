@@ -1,7 +1,46 @@
 import React from 'react';
 import Form from '../../../src/modules/forms/tenonForm/Form';
 import { validator } from '../../../src/modules/utils/helpers/validationHelpers';
-import { isLongerThan } from '../../../src/modules/utils/data/validation';
+import {
+    isLongerThan,
+    isRequired
+} from '../../../src/modules/utils/data/validation';
+import Select from '../../../src/modules/forms/tenonForm/Select';
+
+export class ExamplesSelect extends React.Component {
+    render() {
+        return (
+            <Form
+                onSubmit={submitData => {
+                    alert(JSON.stringify(submitData));
+                }}
+            >
+                {() => (
+                    <>
+                        <Form.SelectController
+                            name="petColour"
+                            required="true"
+                            validators={[
+                                validator(
+                                    isRequired,
+                                    'Selecting a colour is required.'
+                                )
+                            ]}
+                        >
+                            {props => (
+                                <Select
+                                    {...props}
+                                    labelText="Your pet's colour"
+                                />
+                            )}
+                        </Form.SelectController>
+                        <button>Submit</button>
+                    </>
+                )}
+            </Form>
+        );
+    }
+}
 
 class ExampleTest extends React.Component {
     render() {
@@ -13,8 +52,9 @@ class ExampleTest extends React.Component {
             >
                 {() => (
                     <>
-                        <Form.TextInputController
+                        <Form.SelectController
                             name="petName"
+                            required="true"
                             validators={[
                                 validator(
                                     isLongerThan(3),
@@ -54,7 +94,7 @@ class ExampleTest extends React.Component {
                                     )}
                                 </div>
                             )}
-                        </Form.TextInputController>
+                        </Form.SelectController>
                         <button>Submit</button>
                     </>
                 )}

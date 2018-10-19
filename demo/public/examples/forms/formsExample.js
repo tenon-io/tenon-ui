@@ -36,85 +36,57 @@ const FormsExample = () => (
                             "The pet's name is too short"
                         )
                     ]}
-                >
-                    {props => (
-                        <Input
-                            {...props}
-                            requiredText="( required )"
-                            contentHintText="The pet's name must be longer than 5 characters"
-                            labelText="Name of pet"
-                        />
-                    )}
-                </Form.TextInputController>
-
+                    requiredText="( required )"
+                    contentHintText="The pet's name must be longer than 5 characters"
+                    labelText="Name of pet"
+                    component={Input}
+                />
                 <Form.TextInputController
                     name="petType"
                     required="true"
                     validators={[
                         validator(isRequired, 'A type of pet is required')
                     ]}
-                >
-                    {props => (
-                        <Input
-                            {...props}
-                            requiredText="( required )"
-                            labelText="Type of pet"
-                        />
-                    )}
-                </Form.TextInputController>
-
-                <Form.TextareaController name="petDescription">
-                    {props => (
-                        <TextArea
-                            {...props}
-                            rows="10"
-                            labelText="Type of pet"
-                        />
-                    )}
-                </Form.TextareaController>
-
+                    requiredText="( required )"
+                    labelText="Type of pet"
+                    component={Input}
+                />
+                <Form.TextareaController
+                    name="petDescription"
+                    rows="10"
+                    labelText="Type of pet"
+                    component={TextArea}
+                />
                 <Form.SelectController
                     name="petWeight"
                     required="true"
                     validators={[
                         validator(isRequired, 'Please select a weight category')
                     ]}
+                    labelText="Pet's weight"
+                    requiredText="( required )"
+                    component={Select}
                 >
-                    {props => (
-                        <Select
-                            {...props}
-                            labelText="Pet's weight"
-                            requiredText="( required )"
-                        >
-                            <option>No weight category selected</option>
-                            <option value="weightClass1">0-3kg</option>
-                            <option value="weightClass2">3-7kg</option>
-                            <option value="weightClass3">Really heavy!</option>
-                        </Select>
-                    )}
+                    <option>No weight category selected</option>
+                    <option value="weightClass1">0-3kg</option>
+                    <option value="weightClass2">3-7kg</option>
+                    <option value="weightClass3">Really heavy!</option>
                 </Form.SelectController>
-
                 <Form.RadioGroupController
                     name="radioSet"
                     required="true"
                     validators={[
                         validator(isRequired, 'Please select an option')
                     ]}
-                >
-                    {props => (
-                        <RadioGroup
-                            {...props}
-                            legend="Please select an option"
-                            requiredText="( required )"
-                            options={{
-                                option1: 'Option 1',
-                                option2: 'Option 2',
-                                option3: 'Option 3'
-                            }}
-                        />
-                    )}
-                </Form.RadioGroupController>
-
+                    legend="Please select an option"
+                    requiredText="( required )"
+                    options={{
+                        option1: 'Option 1',
+                        option2: 'Option 2',
+                        option3: 'Option 3'
+                    }}
+                    component={RadioGroup}
+                />
                 <Form.CheckboxGroupController
                     name="petEat"
                     required="true"
@@ -124,22 +96,16 @@ const FormsExample = () => (
                             'You need to select an eating time'
                         )
                     ]}
-                >
-                    {props => (
-                        <CheckboxGroup
-                            legend="When does your pet eat"
-                            contentHintText="Please select at least one"
-                            options={{
-                                morning: 'Morning',
-                                noon: 'Noon',
-                                night: 'Night'
-                            }}
-                            requiredText="( required )"
-                            {...props}
-                        />
-                    )}
-                </Form.CheckboxGroupController>
-
+                    legend="When does your pet eat"
+                    contentHintText="Please select at least one"
+                    options={{
+                        morning: 'Morning',
+                        noon: 'Noon',
+                        night: 'Night'
+                    }}
+                    requiredText="( required )"
+                    component={CheckboxGroup}
+                />
                 <Form.CheckboxController
                     name="confirmInfo"
                     required="true"
@@ -149,16 +115,10 @@ const FormsExample = () => (
                             "You must confirm your pet's information"
                         )
                     ]}
-                >
-                    {props => (
-                        <Checkbox
-                            {...props}
-                            requiredText="( required )"
-                            labelText="I confirm that my pet's information is true"
-                        />
-                    )}
-                </Form.CheckboxController>
-
+                    requiredText="( required )"
+                    labelText="I confirm that my pet's information is true"
+                    component={Checkbox}
+                />
                 <button type="submit">'Save your pet'</button>
             </Fragment>
         )}
