@@ -6,31 +6,31 @@ import PageNav from '../components/PageNav';
 export default ({children}) => 
 <Layout>
     <Helmet>
-        <title>Tenon-ui | Create your own textarea view</title>
+        <title>Tenon-ui | Create your own select view</title>
     </Helmet>{children}
 </Layout>
 
-## Create your own Textarea view
+## Create your own Select view
 
 <PageNav targets={
-    ['Available prop getters from TextareaController',
-    'Other props from TextareaController', 
-    'Basic non-validated textarea',
-    'Required validated textarea',
-    'Textarea with a content hint']
+    ['Available prop getters from SelectController',
+    'Other props from SelectController', 
+    'Basic non-validated select',
+    'Required validated select',
+    'Select with a content hint']
     } />
 
-Here you will see how to create your own `Textarea` view. When creating your own view inline, 
-you will use the `children render prop` of the `TextareaController`.
+Here you will see how to create your own `Select` view. When creating your own view inline, 
+you will use the `children render prop` of the `SelectController`.
 
-### Available prop getters from TextareaController
-The `TextareaController` gives you access to the following prop getter functions:
+### Available prop getters from SelectController
+The `SelectController` gives you access to the following prop getter functions:
 
 #### getLabelProps
 This prop getter generates the required props for the `<label>` element.
 
-#### getTextareaProps
-This prop getter generates the required props for the `<textarea>` element.
+#### getSelect
+This prop getter generates the required props for the `<select>` element.
 
 #### getErrorProps
 This prop getter generates the required props for the container element of your
@@ -40,8 +40,8 @@ displayed errors.
 This prop getter generates the required props for the container element of your
 content hint text.
 
-### Other props from TextareaController
-A number of other props are also exposed by the `TextareaController`. Refer to the 
+### Other props from SelectController
+A number of other props are also exposed by the `SelectController`. Refer to the 
 [smart controllers page](/forms-smart-controllers) to see how validators work:
 
 #### showError
@@ -54,48 +54,54 @@ Use this to easily hide and show your error containers.
 #### errorText
 This value contains the current actual error message text. For valid or non-validated fields
 this will be empty. Otherwise if will contain the text from the first failing validator as 
-specified on the `TextareaController`. 
+specified on the `SelectController`. 
 
 #### required
-This boolean value indicates if the `TextareaController` has been marked as `required`. This
+This boolean value indicates if the `SelectController` has been marked as `required`. This
 can be handy to decide when to render required indicators.
 
-### Basic non-validated textarea
-If you only need a label and a textarea you can write view code resembling this:
+### Basic non-validated select
+If you only need a label and a select you can write view code resembling this:
 
 ```
 import { Form } from '@tenon-io/tenon-ui';
 
 //...
 
-<Form.TextareaController name="petDescription">
-    {({ getLabelProps, getTextareaProps }) => (
+<Form.SelectController name="petColour">
+    {({ getLabelProps, getSelectProps }) => (
         <React.Fragment>
             <label {...getLabelProps()}>
-                Enter your pet's name:
+                Select your pet's colour:
             </label>
-            <textarea
-                {...getTextareaProps()}
-            />
+            <select
+                {...getSelectProps()}
+            >
+                <option value="black">
+                    Black
+                </option>
+                <option value="brown">
+                    White
+                </option>        
+            </select>
         </React.Fragment>
     )}
-</Form.TextareaController>
+</Form.SelectController>
 ```
 
-**Note**: that both the `getLabelProps` and the `getTextareaProps` prop getters can be called 
+**Note**: that both the `getLabelProps` and the `getSelect` prop getters can be called 
 with an object that can override and / or enrich the props object returned by these prop getters. 
 For example:
 
 ```
-<textarea
-    {...getTextareaProps({
-        rows: "10",
+<select
+    {...getSelectProps({
         className: "some-custom-style"
     })}
 />
 ```
 
-### Required validated textarea
+### Required validated select
 For validation, you can make use of the `getErrorProps` prop getter as well.
 
 ```
@@ -103,16 +109,16 @@ import { Form, validator, isRequired } from '@tenon-io/tenon-ui';
 
 //...
 
-<Form.TextareaController
-    name="petDescription"
+<Form.SelectController
+    name="petColour"
     validators={[
-        validator(isRequired, 'A description is required.')
+        validator(isRequired, 'A colour selection is required.')
     ]}
     required="true"
 >
     {({
         getLabelProps,
-        getTextareaProps,
+        getSelectProps,
         getErrorProps,
         showError,
         errorText,
@@ -120,7 +126,7 @@ import { Form, validator, isRequired } from '@tenon-io/tenon-ui';
     }) => (
         <React.Fragment>
             <label {...getLabelProps()}>
-                Enter your pet's description:
+                
                 {required && (
                     <span
                         aria-hidden="true"
@@ -129,7 +135,16 @@ import { Form, validator, isRequired } from '@tenon-io/tenon-ui';
                     </span>
                 )}
             </label>
-            <textarea {...getTextareaProps()} />
+            <select
+                {...getSelectProps()}
+            >
+                <option value="black">
+                    Black
+                </option>
+                <option value="brown">
+                    White
+                </option>        
+            </select>
             {showError && (
                 <div
                     {...getErrorProps({
@@ -141,18 +156,18 @@ import { Form, validator, isRequired } from '@tenon-io/tenon-ui';
             )}
         </React.Fragment>
     )}
-</Form.TextareaController>
+</Form.SelectController>
 ```
 
 Note in the example above that the visual `( required )` text is marked with `aria-hidden="true"`. This
-is because the `TextareaController` already marks the textarea as `required` with the 
+is because the `SelectController` already marks the select as `required` with the 
 `aria-required` property. Therefore you need to make sure that this is not read out twice with
 screen readers.
 
-The prop getters will ensure that the error text field is linked to the textarea and that the textarea
+The prop getters will ensure that the error text field is linked to the select and that the select
 validity (`aria-valid`) is managed and read out by screen readers. 
 
-### Textarea with a content hint
+### Select with a content hint
 Should you want to render a `content hint`, please make use of the `getContentHintProps` prop getter:
 
 ```
@@ -160,18 +175,16 @@ import { Form, validator, isRequired } from '@tenon-io/tenon-ui';
 
 //...
 
-<Form.TextareaController
-    name="petDescription"
+<Form.SelectController
+    name="petColour"
     validators={[
-        validator(
-            isLongerThan(60),
-            'The description is not long enough.'
-        )
+        validator(isRequired, 'A colour selection is required.')
     ]}
+    required="true"
 >
     {({
         getLabelProps,
-        getTextareaProps,
+        getSelectProps,
         getErrorProps,
         getContentHintProps,
         showError,
@@ -181,13 +194,22 @@ import { Form, validator, isRequired } from '@tenon-io/tenon-ui';
             <label {...getLabelProps()}>
                 Enter your pet's name:
             </label>
-            <textarea {...getTextareaProps()} />
+            <select
+                {...getSelectProps()}
+            >
+                <option value="black">
+                    Black
+                </option>
+                <option value="brown">
+                    White
+                </option>        
+            </select>
             <div
                 {...getContentHintProps({
                     className: 'content-hint-container'
                 })}
             >
-                The description should be longer than 60 characters.
+                Please select a colour closest to that of your pet.
             </div>
             {showError && (
                 <div
@@ -200,10 +222,10 @@ import { Form, validator, isRequired } from '@tenon-io/tenon-ui';
             )}
         </div>
     )}
-</Form.TextareaController>
+</Form.SelectController>
 ```
 
-The prop getter will ensure that the `content hint` is also linked to the `<textarea>` field so that
+The prop getter will ensure that the `content hint` is also linked to the `<select>` field so that
 screen readers are aware of this.
 
 As shown above you can easily combine this with an error field, although content hint can safely be

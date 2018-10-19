@@ -156,6 +156,10 @@ validity (`aria-valid`) is managed and read out by screen readers.
 Should you want to render a `content hint`, please make use of the `getContentHintProps` prop getter:
 
 ```
+import { Form, validator, isRequired } from '@tenon-io/tenon-ui';
+
+//...
+
 <Form.TextInputController
     name="petName"
     validators={[

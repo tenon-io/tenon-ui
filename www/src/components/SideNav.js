@@ -40,11 +40,6 @@ const SideNav = () => (
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/forms-creating-elements">
-                                    Creating elements
-                                </Link>
-                            </li>
-                            <li>
                                 <Link to="/forms-view-components">
                                     View component usage
                                 </Link>
@@ -57,6 +52,16 @@ const SideNav = () => (
                             <li>
                                 <Link to="/forms-create-your-own-textarea-view">
                                     Create your own Textarea view
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/forms-create-your-own-select-view">
+                                    Create your own Select view
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/forms-create-your-own-checkbox-view">
+                                    Create your own Checkbox view
                                 </Link>
                             </li>
                         </ul>
