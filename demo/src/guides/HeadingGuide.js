@@ -15,7 +15,9 @@ class HeadingGuide extends Component {
                             heading={t('heading.demo.example.heading')}
                         >
                             <Heading.LevelBoundary levelOverride={1}>
-                                <h1>{t('heading.demo.example.h1')}</h1>
+                                <Heading.H>
+                                    {t('heading.demo.example.h1')}
+                                </Heading.H>
                                 <Heading.LevelBoundary>
                                     <Heading.H>
                                         {t('heading.demo.example.h2')}

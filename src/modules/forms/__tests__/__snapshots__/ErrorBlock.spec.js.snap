@@ -6,7 +6,7 @@ exports[`ErrorBlock should render as an unordered list to track the number of it
     aria-labelledby="sectionId"
     class="error-block"
   >
-    <h1
+    <h2
       class="block-heading"
       id="sectionId"
       tabindex="-1"
@@ -15,7 +15,7 @@ exports[`ErrorBlock should render as an unordered list to track the number of it
         class="icon"
       />
       Some errors
-    </h1>
+    </h2>
     <ul>
       <li>
         <a

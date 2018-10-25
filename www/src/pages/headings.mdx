@@ -12,4 +12,108 @@ export default ({children}) =>
 
 ## Headings
 
-TODO: Add page
+The hierarchy of headings is very important. Heading elements (`<h1> - <h6>`) are not there to provide 
+different styles. They are there to provide structure to your application. 
+
+Headings are to be used in order and levels should not be skipped.
+
+Every page should start with an `<h1>` with subsequent headings being applied in order.
+
+Example HTML:
+
+```html
+<h1>Main heading</h1>
+<section>
+    <h2>Section heading 1</h2>
+
+    <h3>Section sub heading 1</h3>
+    <h3>Section sub heading 2</h3>
+</section>
+<section>
+    <h2>Section heading 2</h2>
+
+    <h3>Section sub heading 1</h3>
+    <h3>Section sub heading 2</h3>
+</section>
+```
+
+This can seem simple enough until we use it in a complex React application. Because
+of component composition and re-use it can be hard to anticipate which `<h>` element 
+to use.
+
+### The Heading component
+
+The `Tenon-UI` heading component handles automatic calculation of heading levels for you.
+
+The component is composite and contains to sub components:
+
+#### Heading.H
+
+This component replace the standard `<h>` elements, but it used in exactly the same way:
+
+```
+<Heading.H>
+    My heading text
+</Heading.H>
+```
+
+If used by itself, it will always render an `<h1>` element.
+
+#### Heading.LevelBoundary
+
+To allow automatic level calculation, use the `Heading.LevelBoundary` component. 
+
+This component is applied every time a new level should be used in the wrapped code:
+
+```
+<Heading.H>I will be an h1</Heading.H>
+<Heading.LevelBoundary>
+    <Heading.H>
+        I will be an h2
+    </Heading.H>
+    <Heading.LevelBoundary>
+        <Heading.H>
+            I will be an h3
+        </Heading.H>
+    </Heading.LevelBoundary>
+    <Heading.H>
+        I will be an h2
+    </Heading.H>
+</Heading.LevelBoundary>
+```
+
+Here the levels are all shown together, for clarity, but usually these levels will extend across
+components. If used throughout your component codebase, the levels will always calculate correctly
+and should you refactor the code, the levels will auto adjust.
+
+The `Heading.LevelBoundary` component will, when first applied, cause the next `Heading.H` to render
+as an `h2`.
+
+If you want change this, you can use the `levelOverride` prop:
+
+```
+<Heading.LevelBoundary levelOverride={3}>
+    <Heading.H>
+        I will be an h3
+    </Heading.H>
+    <Heading.LevelBoundary>
+        <Heading.H>
+            I will be an h4
+        </Heading.H>
+    </Heading.LevelBoundary>
+    <Heading.H>
+        I will be an h3
+    </Heading.H>
+</Heading.LevelBoundary>
+```  
+
+This allows for fine tuning the heading level, should the defaults not be enough or if you
+area using it in a section of an application not fully driven by this component. 
+
+### Component using Header
+
+Some of the Tenon-UI components, use the `Heading` component internally to allow you to integrate
+their headings seamlessly into your application. The are:
+
+1. [The ErrorBlock](/forms-error-block)
+1. [The Tabbed Interface](/tabs)

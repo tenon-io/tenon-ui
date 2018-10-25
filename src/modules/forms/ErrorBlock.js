@@ -27,6 +27,8 @@ import uuidv4 from 'uuid/v4';
  *
  * @prop required {string} headingText - Text to show as
  *                  block heading.
+ * @prop {string, number} headingLevel - The level of heading to
+ *                  render if not used inside the Heading component.
  */
 class ErrorBlock extends Component {
     static propTypes = {
@@ -38,7 +40,8 @@ class ErrorBlock extends Component {
                 errorText: PropTypes.string
             })
         }).isRequired,
-        headingText: PropTypes.string.isRequired
+        headingText: PropTypes.string.isRequired,
+        headingLevel: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
     };
 
     constructor(props) {
@@ -48,19 +51,28 @@ class ErrorBlock extends Component {
     }
 
     render() {
-        const { formControls, headingText, forwardedRef } = this.props;
+        const {
+            formControls,
+            headingText,
+            forwardedRef,
+            headingLevel
+        } = this.props;
         const controlNameArray = Object.keys(formControls);
         return controlNameArray.length > 0 ? (
             <section className="error-block" aria-labelledby={this.headingId}>
-                <Heading.H
-                    id={this.headingId}
-                    className="block-heading"
-                    tabIndex="-1"
-                    ref={forwardedRef}
+                <Heading.LevelBoundary
+                    levelOverride={headingLevel ? headingLevel : null}
                 >
-                    <span className="icon" />
-                    {headingText}
-                </Heading.H>
+                    <Heading.H
+                        id={this.headingId}
+                        className="block-heading"
+                        tabIndex="-1"
+                        ref={forwardedRef}
+                    >
+                        <span className="icon" />
+                        {headingText}
+                    </Heading.H>
+                </Heading.LevelBoundary>
                 <ul>
                     {controlNameArray
                         .filter(control => !formControls[control].validity)

@@ -32,6 +32,20 @@ This will render a block of with a list of errors. Each error will be rendered a
 link with a hash `href` to the form element that is in error. All of this is managed and handled 
 for you by `Tenon-UI`.
 
+By default the internal heading is rendered as an `<h2>` unless it is used inside the 
+[Heading.LevelBoundary](/headings) component. You are also able to override this by using the
+`headingLevel` prop:
+
+```
+<ErrorBlock
+    headingText="The form contains errors"
+    formControls={formControls}
+    headingLevel="3"
+/>
+```
+
+In this case it would render an `<h3>`.
+
 Let's now put everything together to make a fully functional validated form.
 
 ### A fully validated form example
