@@ -45,6 +45,16 @@ const SideNav = () => (
                                 </Link>
                             </li>
                             <li>
+                                <Link to="/forms-error-block">
+                                    Put it all together with the ErrorBlock
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/forms-full-demo">
+                                    Full Tenon-UI Form demo
+                                </Link>
+                            </li>
+                            <li>
                                 <Link to="/forms-create-your-own-input-view">
                                     Create your own Input view
                                 </Link>
@@ -66,7 +76,8 @@ const SideNav = () => (
                             </li>
                             <li>
                                 <Link to="/forms-create-your-own-checkboxgroup-radiogroup-view">
-                                    Create your own CheckboxGroup or RadioGroup view
+                                    Create your own CheckboxGroup or RadioGroup
+                                    view
                                 </Link>
                             </li>
                         </ul>

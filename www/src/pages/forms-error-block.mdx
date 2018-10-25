@@ -1,18 +1,58 @@
-import React, { Component, createRef, Fragment } from 'react';
-import Form from '../../../src/modules/forms/tenonForm/Form';
-import Input from '../../../src/modules/forms/tenonForm/Input';
-import Textarea from '../../../src/modules/forms/tenonForm/Textarea';
-import Select from '../../../src/modules/forms/tenonForm/Select';
-import Checkbox from '../../../src/modules/forms/tenonForm/Checkbox';
-import CheckboxGroup from '../../../src/modules/forms/tenonForm/CheckboxGroup';
-import RadioGroup from '../../../src/modules/forms/tenonForm/RadioGroup';
-import ErrorBlock from '../../../src/modules/forms/ErrorBlock';
+import Helmet from "react-helmet";
 
-import { validator } from '../../../src/modules/utils/helpers/validationHelpers';
-import {
-    isRequired,
-    isLongerThan
-} from '../../../src/modules/utils/data/validation';
+import Layout from '../components/layout';
+
+export default ({children}) => 
+<Layout>
+    <Helmet>
+        <title>Tenon-ui | Put it all together with the ErrorBlock</title>
+    </Helmet>{children}
+</Layout>
+
+## Put it all together with the ErrorBlock
+
+While we now know how to put forms together with the `Tenon-UI` components, we still need to 
+put the cherry on the cake for validating complex forms.
+
+### The ErrorBlock component
+
+The `ErrorBlock` component can consume the `formControls` object that is injected into the
+render function by the `Form` component:
+
+```
+<ErrorBlock
+    headingText="The form contains errors"
+    formControls={formControls}
+/>
+```
+
+It also accepts a `headingText` prop that will be shown as the heading of the block.
+
+This will render a block of with a list of errors. Each error will be rendered as a functional
+link with a hash `href` to the form element that is in error. All of this is managed and handled 
+for you by `Tenon-UI`.
+
+Let's now put everything together to make a fully functional validated form.
+
+### A fully validated form example
+
+The following code will provide you with a fully accessible validator form example.
+
+If you want to see a working version please visit the [Tenon-UI full Form demo](/forms-full-demo).
+
+```
+import React, { Component, createRef, Fragment } from 'react';
+import { Form
+        Input
+        TextArea
+        Select
+        Checkbox
+        CheckboxGroup
+        RadioGroup
+        ErrorBlock
+        validator
+        isRequired
+        isLongerThan } from '@tenon-io/tenon-ui';
 
 class DemoForm extends Component {
     constructor(props) {
@@ -33,7 +73,7 @@ class DemoForm extends Component {
         if (!validity) {
             setTimeout(() => {
                 this.errorBlockRef.current.focus();
-            });
+            },50);
         }
     };
 
@@ -49,6 +89,7 @@ class DemoForm extends Component {
                             <ErrorBlock
                                 formControls={formControls}
                                 headingText="The form contains errors"
+                                ref={this.errorBlockRef}
                             />
                         ) : null}
                         <Form.TextInputController
@@ -86,7 +127,7 @@ class DemoForm extends Component {
                             name="petDescription"
                             rows="10"
                             labelText="Type of pet"
-                            component={Textarea}
+                            component={TextArea}
                         />
                         <Form.SelectController
                             name="petWeight"
@@ -162,3 +203,44 @@ class DemoForm extends Component {
 }
 
 export default DemoForm;
+```
+
+You may have noticed one more thing you will need to do by hand. And that is set focus to the 
+`ErrorBlock` when the user activates the submit button and there are validation errors.
+
+First we need to create a [React Ref](https://reactjs.org/docs/refs-and-the-dom.html).
+
+```
+this.errorBlockRef = createRef();
+``` 
+
+Then we attach it to the `ErrorBlock` component:
+
+```
+<ErrorBlock
+      formControls={formControls}
+      headingText="The form contains errors"
+      ref={this.errorBlockRef}
+  />
+```
+
+We can then use the `onRawSubmit` handler of the `Form` to set focus on error as this handler is 
+always called, not just when the form input is valid. 
+
+```
+onRawSubmitHandler = (formControls, validity) => {
+    if (!validity) {
+        setTimeout(() => {
+            this.errorBlockRef.current.focus();
+        },50);
+    }
+};
+```
+
+The `validity` flag is the second parameter and we can then use that to determine whether or not
+to set focus.
+
+Unfortunately we need to use a `setTimeout`, as we need to be sure the `ErrorBlock` has been 
+applied to the `DOM` before setting focus.
+
+This is all the extra work you need to do as the `Form` component cannot handle this for you.

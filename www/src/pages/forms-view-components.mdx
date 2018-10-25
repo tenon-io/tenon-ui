@@ -4,7 +4,7 @@ import Layout from '../components/layout';
 import PageNav from '../components/PageNav';
 import Form from '../../../src/modules/forms/tenonForm/Form';
 import Input from '../../../src/modules/forms/tenonForm/Input';
-import Textarea from '../../../src/modules/forms/tenonForm/Textarea';
+import TextArea from '../../../src/modules/forms/tenonForm/TextArea';
 import Select from '../../../src/modules/forms/tenonForm/Select';
 import Checkbox from '../../../src/modules/forms/tenonForm/Checkbox';
 import CheckboxGroup from '../../../src/modules/forms/tenonForm/CheckboxGroup';
@@ -25,7 +25,7 @@ export default ({children}) =>
     ['Usage',
     'Common component props', 
     'The Input component', 
-    'The Textarea component',
+    'The TextArea component',
     'The Select component',
     'The Checkbox component',
     'The CheckboxGroup component',
@@ -106,7 +106,7 @@ you can do this:
     labelProps={{
         className: 'special-label-class'            
     }}
-    component={Textarea}
+    component={TextArea}
 />
 ```
 
@@ -276,10 +276,10 @@ Override it like this:
 />
 ```
 
-### The Textarea component
+### The TextArea component
 
 ```
-import { Form, Textarea, validator } from '@tenon-io/tenon-ui';
+import { Form, TextArea, validator } from '@tenon-io/tenon-ui';
 
 //...
 
@@ -295,7 +295,7 @@ import { Form, Textarea, validator } from '@tenon-io/tenon-ui';
     requiredText="( required )"
     labelText="Pet description"
     rows="10"
-    component={Textarea}
+    component={TextArea}
 />
 
 //...
@@ -319,7 +319,7 @@ Using this inside the `Form` compent gives:
             requiredText="( required )"
             labelText="Pet description"
             rows="10"
-            component={Textarea}
+            component={TextArea}
         />
         <button type="submit">Submit</button>
      </>   
