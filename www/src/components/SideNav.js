@@ -65,8 +65,8 @@ const SideNav = () => (
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/forms-create-your-own-checkboxgroup-view">
-                                    Create your own CheckboxGroup view
+                                <Link to="/forms-create-your-own-checkboxgroup-radiogroup-view">
+                                    Create your own CheckboxGroup or RadioGroup view
                                 </Link>
                             </li>
                         </ul>
