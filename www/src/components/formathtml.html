@@ -6,20 +6,46 @@
 </head>
 <body>
 <form novalidate="">
-    <div class="form-group">
-        <div class="field-wrapper">
-            <label for="e3c185aa-2e44-4aaa-81b9-8406c8e63c44">Pet description<span
-            aria-hidden="true" class="required">&nbsp;( required )</span></label><textarea aria-required="true"
-                                                                                           id="e3c185aa-2e44-4aaa-81b9-8406c8e63c44"
-                                                                                           name="petDescription"
-                                                                                           rows="10" class="has-error"
-                                                                                           aria-describedby="1b72f31a-d2d9-497d-bca5-b65b67290229"
-                                                                                           aria-invalid="true"></textarea>
+    <fieldset class="form-group">
+        <legend>When does your pet eat<span class="required">&nbsp;( required )</span><span class="visually-hidden">&nbsp;Please select at least one</span>
+        </legend>
+        <div tabindex="-1" style="outline: none;">
+            <ul class="checkbox-container">
+                <li>
+                    <div class="checkbox-wrapper">
+                        <input name="morning"
+                               id="16a32b1a-746e-4b96-ac53-88d85bdad598"
+                               type="checkbox">
+                        <label for="16a32b1a-746e-4b96-ac53-88d85bdad598">
+                            Morning
+                        </label>
+                    </div>
+                </li>
+                <li>
+                    <div class="checkbox-wrapper">
+                        <input name="noon"
+                               id="16a32b1a-746e-4b96-ac53-88d85bdad598-noon"
+                               type="checkbox">
+                        <label for="16a32b1a-746e-4b96-ac53-88d85bdad598-noon">
+                            Noon
+                        </label>
+                    </div>
+                </li>
+                <li>
+                    <div class="checkbox-wrapper">
+                        <input name="night"
+                               id="16a32b1a-746e-4b96-ac53-88d85bdad598-night"
+                               type="checkbox">
+                        <label for="16a32b1a-746e-4b96-ac53-88d85bdad598-night">
+                            Night
+                        </label>
+                    </div>
+                </li>
+            </ul>
         </div>
-        <div class="error-wrapper"><span class="icon"></span><span id="1b72f31a-d2d9-497d-bca5-b65b67290229">A description of your pet is required</span>
+        <div class="info-wrapper" aria-hidden="true"><span class="icon"></span><span>Please select at least one</span>
         </div>
-    </div>
-    <button type="submit">Submit</button>
+    </fieldset>
 </form>
 </body>
 </html>
