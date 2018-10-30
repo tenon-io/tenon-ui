@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { graphql, StaticQuery, Link } from 'gatsby';
-import Header from './header';
+import Header from './Header';
 import { MDXProvider } from '@mdx-js/tag';
 import ExampleBlock from '../components/ExampleBlock';
 import SideNav from '../components/SideNav';

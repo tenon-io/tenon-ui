@@ -1,7 +1,7 @@
 import Helmet from "react-helmet";
 
-import Layout from '../components/layout';
-import Tabs from '../../../src/modules/tabs/Tabs';
+import Layout from '../components/Layout';
+import SpinnerButtonExample from '../components/examples/SpinnerButtonExample';
 
 export default ({children}) => 
 <Layout>
@@ -12,4 +12,118 @@ export default ({children}) =>
 
 ## Spinner button
 
-TODO: Add page
+When you want to trigger an asynchronous action with a button and clearly indicate to all users that
+the action is busy and also that it has completed, you can use `Tenon-IU`'s `SpinnerButton`. 
+
+It shows a visual spinner while marked as active and also broadcasts the necessary messages to screen 
+readers.
+
+### Usage
+
+The spinner button is used as follows:
+
+```
+import React, { Component } from 'react';
+import { SpinnerButton } from '@tenon-ui/tenon-ui';
+
+class SpinnerButtonExample extends Component {
+    state = {
+        showSpinner: false
+    };
+
+    onClickHandler = () => {
+        this.setState({ showSpinner: true });
+        someAsynAction().then(() => {
+            this.setState({ showSpinner: false });
+        })
+    };
+
+    render() {
+        return (
+            <SpinnerButton
+                className="primary spinner-button"
+                onClick={this.onClickHandler}
+                onBusyClick={() => {
+                    alert('The button is still busy.');
+                }}
+                busyText="Async action is busy."
+                completeText="Async action is complete."
+                isBusy={this.state.showSpinner}
+            >
+                Click me
+            </SpinnerButton>
+        );
+    }
+}
+
+export default SpinnerButtonExample;
+```
+
+Which gives you:
+
+<SpinnerButtonExample />
+
+Try clicking this button. Also click the button while it is busy spinning.
+
+Also test this button with a screen reader!
+
+### SpinnerButton component props
+
+#### onClick
+
+The same `onClick` handler you would use with a normal `button`.
+
+It is important to note that this event handler is only fired if the button is in a non-busy
+state, to avoid multiple clicks of the button. `Tenon-UI` does **NOT** recommend using a `disabled`
+state on a button at any time as these buttons cannot easily be found and recognised by all users.
+
+Therefore the button remains clickable but the `SpinnerButton` component manages for you whether the
+`onClick` handler is executed or not.
+
+#### isBusy
+This prop is required.
+
+A boolean value indicating if the action triggered by the button is busy. You are responsible 
+for linking this to your asynchronous action in the code.
+
+#### busyText 
+A string value that will be broadcast to screen readers when the button is busy.
+
+#### completeText
+A string value that will be broadcast to screen readers when the button action completes.
+
+#### onBusyClick
+An event handler that always fires.
+
+You may want trigger an action if a user clicks on a button with a busy state. This allows you 
+to set notifications or other side effects of clicking on a busy button. You can use the 
+`onBusyClick` handler for that purpose as the `onClick` handler is only executed when the button is 
+in a non-busy state.
+
+#### spinnerImgSrc
+An imported animated image source.
+
+If you do not like the spinner that `Tenon-UI` renders, you can provide your own by using this prop.
+
+```
+//...
+
+import mySpinnerImage from './mySpinnerImage.svg';
+
+//...
+
+<SpinnerButton
+    className="primary spinner-button"
+    onClick={this.onClickHandler}
+    onBusyClick={() => {
+        alert('The button is still busy.');
+    }}
+    busyText="Async action is busy."
+    completeText="Async action is complete."
+    isBusy={this.state.showSpinner}
+    spinnerImgSrc={mySpinnerImage}
+>
+    Click me
+</SpinnerButton>
+
+```

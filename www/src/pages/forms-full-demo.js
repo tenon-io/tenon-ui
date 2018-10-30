@@ -1,7 +1,7 @@
 import React, { Component, createRef, Fragment } from 'react';
 import Helmet from 'react-helmet';
 
-import Layout from '../components/layout';
+import Layout from '../components/Layout';
 import Form from '../../../src/modules/forms/tenonForm/Form';
 import ErrorBlock from '../../../src/modules/forms/ErrorBlock';
 import { validator } from '../../../src/modules/utils/helpers/validationHelpers';

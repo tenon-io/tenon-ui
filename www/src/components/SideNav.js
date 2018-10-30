@@ -100,6 +100,9 @@ const SideNav = () => (
                 <h2>Helper Components</h2>
                 <ul>
                     <li>
+                        <Link to="/code-block">Code block</Link>
+                    </li>
+                    <li>
                         <Link to="/focus-catcher">Focus Catcher</Link>
                     </li>
                     <li>
