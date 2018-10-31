@@ -6,6 +6,7 @@ import Header from './Header';
 import { MDXProvider } from '@mdx-js/tag';
 import ExampleBlock from '../components/ExampleBlock';
 import SideNav from '../components/SideNav';
+import Disclosure from '../components/Disclosure';
 
 import '../styles/ui-docs.scss';
 
@@ -34,8 +35,20 @@ const Layout = ({ children }) => (
                 <Header siteTitle={data.site.siteMetadata.title} />
                 <div className="main-panel">
                     <aside className="nav-panel">
-                        <section>
+                        <section className="desktop-menu">
                             <SideNav />
+                        </section>
+                        <section className="mobile-menu">
+                            <Disclosure>
+                                <Disclosure.Trigger className="primary">
+                                    {expanded =>
+                                        expanded ? 'Hide menu' : 'Show menu'
+                                    }
+                                </Disclosure.Trigger>
+                                <Disclosure.Target>
+                                    <SideNav />
+                                </Disclosure.Target>
+                            </Disclosure>
                         </section>
                     </aside>
                     <main id="main" className="viewport">

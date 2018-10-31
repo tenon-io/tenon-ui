@@ -47,11 +47,21 @@ form {
 }
 
 .app-header h1 {
+
     margin: 0.3em;
+    text-align: center;
+
+    @media screen and (max-width: 50em) {
+        font-size: 2em;
+    }
 }
 
 .app-title {
     font-size: 3.5em;
+
+    @media screen and (max-width: 50em) {
+        font-size: 2em;
+    }
 }
 
 .app-intro {
@@ -61,6 +71,7 @@ form {
 .main-panel {
     display: flex;
     flex-direction: row;
+    position: relative;
 }
 
 .working-example {
@@ -155,11 +166,31 @@ form {
     }
 }
 
+.mobile-menu {
+    margin-bottom: 0;
+    margin-top: 0;
+    @media screen and (min-width: 50em) {
+        display: none;
+    }
+}
+
+.desktop-menu {
+    @media screen and (max-width: 50em) {
+        display: none;
+    }
+}
+
 .nav-panel {
     display: flex;
     flex-direction: column;
     margin-left: 2em;
     flex: 1;
+
+    @media screen and (max-width: 50em) {
+        width: 100%;
+    background-color: white;
+        position: absolute;
+    }
 
     button {
         margin-top: 0.5rem;
@@ -213,6 +244,10 @@ form {
     margin-left: 5em;
     padding: 3em;
     flex: 3;
+
+    @media screen and (max-width: 50em) {
+        margin-top: 4em;
+    }
 }
 
 .demo-spinner {
