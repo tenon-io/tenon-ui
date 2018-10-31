@@ -57,6 +57,7 @@ class ErrorBlock extends Component {
             forwardedRef,
             headingLevel
         } = this.props;
+
         const controlNameArray = Object.keys(formControls);
         return controlNameArray.length > 0 ? (
             <section className="error-block" aria-labelledby={this.headingId}>
@@ -89,10 +90,6 @@ class ErrorBlock extends Component {
     }
 }
 
-export default forwardRef(({ formControls, headingText }, ref) => (
-    <ErrorBlock
-        formControls={formControls}
-        headingText={headingText}
-        forwardedRef={ref}
-    />
+export default forwardRef((props, ref) => (
+    <ErrorBlock {...props} forwardedRef={ref} />
 ));

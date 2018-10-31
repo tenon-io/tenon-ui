@@ -577,9 +577,7 @@ class FormController extends Component {
                   { ...renderProps, ...rest },
                   children
               )
-            : children
-                ? children(renderProps)
-                : null;
+            : children && children(renderProps);
     }
 }
 

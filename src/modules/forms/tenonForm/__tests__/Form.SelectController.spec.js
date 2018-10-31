@@ -49,6 +49,40 @@ describe('Form.SelectController', () => {
         expect(testSelect.attributes.length).toBe(2);
     });
 
+    it('should allow view injection via the component prop', () => {
+        const Select = ({ getSelectProps, getLabelProps, labelText }) => (
+            <div>
+                <label {...getLabelProps()}>{labelText}</label>
+                <select {...getSelectProps()}>
+                    <option value="1">One</option>
+                    <option value="2">One</option>
+                </select>
+            </div>
+        );
+
+        const { getByLabelText, getByText } = render(
+            <Form onSubmit={jest.fn()}>
+                {() => (
+                    <Form.SelectController
+                        name="testSelect"
+                        labelText="Test select"
+                        component={Select}
+                    />
+                )}
+            </Form>
+        );
+
+        const testLabel = getByText('Test select');
+        expect(testLabel).toHaveAttribute('for', 'selectId');
+        expect(testLabel.attributes.length).toBe(1);
+
+        const testSelect = getByLabelText('Test select');
+        expect(testSelect).toHaveAttribute('id', 'selectId');
+        expect(testSelect).toHaveAttribute('name', 'testSelect');
+        expect(testSelect.value).toBe('1');
+        expect(testSelect.attributes.length).toBe(2);
+    });
+
     it('should spawn standard and ARIA props for a disabled select', () => {
         const { getByLabelText } = render(
             <Form onSubmit={jest.fn()}>

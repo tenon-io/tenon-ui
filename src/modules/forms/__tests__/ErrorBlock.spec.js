@@ -118,4 +118,25 @@ describe('ErrorBlock', () => {
 
         expect(focusRef.current).toEqual(getByText('Some errors'));
     });
+
+    it('should allow for heading level configuration', () => {
+        const mockControls = {
+            username: {
+                validity: false,
+                controlId: 'usernameControl',
+                errorText: 'User name is required.'
+            }
+        };
+        const { container } = render(
+            <ErrorBlock
+                formControls={mockControls}
+                headingText="Some errors"
+                headingLevel="3"
+            />
+        );
+
+        expect(container.querySelector('h3').innerHTML).toBe(
+            '<span class="icon"></span>Some errors'
+        );
+    });
 });

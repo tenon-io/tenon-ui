@@ -46,6 +46,68 @@ describe('Form.TextInputController', () => {
         expect(testInput.attributes.length).toBe(4);
     });
 
+    it('should allow view injection via the component prop', () => {
+        const Input = ({ getInputProps, getLabelProps, labelText }) => (
+            <div>
+                <label {...getLabelProps()}>{labelText}</label>
+                <input {...getInputProps()} />
+            </div>
+        );
+
+        const { getByLabelText, getByText } = render(
+            <Form onSubmit={jest.fn()}>
+                {() => (
+                    <Form.TextInputController
+                        name="testInput"
+                        labelText="Test input"
+                        component={Input}
+                    />
+                )}
+            </Form>
+        );
+
+        const testLabel = getByText('Test input');
+        expect(testLabel).toHaveAttribute('for', 'inputLabelId');
+        expect(testLabel.attributes.length).toBe(1);
+
+        const testInput = getByLabelText('Test input');
+        expect(testInput).toHaveAttribute('id', 'inputLabelId');
+        expect(testInput).toHaveAttribute('name', 'testInput');
+        expect(testInput).toHaveAttribute('value', '');
+        expect(testInput.attributes.length).toBe(4);
+    });
+
+    it('should render allow view injection via the component prop', () => {
+        const Input = ({ getInputProps, getLabelProps, labelText }) => (
+            <div>
+                <label {...getLabelProps()}>{labelText}</label>
+                <input {...getInputProps()} />
+            </div>
+        );
+
+        const { getByLabelText, getByText } = render(
+            <Form onSubmit={jest.fn()}>
+                {() => (
+                    <Form.TextInputController
+                        name="testInput"
+                        labelText="Test input"
+                        component={Input}
+                    />
+                )}
+            </Form>
+        );
+
+        const testLabel = getByText('Test input');
+        expect(testLabel).toHaveAttribute('for', 'inputLabelId');
+        expect(testLabel.attributes.length).toBe(1);
+
+        const testInput = getByLabelText('Test input');
+        expect(testInput).toHaveAttribute('id', 'inputLabelId');
+        expect(testInput).toHaveAttribute('name', 'testInput');
+        expect(testInput).toHaveAttribute('value', '');
+        expect(testInput.attributes.length).toBe(4);
+    });
+
     it('should spawn standard and ARIA props for a disabled input', () => {
         const { getByLabelText } = render(
             <Form onSubmit={jest.fn()}>

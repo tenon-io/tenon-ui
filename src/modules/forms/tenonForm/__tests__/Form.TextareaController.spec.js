@@ -48,6 +48,37 @@ describe('Form.TextareaController', () => {
         expect(testTextarea.attributes.length).toBe(2);
     });
 
+    it('should allow view injection via the component prop', () => {
+        const TextArea = ({ getTextareaProps, getLabelProps, labelText }) => (
+            <div>
+                <label {...getLabelProps()}>{labelText}</label>
+                <textarea {...getTextareaProps()} />
+            </div>
+        );
+
+        const { getByLabelText, getByText } = render(
+            <Form onSubmit={jest.fn()}>
+                {() => (
+                    <Form.TextareaController
+                        name="textTextarea"
+                        labelText="Test textarea"
+                        component={TextArea}
+                    />
+                )}
+            </Form>
+        );
+
+        const testLabel = getByText('Test textarea');
+        expect(testLabel).toHaveAttribute('for', 'textareaId');
+        expect(testLabel.attributes.length).toBe(1);
+
+        const testTextarea = getByLabelText('Test textarea');
+        expect(testTextarea).toHaveAttribute('id', 'textareaId');
+        expect(testTextarea).toHaveAttribute('name', 'textTextarea');
+        expect(testTextarea.value).toBe('');
+        expect(testTextarea.attributes.length).toBe(2);
+    });
+
     it('should spawn standard and ARIA props for a disabled textarea', () => {
         const { getByLabelText } = render(
             <Form onSubmit={jest.fn()}>
