@@ -11,4 +11,140 @@ export default ({children}) =>
 
 ## Code block
 
-TODO: Add page
+As developers we make applications for people, and as developers are people too sometimes we 
+build technical applications. 
+
+Sharing code should also be for everyone and the `Tenon-UI CodeBlock` helps you achieve that by
+giving you an easy to use, accessible highlighted code block.
+
+This component leverages [react-syntax-highligher](https://github.com/conorhastings/react-syntax-highlighter)
+and styles the code with [Prism syntax highlighter](https://prismjs.com/). However some tweaks
+have been made to ensure that all text has sufficient colour contrast to be readable by as many
+people as possible.
+
+**NOTE**: Every single code example in this documentation site uses the `CodeBlock` component!
+
+### Installation
+
+Due to the payload size of a syntax highlighting, this component is not part of the main
+`Tenon-UI` package. 
+
+#### Installing with npm
+
+```
+npm install @tenon-io/tenon-codeblock
+```
+
+#### Installing with yarn
+
+```
+yarn add @tenon-io/tenon-codeblock
+```
+
+### Usage
+
+The code block can either display the contents of a file or a code string, making it highly 
+flexible.
+
+#### With a file
+
+```
+//... 
+
+import CodeBlock from '@tenon-io/tenon-codeblock';
+
+//...
+
+<CodeBlock
+    file="/codeExample.js"
+/>
+```
+
+The `CodeBlock` component comes with built-in `XHR`, so it will fetch the code file automatically
+from the server at the given location and display it.
+
+This could be handy if you are displaying actual code files, as the code blocks will then update
+real time.
+
+#### With a code string
+
+```
+//... 
+
+import CodeBlock from '@tenon-io/tenon-codeblock';
+
+//...
+
+<CodeBlock
+    codeString={codeText}
+    onReset={() => {
+        console.log('reset');
+    }}
+/>
+```
+
+### Accessibility features
+
+The `CodeBlock` component enables easy keyboard navigation of the blocks themselves. The blocks
+themselves are in the focus order of the HTML so the snippets can easily be selected with the `TAB`
+key.
+
+Using standard text selecting key combinations you are also able to change the exact code selection.
+
+And finally, you also get text selection help when clicking on the code block with your mouse.
+
+A side effect of this is that you can edit the text in the code block, but the original text of the
+code block is reset when the code block loses focus.
+
+### Componentn props
+
+#### file
+The url of the code file you would like to display in the code block.
+
+#### codeString
+A formatted code string you would like to display in the code block.
+
+#### onReset
+An event handler that gets called if the user changes the code and the code is subsequently
+reset `onBlur`.
+
+This even is **NOT** called if no changes are made in the text.
+
+With this even you could inform your users that the text has been reset for the sake of clarity:
+
+```
+<CodeBlock
+    file="codeExample.js"
+    onReset={() => {
+        // Notify the user that any changes made to the text has been reset.
+    }}
+/>
+```
+
+#### language
+In order to keep the bundle size small, the most common languages supported in a React 
+application is supported. They are:
+
+1. **jsx**
+2. **javascript**
+3. **json**
+4. **html**
+
+By default the code block is setup to render `JSX` code but you can specify the language with the
+`language` prop:
+
+```
+<CodeBlock
+    file="codeExample.js"
+    language="json"
+/>
+```
+
+If you would like to use this code block with another language format, please let us know!
+
+ 
+
+
+
+
+
