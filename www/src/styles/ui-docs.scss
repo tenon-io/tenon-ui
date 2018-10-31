@@ -44,15 +44,19 @@ form {
     padding: 20px;
     color: white;
     margin-bottom: 1rem;
-}
 
-.app-header h1 {
+    img {
+        margin: 0.4em 0.4em 0 0.4em;
+    }
 
-    margin: 0.3em;
-    text-align: center;
+    h1 {
 
-    @media screen and (max-width: 50em) {
-        font-size: 2em;
+        margin: 0.3em;
+        text-align: center;
+
+        @media screen and (max-width: 50em) {
+            font-size: 2em;
+        }
     }
 }
 

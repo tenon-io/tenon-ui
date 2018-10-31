@@ -1,20 +1,7 @@
-# tenon-ui
+# Tenon-UI
 
-This is an accessible ui component library.
+This is the home of the accessible React component library of [https://www.tenon.io](Tenon.io).
 
-`npm install @tenon-io/ui`
+## Documentation
 
-or
-
-`yarn add @tenon-io/ui`
-
-##Usage
-
-Please refer to the style guide demo application in the code repository. After cloning the 
-repository and installing the dependencies it can be started with:
-
-`npm run start`
-
-or
-
-`yarn start` 
+Please visit the [Tenon-UI documentation site](https://hoc-attack.surge.sh/).

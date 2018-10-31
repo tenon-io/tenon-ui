@@ -19,13 +19,6 @@ module.exports = {
         'gatsby-plugin-offline',
         'gatsby-mdx',
         {
-            resolve: 'gatsby-source-filesystem',
-            options: {
-                name: 'posts',
-                path: `${__dirname}/content/`
-            }
-        },
-        {
             resolve: `gatsby-plugin-sass`,
             options: {
                 includePaths: ['node_modules']

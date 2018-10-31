@@ -1,7 +1,7 @@
 {
     "name": "@tenon-io/tenon-ui",
-    "version": "1.0.0-RC.2",
-    "description": "Tenon ui components library",
+    "version": "1.0.0",
+    "description": "Tenon-ui components library",
     "contributors": [
         "Karl Groves <karl@tenon.io>",
         "Almero Steyn <almero@tenon.io>",
