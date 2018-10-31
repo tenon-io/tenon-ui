@@ -1,7 +1,6 @@
 import Helmet from "react-helmet";
 
 import Layout from '../components/Layout';
-import Tabs from '../../../src/modules/tabs/Tabs';
 
 export default ({children}) => 
 <Layout>
@@ -12,4 +11,81 @@ export default ({children}) =>
 
 ## Styling
 
-TODO: Add page
+At `Tenon.io` we like to use `CSS` as it was intended. This is our choice and not a criticism of
+other methods of styling, such as `CSS modules`.
+
+Currently `Tenon-UI` comes with a compiled `style sheet` as well as `SASS` source files for you 
+to use. 
+
+You use our compiled `CSS`, import and override our `SASS` files, or completely restyle the components
+using the classes rendered on the elements.
+
+Our styles are based on [Vanilla Framework](https://vanillaframework.io/) to be as lightweight
+and non-intrusive as possible.
+
+### The compiled stylesheet
+
+In your React app, simply import the `tenon-ui.css` file located in the `/lib/styles` part of 
+the import:
+
+```
+import '@tenon-io/tenon-ui/lib/styles/tenon-ui.css';
+```
+
+### SASS files
+
+If your build configuration supports `SASS` compilation, you can also simply import the main `SASS`
+file:
+
+```
+import '@tenon-io/tenon-ui/lib/styles/tenon-ui.scss';
+```
+
+But you also have access to the source files. The main file shows the standard dependencies:
+
+```
+$color-button-primary: #004aa9;
+$color-button-secondary: #575757;
+$color-negative: darken(#c7162b, 15%);
+$color-caution: #ffa500;
+
+@import 'vanilla-framework/scss/vanilla';
+
+@include vf-base;
+@include vf-p-forms;
+@include vf-p-buttons;
+
+@import 'tenon_forms';
+@import 'tenon_buttons';
+@import 'tenon_notifications';
+@import 'tenon_tabs';
+@import 'tenon_spinner_buttons';
+@import 'tenon_helpers.scss';
+@import 'tenon_resets';
+```
+
+Please note the dependency on `Vanilla Framework`. Also note that in order for your compilation
+to succeed `node_modules` **MUST** be registered as a path with the `SASS` compiler.
+
+If you want to override our styles, you can use this file as example. Then you can override or change
+any of the components to achieve the look your desire.
+
+The colours you can override is shown in the [Vanilla Framework Color documentation](https://docs.vanillaframework.io/en/settings/color-settings).
+
+### Roll your own solution
+
+If you would like a totally different visual experience and cannot do this with the files provided,
+you can of course create your own style sheet.
+
+Please refer to the source files and rendered HTML to see how.
+
+Just remember that clear colour combinations and contrasts are also important for accessibility.
+If you use our styles, you get that out of the box.
+
+### But what about stuff like CSS Modules and Styled Components?
+
+`Tenon-UI` was built by Tenon for Tenon so we did it with our preference in mind.
+
+But if you want to use `Tenon-UI` or you are already using it but you want to used other methods of styling,
+please open a Pull Request to discuss. We are open to the discussion and moving `Tenon-UI` towards
+a library that YOU can use easily, but we will need your help sometimes to get it there.

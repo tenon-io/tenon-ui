@@ -215,6 +215,11 @@ form {
     flex: 3;
 }
 
+.demo-spinner {
+    color: black;
+    width: 5em;
+}
+
 @media screen and (max-width: 488px) {
     .main-panel {
         flex-direction: column;

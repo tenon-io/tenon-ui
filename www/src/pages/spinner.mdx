@@ -1,6 +1,7 @@
 import Helmet from "react-helmet";
 
 import Layout from '../components/Layout';
+import Spinner from '../../../src/modules/notifications/Spinner';
 
 export default ({children}) => 
 <Layout>
@@ -11,4 +12,54 @@ export default ({children}) =>
 
 ## Spinner
 
-TODO: Add page
+Visual aids can be very helpful in an application but for folks who cannot see them they can 
+sometimes seriously degrade the overall experience of the web application if these aids carry
+important information.
+
+An often used aid in JavaScript application is the busy spinner.
+
+`Tenon-UI` gives you an `Spinner` component you can use overall. This component already has
+accessibility built in.
+
+### Usage
+
+The spinner can be imported and used as a normal component:
+
+```
+import { Spinner } from '@tenon-io/tenon-ui';
+
+//...
+
+<Spinner 
+    title="Busy fetching data" 
+    className="demo-spinner" 
+/>
+```
+
+The `Spinner` can easily be styled and sized:
+
+```
+.demo-spinner {
+    color: black;
+    width: 5em;
+}
+```
+
+This will display as:
+
+<Spinner title="Busy fetching data" className="demo-spinner" />
+
+### Component props
+
+#### title
+This is required.
+
+A string value describing the spinner. Please use this to describe the purpose of the spinner,
+such as "Busy fetching user data.".
+
+Without a proper title, such spinners are inaccessible to a large number of people.
+
+#### className
+You can use this to give a class to the internal `SVG` so that you can style it with `CSS` 
+as shown above.
+
