@@ -1,6 +1,13 @@
 import React from 'react';
 import { Link } from 'gatsby';
 
+//As we are managing focus manually this is required to tell the code when to focus.
+const FocusLink = ({ children, ...props }) => (
+    <Link {...props} state={{ focus: true }}>
+        {children}
+    </Link>
+);
+
 const SideNav = () => (
     <nav>
         <ul>
@@ -8,13 +15,15 @@ const SideNav = () => (
                 <h2>Information</h2>
                 <ul>
                     <li>
-                        <Link to="/">Home page</Link>
+                        <FocusLink to="/">Home page</FocusLink>
                     </li>
                     <li>
-                        <Link to="/getting-started">Getting Started</Link>
+                        <FocusLink to="/getting-started">
+                            Getting Started
+                        </FocusLink>
                     </li>
                     <li>
-                        <Link to="/styling">Styling</Link>
+                        <FocusLink to="/styling">Styling</FocusLink>
                     </li>
                 </ul>
             </li>
@@ -22,77 +31,79 @@ const SideNav = () => (
                 <h2>Components</h2>
                 <ul>
                     <li>
-                        <Link to="/forms">Smart form components</Link>
+                        <FocusLink to="/forms">Smart form components</FocusLink>
                         <ul className="sub-nav">
                             <li>
-                                <Link to="/forms-knowledge">
+                                <FocusLink to="/forms-knowledge">
                                     Required knowledge
-                                </Link>
+                                </FocusLink>
                             </li>
                             <li>
-                                <Link to="/forms-form-component">
+                                <FocusLink to="/forms-form-component">
                                     Form component
-                                </Link>
+                                </FocusLink>
                             </li>
                             <li>
-                                <Link to="/forms-smart-controllers">
+                                <FocusLink to="/forms-smart-controllers">
                                     Smart form element controllers
-                                </Link>
+                                </FocusLink>
                             </li>
                             <li>
-                                <Link to="/forms-view-components">
+                                <FocusLink to="/forms-view-components">
                                     View component usage
-                                </Link>
+                                </FocusLink>
                             </li>
                             <li>
-                                <Link to="/forms-error-block">
+                                <FocusLink to="/forms-error-block">
                                     Put it all together with the ErrorBlock
-                                </Link>
+                                </FocusLink>
                             </li>
                             <li>
-                                <Link to="/forms-full-demo">
+                                <FocusLink to="/forms-full-demo">
                                     Full Tenon-UI Form demo
-                                </Link>
+                                </FocusLink>
                             </li>
                             <li>
-                                <Link to="/forms-create-your-own-input-view">
+                                <FocusLink to="/forms-create-your-own-input-view">
                                     Create your own Input view
-                                </Link>
+                                </FocusLink>
                             </li>
                             <li>
-                                <Link to="/forms-create-your-own-textarea-view">
+                                <FocusLink to="/forms-create-your-own-textarea-view">
                                     Create your own Textarea view
-                                </Link>
+                                </FocusLink>
                             </li>
                             <li>
-                                <Link to="/forms-create-your-own-select-view">
+                                <FocusLink to="/forms-create-your-own-select-view">
                                     Create your own Select view
-                                </Link>
+                                </FocusLink>
                             </li>
                             <li>
-                                <Link to="/forms-create-your-own-checkbox-view">
+                                <FocusLink to="/forms-create-your-own-checkbox-view">
                                     Create your own Checkbox view
-                                </Link>
+                                </FocusLink>
                             </li>
                             <li>
-                                <Link to="/forms-create-your-own-checkboxgroup-radiogroup-view">
+                                <FocusLink to="/forms-create-your-own-checkboxgroup-radiogroup-view">
                                     Create your own CheckboxGroup or RadioGroup
                                     view
-                                </Link>
+                                </FocusLink>
                             </li>
                         </ul>
                     </li>
                     <li>
-                        <Link to="/headings">Headings</Link>
+                        <FocusLink to="/headings">Headings</FocusLink>
                     </li>
                     <li>
-                        <Link to="/notifications">Notifications</Link>
+                        <FocusLink to="/notifications">Notifications</FocusLink>
                     </li>
                     <li>
-                        <Link to="/spinner-button">Spinner Button</Link>
+                        <FocusLink to="/spinner-button">
+                            Spinner Button
+                        </FocusLink>
                     </li>
                     <li>
-                        <Link to="/tabs">Tabbed interface</Link>
+                        <FocusLink to="/tabs">Tabbed interface</FocusLink>
                     </li>
                 </ul>
             </li>
@@ -100,13 +111,13 @@ const SideNav = () => (
                 <h2>Helper Components</h2>
                 <ul>
                     <li>
-                        <Link to="/code-block">Code block</Link>
+                        <FocusLink to="/code-block">Code block</FocusLink>
                     </li>
                     <li>
-                        <Link to="/focus-catcher">Focus Catcher</Link>
+                        <FocusLink to="/focus-catcher">Focus Catcher</FocusLink>
                     </li>
                     <li>
-                        <Link to="/spinner">Spinner</Link>
+                        <FocusLink to="/spinner">Spinner</FocusLink>
                     </li>
                 </ul>
             </li>

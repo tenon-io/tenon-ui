@@ -7,15 +7,17 @@
     "dependencies": {
         "@mdx-js/mdx": "^0.15.5",
         "@mdx-js/tag": "^0.15.0",
+        "@reach/router": "^1.2.1",
         "@tenon-io/tenon-codeblock": "^1.0.0-alpha.2",
         "gatsby": "^2.0.31",
         "gatsby-mdx": "^0.2.0",
         "gatsby-plugin-manifest": "^2.0.5",
         "gatsby-plugin-offline": "^2.0.5",
         "gatsby-plugin-react-helmet": "^3.0.0",
+        "gatsby-plugin-sass": "^2.0.1",
         "gatsby-source-filesystem": "^2.0.3",
-        "react": "^16.5.2",
-        "react-dom": "^16.5.2",
+        "react": "^16.6.0",
+        "react-dom": "^16.6.0",
         "react-helmet": "^5.2.0",
         "vanilla-framework": "^1.8.0"
     }

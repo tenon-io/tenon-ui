@@ -1,7 +1,8 @@
 import React, { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
-import { graphql, StaticQuery, Link } from 'gatsby';
+import { graphql, Link, StaticQuery } from 'gatsby';
+import { Location } from '@reach/router';
 import Header from './Header';
 import { MDXProvider } from '@mdx-js/tag';
 import ExampleBlock from '../components/ExampleBlock';
@@ -43,9 +44,13 @@ class LayoutView extends Component {
     }
 
     componentDidMount() {
+        const { location } = this.props;
         //This is required as the MDX container rerenders on locations
         //hash change as well which messed up the focus event of the container.
-        if (window.location.hash === '#content') {
+        if (
+            window.location.hash === '#content' ||
+            (location.state && location.state.focus)
+        ) {
             this.mainRef.current.focus();
         }
     }
@@ -140,7 +145,11 @@ class LayoutView extends Component {
                                         href.indexOf('https') === -1
                                     ) {
                                         return (
-                                            <Link to={href} {...props}>
+                                            <Link
+                                                to={href}
+                                                {...props}
+                                                state={{ focus: true }}
+                                            >
                                                 {children}
                                             </Link>
                                         );
@@ -186,4 +195,12 @@ Layout.propTypes = {
     children: PropTypes.node.isRequired
 };
 
-export default Layout;
+export default ({ children, ...props }) => (
+    <Location>
+        {({ location }) => (
+            <Layout location={location} {...props}>
+                {children}
+            </Layout>
+        )}
+    </Location>
+);
