@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { graphql, StaticQuery, Link } from 'gatsby';
@@ -10,18 +10,49 @@ import Disclosure from '../components/Disclosure';
 
 import '../styles/ui-docs.scss';
 
-const Layout = ({ children }) => (
-    <StaticQuery
-        query={graphql`
-            query SiteTitleQuery {
-                site {
-                    siteMetadata {
-                        title
-                    }
-                }
-            }
-        `}
-        render={data => (
+class CustomHeadingThree extends Component {
+    constructor(props) {
+        super(props);
+
+        this.headingRef = createRef();
+    }
+
+    componentDidMount() {
+        //This is required as the MDX container rerenders on locations
+        //hash change as well which messed up the focus event of the container.
+        if (window.location.hash === `#${this.props.id}`) {
+            this.headingRef.current.focus();
+        }
+    }
+
+    render() {
+        const { id, children, ...props } = this.props;
+        return (
+            <h3 id={id} ref={this.headingRef} tabIndex="-1" {...props}>
+                {children}
+            </h3>
+        );
+    }
+}
+
+class LayoutView extends Component {
+    constructor(props) {
+        super(props);
+
+        this.mainRef = createRef();
+    }
+
+    componentDidMount() {
+        //This is required as the MDX container rerenders on locations
+        //hash change as well which messed up the focus event of the container.
+        if (window.location.hash === '#content') {
+            this.mainRef.current.focus();
+        }
+    }
+
+    render() {
+        const { data, children } = this.props;
+        return (
             <>
                 <Helmet
                     title={data.site.siteMetadata.title}
@@ -39,6 +70,7 @@ const Layout = ({ children }) => (
                 >
                     <html lang="en" />
                 </Helmet>
+
                 <Header siteTitle={data.site.siteMetadata.title} />
                 <div className="main-panel">
                     <aside className="nav-panel">
@@ -58,7 +90,12 @@ const Layout = ({ children }) => (
                             </Disclosure>
                         </section>
                     </aside>
-                    <main id="main" className="viewport">
+                    <main
+                        id="content"
+                        className="viewport"
+                        tabIndex="-1"
+                        ref={this.mainRef}
+                    >
                         <MDXProvider
                             components={{
                                 wrapper: 'section',
@@ -86,9 +123,12 @@ const Layout = ({ children }) => (
                                             .replace(/ /g, '-')
                                             .toLowerCase();
                                         return (
-                                            <h3 id={idString} {...props}>
+                                            <CustomHeadingThree
+                                                id={idString}
+                                                {...props}
+                                            >
                                                 {children}
-                                            </h3>
+                                            </CustomHeadingThree>
                                         );
                                     } else {
                                         return <h3 {...props}>{children}</h3>;
@@ -119,6 +159,25 @@ const Layout = ({ children }) => (
                     </main>
                 </div>
             </>
+        );
+    }
+}
+
+const Layout = ({ children, location }) => (
+    <StaticQuery
+        query={graphql`
+            query SiteTitleQuery {
+                site {
+                    siteMetadata {
+                        title
+                    }
+                }
+            }
+        `}
+        render={data => (
+            <LayoutView data={data} location={location}>
+                {children}
+            </LayoutView>
         )}
     />
 );

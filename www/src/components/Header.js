@@ -4,6 +4,9 @@ import { Link } from 'gatsby';
 
 const Header = () => (
     <header className="app-header">
+        <a href="#content" className="skip-link">
+            Skip to content
+        </a>
         <Link to="/">
             <img src={logo} className="app-logo" alt="Logo of Tenon.io" />
         </Link>

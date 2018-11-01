@@ -40,6 +40,9 @@ form {
     padding: 20px;
     color: white;
     margin-bottom: 1rem;
+    position: relative;
+
+
 
     img {
         margin: 0.4em 0.4em 0 0.4em;
@@ -53,6 +56,10 @@ form {
             font-size: 2em;
         }
     }
+}
+
+main:focus, h3:focus {
+    outline: none;
 }
 
 .app-title {
@@ -97,6 +104,7 @@ form {
 }
 
 .skip-link:focus {
+    left: 0;
     height: auto;
     width: auto;
     overflow: auto;
