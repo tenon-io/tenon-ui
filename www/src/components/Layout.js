@@ -63,6 +63,11 @@ const Layout = ({ children }) => (
                             components={{
                                 wrapper: 'section',
                                 strong: 'b',
+                                inlineCode: ({ children }) => (
+                                    <span className="text-highlight">
+                                        {children}
+                                    </span>
+                                ),
                                 code: ({ children, className }) => (
                                     <ExampleBlock
                                         language={
