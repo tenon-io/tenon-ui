@@ -702,7 +702,7 @@
     "@babel/plugin-transform-react-jsx-self" "^7.0.0"
     "@babel/plugin-transform-react-jsx-source" "^7.0.0"
 
-"@babel/runtime@^7.0.0":
+"@babel/runtime@7.1.2", "@babel/runtime@^7.0.0":
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.1.2.tgz#81c89935f4647706fc54541145e6b4ecfef4b8e3"
   integrity sha512-Y3SCjmhSupzFB6wcv1KmmFucH6gDVnI30WjOcicV10ju0cZjak3Jcs67YLIXBrmZYw1xCrVeJPbycFwrqNyxpg==
@@ -823,13 +823,14 @@
     react-lifecycles-compat "^3.0.4"
     warning "^3.0.0"
 
-"@tenon-io/tenon-codeblock@^1.0.0-alpha.2":
-  version "1.0.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/@tenon-io/tenon-codeblock/-/tenon-codeblock-1.0.0-alpha.2.tgz#347ee944ad7b0f6f4c3821b5331f030fc56efeb9"
-  integrity sha512-9EIyyHUifEVQB734qL8NU9k2T3O4n6ph14vsHJ6sE/Mkz5HDxnLwEubIp5hT4gMiHO4HD8GI0MtRMRvdrBcyxg==
+"@tenon-io/tenon-codeblock@^1.0.0-RC.2":
+  version "1.0.0-RC.2"
+  resolved "https://registry.yarnpkg.com/@tenon-io/tenon-codeblock/-/tenon-codeblock-1.0.0-RC.2.tgz#9f3202d5e349e90cee8c889154dec379069d45f4"
+  integrity sha512-9vyHHUozQyY86Vumrpev7Watu7w0TETpk2ty9Z0wuarftfhx+djB1TlfBuB1mujXml0oVavtESqJlS1ONEGHog==
   dependencies:
+    "@babel/runtime" "7.1.2"
     axios "0.18.0"
-    react-syntax-highlighter "8.0.1"
+    react-syntax-highlighter "9.0.1"
 
 "@types/configstore@^2.1.1":
   version "2.1.1"
@@ -8772,10 +8773,10 @@ react-side-effect@^1.1.0:
     exenv "^1.2.1"
     shallowequal "^1.0.1"
 
-react-syntax-highlighter@8.0.1:
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/react-syntax-highlighter/-/react-syntax-highlighter-8.0.1.tgz#88f7833e3a2d3c718799f2e7776266486c82c566"
-  integrity sha512-en/fS7a1eFvEVnAFZ60agglGgH9jRsNrgWpijeFCn4KE39PH7/RWt2wF2HaV47C+FlZW757agCtCgmpxT6MSzg==
+react-syntax-highlighter@9.0.1:
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/react-syntax-highlighter/-/react-syntax-highlighter-9.0.1.tgz#cad91692e1976f68290f24762ac3451b1fec3d26"
+  integrity sha512-rL5wJ0V23arSBahsRs0yhDxEFoA1dRjJ7hK6xKvIi6hd3fUXx950AhjYBQbR05CwYsAIQDWGMhH4Oh/v9XK67g==
   dependencies:
     babel-runtime "^6.18.0"
     highlight.js "~9.12.0"

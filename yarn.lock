@@ -18,6 +18,13 @@
     esutils "^2.0.2"
     js-tokens "^3.0.0"
 
+"@babel/runtime@7.1.2":
+  version "7.1.2"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.1.2.tgz#81c89935f4647706fc54541145e6b4ecfef4b8e3"
+  integrity sha512-Y3SCjmhSupzFB6wcv1KmmFucH6gDVnI30WjOcicV10ju0cZjak3Jcs67YLIXBrmZYw1xCrVeJPbycFwrqNyxpg==
+  dependencies:
+    regenerator-runtime "^0.12.0"
+
 "@insin/npm-install-webpack-plugin@5.0.0":
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/@insin/npm-install-webpack-plugin/-/npm-install-webpack-plugin-5.0.0.tgz#514a027a259cb51392d845086033d534eac9083f"
@@ -39,13 +46,14 @@
     react-lifecycles-compat "^3.0.4"
     warning "^3.0.0"
 
-"@tenon-io/tenon-codeblock@1.0.0-alpha.2":
-  version "1.0.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/@tenon-io/tenon-codeblock/-/tenon-codeblock-1.0.0-alpha.2.tgz#347ee944ad7b0f6f4c3821b5331f030fc56efeb9"
-  integrity sha512-9EIyyHUifEVQB734qL8NU9k2T3O4n6ph14vsHJ6sE/Mkz5HDxnLwEubIp5hT4gMiHO4HD8GI0MtRMRvdrBcyxg==
+"@tenon-io/tenon-codeblock@1.0.0-RC.2":
+  version "1.0.0-RC.2"
+  resolved "https://registry.yarnpkg.com/@tenon-io/tenon-codeblock/-/tenon-codeblock-1.0.0-RC.2.tgz#9f3202d5e349e90cee8c889154dec379069d45f4"
+  integrity sha512-9vyHHUozQyY86Vumrpev7Watu7w0TETpk2ty9Z0wuarftfhx+djB1TlfBuB1mujXml0oVavtESqJlS1ONEGHog==
   dependencies:
+    "@babel/runtime" "7.1.2"
     axios "0.18.0"
-    react-syntax-highlighter "8.0.1"
+    react-syntax-highlighter "9.0.1"
 
 JSONStream@^1.0.3:
   version "1.3.3"
@@ -8839,10 +8847,10 @@ react-proxy@^1.1.7:
     lodash "^4.6.1"
     react-deep-force-update "^1.0.0"
 
-react-syntax-highlighter@8.0.1:
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/react-syntax-highlighter/-/react-syntax-highlighter-8.0.1.tgz#88f7833e3a2d3c718799f2e7776266486c82c566"
-  integrity sha512-en/fS7a1eFvEVnAFZ60agglGgH9jRsNrgWpijeFCn4KE39PH7/RWt2wF2HaV47C+FlZW757agCtCgmpxT6MSzg==
+react-syntax-highlighter@9.0.1:
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/react-syntax-highlighter/-/react-syntax-highlighter-9.0.1.tgz#cad91692e1976f68290f24762ac3451b1fec3d26"
+  integrity sha512-rL5wJ0V23arSBahsRs0yhDxEFoA1dRjJ7hK6xKvIi6hd3fUXx950AhjYBQbR05CwYsAIQDWGMhH4Oh/v9XK67g==
   dependencies:
     babel-runtime "^6.18.0"
     highlight.js "~9.12.0"
@@ -9074,6 +9082,11 @@ regenerator-runtime@^0.11.0:
   version "0.11.1"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
   integrity sha512-MguG95oij0fC3QV3URf4V2SDYGJhJnJGqvIIgdECeODCT98wSWDAJ94SSuVpYQUoTcGUIL6L4yNB7j1DFFHSBg==
+
+regenerator-runtime@^0.12.0:
+  version "0.12.1"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.12.1.tgz#fa1a71544764c036f8c49b13a08b2594c9f8a0de"
+  integrity sha512-odxIc1/vDlo4iZcfXqRYFj0vpXFNoGdKMAUieAlFYO6m/nl5e9KR/beGf41z4a1FI+aQgtjhuaSlDxQ0hmkrHg==
 
 regenerator-transform@^0.10.0:
   version "0.10.1"

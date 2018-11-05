@@ -54,7 +54,7 @@
     },
     "devDependencies": {
         "@reach/router": "1.1.1",
-        "@tenon-io/tenon-codeblock": "1.0.0-alpha.2",
+        "@tenon-io/tenon-codeblock": "1.0.0-RC.2",
         "babel-core": "6.26.0",
         "babel-eslint": "7.2.3",
         "babel-jest": "20.0.3",

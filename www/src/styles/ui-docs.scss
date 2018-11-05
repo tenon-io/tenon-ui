@@ -24,6 +24,12 @@ h6 {
     font-weight: 600;
 }
 
+
+pre.code-block {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
 form {
     margin-bottom: 1em;
 }
@@ -42,8 +48,6 @@ form {
     margin-bottom: 1rem;
     position: relative;
 
-
-
     img {
         margin: 0.4em 0.4em 0 0.4em;
     }
@@ -58,7 +62,8 @@ form {
     }
 }
 
-main:focus, h3:focus {
+main:focus,
+h3:focus {
     outline: none;
 }
 
