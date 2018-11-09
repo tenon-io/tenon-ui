@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://ui.tenon.ip/">
-    <img alt="Tenon UI" src="./logo.png" width="400">
+    <img alt="Tenon UI" src="./logo.png" style="width: 11em;">
   </a>
 </p>
 
