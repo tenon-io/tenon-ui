@@ -7,7 +7,7 @@
 # Tenon-UI
 
 <p>
-  <a href="https://www.npmjs.com/package/@tenon-ui/tenon-ui"><img src="https://img.shields.io/npm/v/@tenon-io/tenon-ui.svg?style=flat-square"></a>
+  <a href="https://www.npmjs.com/package/@tenon-io/tenon-ui"><img src="https://img.shields.io/npm/v/@tenon-io/tenon-ui.svg?style=flat-square"></a>
   <a href="https://www.npmjs.com/package/@tenon-io/tenon-ui"><img src="https://img.shields.io/npm/dm/@tenon-io/tenon-ui.svg?style=flat-square"></a>
 </p>
 
