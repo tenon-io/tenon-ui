@@ -11,6 +11,7 @@ const Header = () => (
             <img src={logo} className="app-logo" alt="Logo of Tenon.io" />
         </Link>
         <h1 className="app-title">Tenon-UI Documentation</h1>
+        <a href="https://github.com/tenon-io/tenon-ui">Code on GitHub</a>
     </header>
 );
 
