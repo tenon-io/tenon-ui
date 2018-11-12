@@ -61,7 +61,7 @@ form {
         }
     }
 
-    a {
+    a:not(.skip-link) {
         color: white;
     }
 }
@@ -185,6 +185,8 @@ h3:focus {
 .mobile-menu {
     margin-bottom: 0;
     margin-top: 0;
+    background-color: #fff;
+    z-index: 1;
     @media screen and (min-width: 50em) {
         display: none;
     }
