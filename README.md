@@ -11,7 +11,7 @@
   <a href="https://www.npmjs.com/package/@tenon-io/tenon-ui"><img src="https://img.shields.io/npm/dm/@tenon-io/tenon-ui.svg?style=flat-square"></a>
 </p>
 
-This is the home of [https://www.tenon.io](Tenon.io)'s the accessible React component library.
+This is the home of [Tenon.io](https://www.tenon.io)'s the accessible React component library.
 
 ## Documentation
 
