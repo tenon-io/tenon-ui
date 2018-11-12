@@ -14,7 +14,7 @@
     "bugs": {
         "url": "https://tenon1.atlassian.net/secure/RapidBoard.jspa"
     },
-    "license": "UNLICENSED",
+    "license": "MIT",
     "main": "lib/index.js",
     "module": "es/index.js",
     "files": [
