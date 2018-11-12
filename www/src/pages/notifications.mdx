@@ -1,0 +1,93 @@
+import Helmet from "react-helmet";
+
+import Layout from '../components/Layout';
+import NotificationExample from '../components/examples/NotificationExample';
+
+export default ({children}) => 
+<Layout>
+    <Helmet>
+        <title>Tenon-ui | Notifications</title>
+    </Helmet>{children}
+</Layout>
+
+## Notifications
+
+In order for application notifications to benefit all users they need to support screen readers
+so that users know when something has happened in your application.
+
+The `Tenon-UI Notification` component is a lightweight wrapper that manages this for you while you
+still have complete freedom to develop the notification view that you want.
+
+```
+import React, { Component, Fragment } from 'react';
+import { Notification } from '@tenon-io/tenon-ui';
+
+class NotificationExample extends Component {
+    state = {
+        showInfoMessage: false
+    };
+
+    onClickHandler = () => {
+        this.setState({ showInfoMessage: true });
+    };
+
+    onDismissHandler = () => {
+        this.setState({ showInfoMessage: false });
+    };
+
+    render() {
+        return (
+            <Fragment>
+                <Notification isActive={this.state.showInfoMessage} type="info">
+                    <span>This is an information message</span>
+                    <button
+                        type="button"
+                        className="dismiss-button"
+                        onClick={this.onDismissHandler}
+                    >
+                        Dismiss
+                    </button>
+                </Notification>
+                <button onClick={this.onClickHandler}>
+                    Show information message
+                </button>
+            </Fragment>
+        );
+    }
+}
+
+export default NotificationExample;
+```
+
+The component manages when the content is shown and thereby will notify screen reader users
+that something has happened.
+
+Working example of an information notification:
+
+<NotificationExample />
+
+Note that the `Notification` component is really just a helper container that helps you
+ensure that screen readers can also work well with your notifications. Most of the implementation
+is up to you.
+
+### Notification component props
+
+#### isActive
+This prop is required.
+
+A boolean prop indicating if the content of the `Notification` component should be shown or
+hidden. 
+
+#### type
+This prop is required.
+
+A string prop indicating what type of notification you want to render:
+
+1. **error**
+2. **warning**
+3. **success**
+4. **info**
+
+Changing this setting will ensure that screen readers read the message at the correct priority
+setting as well as decorates the container with a class equal to the type so that you can
+hit it with styling.

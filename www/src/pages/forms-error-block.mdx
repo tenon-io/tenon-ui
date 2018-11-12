@@ -1,0 +1,260 @@
+import Helmet from "react-helmet";
+
+import Layout from '../components/Layout';
+
+export default ({children}) => 
+<Layout>
+    <Helmet>
+        <title>Tenon-ui | Put it all together with the ErrorBlock</title>
+    </Helmet>{children}
+</Layout>
+
+## Put it all together with the ErrorBlock
+
+While we now know how to put forms together with the `Tenon-UI` components, we still need to 
+put the cherry on the cake for validating complex forms.
+
+### The ErrorBlock component
+
+The `ErrorBlock` component can consume the `formControls` object that is injected into the
+render function by the `Form` component:
+
+```
+<ErrorBlock
+    headingText="The form contains errors"
+    formControls={formControls}
+/>
+```
+
+It also accepts a `headingText` prop that will be shown as the heading of the block.
+
+This will render a block of with a list of errors. Each error will be rendered as a functional
+link with a hash `href` to the form element that is in error. All of this is managed and handled 
+for you by `Tenon-UI`.
+
+By default the internal heading is rendered as an `<h2>` unless it is used inside the 
+[Heading.LevelBoundary](/headings) component. You are also able to override this by using the
+`headingLevel` prop:
+
+```
+<ErrorBlock
+    headingText="The form contains errors"
+    formControls={formControls}
+    headingLevel="3"
+/>
+```
+
+In this case it would render an `<h3>`.
+
+Let's now put everything together to make a fully functional validated form.
+
+### A fully validated form example
+
+The following code will provide you with a fully accessible validator form example.
+
+If you want to see a working version please visit the [Tenon-UI full Form demo](/forms-full-demo).
+
+```
+import React, { Component, createRef, Fragment } from 'react';
+import { Form
+        Input
+        TextArea
+        Select
+        Checkbox
+        CheckboxGroup
+        RadioGroup
+        ErrorBlock
+        validator
+        isRequired
+        isLongerThan } from '@tenon-io/tenon-ui';
+
+class DemoForm extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            formData: {}
+        };
+
+        this.errorBlockRef = createRef();
+    }
+
+    onSubmitHandler = submitData => {
+        alert(`Data: ${JSON.stringify(submitData)}`);
+    };
+
+    onRawSubmitHandler = (formControls, validity) => {
+        if (!validity) {
+            setTimeout(() => {
+                this.errorBlockRef.current.focus();
+            },50);
+        }
+    };
+
+    render() {
+        return (
+            <Form
+                onSubmit={this.onSubmitHandler}
+                onRawSubmit={this.onRawSubmitHandler}
+            >
+                {({ formControls, validity, hasSubmitted }) => (
+                    <Fragment>
+                        {!validity && hasSubmitted ? (
+                            <ErrorBlock
+                                formControls={formControls}
+                                headingText="The form contains errors"
+                                ref={this.errorBlockRef}
+                            />
+                        ) : null}
+                        <Form.TextInputController
+                            name="petName"
+                            required="true"
+                            validators={[
+                                validator(
+                                    isRequired,
+                                    'A name is required for your pet'
+                                ),
+                                validator(
+                                    isLongerThan(5),
+                                    "The pet's name is too short"
+                                )
+                            ]}
+                            requiredText="( required )"
+                            contentHintText="The pet's name must be longer than 5 characters"
+                            labelText="Name of pet"
+                            component={Input}
+                        />
+                        <Form.TextInputController
+                            name="petType"
+                            required="true"
+                            validators={[
+                                validator(
+                                    isRequired,
+                                    'A type of pet is required'
+                                )
+                            ]}
+                            requiredText="( required )"
+                            labelText="Type of pet"
+                            component={Input}
+                        />
+                        <Form.TextareaController
+                            name="petDescription"
+                            rows="10"
+                            labelText="Type of pet"
+                            component={TextArea}
+                        />
+                        <Form.SelectController
+                            name="petWeight"
+                            required="true"
+                            validators={[
+                                validator(
+                                    isRequired,
+                                    'Please select a weight category'
+                                )
+                            ]}
+                            labelText="Pet's weight"
+                            requiredText="( required )"
+                            component={Select}
+                        >
+                            <option>No weight category selected</option>
+                            <option value="weightClass1">0-3kg</option>
+                            <option value="weightClass2">3-7kg</option>
+                            <option value="weightClass3">Really heavy!</option>
+                        </Form.SelectController>
+                        <Form.RadioGroupController
+                            name="radioSet"
+                            required="true"
+                            validators={[
+                                validator(isRequired, 'Please select an option')
+                            ]}
+                            legend="Please select an option"
+                            requiredText="( required )"
+                            options={{
+                                option1: 'Option 1',
+                                option2: 'Option 2',
+                                option3: 'Option 3'
+                            }}
+                            component={RadioGroup}
+                        />
+                        <Form.CheckboxGroupController
+                            name="petEat"
+                            required="true"
+                            validators={[
+                                validator(
+                                    value => value.length > 0,
+                                    'You need to select an eating time'
+                                )
+                            ]}
+                            legend="When does your pet eat"
+                            contentHintText="Please select at least one"
+                            options={{
+                                morning: 'Morning',
+                                noon: 'Noon',
+                                night: 'Night'
+                            }}
+                            requiredText="( required )"
+                            component={CheckboxGroup}
+                        />
+                        <Form.CheckboxController
+                            name="confirmInfo"
+                            required="true"
+                            validators={[
+                                validator(
+                                    value => value === true,
+                                    "You must confirm your pet's information"
+                                )
+                            ]}
+                            requiredText="( required )"
+                            labelText="I confirm that my pet's information is true"
+                            component={Checkbox}
+                        />
+                        <button type="submit">'Save your pet'</button>
+                    </Fragment>
+                )}
+            </Form>
+        );
+    }
+}
+
+export default DemoForm;
+```
+
+You may have noticed one more thing you will need to do by hand. And that is set focus to the 
+`ErrorBlock` when the user activates the submit button and there are validation errors.
+
+First we need to create a [React Ref](https://reactjs.org/docs/refs-and-the-dom.html).
+
+```
+this.errorBlockRef = createRef();
+``` 
+
+Then we attach it to the `ErrorBlock` component:
+
+```
+<ErrorBlock
+      formControls={formControls}
+      headingText="The form contains errors"
+      ref={this.errorBlockRef}
+  />
+```
+
+We can then use the `onRawSubmit` handler of the `Form` to set focus on error as this handler is 
+always called, not just when the form input is valid. 
+
+```
+onRawSubmitHandler = (formControls, validity) => {
+    if (!validity) {
+        setTimeout(() => {
+            this.errorBlockRef.current.focus();
+        },50);
+    }
+};
+```
+
+The `validity` flag is the second parameter and we can then use that to determine whether or not
+to set focus.
+
+Unfortunately we need to use a `setTimeout`, as we need to be sure the `ErrorBlock` has been 
+applied to the `DOM` before setting focus.
+
+This is all the extra work you need to do as the `Form` component cannot handle this for you.

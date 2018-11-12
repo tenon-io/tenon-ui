@@ -12,10 +12,7 @@ describe('Form.CheckboxGroupController', () => {
         jest.clearAllMocks();
         uuidv4
             .mockReturnValueOnce('inputLabelId')
-            .mockReturnValueOnce('contentHintId')
-            .mockReturnValueOnce('errorId')
-            .mockReturnValueOnce('legendId')
-            .mockReturnValueOnce('containerId');
+            .mockReturnValueOnce('contentHintId');
     });
 
     afterEach(cleanup);
@@ -52,6 +49,63 @@ describe('Form.CheckboxGroupController', () => {
                             </fieldset>
                         )}
                     </Form.CheckboxGroupController>
+                )}
+            </Form>
+        );
+
+        const inputOne = getByLabelText('One');
+        expect(inputOne).toHaveAttribute('id', 'inputLabelId');
+        expect(inputOne).toHaveAttribute('name', 'one');
+        expect(inputOne).toHaveAttribute('type', 'checkbox');
+        expect(inputOne.attributes.length).toBe(3);
+
+        const inputTwo = getByLabelText('Two');
+        expect(inputTwo).toHaveAttribute('id', 'inputLabelId-two');
+        expect(inputTwo).toHaveAttribute('name', 'two');
+        expect(inputTwo).toHaveAttribute('type', 'checkbox');
+        expect(inputTwo.attributes.length).toBe(3);
+    });
+
+    it('should allow view injection via the component prop', () => {
+        const CheckboxGroup = ({
+            getCheckboxProps,
+            getLabelProps,
+            legendText
+        }) => (
+            <fieldset>
+                <legend>{legendText}</legend>
+                <div>
+                    <input
+                        {...getCheckboxProps({
+                            name: 'one',
+                            focusElement: true
+                        })}
+                    />
+                    <label {...getLabelProps()}>One</label>
+                    <input
+                        {...getCheckboxProps({
+                            name: 'two'
+                        })}
+                    />
+                    <label
+                        {...getLabelProps({
+                            autoIdPostfix: 'two'
+                        })}
+                    >
+                        Two
+                    </label>
+                </div>
+            </fieldset>
+        );
+
+        const { getByLabelText } = render(
+            <Form onSubmit={jest.fn()}>
+                {() => (
+                    <Form.CheckboxGroupController
+                        name="textCheck"
+                        legendText="Test check"
+                        component={CheckboxGroup}
+                    />
                 )}
             </Form>
         );

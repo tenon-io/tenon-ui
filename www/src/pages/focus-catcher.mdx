@@ -1,0 +1,75 @@
+import Helmet from "react-helmet";
+
+import Layout from '../components/Layout';
+import FocusCatcher from '../../../src/modules/utils/components/FocusCatcher';
+
+export default ({children}) => 
+<Layout>
+    <Helmet>
+        <title>Tenon-ui | Focus catcher</title>
+    </Helmet>{children}
+</Layout>
+
+## Focus catcher
+
+Usually the `React event system` fully respects and follows the way events work in the actual
+`browser DOM`.
+
+But with `focus` and `blur` this is different. In React, both of these events are bubbled up the
+tree until they are handled. This is a conscious decision, and even makes it possible to 
+[sanely implement alternatives for Focus Outside](https://reactjs.org/docs/accessibility.html#mouse-and-pointer-events).
+
+In accessible applications you want to keep the CSS focus outline intact for all elements that can
+receive focus. But here this bubbling can cause some unexpected side effects. 
+
+The input below sits in a focusable container: a `div` that has been given `tabIndex="-1"` because
+we may want to set focus to it later via code. Click on the label below to see the side effect:
+
+<div className="form-group" tabIndex="-1">
+    <div className="field-wrapper">
+        <label for="focusFailId">Click for focus side effect</label>
+        <input type="text" id="focusFailId" />
+    </div>
+</div>
+
+These kind of side effects could tempt you to remove the focus outline from elements that should
+actually have this.
+
+This is where the `FocusCatcher` component can help you.
+
+### Usage
+
+Simply wrap clickable content in the `FocusCatcher` component and it will act as a boundary
+that catches and handles the bubbled `focus event`:
+
+```
+import { FocusCatcher } from '@tenon-io/tenon-ui';
+
+//...
+
+<section tabIndex="-1">
+
+//...
+
+    <FocusCatcher>
+        <label htmlFor="myId">Click me</label>
+        <input type="text" id="myId" />
+    </FocusCatcher>
+
+//...
+
+</section>
+```
+
+Here is the same example as above, but with the `FocusCatcher` component introduced:
+
+<div className="form-group" tabIndex="-1">
+    <FocusCatcher>
+        <div className="field-wrapper">
+            <label htmlFor="focusTrapId">Click for normal focus effect</label>
+            <input type="text" id="focusTrapId" />
+        </div>
+    </FocusCatcher>
+</div>
+
+

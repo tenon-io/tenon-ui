@@ -22,10 +22,6 @@ import FeedbackBlock from './FeedbackBlock';
  *              of the group. The autoIdPostfix config option should
  *              be set with the value of the radiobutton input or the id
  *              linkage will fail.
- * @prop required {function} getFieldsetProps - Prop getter function
- *              from the smart radiogroup controller for each <input>
- *              of the group. It is required to se the value in this
- *              function or the component will fail.
  * @prop required {function} getRadioFieldsetProps - Prop getter function
  *              from the smart radiogroup controller for the fiedset
  *              element.
@@ -48,7 +44,6 @@ const RadioGroup = forwardRef(
             options,
             getRadioButtonProps,
             getLabelProps,
-            getFieldsetProps,
             contentHintText,
             errorText,
             showError,

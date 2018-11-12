@@ -1,0 +1,637 @@
+import Helmet from "react-helmet";
+
+import Layout from '../components/Layout';
+import PageNav from '../components/PageNav';
+import Form from '../../../src/modules/forms/tenonForm/Form';
+import Input from '../../../src/modules/forms/tenonForm/Input';
+import TextArea from '../../../src/modules/forms/tenonForm/TextArea';
+import Select from '../../../src/modules/forms/tenonForm/Select';
+import Checkbox from '../../../src/modules/forms/tenonForm/Checkbox';
+import CheckboxGroup from '../../../src/modules/forms/tenonForm/CheckboxGroup';
+import RadioGroup from '../../../src/modules/forms/tenonForm/RadioGroup';
+import {validator} from '../../../src/modules/utils/helpers/validationHelpers';
+import {isRequired, isLongerThan} from '../../../src/modules/utils/data/validation';
+
+export default ({children}) => 
+<Layout>
+    <Helmet>
+        <title>Tenon-ui | The view components</title>
+    </Helmet>{children}
+</Layout>
+
+## The Tenon-UI view components
+
+<PageNav targets={
+    ['Usage',
+    'Common component props', 
+    'The Input component', 
+    'The TextArea component',
+    'The Select component',
+    'The Checkbox component',
+    'The CheckboxGroup component',
+    'The RadioGroup component']
+    } />
+
+### Usage 
+
+All view components can be used in one of two ways.
+
+#### The component prop
+Here is an example of using the `Input` component by using the `component` prop of the controller.
+
+```
+<Form.TextInputController
+    name="petName"
+    labelText="Name of pet"
+    component={Input}
+/>
+```
+
+Note that the `labelText` prop for the `view component` is added to the `controller component` which
+will then pass these props through to the `view component`. This **ONLY** happens when 
+you use the `component` prop.
+
+This method is recommended when using a view component, even if you have created it yourself,
+and will be used further on this page. 
+
+#### The children render prop
+You can still use the view components in the `children render prop` of the controllers.
+
+Here is an example of using the `Input` component to show how all view components can be 
+used inside the `children render prop` of each controller:
+
+```
+<Form.TextInputController
+    name="petName"
+    labelText="Name of pet"
+    component={Input}
+>
+{props => (
+    <Input
+        {...props}
+        labelText="Pet type"
+    />
+)}
+</Form.TextInputController>
+```
+
+It is **VERY** important to spread the props object from the render function of the 
+`controller` onto the `view component`. This passes the required props into 
+our view components. The same props you would otherwise use when creating your own views.
+
+### Common component props
+
+#### labelText
+Required when present. Not used for `RadioGroup` and `CheckboxGroup`.
+
+Every form control needs a text label. With this prop you provide the text that will be rendered inside
+the `<label>` element.
+
+#### labelProps
+Not used for `RadioGroup` and `CheckboxGroup`.
+
+This is an optional object that can be used to override or amend the props that passed to the 
+`<label>` element.
+
+For example, if you want to add a specific `className` to the `<label>` of the `<textarea>` element 
+you can do this:
+
+```
+<Form.TextareaController
+    name="petDescription"
+    labelText="Describe your pet"
+    labelProps={{
+        className: 'special-label-class'            
+    }}
+    component={TextArea}
+/>
+```
+
+#### contentHintText
+Every form control can also have `content hint text`. This is text that describes what should be
+entered into the control. For example, an input that requires at least five characters.
+
+**Note**: The `<input> placeholder` attribute is often used for this, but this is **wrong**. The placeholder
+should **never** be used for this function as it causes difficulty for many users out there.
+
+Specify a content hint text as follows:
+
+```
+<Form.TextInputController
+    name="petName"
+    labelText="Name of pet"
+    contentHintText="The pet's name should be longer than three characters" 
+    component={Input}
+/>
+```
+
+Content hints are rendered as follows:
+
+<Form
+    onSubmit={submitData => {
+        alert(JSON.stringify(submitData));
+    }}
+>
+    {() => (
+    <>
+        <Form.TextInputController
+            name="petName"
+            validators={[
+                validator(
+                    isLongerThan(3), 
+                    'The name is too short'
+                )
+            ]}
+            labelText="Pet name"
+            contentHintText="The name should be longer than 3 characters"
+            component={Input}                    
+        />
+        <button type="submit">Submit</button>
+     </>   
+    )}
+</Form>
+
+Should you open the browser's HTML inspector, you will find that the content hint container
+is linked to the `<input>` element with the `aria-describedby` property. This is very important
+for screen readers.
+
+#### requiredText
+With this prop you can set the text that displays next to the `<label>` text for required fields.
+
+If you do not set this, a `*` will be shown for required fields as this is a standard pattern
+on the web. If you use this, please put a legend somewhere on your form that indicates that a
+`*` denotes a required field. 
+
+You don't have to do any more than that as `Tenon-UI` already marks required fields in a way
+that screen readers can interpret. 
+
+#### Tenon-UI specific props
+
+Should you look at the code for the view components, you will see that it also expects a number 
+of other props. These are the props that is provided by the `smart controller components` as
+seen in the examples above. 
+
+Please do not provide these props yourself as this will most probably break the functionality of
+the component.
+
+#### Other props
+Not relevant for `RadioGroup` and `CheckboxGroup`.
+
+Any other props given to these components will be passed onto the relevant functional HTML element.
+
+#### Refs
+In some case you may want to create a [React ref](https://reactjs.org/docs/refs-and-the-dom.html)
+to the form controls.
+
+In accessible applications, this is mostly done in cases where you want to set focus to a specific 
+element. 
+
+Each view component [forwards the ref](https://reactjs.org/docs/forwarding-refs.html) to the the correct element so that you can easily set focus
+when required:
+
+```
+//...
+this.inputRef = React.createRef();
+//...
+{props => (
+    <Input
+        {...props}
+        labelText="Pet's age"
+        ref={this.inputRef}
+    />
+)}
+```
+
+**Note**: If you want to create a `ref` to any of the view components, you **HAVE** to use
+the `children render prop` version. Otherwise you will get a reference to the instance of 
+the controller component class!
+
+### The Input component
+
+As already illustrated above, the input component is used as:
+```
+import { Form, Input, validator } from '@tenon-io/tenon-ui';
+
+//...
+
+<Form.TextInputController
+    name="petType"
+    required="true"
+    validators={[
+        validator(
+            isRequired,
+            'A type of pet is required'
+        )
+    ]}
+     requiredText="( required )"
+     labelText="Pet type"
+     componen={Input}           
+/>
+
+//...
+```
+
+Using this inside the `Form` component gives:
+
+<Form
+    onSubmit={submitData => {
+        alert(JSON.stringify(submitData));
+    }}
+>
+    {() => (
+    <>
+        <Form.TextInputController
+            name="petType"
+            required="true"
+            validators={[
+                validator(
+                    isRequired,
+                    'A type of pet is required'
+                )
+            ]}
+            requiredText="( required )"
+            labelText="Pet type"
+            component={Input}
+        />
+        <button type="submit">Submit</button>
+     </>   
+    )}
+</Form>
+
+#### Overriding the input type
+By default an `<input type="text">` will be rendered. But this can also be overridden.
+
+The `TextInputController` will also play nice with other types.
+
+Override it like this:
+```
+<Form.TextInputController
+    name="petAge"
+    labelText="Age of pet"
+    type="number"
+    contentHintText="The pet's name should be longer than three characters" 
+/>
+```
+
+### The TextArea component
+
+```
+import { Form, TextArea, validator } from '@tenon-io/tenon-ui';
+
+//...
+
+<Form.TextareaController
+    name="petDescription"
+    required="true"
+    validators={[
+        validator(
+            isRequired,
+            'A description of your pet is required'
+        )
+    ]}
+    requiredText="( required )"
+    labelText="Pet description"
+    rows="10"
+    component={TextArea}
+/>
+
+//...
+```
+
+Using this inside the `Form` component gives:
+
+<Form
+    onSubmit={submitData => {
+        alert(JSON.stringify(submitData));
+    }}
+>
+    {() => (
+    <>
+        <Form.TextareaController
+            name="petDescription"
+            required="true"
+            validators={[
+                validator(isRequired, 'A description of your pet is required')
+            ]}
+            requiredText="( required )"
+            labelText="Pet description"
+            rows="10"
+            component={TextArea}
+        />
+        <button type="submit">Submit</button>
+     </>   
+    )}
+</Form>
+
+### The Select component
+
+The `Select` component needs `options` and those are provided as `children` of the component
+in the same way they would be coded in normal HTML.
+
+As we suggest passing it into the `component` prop of the `SelectController`, you can now 
+code the `<option>` elements as children of the controller as they are passed as `children` to
+the component injected into the `component` prop.
+
+```
+import { Form, Select, validator } from '@tenon-io/tenon-ui';
+
+//...
+
+<Form.SelectController
+    name="petNumber"
+    required="true"
+    validators={[
+        validator(isRequired, 'Please select a numer of pets')
+    ]}
+    requiredText="( required )"
+    labelText="How many pets do you have?"
+    component={Select}
+    >
+        <option>
+            Select a number
+        </option>
+        <option value="1">
+            One
+        </option>        
+        <option value="2">
+            Two
+        </option>
+        <option value="3">
+            Three
+        </option>
+</Form.SelectController>
+
+//...
+```
+
+Using this inside the `Form` component gives:
+
+<Form
+    onSubmit={submitData => {
+        alert(JSON.stringify(submitData));
+    }}
+>
+    {() => (
+    <>
+        <Form.SelectController
+            name="petNumber"
+            required="true"
+            validators={[
+                validator(isRequired, 'Please select a numer of pets')
+            ]}
+            requiredText="( required )"
+            labelText="How many pets do you have?"
+            component={Select}
+        >
+        <option>
+            Select a number
+        </option>
+        <option value="1">
+            One
+        </option>        
+        <option value="2">
+            Two
+        </option>
+        <option value="3">
+            Three
+        </option>
+        </Form.SelectController>
+        <button type="submit">Submit</button>
+     </>   
+    )}
+</Form>
+
+### The Checkbox component
+
+The `Checkbox` component should be used to render single checkboxes. Please do **NOT** use this
+to create groups of checkboxes related to the same choice, rather use the `CheckboxGroup`.
+
+Also note here how easy it is to create ad-hoc validations with `Tenon-UI`.
+
+```
+import { Form, Checkbox, validator } from '@tenon-io/tenon-ui';
+
+//...
+
+<Form.CheckboxContoller
+    name="acceptTerm"
+    required="true"
+    validators={[
+        validator(
+            value => value === true, 
+            'Please accept the terms and conditions'
+        )
+    ]}
+    requiredText="( required )"
+    labelText="Do you accept the terms and conditions?"
+    component={Checkbox}
+/>
+
+//...
+```
+
+Using this inside the `Form` component gives:
+
+<Form
+    onSubmit={submitData => {
+        alert(JSON.stringify(submitData));
+    }}
+>
+    {() => (
+    <>
+        <Form.CheckboxController
+            name="acceptTerm"
+            required="true"
+            validators={[
+                validator(value => value === true, 'Please accept the terms and conditions')
+            ]}
+            requiredText="( required )"
+            labelText="Do you accept the terms and conditions?"
+            component={Checkbox}
+        />
+        <button type="submit">Submit</button>
+     </>   
+    )}
+</Form>
+
+### The CheckboxGroup component
+
+Use this component if you want to render a group of related checkboxes.
+
+Aside from the standard props for `Tenon-UI` view components, this component also accepts the following.
+
+#### legend
+This prop is required.
+
+Use this to set the `<legend>` for the group of checkboxes. This acts as a grouping label.
+
+#### options
+This prop is required.
+
+Use this to provide an options object to the component. This will be used to automatically render 
+a group of checkboxes based on this object. The object is an indexer object:
+
+```
+{
+    morning: 'In the morning',
+    noon: 'In the noon',
+    night: 'In the night'
+}
+```
+
+When used, the property names will become the values of the checkboxes while the property
+values will become the labels of the checkboxes.
+
+#### Usage
+
+```
+import { Form, CheckboxGroup, validator } from '@tenon-io/tenon-ui';
+
+//...
+
+<Form.CheckboxGroupController
+    name="eatingTimes"
+    required="true"
+    validators={[
+        validator(
+            value => value.length > 0, 
+            'Please select at least one eating time.'
+        )
+    ]}
+    options ={{
+        morning: 'In the morning',
+        noon: 'In the noon',
+        night: 'In the night'
+    }}
+    requiredText="( required )"
+    labelText="When does your pet eat?"
+    component={CheckboxGroup}
+/>
+
+//...
+```
+
+Using this inside the `Form` component gives:
+ 
+<Form
+    onSubmit={submitData => {
+        alert(JSON.stringify(submitData));
+    }}
+>
+    {() => (
+    <>
+        <Form.CheckboxGroupController
+            name="eatingTimes"
+            required="true"
+            validators={[
+                validator(
+                    value => value.length > 0, 
+                    'Please select at least one eating time.'
+                )
+            ]}
+            options ={{
+                morning: 'In the morning',
+                noon: 'At noon',
+                night: 'At night'
+            }}
+            requiredText="( required )"
+            legend="When does your pet eat?"
+            component={CheckboxGroup}
+        />
+        <button type="submit">Submit</button>
+     </>   
+    )}
+</Form>
+
+If you try this example, you will notice that the `CheckboxGroupController` passes
+an array of values to the `Form` component. In this way the `CheckboxGroupController` differ
+from all other controllers in `Tenon-UI`.
+
+### The RadioGroup component
+
+Use this component if you want to render a group of radio buttons. 
+
+Aside from the standard props for `Tenon-UI` view components, this component also accepts the following.
+
+#### legend
+This prop is required.
+
+Use this to set the `<legend>` for the group of radio buttons. This acts as a grouping label.
+
+#### options
+This prop is required.
+
+Use this to provide an options object to the component. This will be used to automatically render 
+a group of radio buttons based on this object. The object is an indexer object:
+
+```
+{
+    black: 'Black',
+    white: 'White',
+    brown: 'Brown'
+}
+```
+
+When used, the property names will become the values of the radio buttons while the property
+values will become the labels of the radio buttons.
+
+#### Usage
+
+```
+import { Form, RadioGroup, validator } from '@tenon-io/tenon-ui';
+
+//...
+
+<Form.RadioGroupController
+    name="petColour"
+    required="true"
+    validators={[
+        validator(
+            isRequired, 
+            'Please select a colour.'
+        )
+    ]}
+    options ={{
+         black: 'Black',
+         white: 'White',
+         brown: 'Brown'
+    }}
+    requiredText="( required )"
+    legend="What colour is your pet?"
+    component={RadioGroup}
+/>
+
+//...
+```
+
+Using this inside the `Form` component gives:
+ 
+<Form
+    onSubmit={submitData => {
+        alert(JSON.stringify(submitData));
+    }}
+>
+    {() => (
+    <>
+        <Form.RadioGroupController
+            name="petColour"
+            required="true"
+            validators={[
+                validator(
+                    isRequired, 
+                    'Please select a colour.'
+                )
+            ]}
+            options ={{
+                 black: 'Black',
+                 white: 'White',
+                 brown: 'Brown'
+            }}
+            requiredText="( required )"
+            legend="What colour is your pet?"
+            component={RadioGroup}
+        />
+        <button type="submit">Submit</button>
+     </>   
+    )}
+</Form>

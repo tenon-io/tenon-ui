@@ -106,22 +106,17 @@ class FormsGuide extends Component {
                                                     )
                                                 )
                                             ]}
-                                        >
-                                            {props => (
-                                                <Input
-                                                    {...props}
-                                                    requiredText={t(
-                                                        'forms.demo.requiredText'
-                                                    )}
-                                                    contentHintText={t(
-                                                        'forms.demo.petName.contentHint'
-                                                    )}
-                                                    labelText={t(
-                                                        'forms.demo.petName.label'
-                                                    )}
-                                                />
+                                            requiredText={t(
+                                                'forms.demo.requiredText'
                                             )}
-                                        </Form.TextInputController>
+                                            contentHintText={t(
+                                                'forms.demo.petName.contentHint'
+                                            )}
+                                            labelText={t(
+                                                'forms.demo.petName.label'
+                                            )}
+                                            component={Input}
+                                        />
                                         <Form.TextInputController
                                             name="petType"
                                             required="true"
@@ -133,30 +128,22 @@ class FormsGuide extends Component {
                                                     )
                                                 )
                                             ]}
-                                        >
-                                            {props => (
-                                                <Input
-                                                    {...props}
-                                                    requiredText={t(
-                                                        'forms.demo.requiredText'
-                                                    )}
-                                                    labelText={t(
-                                                        'forms.demo.petType.label'
-                                                    )}
-                                                />
+                                            requiredText={t(
+                                                'forms.demo.requiredText'
                                             )}
-                                        </Form.TextInputController>
-                                        <Form.TextareaController name="petDescription">
-                                            {props => (
-                                                <TextArea
-                                                    {...props}
-                                                    rows="10"
-                                                    labelText={t(
-                                                        'forms.demo.petDescription.label'
-                                                    )}
-                                                />
+                                            labelText={t(
+                                                'forms.demo.petType.label'
                                             )}
-                                        </Form.TextareaController>
+                                            component={Input}
+                                        />
+                                        <Form.TextareaController
+                                            name="petDescription"
+                                            rows="10"
+                                            labelText={t(
+                                                'forms.demo.petDescription.label'
+                                            )}
+                                            component={TextArea}
+                                        />
                                         <Form.SelectController
                                             name="petWeight"
                                             required="true"
@@ -168,39 +155,34 @@ class FormsGuide extends Component {
                                                     )
                                                 )
                                             ]}
-                                        >
-                                            {props => (
-                                                <Select
-                                                    {...props}
-                                                    labelText={t(
-                                                        'forms.demo.petWeight.label'
-                                                    )}
-                                                    requiredText={t(
-                                                        'forms.demo.requiredText'
-                                                    )}
-                                                >
-                                                    <option>
-                                                        {t(
-                                                            'forms.demo.petWeight.defaultOption'
-                                                        )}
-                                                    </option>
-                                                    <option value="weightClass1">
-                                                        {t(
-                                                            'forms.demo.petWeight.weightClass1'
-                                                        )}
-                                                    </option>
-                                                    <option value="weightClass2">
-                                                        {t(
-                                                            'forms.demo.petWeight.weightClass2'
-                                                        )}
-                                                    </option>
-                                                    <option value="weightClass3">
-                                                        {t(
-                                                            'forms.demo.petWeight.weightClass3'
-                                                        )}
-                                                    </option>
-                                                </Select>
+                                            labelText={t(
+                                                'forms.demo.petWeight.label'
                                             )}
+                                            requiredText={t(
+                                                'forms.demo.requiredText'
+                                            )}
+                                            component={Select}
+                                        >
+                                            <option>
+                                                {t(
+                                                    'forms.demo.petWeight.defaultOption'
+                                                )}
+                                            </option>
+                                            <option value="weightClass1">
+                                                {t(
+                                                    'forms.demo.petWeight.weightClass1'
+                                                )}
+                                            </option>
+                                            <option value="weightClass2">
+                                                {t(
+                                                    'forms.demo.petWeight.weightClass2'
+                                                )}
+                                            </option>
+                                            <option value="weightClass3">
+                                                {t(
+                                                    'forms.demo.petWeight.weightClass3'
+                                                )}
+                                            </option>
                                         </Form.SelectController>
                                         <Form.RadioGroupController
                                             name="petColour"
@@ -213,30 +195,25 @@ class FormsGuide extends Component {
                                                     )
                                                 )
                                             ]}
-                                        >
-                                            {props => (
-                                                <RadioGroup
-                                                    {...props}
-                                                    legend={t(
-                                                        'forms.demo.petColour.legend'
-                                                    )}
-                                                    requiredText={t(
-                                                        'forms.demo.requiredText'
-                                                    )}
-                                                    options={{
-                                                        black: t(
-                                                            'forms.demo.petColour.blackOption'
-                                                        ),
-                                                        white: t(
-                                                            'forms.demo.petColour.whiteOption'
-                                                        ),
-                                                        brown: t(
-                                                            'forms.demo.petColour.brownOption'
-                                                        )
-                                                    }}
-                                                />
+                                            legend={t(
+                                                'forms.demo.petColour.legend'
                                             )}
-                                        </Form.RadioGroupController>
+                                            requiredText={t(
+                                                'forms.demo.requiredText'
+                                            )}
+                                            options={{
+                                                black: t(
+                                                    'forms.demo.petColour.blackOption'
+                                                ),
+                                                white: t(
+                                                    'forms.demo.petColour.whiteOption'
+                                                ),
+                                                brown: t(
+                                                    'forms.demo.petColour.brownOption'
+                                                )
+                                            }}
+                                            component={RadioGroup}
+                                        />
 
                                         <Form.CheckboxGroupController
                                             name="petEat"
@@ -249,33 +226,28 @@ class FormsGuide extends Component {
                                                     )
                                                 )
                                             ]}
-                                        >
-                                            {props => (
-                                                <CheckboxGroup
-                                                    legend={t(
-                                                        'forms.demo.petLove.legend'
-                                                    )}
-                                                    contentHintText={t(
-                                                        'forms.demo.petLove.contentHint'
-                                                    )}
-                                                    options={{
-                                                        morning: t(
-                                                            'forms.demo.petLove.morningOption'
-                                                        ),
-                                                        noon: t(
-                                                            'forms.demo.petLove.noonOption'
-                                                        ),
-                                                        night: t(
-                                                            'forms.demo.petLove.nightOption'
-                                                        )
-                                                    }}
-                                                    requiredText={t(
-                                                        'forms.demo.requiredText'
-                                                    )}
-                                                    {...props}
-                                                />
+                                            legend={t(
+                                                'forms.demo.petLove.legend'
                                             )}
-                                        </Form.CheckboxGroupController>
+                                            contentHintText={t(
+                                                'forms.demo.petLove.contentHint'
+                                            )}
+                                            options={{
+                                                morning: t(
+                                                    'forms.demo.petLove.morningOption'
+                                                ),
+                                                noon: t(
+                                                    'forms.demo.petLove.noonOption'
+                                                ),
+                                                night: t(
+                                                    'forms.demo.petLove.nightOption'
+                                                )
+                                            }}
+                                            requiredText={t(
+                                                'forms.demo.requiredText'
+                                            )}
+                                            component={CheckboxGroup}
+                                        />
 
                                         <Form.CheckboxController
                                             name="confirmInfo"
@@ -288,19 +260,14 @@ class FormsGuide extends Component {
                                                     )
                                                 )
                                             ]}
-                                        >
-                                            {props => (
-                                                <Checkbox
-                                                    {...props}
-                                                    requiredText={t(
-                                                        'forms.demo.requiredText'
-                                                    )}
-                                                    labelText={t(
-                                                        'forms.demo.confirmInfo.label'
-                                                    )}
-                                                />
+                                            requiredText={t(
+                                                'forms.demo.requiredText'
                                             )}
-                                        </Form.CheckboxController>
+                                            labelText={t(
+                                                'forms.demo.confirmInfo.label'
+                                            )}
+                                            component={Checkbox}
+                                        />
 
                                         <button type="submit">
                                             {t('forms.demo.submitButton.label')}

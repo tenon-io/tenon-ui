@@ -65,7 +65,8 @@ const defaultValues = {
  */
 class FormController extends Component {
     static propTypes = {
-        children: PropTypes.func.isRequired,
+        children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+        component: PropTypes.any,
         deregisterControl: PropTypes.func.isRequired,
         registerControl: PropTypes.func.isRequired,
         setControlValue: PropTypes.func.isRequired,
@@ -552,14 +553,31 @@ class FormController extends Component {
             getControlErrorText,
             name,
             required,
-            registerErrors
+            registerErrors,
+            component,
+            deregisterControl,
+            registerControl,
+            setControlValue,
+            getControlValue,
+            setControlValidity,
+            validators,
+            ...rest
         } = this.props;
-        return children({
+
+        const renderProps = {
             showError: registerErrors ? !getControlValidity(name) : false,
             errorText: getControlErrorText(name),
             required: required === true || required === 'true',
             ...this.buildRenderObject(type)
-        });
+        };
+
+        return component
+            ? React.createElement(
+                  component,
+                  { ...renderProps, ...rest },
+                  children
+              )
+            : children && children(renderProps);
     }
 }
 
@@ -583,16 +601,23 @@ const getController = (props, type) => (
 );
 
 const controllerPropTypes = {
-    children: PropTypes.func.isRequired,
+    children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+    component: PropTypes.any,
     validators: PropTypes.arrayOf(PropTypes.object),
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
+    required: PropTypes.oneOfType([
+        PropTypes.bool,
+        PropTypes.oneOf(['true', 'false'])
+    ])
 };
 
 /**
  * @component
  * Text input controller
  *
- * @prop required {function} children - Render function for the
+ * @prop {function} children - Render function for the
+ * text input view.
+ * @prop {React Node} component - Component for the
  * text input view.
  * @prop required {string} name - The name to register the control
  * with, with the smartform.
@@ -607,8 +632,10 @@ TextInputController.propTypes = controllerPropTypes;
  * @component
  * Textarea controller
  *
- * @prop required {function} children - Render function for the
- * text input view.
+ * @prop {function} children - Render function for the
+ * textarea view.
+ * @prop {React Node} component - Component for the
+ * textarea view.
  * @prop required {string} name - The name to register the control
  * with, with the smartform.
  * @validators {array} validators - Array of validator functions to
@@ -622,8 +649,10 @@ TextareaController.propTypes = controllerPropTypes;
  * @component
  * Select controller
  *
- * @prop required {function} children - Render function for the
- * text input view.
+ * @prop {function} children - Render function for the
+ * select view.
+ * @prop {React Node} component - Component for the
+ * select view.
  * @prop required {string} name - The name to register the control
  * with, with the smartform.
  * @validators {array} validators - Array of validator functions to
@@ -637,8 +666,10 @@ SelectController.propTypes = controllerPropTypes;
  * @component
  * Radiogroup controller
  *
- * @prop required {function} children - Render function for the
- * text input view.
+ * @prop {function} children - Render function for the
+ * radiogroup view.
+ * @prop {React Node} component - Component for the
+ * radiogroup view.
  * @prop required {string} name - The name to register the control
  * with, with the smartform.
  * @validators {array} validators - Array of validator functions to
@@ -652,8 +683,10 @@ RadioGroupController.propTypes = controllerPropTypes;
  * @component
  * Single checkbox controller
  *
- * @prop required {function} children - Render function for the
- * text input view.
+ * @prop {function} children - Render function for the
+ * checkbox view.
+ * @prop {React Node} component - Component for the
+ * checkbox view.
  * @prop required {string} name - The name to register the control
  * with, with the smartform.
  * @validators {array} validators - Array of validator functions to
@@ -667,8 +700,10 @@ CheckboxController.propTypes = controllerPropTypes;
  * @component
  * Checkbox group controller
  *
- * @prop required {function} children - Render function for the
- * text input view.
+ * @prop {function} children - Render function for the
+ * checkbox group view.
+ * @prop {React Node} component - Component for the
+ * checkbox group view.
  * @prop required {string} name - The name to register the control
  * with, with the smartform.
  * @validators {array} validators - Array of validator functions to

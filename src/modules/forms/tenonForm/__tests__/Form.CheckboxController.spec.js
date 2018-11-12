@@ -46,6 +46,36 @@ describe('Form.CheckboxController', () => {
         expect(testInput.attributes.length).toBe(3);
     });
 
+    it('should allow view injection via the component prop', () => {
+        const Checkbox = ({ getCheckboxProps, getLabelProps, labelText }) => (
+            <div>
+                <input {...getCheckboxProps()} />
+                <label {...getLabelProps()}>{labelText}</label>
+            </div>
+        );
+
+        const { getByLabelText, getByText } = render(
+            <Form onSubmit={jest.fn()}>
+                {() => (
+                    <Form.CheckboxController
+                        name="testCheckbox"
+                        labelText="Test checkbox"
+                        component={Checkbox}
+                    />
+                )}
+            </Form>
+        );
+
+        const testLabel = getByText('Test checkbox');
+        expect(testLabel).toHaveAttribute('for', 'inputLabelId');
+        expect(testLabel.attributes.length).toBe(1);
+
+        const testInput = getByLabelText('Test checkbox');
+        expect(testInput).toHaveAttribute('id', 'inputLabelId');
+        expect(testInput).toHaveAttribute('name', 'testCheckbox');
+        expect(testInput.attributes.length).toBe(3);
+    });
+
     it('should spawn standard and ARIA props for a disabled checkbox', () => {
         const { getByLabelText } = render(
             <Form onSubmit={jest.fn()}>
