@@ -15,7 +15,7 @@ This is the home of [https://www.tenon.io](Tenon.io)'s the accessible React comp
 
 ## Documentation
 
-For complete documentation and usage guides please visit the [Tenon-UI documentation site](https://ui.tenon.io/).
+For complete documentation and usage guides please visit the [Tenon-UI documentation site](https://tenon-ui.info/).
 
 ## Contributing
 
