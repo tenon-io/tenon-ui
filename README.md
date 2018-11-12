@@ -1,6 +1,6 @@
-<p align="center">
-  <a href="https://ui.tenon.io/">
-    <img alt="Tenon-UI" src="./logo.png" style="width: 11em;">
+<p style="text-align:center;">
+  <a href="https://www.tenon-ui.info">
+    <img alt="Tenon-UI" src="logo.png" style="width: 11em;">
   </a>
 </p>
 
