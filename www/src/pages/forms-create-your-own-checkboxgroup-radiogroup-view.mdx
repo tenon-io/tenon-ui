@@ -88,7 +88,7 @@ A number of other props are also exposed by the `CheckboxGroupController` and `R
 [smart controllers page](/forms-smart-controllers) to see how validators work:
 
 #### showError
-This boolean value will indicate to the view if an error should be shown. Normally, errors
+This boolean value will indicate to the view whether an error should be shown. Normally, errors
 will only be shown after the first submit attempt unless overridden by the `alwaysShowErrors`
 prop of the [Form component](/forms-form-component).
 
@@ -157,7 +157,7 @@ import { Form } from '@tenon-io/tenon-ui';
 </Form.CheckboxGroupController>
 ```
 
-Similarly, if I want a group of radiobuttons the code becomes:
+Similarly, if you want a group of radiobuttons the code becomes:
 
 ```
 import { Form } from '@tenon-io/tenon-ui';
@@ -216,7 +216,7 @@ Here you will notice something strange going on. As you will see in the document
 For single elements, this is easy, but for a group of checkboxes or radiobuttons we want to link to and 
 set focus on the element of the set. 
 
-The controllers does not reliably know which of the child elements in their render
+The controllers do not reliably know which of the child elements in their render
 props are the first. And neither should they try to figure this out as this would lead to more
 tightly coupled code. So we need to do some further configuration in our views.
 
@@ -250,7 +250,7 @@ For radiobutton groups we do this by passing `focusElement: true` into the confi
 />
 ```
 
-And for each radiobutton I need to pass in the `value`. The selected radiobutton will assign its 
+And for each radiobutton you need to pass in the `value`. The selected radiobutton will assign its 
 `value` as the value of the entire control.
 
 `Tenon-ui` also automatically generates element `id` attributes for you. For checkbox groups, the

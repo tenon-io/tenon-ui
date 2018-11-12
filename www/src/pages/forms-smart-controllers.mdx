@@ -88,7 +88,7 @@ Each controller has access to the same three props, although the render function
 #### name
 This prop is required.
 
-Every controller has to have a string name. This is the name with which it will register with the `Form` component. Subsequently,
+Every controller must have a string name. This is the name with which it will register with the `Form` component. Subsequently,
 this is the name that will appear in the `Form` datasets mentioned above.
 
 #### component 
@@ -111,7 +111,7 @@ To avoid this, you can use the `component` prop instead:
 />    
 ```
 
-Each controller will also pass any props not used in the controller itself through to 
+Each controller will also pass any props not used in the controller itself through to the
 view component. This way you can still pass props, for instance a label text, to your
 view component.
 
@@ -154,7 +154,7 @@ Whenever a component is used as view in the docs, we will prefer using the `comp
 over using the render prop.
 
 #### required
-A form control can be marked as required by acivating this prop. This is important as it then passes important information 
+A form control can be marked as required by activating this prop. This is important as it then passes important information 
 to the view components through the render function.
 
 The prop accepts both `boolean` as well as `string` values.
@@ -162,8 +162,8 @@ The prop accepts both `boolean` as well as `string` values.
 #### validators
 This array of validators forms the heart of validation in `Tenon-UI`. 
 
-The library also exports a `validor` function you can use to compose the validators you add to the controllers. Each
-entry in the `validtors` array should be composed with this function.
+The library also exports a `validator` function you can use to compose the validators you add to the controllers. Each
+entry in the `validators` array should be composed with this function.
 
 The function takes three parameters:
 
@@ -240,8 +240,8 @@ be shown, thereby freeing the view from more decision making logic.
 
 ##### ignore
 
-Sometimes you would like to turn off a specific validation programmatically. This third, optional
-parameter, allows you to ignore any specific validator. 
+Sometimes you would like to turn off a specific validation programmatically. This third (optional)
+parameter allows you to ignore any specific validator. 
 
 To ignore a validator do:
 

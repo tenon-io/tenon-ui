@@ -32,9 +32,6 @@ export default ({children}) =>
     'The RadioGroup component']
     } />
 
-The `Tenon-UI` view components are accessible. We recommend using these view components if you
-want to ensure that your form fields are accessible.
-
 ### Usage 
 
 All view components can be used in one of two ways.
@@ -80,20 +77,20 @@ used inside the `children render prop` of each controller:
 
 It is **VERY** important to spread the props object from the render function of the 
 `controller` onto the `view component`. This passes the required props into 
-our view components The same props you would otherwise use when creating your own views.
+our view components. The same props you would otherwise use when creating your own views.
 
 ### Common component props
 
 #### labelText
-Required when present. Not used for `RadioGroup` and `CheckboxGroup`;
+Required when present. Not used for `RadioGroup` and `CheckboxGroup`.
 
 Every form control needs a text label. With this prop you provide the text that will be rendered inside
 the `<label>` element.
 
 #### labelProps
-Not used for `RadioGroup` and `CheckboxGroup`;
+Not used for `RadioGroup` and `CheckboxGroup`.
 
-This is an optional object that can be used to override or enrich the props that passed to the 
+This is an optional object that can be used to override or amend the props that passed to the 
 `<label>` element.
 
 For example, if you want to add a specific `className` to the `<label>` of the `<textarea>` element 
@@ -114,7 +111,7 @@ you can do this:
 Every form control can also have `content hint text`. This is text that describes what should be
 entered into the control. For example, an input that requires at least five characters.
 
-**Special note**: The `<input> placeholder` attributes is often used for this, but this is **wrong**. The placeholder
+**Note**: The `<input> placeholder` attribute is often used for this, but this is **wrong**. The placeholder
 should **never** be used for this function as it causes difficulty for many users out there.
 
 Specify a content hint text as follows:
@@ -178,7 +175,7 @@ Please do not provide these props yourself as this will most probably break the 
 the component.
 
 #### Other props
-Not relevant for `RadioGroup` and `CheckboxGroup`;
+Not relevant for `RadioGroup` and `CheckboxGroup`.
 
 Any other props given to these components will be passed onto the relevant functional HTML element.
 
@@ -189,7 +186,7 @@ to the form controls.
 In accessible applications, this is mostly done in cases where you want to set focus to a specific 
 element. 
 
-Each view component [forward the ref](https://reactjs.org/docs/forwarding-refs.html) to the the correct element so that you can easily set focus
+Each view component [forwards the ref](https://reactjs.org/docs/forwarding-refs.html) to the the correct element so that you can easily set focus
 when required:
 
 ```
@@ -234,7 +231,7 @@ import { Form, Input, validator } from '@tenon-io/tenon-ui';
 //...
 ```
 
-Using this inside the `Form` compent gives:
+Using this inside the `Form` component gives:
 
 <Form
     onSubmit={submitData => {
@@ -301,7 +298,7 @@ import { Form, TextArea, validator } from '@tenon-io/tenon-ui';
 //...
 ```
 
-Using this inside the `Form` compent gives:
+Using this inside the `Form` component gives:
 
 <Form
     onSubmit={submitData => {

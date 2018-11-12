@@ -89,7 +89,7 @@ import { Form } from '@tenon-io/tenon-ui';
 </Form.SelectController>
 ```
 
-**Note**: that both the `getLabelProps` and the `getSelect` prop getters can be called 
+**Note**: that both the `getLabelProps` and the `getSelectProps` prop getters can be called 
 with an object that can override and / or enrich the props object returned by these prop getters. 
 For example:
 
@@ -161,7 +161,7 @@ import { Form, validator, isRequired } from '@tenon-io/tenon-ui';
 
 Note in the example above that the visual `( required )` text is marked with `aria-hidden="true"`. This
 is because the `SelectController` already marks the select as `required` with the 
-`aria-required` property. Therefore you need to make sure that this is not read out twice with
+`aria-required` property. Therefore you need to make sure that this is not read out twice by
 screen readers.
 
 The prop getters will ensure that the error text field is linked to the select and that the select
@@ -228,7 +228,7 @@ import { Form, validator, isRequired } from '@tenon-io/tenon-ui';
 The prop getter will ensure that the `content hint` is also linked to the `<select>` field so that
 screen readers are aware of this.
 
-As shown above you can easily combine this with an error field, although content hint can safely be
+As shown above you can easily combine this with an error field, although a content hint can safely be
 rendered on its own. 
 
 

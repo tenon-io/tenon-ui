@@ -41,7 +41,7 @@ Every `Form` requires a render function supplied as children of the component. A
 handler is also required.
 
 The `Form` component automatically manages all the child form element components (see below)
-and will pass 
+and will pass all the required data into the render function.
 
 ### Form props
 
@@ -77,7 +77,7 @@ validation the value will be `false`.
 This flag can be used to trigger global error blocks, for example.
 
 ##### hasSubmitted 
-A boolean value indicating if the user has triggered a `onSubmit` event at least once.
+A boolean value indicating if the user has triggered an `onSubmit` event at least once.
 
 This can also be used to display information, such as error blocks, only after the user
 has attempted to submit the `Form`.
@@ -85,7 +85,7 @@ has attempted to submit the `Form`.
 #### onSubmit
 This prop is required.
 
-An event handler function that is called in a submit event occurs and all form controls
+An event handler function that is called if a submit event occurs and all form controls
 passes validation.
 
 **NOTE**: This event is NOT called on a submit event if any of the form controls fails
@@ -130,7 +130,7 @@ is changed via user interaction, these changes will **NOT** be reflected in this
 By default, the smart form control are built to only display validation error conditions once
 a submit has been attempted. As this is the user experience we recommend.
 
-Should the need arise to immediately show errors real-time , this boolean flag can be set to 
+Should the need arise to immediately show errors real-time, this boolean flag can be set to 
 `true`.
 
 #### className

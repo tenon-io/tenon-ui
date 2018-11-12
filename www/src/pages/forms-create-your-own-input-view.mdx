@@ -53,7 +53,7 @@ Use this to easily hide and show your error containers.
 
 #### errorText
 This value contains the current actual error message text. For valid or non-validated fields
-this will be empty. Otherwise if will contain the text from the first failing validator as 
+this will be empty. Otherwise it will contain the text from the first failing validator as 
 specified on the `TextInputController`. 
 
 #### required
@@ -96,7 +96,7 @@ For example:
 ```
 
 ### Required validated input
-For validation, you can make use of the `getErrorProps` prop getter as well.
+For validation, you can use the `getErrorProps` prop getter as well.
 
 ```
 import { Form, validator, isRequired } from '@tenon-io/tenon-ui';
@@ -146,7 +146,7 @@ import { Form, validator, isRequired } from '@tenon-io/tenon-ui';
 
 Note in the example above that the visual `( required )` text is marked with `aria-hidden="true"`. This
 is because the `TextInputController` already marks the input as `required` with the 
-`aria-required` property. Therefore you need to make sure that this is not read out twice with
+`aria-required` property. Therefore you need to make sure that this is not read out twice by
 screen readers.
 
 The prop getters will ensure that the error text field is linked to the input and that the input
@@ -207,7 +207,7 @@ import { Form, validator, isRequired } from '@tenon-io/tenon-ui';
 The prop getter will ensure that the `content hint` is also linked to the `<input>` field so that
 screen readers are aware of this.
 
-As shown above you can easily combine this with an error field, although content hint can safely be
+As shown above you can easily combine this with an error field, although a content hint can safely be
 rendered on its own. 
 
 
