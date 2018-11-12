@@ -1,0 +1,21 @@
+body {
+    font-weight: 400;
+
+    *:focus {
+        outline-width: 2px !important;
+    }
+
+    a {
+        text-decoration: underline;
+
+        &:focus {
+            outline: 2px solid $color-focus;
+            outline-offset: 2px;
+        }
+
+        &:focus,
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}

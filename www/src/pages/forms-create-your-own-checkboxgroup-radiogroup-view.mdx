@@ -1,0 +1,685 @@
+import Helmet from "react-helmet";
+
+import Layout from '../components/Layout';
+import PageNav from '../components/PageNav';
+
+export default ({children}) => 
+<Layout>
+    <Helmet>
+        <title>Tenon-ui | Create your own CheckboxGroup or RadioGroup view</title>
+    </Helmet>{children}
+</Layout>
+
+## Create your own CheckboxGroup or RadioGroup view
+
+<PageNav targets={
+    ['Checkbox and radiobutton groups',
+    'Available prop getters from CheckboxGroupController',
+    'Available prop getters from RadioGroupController',
+    'Other props', 
+    'Basic non-validated checkbox and radiobutton group',
+    'Required validated checkbox and radiobutton group',
+    'Checkbox and radiobutton group with a content hint']
+    } />
+
+Here you will see how to create your own `CheckboxGroup` and `RadioGroup` view. When creating your own view inline, 
+you will use the `children render prop` of either the `CheckboxGroupController` or the 
+`RadioGroupController`.
+
+Creating these views are so similar they will be discussed on this one page with the small differences highlighted.
+
+### Checkbox and radiobutton groups
+Making these groups accessible is surprisingly tricky, despite their prolific use. Please reconsider 
+using the `CheckboxGroup` and `RadioGroup` components provided.
+
+If you still want to build your own view, please take into account the following:
+
+1. Groups of elements should go inside a `<fieldset>` element and be described by a `<legend>`.
+1. In order for most screen readers out there to recognise the `<legend>`, it **HAS** to be
+the very next element after the `<fieldset>` opens. Please do not put any other HTML between the 
+opening tag of the `<fieldset>` and the `<legend>`.
+1. Unlike controls such as the `<input>`, there is no reliable way to connect `error messages` or 
+`content hints` to a `<fieldset>`. These messages must therefore be rendered into the `<legend>` 
+element. Should this text not need be visible, it can be hidden with a style that visually hides
+content.
+1. When setting focus to this group, focus should land on the first `<input type="checkbox">` or
+`<input type="radio">` of the group.
+
+The `CheckboxGroupController` and `RadioGroupController` does a lot to support you in this, but if your view does not support
+the points mentioned above, your resulting group of elements will be almost certainly
+inaccessible.
+
+The visually hidden style mentioned above can be created like this:
+```css
+.visually-hidden {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+}
+```
+
+Therefore we will once again urge you to use the `CheckboxGroup` and `RadioGroup` components provided by
+`Tenon-UI` and change it with styling.
+
+Still not convinced? Then keep these points in mind in the following sections.
+
+### Available prop getters from CheckboxGroupController
+The `CheckboxGroupController` gives you access to the following prop getter functions:
+
+#### getLabelProps
+This prop getter generates the required props for each checkbox's `<label>` element.
+
+#### getCheckboxProps
+This prop getter generates the required props for the `<input>` elements of each checkbox.
+
+### Available prop getters from RadioGroupController
+The `RadioGroupController` gives you access to the following prop getter functions:
+
+#### getLabelProps
+This prop getter generates the required props for each checkbox's `<label>` element.
+
+#### getRadioButtonProps
+This prop getter generates the required props for the `<input>` elements of each radiobutton.
+
+### Other props
+A number of other props are also exposed by the `CheckboxGroupController` and `RadioGroupController. Refer to the 
+[smart controllers page](/forms-smart-controllers) to see how validators work:
+
+#### showError
+This boolean value will indicate to the view whether an error should be shown. Normally, errors
+will only be shown after the first submit attempt unless overridden by the `alwaysShowErrors`
+prop of the [Form component](/forms-form-component).
+
+Use this to easily hide and show your error containers. 
+
+#### errorText
+This value contains the current actual error message text. For valid or non-validated fields
+this will be empty. Otherwise if will contain the text from the first failing validator as 
+specified on the controller. 
+
+#### required
+This boolean value indicates if the controller has been marked as `required`. This
+can be handy to decide when to render required indicators.
+
+### Basic non-validated checkbox and radiobutton group
+If you only need a group of checkboxes without validation you can write view code resembling this:
+
+```
+import { Form } from '@tenon-io/tenon-ui';
+
+//...
+
+<Form.CheckboxGroupController name="eatingTimes">
+    {({ getLabelProps, getCheckboxProps }) => (
+        <fieldset>
+            <legend>
+                When does your pet eat?
+            </legend>
+            <input
+                {...getCheckboxProps({
+                    name: 'morning',
+                    focusElement: true
+                })}
+            />
+            <label
+                {...getLabelProps()}
+            >
+                In the morning
+            </label>
+            <input
+                {...getCheckboxProps({
+                    name: 'noon'
+                })}
+            />
+            <label
+                {...getLabelProps({
+                    autoIdPostfix: 'noon'
+                })}
+            >
+                At noon
+            </label>
+            <input
+                {...getCheckboxProps({
+                    name: 'night'
+                })}
+            />
+            <label
+                {...getLabelProps({
+                    autoIdPostfix: 'night'
+                })}
+            >
+                At night
+            </label>
+        </fieldset>
+    )}
+</Form.CheckboxGroupController>
+```
+
+Similarly, if you want a group of radiobuttons the code becomes:
+
+```
+import { Form } from '@tenon-io/tenon-ui';
+
+//...
+
+<Form.RadioGroupController name="petColour">
+    {({ getLabelProps, getRadioButtonProps }) => (
+        <fieldset>
+            <legend>
+                What colour is your pet?
+            </legend>
+            <input
+                {...getRadioButtonProps({
+                    value: 'black',
+                    focusElement: true
+                })}
+            />
+            <label
+                {...getLabelProps()}
+            >
+                Black
+            </label>
+            <input
+                {...getRadioButtonProps({
+                    value: 'brown'
+                })}
+            />
+            <label
+                {...getLabelProps({
+                    autoIdPostfix: 'brown'
+                })}
+            >
+                At noon
+            </label>
+            <input
+                {...getRadioButtonProps({
+                    value: 'white'
+                })}
+            />
+            <label
+                {...getLabelProps({
+                    autoIdPostfix: 'white'
+                })}
+            >
+                At night
+            </label>
+        </fieldset>
+    )}
+</Form.RadioGroupController>
+```
+
+Here you will notice something strange going on. As you will see in the documentation for the 
+`ErrorBlock` component, we sometimes need to link to our form controls when they are in error. 
+
+For single elements, this is easy, but for a group of checkboxes or radiobuttons we want to link to and 
+set focus on the element of the set. 
+
+The controllers do not reliably know which of the child elements in their render
+props are the first. And neither should they try to figure this out as this would lead to more
+tightly coupled code. So we need to do some further configuration in our views.
+
+Firstly we need to tell the controllers which element is intended to receive focus in an error
+condition. We do this with the `focusElement` configuration setting.
+
+For checkbox groups we do this by passing `focusElement: true` into the config object of the 
+`getCheckboxProps` prop getter for the first checkbox:
+
+```
+<input
+    {...getCheckboxProps({
+        name: 'morning',
+        focusElement: true
+    })}
+/>
+```
+
+Also note that for each checkbox I need to pass in the `name`, which will be the returned value in
+the array of selected checkboxes should this checkbox be selected.
+
+For radiobutton groups we do this by passing `focusElement: true` into the config object of the
+`getRadiobuttonProps` prop getter for the first radiobutton:
+
+```
+<input
+    {...getRadioButtonProps({
+        value: 'black',
+        focusElement: true
+    })}
+/>
+```
+
+And for each radiobutton you need to pass in the `value`. The selected radiobutton will assign its 
+`value` as the value of the entire control.
+
+`Tenon-ui` also automatically generates element `id` attributes for you. For checkbox groups, the
+`CheckboxGroupController` will use the `name` values to keep the different checkbox id values
+unique. Similarly the `RadioGroupController` will use the `value` values. 
+
+Have a look at this `HTML` snippet of a checkbox group rendered with `Tenon-UI` to illustrate the effect
+of this (due to the similarity of the radiobuttons group only the checkbox group will be shown):
+
+```html
+<ul class="checkbox-container">
+    <li>
+        <div class="checkbox-wrapper">
+            <input name="morning" 
+                   id="16a32b1a-746e-4b96-ac53-88d85bdad598"
+                   type="checkbox">
+            <label for="16a32b1a-746e-4b96-ac53-88d85bdad598">
+                Morning
+            </label>
+        </div>
+    </li>
+    <li>
+        <div class="checkbox-wrapper">
+            <input name="noon" 
+                   id="16a32b1a-746e-4b96-ac53-88d85bdad598-noon" 
+                   type="checkbox">
+            <label for="16a32b1a-746e-4b96-ac53-88d85bdad598-noon">
+                Noon
+            </label>
+        </div>
+    </li>
+    <li>
+        <div class="checkbox-wrapper">
+            <input name="night" 
+                   id="16a32b1a-746e-4b96-ac53-88d85bdad598-night"
+                   type="checkbox">
+            <label for="16a32b1a-746e-4b96-ac53-88d85bdad598-night">
+                Night
+            </label>
+        </div>
+    </li>
+</ul>
+``` 
+
+Have a look at the `id` attributes. The first checkbox, which was marked as the `focusElement`,
+receives the unique `id` value generated for the group element.
+
+For every other checkbox, the `name` is appended to the group `id` value to keep the values
+unique.
+
+But we want our labels' `for` attributes to still point to the correct checkboxes or radiobuttons. So here we
+have some more work to do. For every label, aside from the label for the `focusElement`, we need
+to pass in an `autoIdPostfix` configuration object value to the `getLabelProps` prop getter:
+
+```
+<label
+    {...getLabelProps({
+        autoIdPostfix: 'noon'
+    })}
+>
+```
+
+This can, of course, also be automated in a `map`, as we see in the source code for the 
+`CheckboxGroup` component:
+
+```
+<ul className="checkbox-container">
+    {Object.keys(options).map((option, i) => (
+        <li key={option}>
+            <div className="checkbox-wrapper">
+                <input
+                    {...getCheckboxProps({
+                        name: option,
+                        focusElement: i === 0
+                    })}
+                />
+                <label
+                    {...getLabelProps({
+                        autoIdPostfix: i === 0 ? '' : option
+                    })}
+                >
+                    {options[option]}
+                </label>
+            </div>
+        </li>
+    ))}
+</ul>
+```
+
+You may also notice that in our examples, the checkboxes are rendered inside a `<ul>` element. We
+also do that for the radiobutton.
+
+This is done to give further assistance to screen reader users as they will then get to hear
+how many elements are inside the current group. Decide for yourself if you also want to 
+add this extra bit of assistance.
+
+We realise that this is not very intuitive, but we have spent a lot of time to come up with a
+re-usable control pattern that functioned reliably when tested in a large number of screen readers
+out there. We also want the usage and interface of this control to fit in the pattern of the single
+elements in `Tenon-UI`.
+
+In this case we are limited by how these elements are interpreted by assistive technologies.
+
+### Required validated checkbox and radiobutton group
+
+Render your error messages directly into the `<legend>` element. You can move these containers with 
+styling.
+
+Or you can hide it with a `visually-hidden` style and render the visible message further down and
+hide that from screen readers with `aria-hidden="true"`.
+
+Note that the `required` text is also rendered into the `<legend>`.
+
+
+For checkboxes:
+
+```
+import { Form } from '@tenon-io/tenon-ui';
+ 
+//...
+ 
+<Form.CheckboxGroupController  
+   required="true"
+   validators={[
+       validator(
+           value => value.length > 0,
+           'Please select at least one eating time.'
+       )
+   ]} 
+   name="eatingTimes">
+    {({ getLabelProps, 
+        getCheckboxProps,
+        required, 
+        errorText, 
+        showError 
+    }) => (
+        <fieldset>
+            <legend>
+                When does your pet eat?
+                 {required && (
+                        <span className="required">
+                            &nbsp;
+                            ( required )
+                        </span>
+                    ) : null}
+                {errorText &&
+                    showError && (
+                        <span className="visually-hidden">
+                            &nbsp;
+                            {errorText}
+                        </span>
+                    )}
+            </legend>
+            <input
+                {...getCheckboxProps({
+                    name: 'morning',
+                    focusElement: true
+                })}
+            />
+            <label
+                {...getLabelProps()}
+            >
+                In the morning
+            </label>
+            <input
+                {...getCheckboxProps({
+                    name: 'noon'
+                })}
+            />
+            <label
+                {...getLabelProps({
+                    autoIdPostfix: 'noon'
+                })}
+            >
+                At noon
+            </label>
+            <input
+                {...getCheckboxProps({
+                    name: 'night'
+                })}
+            />
+            <label
+                {...getLabelProps({
+                    autoIdPostfix: 'night'
+                })}
+            >
+                At night
+            </label>
+            {showError && (
+                <div className="error-container"
+                     aria-hidden="true"
+                >
+                    {errorText}
+                </div>
+            )}
+        </fieldset>
+    )}
+</Form.CheckboxGroupController>
+```
+ 
+Similarly, for radiobuttons:
+ 
+```
+import { Form } from '@tenon-io/tenon-ui';
+ 
+//...
+ 
+<Form.RadioGroupController 
+    required="true"
+    validators={[
+        validator(
+            isRequired,
+            'Please select a colour for your pet.'
+        )
+    ]} 
+    name="petColour">
+    {({ getLabelProps, 
+        getRadioButtonProps,
+        required, 
+        errorText, 
+        showError 
+    }) => (
+        <fieldset>
+            <legend>
+                What colour is your pet?
+                {required && (
+                       <span className="required">
+                           &nbsp;
+                           ( required )
+                       </span>
+                   ) : null}
+               {errorText &&
+                   showError && (
+                       <span className="visually-hidden">
+                           &nbsp;
+                           {errorText}
+                       </span>
+                   )}
+             </legend>
+             <input
+                 {...getRadioButtonProps({
+                     value: 'black',
+                     focusElement: true
+                 })}
+             />
+             <label
+                 {...getLabelProps()}
+             >
+                 Black
+             </label>
+             <input
+                 {...getRadioButtonProps({
+                     value: 'brown'
+                 })}
+             />
+             <label
+                 {...getLabelProps({
+                     autoIdPostfix: 'brown'
+                 })}
+             >
+                 At noon
+             </label>
+             <input
+                 {...getRadioButtonProps({
+                     value: 'white'
+                 })}
+             />
+             <label
+                 {...getLabelProps({
+                     autoIdPostfix: 'white'
+                 })}
+             >
+                 At night
+             </label>
+             {showError && (
+                 <div className="error-container"
+                      aria-hidden="true"
+                 >
+                     {errorText}
+                 </div>
+             )}
+         </fieldset>
+     )}
+ </Form.RadioGroupController>
+```
+
+### Checkbox and radiobutton group with a content hint
+
+We add a `content hint` in the same way, although for these elements we do not get any 
+assistance from the controllers.
+
+ ```
+import { Form } from '@tenon-io/tenon-ui';
+ 
+//...
+ 
+<Form.CheckboxGroupController  
+   name="eatingTimes">
+    {({ getLabelProps, 
+        getCheckboxProps
+    }) => (
+        <fieldset>
+            <legend>
+                When does your pet eat?
+                {contentHintText && (
+                    <span className="visually-hidden">
+                        &nbsp;
+                        Remember 12 o'clock means noon!
+                    </span>
+                )}
+            </legend>
+            <input
+                {...getCheckboxProps({
+                    name: 'morning',
+                    focusElement: true
+                })}
+            />
+            <label
+                {...getLabelProps()}
+            >
+                In the morning
+            </label>
+            <input
+                {...getCheckboxProps({
+                    name: 'noon'
+                })}
+            />
+            <label
+                {...getLabelProps({
+                    autoIdPostfix: 'noon'
+                })}
+            >
+                At noon
+            </label>
+            <input
+                {...getCheckboxProps({
+                    name: 'night'
+                })}
+            />
+            <label
+                {...getLabelProps({
+                    autoIdPostfix: 'night'
+                })}
+            >
+                At night
+            </label>
+            {contentHintText && (
+                <div className="content-hint-style"
+                     aria-hidden="true"
+                >
+                    Remember 12 o'clock means noon!
+                </div>
+            )}
+        </fieldset>
+    )}
+</Form.CheckboxGroupController>
+ ```
+ 
+Similarly, for radiobuttons:
+ 
+ ```
+import { Form } from '@tenon-io/tenon-ui';
+ 
+//...
+ 
+<Form.RadioGroupController 
+    name="petColour">
+    {({ getLabelProps, 
+        getRadioButtonProps
+    }) => (
+        <fieldset>
+            <legend>
+                What colour is your pet?
+                {contentHintText && (
+                    <span className="visually-hidden">
+                        &nbsp;
+                        Choose the predominant colour.
+                    </span>
+                )}
+             </legend>
+             <input
+                 {...getRadioButtonProps({
+                     value: 'black',
+                     focusElement: true
+                 })}
+             />
+             <label
+                 {...getLabelProps()}
+             >
+                 Black
+             </label>
+             <input
+                 {...getRadioButtonProps({
+                     value: 'brown'
+                 })}
+             />
+             <label
+                 {...getLabelProps({
+                     autoIdPostfix: 'brown'
+                 })}
+             >
+                 At noon
+             </label>
+             <input
+                 {...getRadioButtonProps({
+                     value: 'white'
+                 })}
+             />
+             <label
+                 {...getLabelProps({
+                     autoIdPostfix: 'white'
+                 })}
+             >
+                 At night
+             </label>
+            {contentHintText && (
+                <div className="content-hint-style"
+                     aria-hidden="true"
+                >
+                     Choose the predominant colour.
+                </div>
+            )}
+         </fieldset>
+     )}
+ </Form.RadioGroupController>
+ ```
+
+
+   
+
+
+

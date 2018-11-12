@@ -1,0 +1,42 @@
+.notification {
+    > div {
+        border: 1px solid;
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .error {
+        .icon {
+            display: inline;
+            padding: 0.4em;
+            margin: 0.3em;
+            background-size: contain;
+            @extend %icon;
+            @include vf-icon-error($color-negative);
+            position: relative;
+            top: -0.15em;
+        }
+
+        border-color: $color-negative;
+        background-color: lighten($color-negative, 68%);
+        color: $color-x-dark;
+    }
+
+    .warning {
+        border-color: $color-caution;
+        background-color: lighten($color-caution, 45%);
+        color: $color-x-dark;
+    }
+
+    .info {
+        border-color: $color-information;
+        background-color: lighten($color-information, 58%);
+        color: $color-x-dark;
+    }
+
+    .success {
+        border-color: $color-positive;
+        background-color: lighten($color-positive, 68%);
+        color: $color-x-dark;
+    }
+}

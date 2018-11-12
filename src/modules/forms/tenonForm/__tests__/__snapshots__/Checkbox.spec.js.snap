@@ -1,0 +1,88 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Checkbox should render a checkbox and label only 1`] = `
+<div
+  class="form-group"
+>
+  <div
+    class="checkbox-wrapper"
+  >
+    <input
+      id="foo"
+      type="checkbox"
+    />
+    <label
+      for="foo"
+    >
+      Test checkbox
+    </label>
+  </div>
+</div>
+`;
+
+exports[`Checkbox should render a content hint if given 1`] = `
+<div
+  class="form-group"
+>
+  <div
+    class="checkbox-wrapper"
+  >
+    <input
+      aria-describedby="bar"
+      id="foo"
+      type="checkbox"
+    />
+    <label
+      for="foo"
+    >
+      Test checkbox
+    </label>
+  </div>
+  <div
+    class="info-wrapper"
+  >
+    <span
+      class="icon"
+    />
+    <span
+      id="bar"
+    >
+      Content hint test
+    </span>
+  </div>
+</div>
+`;
+
+exports[`Checkbox should render an error text when invalid 1`] = `
+<div
+  class="form-group"
+>
+  <div
+    class="checkbox-wrapper"
+  >
+    <input
+      aria-describedby="bar"
+      class="has-error"
+      id="foo"
+      type="checkbox"
+    />
+    <label
+      for="foo"
+    >
+      Test checkbox
+    </label>
+  </div>
+  <div
+    class="error-wrapper"
+  >
+    <span
+      class="icon"
+    />
+    <span
+      id="bar"
+    >
+      Test error
+    </span>
+  </div>
+</div>
+`;

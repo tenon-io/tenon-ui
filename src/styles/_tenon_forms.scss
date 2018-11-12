@@ -1,0 +1,132 @@
+.form-group {
+    margin-bottom: 1rem;
+
+    input + label {
+        display: inline-block;
+        width: auto;
+    }
+
+    label .required,
+    legend .required {
+        font-size: small;
+        font-weight: bold;
+    }
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        &.radio-container {
+            margin-bottom: 0.5rem;
+        }
+
+        li {
+            .radio-wrapper,
+            .checkbox-wrapper {
+                display: flex;
+            }
+        }
+    }
+
+    input[type='radio'] {
+        margin-top: 0.8rem;
+        margin-right: 0.8rem;
+        height: auto;
+
+        &:focus {
+            outline-offset: 2px;
+        }
+    }
+
+    input[type='checkbox'] {
+        z-index: 5;
+
+        + label {
+            display: inline-block;
+
+            &::before {
+                border-color: $color-mid-dark;
+            }
+
+            &::after {
+                top: 13px;
+            }
+        }
+
+        &:focus {
+            + label::before {
+                outline: 2px solid $color-focus;
+                outline-offset: 2px;
+            }
+        }
+    }
+
+    .error-wrapper {
+        .icon {
+            display: inline;
+            padding: 0.4em;
+            margin: 0.3em;
+            background-size: contain;
+            @extend %icon;
+            @include vf-icon-error($color-negative);
+            position: relative;
+            top: -0.25em;
+        }
+
+        color: $color-negative;
+    }
+
+    .info-wrapper {
+        .icon {
+            display: inline;
+            padding: 0.4em;
+            margin: 0.3em;
+            background-size: contain;
+            @extend %icon;
+            @include vf-icon-info($color-information);
+            position: relative;
+            top: -0.25em;
+        }
+
+        margin-bottom: 0.5rem;
+        color: $color-information;
+    }
+}
+
+.error-block {
+    .block-heading {
+        font-weight: bold;
+        font-size: 1.2rem;
+        padding: 0.6rem 0.5rem 0.5rem;
+        color: $color-negative;
+
+        .icon {
+            display: inline;
+            padding: 0.4em;
+            margin: 0.3em;
+            background-size: contain;
+            @extend %icon;
+            @include vf-icon-error($color-negative);
+            position: relative;
+            top: -0.15em;
+        }
+    }
+
+    ul {
+        padding-left: 1.5rem;
+
+        li {
+            margin-top: 1rem;
+        }
+
+        a {
+            color: $color-negative;
+        }
+    }
+
+    border: 1px solid $color-negative;
+    background-color: lighten($color-negative, 70%);
+    margin-bottom: 1em;
+    padding: 1.5rem;
+}

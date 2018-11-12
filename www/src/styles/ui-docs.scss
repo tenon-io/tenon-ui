@@ -1,0 +1,290 @@
+@import '../../../src/styles/tenon-ui';
+
+p {
+    max-width: 100%;
+
+    + p {
+        margin-top: 0.5em !important;
+    }
+}
+
+.text-highlight {
+    background-color: #237044;
+    border-radius: 4px;
+    padding: 2px 4px 2px 4px;
+    color: white;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 600;
+}
+
+
+pre.code-block {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+form {
+    margin-bottom: 1em;
+}
+
+.app-logo {
+    height: 80px;
+}
+
+.app-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #222;
+    padding: 20px;
+    color: white;
+    margin-bottom: 1rem;
+    position: relative;
+
+    img {
+        margin: 0.4em 0.4em 0 0.4em;
+    }
+
+    h1 {
+        margin: 0.3em;
+        text-align: center;
+
+        @media screen and (max-width: 50em) {
+            font-size: 2em;
+        }
+    }
+
+    a:not(.skip-link) {
+        color: white;
+    }
+}
+
+main:focus,
+h3:focus {
+    outline: none;
+}
+
+.app-title {
+    font-size: 3.5em;
+
+    @media screen and (max-width: 50em) {
+        font-size: 2em;
+    }
+}
+
+.app-intro {
+    font-size: large;
+}
+
+.main-panel {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+}
+
+.working-example {
+    border: 1px solid black;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.pane-section {
+    margin-right: 2em;
+}
+
+.skip-link {
+    position: absolute !important;
+    margin-top: 0.5rem;
+    margin-left: 0.5rem;
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    border: solid #0047ab;
+    background-color: white;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+}
+
+.skip-link:focus {
+    left: 0;
+    height: auto;
+    width: auto;
+    overflow: auto;
+    clip: inherit;
+}
+
+.demo-spinner {
+    color: #002964;
+}
+
+.demo-spinner g {
+    stroke: currentColor;
+}
+
+.demo-spinner circle {
+    fill: currentColor;
+}
+
+.language-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.language-container button {
+    width: 100%;
+}
+
+.notification-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.notification-container button {
+    margin-bottom: 0;
+}
+
+.spinner-button {
+    margin-bottom: 0;
+}
+
+.in-page-nav {
+    margin-bottom: 2em;
+    border: 1px solid #237044;
+    padding: 0.2em;
+
+    p {
+        margin-bottom: 0.1em;
+    }
+
+    ul {
+        display: flex;
+        flex-wrap: wrap;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+            margin-bottom: 0.3em;
+            margin-right: 1em;
+            margin-left: 0.2em;
+
+            &::before {
+                content: '\200B';
+            }
+        }
+    }
+}
+
+.mobile-menu {
+    margin-bottom: 0;
+    margin-top: 0;
+    background-color: #fff;
+    z-index: 1;
+    @media screen and (min-width: 50em) {
+        display: none;
+    }
+}
+
+.desktop-menu {
+    @media screen and (max-width: 50em) {
+        display: none;
+    }
+}
+
+.nav-panel {
+    display: flex;
+    flex-direction: column;
+    margin-left: 2em;
+    flex: 1;
+
+    @media screen and (max-width: 50em) {
+        width: 100%;
+        background-color: white;
+        position: absolute;
+    }
+
+    button {
+        margin-top: 0.5rem;
+    }
+
+    h2 {
+        font-size: 2em;
+        margin-top: 1.5em;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+
+        ul {
+            border: 1px solid #237044;
+            padding-left: 0.5em;
+            padding-right: 0.5em;
+            padding-bottom: 0.5em;
+        }
+
+        a {
+            display: block;
+            margin-top: 0.5rem;
+            padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+
+            &[aria-current='page'] {
+                background-color: #237044;
+                color: white;
+            }
+
+            &:focus,
+            &:hover {
+                background-color: #237044;
+                color: #fff;
+            }
+        }
+    }
+
+    ul.sub-nav {
+        border: none;
+        margin-left: 0.5em;
+        padding-right: 0;
+    }
+}
+
+.viewport {
+    display: flex;
+    flex-direction: column;
+    margin-left: 5em;
+    padding: 3em;
+    flex: 3;
+
+    @media screen and (max-width: 50em) {
+        margin-top: 4em;
+    }
+}
+
+.demo-spinner {
+    color: black;
+    width: 5em;
+}
+
+@media screen and (max-width: 488px) {
+    .main-panel {
+        flex-direction: column;
+    }
+
+    .viewport {
+        margin-left: 0;
+        padding: 1em;
+    }
+
+    .nav-panel {
+        margin-left: 0;
+        padding: 0.5em;
+    }
+}

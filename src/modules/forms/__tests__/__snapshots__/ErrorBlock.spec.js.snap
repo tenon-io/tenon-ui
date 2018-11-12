@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ErrorBlock should render as an unordered list to track the number of items 1`] = `
+<div>
+  <section
+    aria-labelledby="sectionId"
+    class="error-block"
+  >
+    <h2
+      class="block-heading"
+      id="sectionId"
+      tabindex="-1"
+    >
+      <span
+        class="icon"
+      />
+      Some errors
+    </h2>
+    <ul>
+      <li>
+        <a
+          href="#usernameControl"
+        >
+          User name is required.
+        </a>
+      </li>
+    </ul>
+  </section>
+</div>
+`;

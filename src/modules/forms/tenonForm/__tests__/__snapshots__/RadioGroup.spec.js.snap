@@ -1,0 +1,182 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RadioGroup should render a content hint if given 1`] = `
+<fieldset
+  class="form-group"
+>
+  <legend>
+    Test radio group
+    <span
+      class="visually-hidden"
+    >
+       
+      Content hint test
+    </span>
+  </legend>
+  <div>
+    <span>
+      FocusCatcher
+    </span>
+    <ul
+      class="radio-container"
+    >
+      <li>
+        <div
+          class="radio-wrapper"
+        >
+          <input
+            id="foo"
+            value="one"
+          />
+          <label
+            for="foo"
+          >
+            One
+          </label>
+        </div>
+      </li>
+      <li>
+        <div
+          class="radio-wrapper"
+        >
+          <input
+            id="foo-two"
+            value="two"
+          />
+          <label
+            for="foo-two"
+          >
+            Two
+          </label>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div
+    aria-hidden="true"
+    class="info-wrapper"
+  >
+    <span
+      class="icon"
+    />
+    <span>
+      Content hint test
+    </span>
+  </div>
+</fieldset>
+`;
+
+exports[`RadioGroup should render an error text when invalid 1`] = `
+<fieldset
+  class="form-group"
+>
+  <legend>
+    Test radio group
+    <span
+      class="visually-hidden"
+    >
+       
+      Test error
+    </span>
+  </legend>
+  <div>
+    <span>
+      FocusCatcher
+    </span>
+    <ul
+      class="radio-container"
+    >
+      <li>
+        <div
+          class="radio-wrapper"
+        >
+          <input
+            id="foo"
+            value="one"
+          />
+          <label
+            for="foo"
+          >
+            One
+          </label>
+        </div>
+      </li>
+      <li>
+        <div
+          class="radio-wrapper"
+        >
+          <input
+            id="foo-two"
+            value="two"
+          />
+          <label
+            for="foo-two"
+          >
+            Two
+          </label>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div
+    aria-hidden="true"
+    class="error-wrapper"
+  >
+    <span
+      class="icon"
+    />
+    <span>
+      Test error
+    </span>
+  </div>
+</fieldset>
+`;
+
+exports[`RadioGroup should render an input and label only 1`] = `
+<fieldset
+  class="form-group"
+>
+  <legend>
+    Test radio group
+  </legend>
+  <div>
+    <span>
+      FocusCatcher
+    </span>
+    <ul
+      class="radio-container"
+    >
+      <li>
+        <div
+          class="radio-wrapper"
+        >
+          <input
+            id="foo"
+            value="one"
+          />
+          <label
+            for="foo"
+          >
+            One
+          </label>
+        </div>
+      </li>
+      <li>
+        <div
+          class="radio-wrapper"
+        >
+          <input
+            id="foo-two"
+            value="two"
+          />
+          <label
+            for="foo-two"
+          >
+            Two
+          </label>
+        </div>
+      </li>
+    </ul>
+  </div>
+</fieldset>
+`;

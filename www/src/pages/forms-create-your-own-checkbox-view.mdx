@@ -1,0 +1,226 @@
+import Helmet from "react-helmet";
+
+import Layout from '../components/Layout';
+import PageNav from '../components/PageNav';
+
+export default ({children}) => 
+<Layout>
+    <Helmet>
+        <title>Tenon-ui | Create your own Checkbox view</title>
+    </Helmet>{children}
+</Layout>
+
+## Create your own Checkbox view
+
+<PageNav targets={
+    ['Available prop getters from CheckboxController',
+    'Other props from CheckboxController', 
+    'Basic non-validated checkbox',
+    'Required validated checkbox',
+    'Checkbox with a content hint']
+    } />
+
+Here you will see how to create your own `Checkbox` view. When creating your own view inline, 
+you will use the `children render prop` of the `CheckboxController`.
+
+### Available prop getters from CheckboxController
+The `CheckboxController` gives you access to the following prop getter functions:
+
+#### getLabelProps
+This prop getter generates the required props for the `<label>` element.
+
+#### getCheckboxProps
+This prop getter generates the required props for the `<input>` element.
+
+#### getErrorProps
+This prop getter generates the required props for the container element of your
+displayed errors.
+
+#### getContentHintProps
+This prop getter generates the required props for the container element of your
+content hint text.
+
+### Other props from CheckboxController
+A number of other props are also exposed by the `CheckboxController`. Refer to the 
+[smart controllers page](/forms-smart-controllers) to see how validators work:
+
+#### showError
+This boolean value will indicate to the view if an error should be shown. Normally, errors
+will only be shown after the first submit attempt unless overridden by the `alwaysShowErrors`
+prop of the [Form component](/forms-form-component).
+
+Use this to easily hide and show your error containers. 
+
+#### errorText
+This value contains the current actual error message text. For valid or non-validated fields
+this will be empty. Otherwise if will contain the text from the first failing validator as 
+specified on the `CheckboxController`. 
+
+#### required
+This boolean value indicates if the `CheckboxController` has been marked as `required`. This
+can be handy to decide when to render required indicators.
+
+### Basic non-validated checkbox
+If you only need a label and a checkbox you can write view code resembling this:
+
+```
+import { Form } from '@tenon-io/tenon-ui';
+
+//...
+
+<Form.CheckboxController name="acceptConditions">
+    {({ getLabelProps, getCheckboxProps }) => (
+        <React.Fragment>
+            <input
+                {...getCheckboxProps()}
+            />
+            <label {...getLabelProps()}>
+                Do you accept our terms and conditions?
+            </label>
+        </React.Fragment>
+    )}
+</Form.CheckboxController>
+```
+
+Here the label follows the `<input>`. This is common practise when rendering checkboxes.
+
+**Note**: that both the `getLabelProps` and the `getCheckboxProps` prop getters can be called 
+with an object that can override and / or enrich the props object returned by these prop getters. 
+For example:
+
+```
+<input
+    {...getCheckboxProps({
+        className: "some-custom-style"
+    })}
+/>
+```
+
+### Required validated checkbox
+For validation, you can make use of the `getErrorProps` prop getter as well.
+
+```
+import { Form, validator, isRequired } from '@tenon-io/tenon-ui';
+
+//...
+
+<Form.CheckboxController
+    name="acceptConditions"
+    validators={[
+        validator(
+        value => value === true, 
+        'Please indicate that your accept the terms and conditions.'
+        )
+    ]}
+    required="true"
+>
+    {({
+        getLabelProps,
+        getCheckboxProps,
+        getErrorProps,
+        showError,
+        errorText,
+        required
+    }) => (
+        <React.Fragment>
+            <input {...getCheckboxProps()} />
+            <label {...getLabelProps()}>
+                Do you accept our terms and conditions?
+                {required && (
+                    <span
+                        aria-hidden="true"
+                    >
+                      ( required )
+                    </span>
+                )}
+            </label>
+            {showError && (
+                <div
+                    {...getErrorProps({
+                        className: 'error-container'
+                    })}
+                >
+                    {errorText}
+                </div>
+            )}
+        </React.Fragment>
+    )}
+</Form.CheckboxController>
+```
+
+Note in the example above that the visual `( required )` text is marked with `aria-hidden="true"`. This
+is because the `CheckboxController` already marks the input as `required` with the 
+`aria-required` property. Therefore you need to make sure that this is not read out twice by
+screen readers.
+
+The prop getters will ensure that the error text field is linked to the input and that the input
+validity (`aria-valid`) is managed and read out by screen readers. 
+
+### Checkbox with a content hint
+Should you want to render a `content hint`, please make use of the `getContentHintProps` prop getter:
+
+```
+import { Form, validator, isRequired } from '@tenon-io/tenon-ui';
+
+//...
+
+<Form.CheckboxController
+    name="acceptConditions"
+    validators={[
+        validator(
+        value => value === true, 
+        'Please indicate that your accept the terms and conditions.'
+        )
+    ]}
+    required="true"
+>
+    {({
+        getLabelProps,
+        getCheckboxProps,
+        getErrorProps,
+        getContentHintProps,
+        showError,
+        errorText,
+        required
+    }) => (
+        <React.Fragment>
+            <input {...getCheckboxProps()} />
+            <label {...getLabelProps()}>
+                Do you accept our terms and conditions?
+                {required && (
+                    <span
+                        aria-hidden="true"
+                    >
+                      ( required )
+                    </span>
+                )}
+            </label>
+            <div
+                {...getContentHintProps({
+                    className: 'content-hint-container'
+                })}
+            >
+                You need to select this to continue.
+            </div>
+            {showError && (
+                <div
+                    {...getErrorProps({
+                        className: 'error-container'
+                    })}
+                >
+                    {errorText}
+                </div>
+            )}
+        </React.Fragment>
+    )}
+</Form.CheckboxController>
+```
+
+The prop getter will ensure that the `content hint` is also linked to the `<input>` field so that
+screen readers are aware of this.
+
+As shown above you can easily combine this with an error field, although a content hint can safely be
+rendered on its own. 
+
+
+

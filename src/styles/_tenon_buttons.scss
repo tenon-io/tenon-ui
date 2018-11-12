@@ -1,0 +1,39 @@
+@mixin buttonPrimary() {
+    @include vf-button-pattern(
+        $button-background-color: $color-button-primary,
+        $button-text-color: $color-x-light,
+        $button-disabled-border-color: $color-button-primary,
+        $button-disabled-background-color: $color-button-primary,
+        $button-border-color: $color-button-primary,
+        $button-hover-background-color: darken($color-button-primary, 10%),
+        $button-hover-border-color: $color-button-primary
+    );
+    font-weight: 400;
+    margin-bottom: 0;
+}
+
+@mixin buttonSecondary() {
+    @include vf-button-pattern(
+        $button-background-color: $color-button-secondary,
+        $button-text-color: $color-x-light,
+        $button-disabled-border-color: $color-button-secondary,
+        $button-disabled-background-color: $color-button-secondary,
+        $button-border-color: $color-button-secondary,
+        $button-hover-background-color: darken($color-button-secondary, 10%),
+        $button-hover-border-color: $color-button-secondary
+    );
+    font-weight: 400;
+    margin-bottom: 0;
+}
+
+button.primary {
+    @include buttonPrimary();
+}
+
+button.secondary {
+    @include buttonSecondary();
+}
+
+button[type='submit'] {
+    @include buttonPrimary();
+}
