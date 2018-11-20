@@ -130,6 +130,54 @@ describe('Form.CheckboxController', () => {
         expect(testInput.attributes.length).toBe(4);
     });
 
+    it('should run a custom onChange handler, when given', () => {
+        let eventValue = '';
+
+        const onChangeSpy = jest.fn(e => {
+            eventValue = e.target.checked;
+        });
+
+        const { getByLabelText, getByTestId } = render(
+            <Form onSubmit={jest.fn()}>
+                {({ formControls }) => (
+                    <div>
+                        {JSON.stringify(formControls)}
+                        <span data-testid="resultContainer">
+                            {formControls.testCheckbox
+                                ? formControls.testCheckbox.value.toString()
+                                : ''}
+                        </span>
+                        <Form.CheckboxController name="testCheckbox">
+                            {({ getCheckboxProps, getLabelProps }) => {
+                                return (
+                                    <div>
+                                        <input
+                                            {...getCheckboxProps({
+                                                onChange: onChangeSpy
+                                            })}
+                                        />
+                                        <label {...getLabelProps()}>
+                                            Test checkbox
+                                        </label>
+                                    </div>
+                                );
+                            }}
+                        </Form.CheckboxController>
+                        <button type="submit">Submit</button>
+                    </div>
+                )}
+            </Form>
+        );
+
+        const input = getByLabelText('Test checkbox');
+
+        fireEvent.click(input);
+
+        expect(getByTestId('resultContainer')).toHaveTextContent('true');
+        expect(onChangeSpy).toHaveBeenCalled();
+        expect(eventValue).toBe(true);
+    });
+
     it('should validate a checkbox and set an error text when appropriate', () => {
         const { getByLabelText, getByTestId, getByText } = render(
             <Form onSubmit={jest.fn()}>

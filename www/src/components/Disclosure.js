@@ -36,8 +36,8 @@ const Target = ({ children, useHidden, deactivate }) => (
                       })
                   )
                 : expanded || deactivate
-                    ? children
-                    : null
+                ? children
+                : null
         }
     </DisclosureContext.Consumer>
 );

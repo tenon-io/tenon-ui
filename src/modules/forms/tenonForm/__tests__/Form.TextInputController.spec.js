@@ -181,6 +181,54 @@ describe('Form.TextInputController', () => {
         expect(testInput.attributes.length).toBe(5);
     });
 
+    it('should run a custom onChange handler, when given', () => {
+        let eventValue = '';
+
+        const onChangeSpy = jest.fn(e => {
+            eventValue = e.target.value;
+        });
+
+        const { getByLabelText, getByTestId } = render(
+            <Form onSubmit={jest.fn()}>
+                {({ formControls }) => (
+                    <div>
+                        <span data-testid="resultContainer">
+                            {formControls.testInput
+                                ? formControls.testInput.value
+                                : ''}
+                        </span>
+                        <Form.TextInputController name="testInput">
+                            {({ getInputProps, getLabelProps }) => {
+                                return (
+                                    <div>
+                                        <label {...getLabelProps()}>
+                                            Test input
+                                        </label>
+                                        <input
+                                            {...getInputProps({
+                                                onChange: onChangeSpy
+                                            })}
+                                        />
+                                    </div>
+                                );
+                            }}
+                        </Form.TextInputController>
+                        <button type="submit">Submit</button>
+                    </div>
+                )}
+            </Form>
+        );
+
+        const input = getByLabelText('Test input');
+
+        input.value = 'Some text';
+        fireEvent.change(input);
+
+        expect(getByTestId('resultContainer')).toHaveTextContent('Some text');
+        expect(onChangeSpy).toHaveBeenCalled();
+        expect(eventValue).toBe('Some text');
+    });
+
     it('should validate an input and set an error text when appropriate', () => {
         const { getByLabelText, getByTestId, getByText } = render(
             <Form onSubmit={jest.fn()}>

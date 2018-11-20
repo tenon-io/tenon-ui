@@ -1,18 +1,20 @@
-import Helmet from "react-helmet";
+import Helmet from 'react-helmet';
 
 import Layout from '../components/Layout';
 import Spinner from '../../../src/modules/notifications/Spinner';
 
-export default ({children}) => 
-<Layout>
-    <Helmet>
-        <title>Tenon-ui | Spinner</title>
-    </Helmet>{children}
-</Layout>
+export default ({ children }) => (
+    <Layout>
+        <Helmet>
+            <title>Tenon-ui | Spinner</title>
+        </Helmet>
+        {children}
+    </Layout>
+);
 
 ## Spinner
 
-Visual aids can be very helpful in an application but for people who cannot see them they can 
+Visual aids can be very helpful in an application but for people who cannot see them they can
 sometimes seriously degrade the overall experience of the web application if these aids carry
 important information.
 
@@ -30,9 +32,9 @@ import { Spinner } from '@tenon-io/tenon-ui';
 
 //...
 
-<Spinner 
-    title="Busy fetching data" 
-    className="demo-spinner" 
+<Spinner
+    title="Busy fetching data"
+    className="demo-spinner"
 />
 ```
 
@@ -52,6 +54,7 @@ This will display as:
 ### Component props
 
 #### title
+
 This is required.
 
 A string value describing the spinner. Please use this to describe the purpose of the spinner,
@@ -60,6 +63,6 @@ such as "Busy fetching user data.".
 Without a proper title, such spinners are inaccessible to a large number of people.
 
 #### className
-You can use this to give a class to the internal `SVG` so that you can style it with `CSS` 
-as shown above.
 
+You can use this to give a class to the internal `SVG` so that you can style it with `CSS`
+as shown above.

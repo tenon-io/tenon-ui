@@ -136,6 +136,57 @@ describe('Form.SelectController', () => {
         expect(testSelect.attributes.length).toBe(3);
     });
 
+    it('should run a custom onChange handler, when given', () => {
+        let eventValue = '';
+
+        const onChangeSpy = jest.fn(e => {
+            eventValue = e.target.value;
+        });
+
+        const { getByLabelText, getByTestId } = render(
+            <Form onSubmit={jest.fn()}>
+                {({ formControls }) => (
+                    <div>
+                        <span data-testid="resultContainer">
+                            {formControls.testSelect
+                                ? formControls.testSelect.value
+                                : ''}
+                        </span>
+                        <Form.SelectController name="testSelect">
+                            {({ getSelectProps, getLabelProps }) => {
+                                return (
+                                    <div>
+                                        <label {...getLabelProps()}>
+                                            Test select
+                                        </label>
+                                        <select
+                                            {...getSelectProps({
+                                                onChange: onChangeSpy
+                                            })}
+                                        >
+                                            <option value="one">1</option>
+                                            <option value="two">2</option>
+                                        </select>
+                                    </div>
+                                );
+                            }}
+                        </Form.SelectController>
+                        <button type="submit">Submit</button>
+                    </div>
+                )}
+            </Form>
+        );
+
+        const select = getByLabelText('Test select');
+
+        select.value = 'two';
+        fireEvent.change(select);
+
+        expect(getByTestId('resultContainer')).toHaveTextContent('two');
+        expect(onChangeSpy).toHaveBeenCalled();
+        expect(eventValue).toBe('two');
+    });
+
     it('should validate a select and set an error text when appropriate', () => {
         const { getByLabelText, getByTestId, getByText } = render(
             <Form onSubmit={jest.fn()}>

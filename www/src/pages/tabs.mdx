@@ -1,18 +1,20 @@
-import Helmet from "react-helmet";
+import Helmet from 'react-helmet';
 
 import Layout from '../components/Layout';
 import Tabs from '../../../src/modules/tabs/Tabs';
 
-export default ({children}) => 
-<Layout>
-    <Helmet>
-        <title>Tenon-ui | Tabbed interface</title>
-    </Helmet>{children}
-</Layout>
+export default ({ children }) => (
+    <Layout>
+        <Helmet>
+            <title>Tenon-ui | Tabbed interface</title>
+        </Helmet>
+        {children}
+    </Layout>
+);
 
 ## Tabbed interface
 
-Rendering accessible tabbed interfaces is not simple. There are a number of features that you 
+Rendering accessible tabbed interfaces is not simple. There are a number of features that you
 need to implement if you want all users to be able to easily interact with your tabs.
 
 You can read more about this on [the W3C ARIA design patterns page for tabs](https://www.w3.org/TR/wai-aria-practices-1.1/#tabpanel)
@@ -67,7 +69,7 @@ You then get:
 
 You are free to render any view you'd like inside the tabs.
 
-**Please note**: True tabs are not site navigation elements. If you are rendering large 
+**Please note**: True tabs are not site navigation elements. If you are rendering large
 views inside your tabs, rather consider doing it with routing and navigation elements. `Tenon-UI`
 uses styles to hide and show the tabs, so rendering very large content in many tabs will
 incur a performance hit.
@@ -75,53 +77,59 @@ incur a performance hit.
 ### Tabs.Tab component props
 
 #### title
+
 This prop is required.
 
 The title of the panel. This is the text that is rendered as the text inside the tabs. By default,
 it is also rendered as heading of the tab panel.
 
 #### noHeading
-This boolean prop can be used if you do not want to render the `title` texts as a heading inside the 
+
+This boolean prop can be used if you do not want to render the `title` texts as a heading inside the
 tab panel.
 
 #### className
+
 This prop is passed through to the wrapping `<section>` element of the tab panel.
 
 #### headingLevel
-The `Tabs` component makes use of the [Tenon-UI Heading component](/headings) to automatically
-render the correct heading level. 
 
-If your application does not use this component you can override the default level by giving the 
+The `Tabs` component makes use of the [Tenon-UI Heading component](/headings) to automatically
+render the correct heading level.
+
+If your application does not use this component you can override the default level by giving the
 desired heading level in this prop.
 
 ```
-<Tabs.Tab 
+<Tabs.Tab
     title="Panel 4"
     headingLevel="3">
     <p>You are on panel 4.</p>
 </Tabs.Tab>
-``` 
+```
 
 #### name
-A string name prop that can be used to identify the tabs by name. This can be useful in the 
+
+A string name prop that can be used to identify the tabs by name. This can be useful in the
 toggle render function described next.
 
 If no `name` prop is given the tabs are named by index: `tab0`, `tab1`, `tab3` ... etc.
 
 #### toggleRender
+
 Should you also want to customise the HTML that is rendered inside the tab toggle elements,
-you can pass a render function into this prop. This will then override the default HTML inside 
+you can pass a render function into this prop. This will then override the default HTML inside
 the toggles.
 
 ```
-<Tabs.Tab 
-    title="Panel 1" 
-    name="myTab" 
+<Tabs.Tab
+    title="Panel 1"
+    name="myTab"
     toggleRender={
-    ({isActive, name, title}) => 
-        isActive ? 
-            <b>{title}</b> : 
-            <span className={name}>{title}</b> 
+    ({isActive, name, title}) =>
+        isActive ?
+            <b>{title}</b> :
+            <span className={name}>{title}</b>
     JSON.stringify(props)
     }>
     <p>You are on panel 1.</p>
@@ -131,12 +139,14 @@ the toggles.
 The render function is called with:
 
 ##### title
+
 The text title of the tab so that you can render that text into your own JSX.
 
 ##### name
-The name given to the tab in question. This can be handy in some cases where generic render 
+
+The name given to the tab in question. This can be handy in some cases where generic render
 functions are used.
 
 ##### isActive
-A boolean value indicating if the tab is currently active.
 
+A boolean value indicating if the tab is currently active.

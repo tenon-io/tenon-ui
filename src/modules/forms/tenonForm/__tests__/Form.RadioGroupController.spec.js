@@ -67,6 +67,59 @@ describe('Form.RadioGroupController', () => {
         expect(inputTwo.attributes.length).toBe(4);
     });
 
+    it('should run a custom onChange handler, when given', () => {
+        let eventValue = '';
+
+        let submitData = null;
+
+        const onChangeSpy = jest.fn(e => {
+            eventValue = e.target.value;
+        });
+
+        const { getByLabelText, getByText } = render(
+            <Form
+                onSubmit={data => {
+                    submitData = data;
+                }}
+            >
+                {() => (
+                    <Form.RadioGroupController name="testRadio">
+                        {({ getRadioButtonProps, getLabelProps }) => (
+                            <fieldset>
+                                <legend>Test check</legend>
+                                <div>
+                                    <input
+                                        {...getRadioButtonProps({
+                                            name: 'one',
+                                            value: 'one',
+                                            onChange: onChangeSpy
+                                        })}
+                                    />
+                                    <label
+                                        {...getLabelProps({
+                                            autoIdPostfix: 'one'
+                                        })}
+                                    >
+                                        One
+                                    </label>
+                                </div>
+                                <button type="submit">Submit</button>
+                            </fieldset>
+                        )}
+                    </Form.RadioGroupController>
+                )}
+            </Form>
+        );
+
+        fireEvent.click(getByLabelText('One'));
+        fireEvent.click(getByText('Submit'));
+
+        expect(submitData).toEqual({ testRadio: 'one' });
+
+        expect(onChangeSpy).toHaveBeenCalled();
+        expect(eventValue).toBe('one');
+    });
+
     it('should allow view injection via the component prop', () => {
         const RadioGroup = ({
             getRadioButtonProps,

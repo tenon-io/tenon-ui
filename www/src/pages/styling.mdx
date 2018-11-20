@@ -1,18 +1,20 @@
-import Helmet from "react-helmet";
+import Helmet from 'react-helmet';
 
 import Layout from '../components/Layout';
 
-export default ({children}) => 
-<Layout>
-    <Helmet>
-        <title>Tenon-ui | Styling</title>
-    </Helmet>{children}
-</Layout>
+export default ({ children }) => (
+    <Layout>
+        <Helmet>
+            <title>Tenon-ui | Styling</title>
+        </Helmet>
+        {children}
+    </Layout>
+);
 
 ## Styling
 
-Currently `Tenon-UI` comes with a compiled `style sheet` as well as `SASS` source files for you 
-to use. 
+Currently `Tenon-UI` comes with a compiled `style sheet` as well as `SASS` source files for you
+to use.
 
 You can use our compiled `CSS`, import and override our `SASS` files, or completely restyle the components
 using the classes rendered on the elements.
@@ -22,7 +24,7 @@ and non-intrusive as possible.
 
 ### The compiled stylesheet
 
-In your React app, simply import the `tenon-ui.css` file located in the `/lib/styles` part of 
+In your React app, simply import the `tenon-ui.css` file located in the `/lib/styles` part of
 the import:
 
 ```

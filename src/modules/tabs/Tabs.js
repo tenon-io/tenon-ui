@@ -238,17 +238,16 @@ class Tabs extends Component {
         this.tabRefs = {};
         this.panelRefs = {};
 
-        const tabPanelMetadata = tabChildren.map(
-            child =>
-                child.title
-                    ? {
-                          title: child.title,
-                          name: child.name,
-                          toggleRender: child.toggleRender,
-                          tabId: uuidv4(),
-                          panelId: uuidv4()
-                      }
-                    : {}
+        const tabPanelMetadata = tabChildren.map(child =>
+            child.title
+                ? {
+                      title: child.title,
+                      name: child.name,
+                      toggleRender: child.toggleRender,
+                      tabId: uuidv4(),
+                      panelId: uuidv4()
+                  }
+                : {}
         );
 
         const tabMetadata = tabPanelMetadata.filter(tab => !!tab.tabId);
@@ -307,8 +306,8 @@ class Tabs extends Component {
                     child && child.props.toggleRender
                         ? child.props.toggleRender
                         : toggleRender
-                            ? toggleRender
-                            : null
+                        ? toggleRender
+                        : null
             }))
         );
 
