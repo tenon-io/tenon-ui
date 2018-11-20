@@ -161,6 +161,54 @@ describe('Form.TextareaController', () => {
         expect(testTextarea.attributes.length).toBe(4);
     });
 
+    it('should run a custom onChange handler, when given', () => {
+        let eventValue = '';
+
+        const onChangeSpy = jest.fn(e => {
+            eventValue = e.target.value;
+        });
+
+        const { getByLabelText, getByTestId } = render(
+            <Form onSubmit={jest.fn()}>
+                {({ formControls }) => (
+                    <div>
+                        <span data-testid="resultContainer">
+                            {formControls.testTextarea
+                                ? formControls.testTextarea.value
+                                : ''}
+                        </span>
+                        <Form.TextareaController name="testTextarea">
+                            {({ getTextareaProps, getLabelProps }) => {
+                                return (
+                                    <div>
+                                        <label {...getLabelProps()}>
+                                            Test textarea
+                                        </label>
+                                        <textarea
+                                            {...getTextareaProps({
+                                                onChange: onChangeSpy
+                                            })}
+                                        />
+                                    </div>
+                                );
+                            }}
+                        </Form.TextareaController>
+                        <button type="submit">Submit</button>
+                    </div>
+                )}
+            </Form>
+        );
+
+        const textarea = getByLabelText('Test textarea');
+
+        textarea.value = 'Some text';
+        fireEvent.change(textarea);
+
+        expect(getByTestId('resultContainer')).toHaveTextContent('Some text');
+        expect(onChangeSpy).toHaveBeenCalled();
+        expect(eventValue).toBe('Some text');
+    });
+
     it('should validate a textarea and set an error text when appropriate', () => {
         const { getByLabelText, getByTestId, getByText } = render(
             <Form onSubmit={jest.fn()}>

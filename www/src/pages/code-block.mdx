@@ -1,23 +1,25 @@
-import Helmet from "react-helmet";
+import Helmet from 'react-helmet';
 
 import Layout from '../components/Layout';
 
-export default ({children}) => 
-<Layout>
-    <Helmet>
-        <title>Tenon-ui | Code block</title>
-    </Helmet>{children}
-</Layout>
+export default ({ children }) => (
+    <Layout>
+        <Helmet>
+            <title>Tenon-ui | Code block</title>
+        </Helmet>
+        {children}
+    </Layout>
+);
 
 ## Code block
 
-As developers we make applications for people, and as developers are people too sometimes we 
-build technical applications. 
+As developers we make applications for people, and as developers are people too sometimes we
+build technical applications.
 
 Sharing code should also be for everyone and the `Tenon-UI CodeBlock` helps you achieve that by
 giving you an easy to use accessible highlighted code block.
 
-This component leverages [react-syntax-highlighter](https://github.com/conorhastings/react-syntax-highlighter). 
+This component leverages [react-syntax-highlighter](https://github.com/conorhastings/react-syntax-highlighter).
 However some tweaks have been made to ensure that all text has sufficient colour contrast to be readable by as many
 people as possible.
 
@@ -26,7 +28,7 @@ people as possible.
 ### Installation
 
 Due to the payload size of a syntax highlighting, this component is not part of the main
-`Tenon-UI` package. 
+`Tenon-UI` package.
 
 #### Installing with npm
 
@@ -42,13 +44,13 @@ yarn add @tenon-io/tenon-codeblock
 
 ### Usage
 
-The code block can either display the contents of a file or a code string, making it highly 
+The code block can either display the contents of a file or a code string, making it highly
 flexible.
 
 #### With a file
 
 ```
-//... 
+//...
 
 import CodeBlock from '@tenon-io/tenon-codeblock';
 
@@ -68,7 +70,7 @@ real time.
 #### With a code string
 
 ```
-//... 
+//...
 
 import CodeBlock from '@tenon-io/tenon-codeblock';
 
@@ -98,12 +100,15 @@ code block is reset when the code block loses focus.
 ### Component props
 
 #### file
+
 The url of the code file you would like to display in the code block.
 
 #### codeString
+
 A formatted code string you would like to display in the code block.
 
 #### onReset
+
 An event handler that gets called if the user changes the code and the code is subsequently
 reset `onBlur`.
 
@@ -121,7 +126,8 @@ With this event you could inform your users that the text has been reset for the
 ```
 
 #### language
-In order to keep the bundle size small, the most common languages supported in a React 
+
+In order to keep the bundle size small, the most common languages supported in a React
 application are supported:
 
 1. **jsx**
@@ -141,10 +147,3 @@ By default the code block is setup to render `JSX` code but you can specify the 
 ```
 
 If you would like to use this code block with another language format, please let us know!
-
- 
-
-
-
-
-

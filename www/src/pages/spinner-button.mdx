@@ -1,21 +1,23 @@
-import Helmet from "react-helmet";
+import Helmet from 'react-helmet';
 
 import Layout from '../components/Layout';
 import SpinnerButtonExample from '../components/examples/SpinnerButtonExample';
 
-export default ({children}) => 
-<Layout>
-    <Helmet>
-        <title>Tenon-ui | Spinner button</title>
-    </Helmet>{children}
-</Layout>
+export default ({ children }) => (
+    <Layout>
+        <Helmet>
+            <title>Tenon-ui | Spinner button</title>
+        </Helmet>
+        {children}
+    </Layout>
+);
 
 ## Spinner button
 
 When you want to trigger an asynchronous action with a button and clearly indicate to all users that
-the action is busy and also that it has completed, you can use `Tenon-IU`'s `SpinnerButton`. 
+the action is busy and also that it has completed, you can use `Tenon-IU`'s `SpinnerButton`.
 
-It shows a visual spinner while marked as active and also broadcasts the necessary messages to screen 
+It shows a visual spinner while marked as active and also broadcasts the necessary messages to screen
 readers.
 
 ### Usage
@@ -81,26 +83,31 @@ Therefore the button remains clickable but the `SpinnerButton` component manages
 `onClick` handler is executed or not.
 
 #### isBusy
+
 This prop is required.
 
-A boolean value indicating if the action triggered by the button is busy. You are responsible 
+A boolean value indicating if the action triggered by the button is busy. You are responsible
 for linking this to your asynchronous action in the code.
 
-#### busyText 
+#### busyText
+
 A string value that will be broadcast to screen readers when the button is busy.
 
 #### completeText
+
 A string value that will be broadcast to screen readers when the button action completes.
 
 #### onBusyClick
+
 An event handler that always fires.
 
-You may want trigger an action if a user clicks on a button with a busy state. This allows you 
-to set notifications or other side effects of clicking on a busy button. You can use the 
-`onBusyClick` handler for that purpose as the `onClick` handler is only executed when the button is 
+You may want trigger an action if a user clicks on a button with a busy state. This allows you
+to set notifications or other side effects of clicking on a busy button. You can use the
+`onBusyClick` handler for that purpose as the `onClick` handler is only executed when the button is
 in a non-busy state.
 
 #### spinnerImgSrc
+
 An imported animated image source.
 
 If you do not like the spinner that `Tenon-UI` renders, you can provide your own by using this prop.

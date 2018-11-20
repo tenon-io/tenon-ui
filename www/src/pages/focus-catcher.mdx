@@ -1,14 +1,16 @@
-import Helmet from "react-helmet";
+import Helmet from 'react-helmet';
 
 import Layout from '../components/Layout';
 import FocusCatcher from '../../../src/modules/utils/components/FocusCatcher';
 
-export default ({children}) => 
-<Layout>
-    <Helmet>
-        <title>Tenon-ui | Focus catcher</title>
-    </Helmet>{children}
-</Layout>
+export default ({ children }) => (
+    <Layout>
+        <Helmet>
+            <title>Tenon-ui | Focus catcher</title>
+        </Helmet>
+        {children}
+    </Layout>
+);
 
 ## Focus catcher
 
@@ -16,11 +18,11 @@ Usually the `React event system` fully respects and follows the way events work 
 `browser DOM`.
 
 But with `focus` and `blur` this is different. In React, both of these events are bubbled up the
-tree until they are handled. This is a conscious decision, and even makes it possible to 
+tree until they are handled. This is a conscious decision, and even makes it possible to
 [sanely implement alternatives for Focus Outside](https://reactjs.org/docs/accessibility.html#mouse-and-pointer-events).
 
 In accessible applications you want to keep the CSS focus outline intact for all elements that can
-receive focus. But here this bubbling can cause some unexpected side effects. 
+receive focus. But here this bubbling can cause some unexpected side effects.
 
 The input below sits in a focusable container: a `div` that has been given `tabIndex="-1"` because
 we may want to set focus to it later via code. Click on the label below to see the side effect:
@@ -71,5 +73,3 @@ Here is the same example as above, but with the `FocusCatcher` component introdu
         </div>
     </FocusCatcher>
 </div>
-
-

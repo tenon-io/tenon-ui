@@ -1,15 +1,18 @@
-import Helmet from "react-helmet";
+import Helmet from 'react-helmet';
 
 import Layout from '../components/Layout';
 
-export default ({children}) => 
-<Layout>
-    <Helmet>
-        <title>Tenon-ui | Smart form element controllers</title>
-    </Helmet>{children}
-</Layout>
+export default ({ children }) => (
+    <Layout>
+        <Helmet>
+            <title>Tenon-ui | Smart form element controllers</title>
+        </Helmet>
+        {children}
+    </Layout>
+);
 
 ## Smart form element controllers
+
 In the `Tenon-UI smart form` architecture, each control on your `Form` will talk to this parent `Form`
 automatically. Each control will also allow you to implement your own view.
 
@@ -18,21 +21,23 @@ each form control type has a `smart controller component`. These controller comp
 compound component.
 
 They are:
-- TextInputController
-- TextareaController
-- SelectController
-- CheckboxController
-- CheckboxGroupController
-- RadioGroupController
+
+-   TextInputController
+-   TextareaController
+-   SelectController
+-   CheckboxController
+-   CheckboxGroupController
+-   RadioGroupController
 
 Each of these controllers also accepts a `children render prop` function where any view can be injected.
 
 These controllers do the following for you:
-- Registers itself with the `Form` component and communicates all data and validation changes.
-- Provides all event handlers and data bindings required to turn your view controls into [controlled components](https://reactjs.org/docs/forms.html#controlled-components).
-- Auto calculates all `id` values required for your view in order ensure that id's remain unique.
-- Where possible, calculates accessibility states and properties required to make your view accessible.
-- Exposes all this information via [prop getter functions](https://blog.kentcdodds.com/how-to-give-rendering-control-to-users-with-prop-getters-549eaef76acf).
+
+-   Registers itself with the `Form` component and communicates all data and validation changes.
+-   Provides all event handlers and data bindings required to turn your view controls into [controlled components](https://reactjs.org/docs/forms.html#controlled-components).
+-   Auto calculates all `id` values required for your view in order ensure that id's remain unique.
+-   Where possible, calculates accessibility states and properties required to make your view accessible.
+-   Exposes all this information via [prop getter functions](https://blog.kentcdodds.com/how-to-give-rendering-control-to-users-with-prop-getters-549eaef76acf).
 
 Think of the controller components as where all the magic happens for each form control.
 
@@ -82,71 +87,77 @@ class FormClass extends React.Component {
     }
 }
 ```
+
 ### Controller props
+
 Each controller has access to the same three props, although the render function of each controller differs slightly.
 
 #### name
+
 This prop is required.
 
 Every controller must have a string name. This is the name with which it will register with the `Form` component. Subsequently,
 this is the name that will appear in the `Form` datasets mentioned above.
 
-#### component 
+#### component
+
 While the controllers have been built to easily inject any custom view, often you will extract that
 view to another component. And `Tenon-UI` also provides a number of view components for you.
- 
+
 Using these components in the render prop will lead the to following code being repeated:
- 
+
 ```
 {props => {
     return <SomeViewComponent {...props} />
 }}
 ```
- 
+
 To avoid this, you can use the `component` prop instead:
- ```
+
+```
 <Form.[Contoller]
-    name="petName"
-    component={SomeViewComponent}
-/>    
+   name="petName"
+   component={SomeViewComponent}
+/>
 ```
 
 Each controller will also pass any props not used in the controller itself through to the
 view component. This way you can still pass props, for instance a label text, to your
 view component.
 
-In this example, the `labelText` prop will be pass through to the `SomeViewComponent` 
+In this example, the `labelText` prop will be pass through to the `SomeViewComponent`
 view component:
- ```
+
+```
 <Form.[Contoller]
-    name="petName"
-    labelText="Pet name"
-    component={SomeViewComponent}
-/>    
+   name="petName"
+   labelText="Pet name"
+   component={SomeViewComponent}
+/>
 ```
 
 Finally, if the `component` prop is specified, the `children` of the controller component
 will be passed into the view component as its children. This can make it easier and more
 natural to create things like `<select>` boxes.
 
- ```
- //Inside SomeViewComponent
- <select {...getSelectProps()}>
-    {this.props.children}
- </select>
- 
-//Then it can be use as: 
+```
+//Inside SomeViewComponent
+<select {...getSelectProps()}>
+   {this.props.children}
+</select>
+
+//Then it can be use as:
 <Form.SelectController
-    name="petAge"
-    labelText="Pet age"
-    component={SomeViewComponent}
+   name="petAge"
+   labelText="Pet age"
+   component={SomeViewComponent}
 >
-    <option value="1">
-        One
-    </option>    
-    <option value="2">
-        Two
-    </option>
+   <option value="1">
+       One
+   </option>
+   <option value="2">
+       Two
+   </option>
 </Form.SelectController>
 ```
 
@@ -154,21 +165,24 @@ Whenever a component is used as view in the docs, we will prefer using the `comp
 over using the render prop.
 
 #### required
-A form control can be marked as required by activating this prop. This is important as it then passes important information 
+
+A form control can be marked as required by activating this prop. This is important as it then passes important information
 to the view components through the render function.
 
 The prop accepts both `boolean` as well as `string` values.
 
 #### validators
-This array of validators forms the heart of validation in `Tenon-UI`. 
+
+This array of validators forms the heart of validation in `Tenon-UI`.
 
 The library also exports a `validator` function you can use to compose the validators you add to the controllers. Each
 entry in the `validators` array should be composed with this function.
 
 The function takes three parameters:
 
-##### function 
-This is the validation function to run. 
+##### function
+
+This is the validation function to run.
 
 Validation functions should return `true` if the validation passes, and `false` if the validation fails.
 
@@ -176,7 +190,7 @@ You are free to create your own validation functions, it can even be done inline
 
 Validation functions come in two forms.
 
-The simple validation function accept a `value`, which will be injected into the function by the 
+The simple validation function accept a `value`, which will be injected into the function by the
 controller component. This `value` will be the current value of the control. And example of such a function
 is:
 
@@ -191,11 +205,11 @@ const isLongerThan = minLength => value =>
     !value || value.length > minLength;
 ```
 
-Note that these functions are `curried functions`. In the example shown above for the controller usage, it 
+Note that these functions are `curried functions`. In the example shown above for the controller usage, it
 can be seen how each one of these types of functions are used in the validators array.
 
 This second type of function can be used to create powerful validators between various form controls by
-injecting the value of another control from `formControls` render function object into the validator of 
+injecting the value of another control from `formControls` render function object into the validator of
 your control:
 
 ```
@@ -241,7 +255,7 @@ be shown, thereby freeing the view from more decision making logic.
 ##### ignore
 
 Sometimes you would like to turn off a specific validation programmatically. This third (optional)
-parameter allows you to ignore any specific validator. 
+parameter allows you to ignore any specific validator.
 
 To ignore a validator do:
 
@@ -252,4 +266,3 @@ validator(
     true
 )
 ```
-
