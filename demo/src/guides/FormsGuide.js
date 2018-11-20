@@ -134,9 +134,6 @@ class FormsGuide extends Component {
                                             labelText={t(
                                                 'forms.demo.petType.label'
                                             )}
-                                            onChange={e => {
-                                                console.log(e.target.value);
-                                            }}
                                             component={Input}
                                         />
                                         <Form.TextareaController
@@ -145,9 +142,6 @@ class FormsGuide extends Component {
                                             labelText={t(
                                                 'forms.demo.petDescription.label'
                                             )}
-                                            onChange={e => {
-                                                console.log(e.target.value);
-                                            }}
                                             component={TextArea}
                                         />
                                         <Form.SelectController
@@ -167,9 +161,6 @@ class FormsGuide extends Component {
                                             requiredText={t(
                                                 'forms.demo.requiredText'
                                             )}
-                                            onChange={e => {
-                                                console.log(e.target.value);
-                                            }}
                                             component={Select}
                                         >
                                             <option>
@@ -275,9 +266,6 @@ class FormsGuide extends Component {
                                             labelText={t(
                                                 'forms.demo.confirmInfo.label'
                                             )}
-                                            onChange={e => {
-                                                console.log(e.target.value);
-                                            }}
                                             component={Checkbox}
                                         />
 
