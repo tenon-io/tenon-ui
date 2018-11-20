@@ -1,66 +1,80 @@
-import Helmet from "react-helmet";
+import Helmet from 'react-helmet';
 
 import Layout from '../components/Layout';
 import PageNav from '../components/PageNav';
 
-export default ({children}) => 
-<Layout>
-    <Helmet>
-        <title>Tenon-ui | Create your own Textarea view</title>
-    </Helmet>{children}
-</Layout>
+export default ({ children }) => (
+    <Layout>
+        <Helmet>
+            <title>Tenon-ui | Create your own Textarea view</title>
+        </Helmet>
+        {children}
+    </Layout>
+);
 
 ## Create your own Textarea view
 
-<PageNav targets={
-    ['Available prop getters from TextareaController',
-    'Other props from TextareaController', 
-    'Basic non-validated textarea',
-    'Required validated textarea',
-    'Textarea with a content hint']
-    } />
+<PageNav
+    targets={[
+        'Available prop getters from TextareaController',
+        'Other props from TextareaController',
+        'Basic non-validated textarea',
+        'Required validated textarea',
+        'Textarea with a content hint'
+    ]}
+/>
 
-Here you will see how to create your own `Textarea` view. When creating your own view inline, 
+Here you will see how to create your own `Textarea` view. When creating your own view inline,
 you will use the `children render prop` of the `TextareaController`.
 
 ### Available prop getters from TextareaController
+
 The `TextareaController` gives you access to the following prop getter functions:
 
 #### getLabelProps
+
 This prop getter generates the required props for the `<label>` element.
 
 #### getTextareaProps
+
 This prop getter generates the required props for the `<textarea>` element.
 
 #### getErrorProps
+
 This prop getter generates the required props for the container element of your
 displayed errors.
 
 #### getContentHintProps
+
 This prop getter generates the required props for the container element of your
 content hint text.
 
 ### Other props from TextareaController
-A number of other props are also exposed by the `TextareaController`. Refer to the 
+
+A number of other props are also exposed by the `TextareaController`. Refer to the
 [smart controllers page](/forms-smart-controllers) to see how validators work:
 
 #### showError
+
 This boolean value will indicate to the view if an error should be shown. Normally, errors
 will only be shown after the first submit attempt unless overridden by the `alwaysShowErrors`
 prop of the [Form component](/forms-form-component).
 
-Use this to easily hide and show your error containers. 
+Use this to easily hide and show your error containers.
 
 #### errorText
+
 This value contains the current actual error message text. For valid or non-validated fields
-this will be empty. Otherwise if will contain the text from the first failing validator as 
-specified on the `TextareaController`. 
+this will be empty. Otherwise if will contain the text from the first failing validator as
+specified on the `TextareaController`.
 
 #### required
+
 This boolean value indicates if the `TextareaController` has been marked as `required`. This
 can be handy to decide when to render required indicators.
 
 ### Basic non-validated textarea
+
 If you only need a label and a textarea you can write view code resembling this:
 
 ```
@@ -82,8 +96,8 @@ import { Form } from '@tenon-io/tenon-ui';
 </Form.TextareaController>
 ```
 
-**Note**: that both the `getLabelProps` and the `getTextareaProps` prop getters can be called 
-with an object that can override and / or amend the props object returned by these prop getters. 
+**Note**: that both the `getLabelProps` and the `getTextareaProps` prop getters can be called
+with an object that can override and / or amend the props object returned by these prop getters.
 For example:
 
 ```
@@ -96,6 +110,7 @@ For example:
 ```
 
 ### Required validated textarea
+
 For validation, you can make use of the `getErrorProps` prop getter as well.
 
 ```
@@ -145,14 +160,15 @@ import { Form, validator, isRequired } from '@tenon-io/tenon-ui';
 ```
 
 Note in the example above that the visual `( required )` text is marked with `aria-hidden="true"`. This
-is because the `TextareaController` already marks the textarea as `required` with the 
+is because the `TextareaController` already marks the textarea as `required` with the
 `aria-required` property. Therefore you need to make sure that this is not read out twice by
 screen readers.
 
 The prop getters will ensure that the error text field is linked to the textarea and that the textarea
-validity (`aria-valid`) is managed and read out by screen readers. 
+validity (`aria-valid`) is managed and read out by screen readers.
 
 ### Textarea with a content hint
+
 Should you want to render a `content hint`, please make use of the `getContentHintProps` prop getter:
 
 ```
@@ -207,7 +223,4 @@ The prop getter will ensure that the `content hint` is also linked to the `<text
 screen readers are aware of this.
 
 As shown above you can easily combine this with an error field, although a content hint can safely be
-rendered on its own. 
-
-
-
+rendered on its own.

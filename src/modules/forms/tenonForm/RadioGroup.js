@@ -68,13 +68,12 @@ const RadioGroup = forwardRef(
                         {contentHintText}
                     </span>
                 )}
-                {errorText &&
-                    showError && (
-                        <span className="visually-hidden">
-                            &nbsp;
-                            {errorText}
-                        </span>
-                    )}
+                {errorText && showError && (
+                    <span className="visually-hidden">
+                        &nbsp;
+                        {errorText}
+                    </span>
+                )}
             </legend>
             <FocusCatcher>
                 <ul className="radio-container">

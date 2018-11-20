@@ -270,10 +270,12 @@ class FormController extends Component {
      *
      * @param required {object} props - Object with the given
      * props to configure the input.
+     * @param {SyntheticEvent} onChange - Custome user onChange
+     * event handler.
      *
      * @returns {object}
      */
-    getBaseInputProps = ({ onChange, ...props }) => {
+    getBaseInputProps = (props, onChange) => {
         const {
             name,
             getControlValidity,
@@ -304,11 +306,11 @@ class FormController extends Component {
      * @param {object} props
      * @returns {object}
      */
-    getInputProps = (props = {}) => {
+    getInputProps = ({ onChange, ...props } = {}) => {
         const { name, getControlValue } = this.props;
 
         return {
-            ...this.getBaseInputProps(props),
+            ...this.getBaseInputProps(props, onChange),
             'aria-readonly': props['readOnly'] ? 'true' : null,
             type: 'text',
             value: getControlValue(name),
@@ -360,11 +362,11 @@ class FormController extends Component {
      * @param {object} props
      * @returns {object}
      */
-    getCheckboxProps = (props = {}) => {
+    getCheckboxProps = ({ onChange, ...props } = {}) => {
         const { name, getControlValue } = this.props;
 
         return {
-            ...this.getBaseInputProps(props),
+            ...this.getBaseInputProps(props, onChange),
             type: 'checkbox',
             checked: getControlValue(name),
             ...props

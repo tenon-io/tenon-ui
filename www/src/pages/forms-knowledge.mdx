@@ -1,13 +1,15 @@
-import Helmet from "react-helmet";
+import Helmet from 'react-helmet';
 
 import Layout from '../components/Layout';
 
-export default ({children}) => 
-<Layout>
-    <Helmet>
-        <title>Tenon-ui | Smart form required knowledge</title>
-    </Helmet>{children}
-</Layout>
+export default ({ children }) => (
+    <Layout>
+        <Helmet>
+            <title>Tenon-ui | Smart form required knowledge</title>
+        </Helmet>
+        {children}
+    </Layout>
+);
 
 ## Smart form required knowledge
 
@@ -20,6 +22,7 @@ Using the standard `props.children` prop as a [render prop](https://reactjs.org/
 is used prolifically in the forms components.
 
 Example:
+
 ```
 import React from 'react';
 import { Form } from '@tenon-io/tenon-ui';
@@ -48,14 +51,14 @@ class FormClass extends React.Component {
 of the data and accessibility engine provided.
 
 Whereas we would like you to use our view components, as they will ensure accessibility
-of the components themselves, we also understand that UI component libraries are 
-often too restrictive and not every application and design you may need to code can be solved 
+of the components themselves, we also understand that UI component libraries are
+often too restrictive and not every application and design you may need to code can be solved
 with the same static views.
 
-`Tenon-ui` exposes its data and accessibility engine through `prop getter functions` injected 
+`Tenon-ui` exposes its data and accessibility engine through `prop getter functions` injected
 into render functions via `children render props`.
- 
-These functions allow you, not only to access the prop needed to drive your views, but also to 
+
+These functions allow you, not only to access the prop needed to drive your views, but also to
 override and enrich the standard set of props given:
 
 ```
@@ -78,5 +81,4 @@ override and enrich the standard set of props given:
 The specifics around the `Tenon-ui` components will be discussed later, but if the way
 this code snippet gives props to the `<label>` and `<input>` elements are not clear,
 please read this [blog post about prop getters](https://blog.kentcdodds.com/how-to-give-rendering-control-to-users-with-prop-getters-549eaef76acf)
-by Kent C. Dodds. 
-
+by Kent C. Dodds.

@@ -1,19 +1,20 @@
-import Helmet from "react-helmet";
+import Helmet from 'react-helmet';
 
 import Layout from '../components/Layout';
 
-
-export default ({children}) => 
-<Layout>
-    <Helmet>
-        <title>Tenon-ui | Headings</title>
-    </Helmet>{children}
-</Layout>
+export default ({ children }) => (
+    <Layout>
+        <Helmet>
+            <title>Tenon-ui | Headings</title>
+        </Helmet>
+        {children}
+    </Layout>
+);
 
 ## Headings
 
-The hierarchy of headings is very important. Heading elements (`<h1> - <h6>`) are not there to provide 
-different styles. They are there to provide structure to your application. 
+The hierarchy of headings is very important. Heading elements (`<h1> - <h6>`) are not there to provide
+different styles. They are there to provide structure to your application.
 
 Headings are to be used in order and levels should not be skipped.
 
@@ -38,7 +39,7 @@ Example HTML:
 ```
 
 This can seem simple enough until we use it in a complex React application. Because
-of component composition and re-use it can be hard to anticipate which `<h>` element 
+of component composition and re-use it can be hard to anticipate which `<h>` element
 to use.
 
 ### The Heading component
@@ -61,7 +62,7 @@ If used by itself, it will always render an `<h1>` element.
 
 #### Heading.LevelBoundary
 
-To allow automatic level calculation, use the `Heading.LevelBoundary` component. 
+To allow automatic level calculation, use the `Heading.LevelBoundary` component.
 
 This component is applied every time a new level should be used in the wrapped code:
 
@@ -105,10 +106,10 @@ If you want change this, you can use the `levelOverride` prop:
         I will be an h3
     </Heading.H>
 </Heading.LevelBoundary>
-```  
+```
 
 This allows for fine tuning the heading level, should the defaults not be enough or if you
-are using it in a section of an application not fully driven by this component. 
+are using it in a section of an application not fully driven by this component.
 
 ### Component using Header
 

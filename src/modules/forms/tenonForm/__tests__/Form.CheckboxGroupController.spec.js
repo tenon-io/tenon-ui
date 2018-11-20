@@ -190,6 +190,58 @@ describe('Form.CheckboxGroupController', () => {
         expect(submitData).toEqual({ textCheck: ['two'] });
     });
 
+    it('should run a custom onChange handler, when given', () => {
+        let eventValue = '';
+
+        let submitData = null;
+
+        const onChangeSpy = jest.fn(e => {
+            eventValue = e.target.checked;
+        });
+
+        const { getByLabelText, getByText } = render(
+            <Form
+                onSubmit={data => {
+                    submitData = data;
+                }}
+            >
+                {() => (
+                    <Form.CheckboxGroupController name="textCheck">
+                        {({ getCheckboxProps, getLabelProps }) => (
+                            <fieldset>
+                                <legend>Test check</legend>
+                                <div>
+                                    <input
+                                        {...getCheckboxProps({
+                                            name: 'one',
+                                            onChange: onChangeSpy
+                                        })}
+                                    />
+                                    <label
+                                        {...getLabelProps({
+                                            autoIdPostfix: 'one'
+                                        })}
+                                    >
+                                        One
+                                    </label>
+                                </div>
+                                <button type="submit">Submit</button>
+                            </fieldset>
+                        )}
+                    </Form.CheckboxGroupController>
+                )}
+            </Form>
+        );
+
+        fireEvent.click(getByLabelText('One'));
+        fireEvent.click(getByText('Submit'));
+
+        expect(submitData).toEqual({ textCheck: ['one'] });
+
+        expect(onChangeSpy).toHaveBeenCalled();
+        expect(eventValue).toBe(true);
+    });
+
     it('should spawn standard and ARIA props for a disabled checkbox', () => {
         const { getByLabelText } = render(
             <Form onSubmit={jest.fn()}>

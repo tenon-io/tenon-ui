@@ -1,33 +1,35 @@
-import Helmet from "react-helmet";
+import Helmet from 'react-helmet';
 
 import Layout from '../components/Layout';
 
-export default ({children}) => 
-<Layout>
-    <Helmet>
-        <title>Tenon-ui | Home page</title>
-    </Helmet>{children}
-</Layout>
+export default ({ children }) => (
+    <Layout>
+        <Helmet>
+            <title>Tenon-ui | Home page</title>
+        </Helmet>
+        {children}
+    </Layout>
+);
 
 ## Welcome to Tenon-UI
 
 These are the documentation pages of `Tenon-UI`: Tenon's accessible React components library.
 
-### Why another component library? 
+### Why another component library?
 
 Tenon-UI strives to become a go-to library for React developers who want to build inclusive and
 accessible sites that can be used by as many people as possible.
 
-If you do not yet know why this is a very good idea or how this relates to React in general, 
+If you do not yet know why this is a very good idea or how this relates to React in general,
 please visit the [React Accessibility Docs](https://reactjs.org/docs/accessibility.html).
 
 ### Use our views or bring your own.
 
 Not every project calls for the same visual representation, and we acknowledge that. So Tenon-UI has
-been built with this in mind. 
+been built with this in mind.
 
 All visual parts of the library are completely plug and play allowing you to implement your own
-view, if required. 
+view, if required.
 
 Tenon-UI also comes with its own separate `StyleSheet` and `SASS` source files so you can change
 it or even replace it completely.
@@ -38,21 +40,21 @@ We want to make it as easy as possible for you to build powerful, accessible app
 
 With great power comes great responsibility.
 
-We have gone through a lot of effort to ensure that this library conforms to current 
+We have gone through a lot of effort to ensure that this library conforms to current
 accessibility requirements, working on as wide a range of browsers and assistive technologies
 as possible.
 
-With this in mind, the view components shipped with the library play a crucial 
+With this in mind, the view components shipped with the library play a crucial
 role to ensure this feature.
 
 If you do decide to replace our view components with your own, **we can no longer guarantee an
 accessible result**. We recommend that you just use our views.
 
-If you still want to replace our view components, please first read the documentation and 
-supporting linked information carefully. Also have a look at how our view 
+If you still want to replace our view components, please first read the documentation and
+supporting linked information carefully. Also have a look at how our view
 components are built and use them as a a guideline for your own.
 
-### Enjoy  
+### Enjoy
 
 Tenon-UI exists to make your life easier. Please enjoy the productivity boost these
 components add.
@@ -60,7 +62,7 @@ components add.
 ### What about Hooks and Suspense?
 
 We are fully aware of the future path of React. So we will invest time in the near future to also
-bring support for `Hooks` and `Suspense` where appropriate. 
+bring support for `Hooks` and `Suspense` where appropriate.
 
 But first we want to provide you with components built on the current tried and tested patterns.
 

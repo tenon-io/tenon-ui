@@ -1,14 +1,16 @@
-import Helmet from "react-helmet";
+import Helmet from 'react-helmet';
 
 import Layout from '../components/Layout';
 import NotificationExample from '../components/examples/NotificationExample';
 
-export default ({children}) => 
-<Layout>
-    <Helmet>
-        <title>Tenon-ui | Notifications</title>
-    </Helmet>{children}
-</Layout>
+export default ({ children }) => (
+    <Layout>
+        <Helmet>
+            <title>Tenon-ui | Notifications</title>
+        </Helmet>
+        {children}
+    </Layout>
+);
 
 ## Notifications
 
@@ -73,12 +75,14 @@ is up to you.
 ### Notification component props
 
 #### isActive
+
 This prop is required.
 
 A boolean prop indicating if the content of the `Notification` component should be shown or
-hidden. 
+hidden.
 
 #### type
+
 This prop is required.
 
 A string prop indicating what type of notification you want to render:

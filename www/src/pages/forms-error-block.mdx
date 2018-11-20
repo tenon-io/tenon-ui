@@ -1,17 +1,19 @@
-import Helmet from "react-helmet";
+import Helmet from 'react-helmet';
 
 import Layout from '../components/Layout';
 
-export default ({children}) => 
-<Layout>
-    <Helmet>
-        <title>Tenon-ui | Put it all together with the ErrorBlock</title>
-    </Helmet>{children}
-</Layout>
+export default ({ children }) => (
+    <Layout>
+        <Helmet>
+            <title>Tenon-ui | Put it all together with the ErrorBlock</title>
+        </Helmet>
+        {children}
+    </Layout>
+);
 
 ## Put it all together with the ErrorBlock
 
-While we now know how to put forms together with the `Tenon-UI` components, we still need to 
+While we now know how to put forms together with the `Tenon-UI` components, we still need to
 put the cherry on the cake for validating complex forms.
 
 ### The ErrorBlock component
@@ -29,10 +31,10 @@ render function by the `Form` component:
 It also accepts a `headingText` prop that will be shown as the heading of the block.
 
 This will render a block of with a list of errors. Each error will be rendered as a functional
-link with a hash `href` to the form element that is in error. All of this is managed and handled 
+link with a hash `href` to the form element that is in error. All of this is managed and handled
 for you by `Tenon-UI`.
 
-By default the internal heading is rendered as an `<h2>` unless it is used inside the 
+By default the internal heading is rendered as an `<h2>` unless it is used inside the
 [Heading.LevelBoundary](/headings) component. You are also able to override this by using the
 `headingLevel` prop:
 
@@ -219,14 +221,14 @@ class DemoForm extends Component {
 export default DemoForm;
 ```
 
-You may have noticed one more thing you will need to do by hand. And that is set focus to the 
+You may have noticed one more thing you will need to do by hand. And that is set focus to the
 `ErrorBlock` when the user activates the submit button and there are validation errors.
 
 First we need to create a [React Ref](https://reactjs.org/docs/refs-and-the-dom.html).
 
 ```
 this.errorBlockRef = createRef();
-``` 
+```
 
 Then we attach it to the `ErrorBlock` component:
 
@@ -238,8 +240,8 @@ Then we attach it to the `ErrorBlock` component:
   />
 ```
 
-We can then use the `onRawSubmit` handler of the `Form` to set focus on error as this handler is 
-always called, not just when the form input is valid. 
+We can then use the `onRawSubmit` handler of the `Form` to set focus on error as this handler is
+always called, not just when the form input is valid.
 
 ```
 onRawSubmitHandler = (formControls, validity) => {
@@ -254,7 +256,7 @@ onRawSubmitHandler = (formControls, validity) => {
 The `validity` flag is the second parameter and we can then use that to determine whether or not
 to set focus.
 
-Unfortunately we need to use a `setTimeout`, as we need to be sure the `ErrorBlock` has been 
+Unfortunately we need to use a `setTimeout`, as we need to be sure the `ErrorBlock` has been
 applied to the `DOM` before setting focus.
 
 This is all the extra work you need to do as the `Form` component cannot handle this for you.
