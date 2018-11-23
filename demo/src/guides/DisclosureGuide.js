@@ -3,7 +3,7 @@ import { I18n } from 'react-i18next';
 import Pane from '../Pane';
 import WorkingExample from '../WorkingExample';
 import CodeExample from '../CodeExample';
-import Disclosure from '../../../src/modules/layout/disclosure/Disclosure';
+import Disclosure from '../../../src/modules/layout/discrename/Disclosure';
 
 class DisclosureGuide extends Component {
     state = {
