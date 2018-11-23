@@ -28,6 +28,9 @@ const SpinnerGuideAsync = AsyncLoader({
 const FocusCatcherGuideAsync = AsyncLoader({
     loader: () => import('./guides/FocusCatcherGuide')
 });
+const DisclosureGuideAsync = AsyncLoader({
+    loader: () => import('./guides/DisclosureGuide')
+});
 
 class App extends Component {
     render() {
@@ -97,6 +100,7 @@ class App extends Component {
                                 <main id="main" className="viewport">
                                     <Router>
                                         <Welcome path="/" />
+                                        <DisclosureGuideAsync path="/disclosure" />
                                         <TabsGuideAsync path="/tabs" />
                                         <FormsGuideAsync path="/forms" />
                                         <HeadingGuideAsync path="/heading" />
