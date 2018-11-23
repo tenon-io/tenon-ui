@@ -18,9 +18,9 @@ export Spinner from './modules/notifications/Spinner';
 export SpinnerButton from './modules/forms/SpinnerButton';
 export Tabs, { Tab } from './modules/tabs/Tabs';
 export FocusCatcher from './modules/utils/components/FocusCatcher';
-export Disclosure from './modules/layout/discrename/Disclosure';
-export Trigger from './modules/layout/discrename/Trigger';
-export Target from './modules/layout/discrename/Target';
+export Disclosure from './modules/layout/disclosure/Disclosure';
+export Trigger from './modules/layout/disclosure/Trigger';
+export Target from './modules/layout/disclosure/Target';
 
 export * from './modules/utils/data/validation';
 export * from './modules/utils/helpers/validationHelpers';
