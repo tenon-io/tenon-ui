@@ -21,10 +21,10 @@ const Target = ({ children, useHidden, deactivate }) => (
         {({ expanded }) =>
             useHidden === true || useHidden === 'true'
                 ? Children.map(children, child =>
-                    cloneElement(child, {
-                        hidden: expanded || deactivate ? null : 'hidden'
-                    })
-                )
+                      cloneElement(child, {
+                          hidden: expanded || deactivate ? null : 'hidden'
+                      })
+                  )
                 : expanded || deactivate
                 ? children
                 : null
