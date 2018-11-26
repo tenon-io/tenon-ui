@@ -1,0 +1,360 @@
+import Helmet from 'react-helmet';
+
+import Layout from '../components/Layout';
+import Disclosure from '../../../src/modules/layout/disclosure/Disclosure';
+
+export default ({ children }) => (
+    <Layout>
+        <Helmet>
+            <title>Tenon-ui | Disclosure</title>
+        </Helmet>
+        {children}
+    </Layout>
+);
+
+## Disclosure
+
+We often need to hide verbose bits of the user interface and allow the user to expand and
+collapse these elements. This creates a better user experience and for this we need
+a `Disclosure` widget.
+
+If you would like to get into the nuts and bolts of such a control, read the
+[Collapsible Sections article on the Inclusive Components site](https://inclusive-components.design/collapsible-sections/).
+
+The important part to know is that the button triggering the region should have
+`aria-expanded` set to the expanded state of the region.
+
+### Usage
+
+We wanted to make this control as easy and as flexible as possible to use. In it's simplest
+form the control is used as follows:
+
+```
+<Disclosure>
+    <Disclosure.Trigger>Expand/collapse</Disclosure.Trigger>
+    <Disclosure.Target>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing
+            elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis
+            nostrud exercitation ullamco laboris nisi ut aliquip
+            ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore
+            eu fugiat nulla pariatur. Excepteur sint occaecat
+            cupidatat non proident, sunt in culpa qui officia
+            deserunt mollit anim id est laborum
+        </p>
+    </Disclosure.Target>
+</Disclosure>
+```
+
+This renders:
+
+<Disclosure>
+    <Disclosure.Trigger>Expand/collapse</Disclosure.Trigger>
+    <Disclosure.Target>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum
+        </p>
+    </Disclosure.Target>
+</Disclosure>
+
+Note that there is a `Disclosure` component that wraps the entire section of `JSX` you
+would like to control with the trigger.
+
+Then you have a `Disclosure.Trigger` component that always renders a button and will control
+the targets specified on the same level as the trigger.
+
+Finally you have a `Disclosure.Target` component that can take any type of `JSX` content,
+and this will be the content that gets hidden and shown when the trigger is toggled.
+
+### Disclosure component
+
+This component manages the region of JSX managed by the `Trigger`. Any `Target` components
+inside this region will be acted upon by the `Trigger`.
+
+#### Rules
+
+-   Only ever add one `Trigger` component to any `Disclosure` component. As you will see below
+    the disclosures can be nested but always have another `Disclosure` level before adding another
+    `Trigger`.
+
+-   Always precede any `Target` components with a `Trigger`. Do **NOT** render a `Trigger`
+    after a `Target` it controls as this will confuse users.
+
+#### Props
+
+##### isExpanded
+
+This boolean prop is used to override the internal open / closed toggle stage of the
+`Disclosure`.
+
+It can be used to render the component as default open on mount.
+
+Or it can be used to open / close the `Disclosure` from outside. This is particularly
+handy if you have a number of expandable regions and you want to create an
+`Expand all` or `Collapse all` button.
+
+**Note**: Expanding and collapsing many regions with this is up to you to implement
+correctly with a boolean flag. If your button is not directly above the regions you
+are expanding or collapsing, please make sure you notify the users that something has
+happened by making use of [ARIA Live regions](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions).
+
+### The trigger
+
+The `Trigger` sub component will always render a `<button type="button">`. This is the
+recommended element type to use.
+
+#### Trigger props
+
+##### expandedClass
+
+This string prop accepts a class string to add to the `class` attribute of the button in
+the DOM when its controlled element is expanded. It will be merged with all other
+CSS classes added and allows styling the button based on the toggle state.
+
+##### other
+
+The `Trigger` accept all standard props that the `<button>` JSX element accepts.
+
+#### Render content based on toggle state
+
+Should you want to change the content of the `<button>` element, based on the toggle state,
+the `Trigger` component also accept a `children render prop` that is called with the current
+toggle state:
+
+```
+<Disclosure>
+    <Disclosure.Trigger>
+        {expanded => expanded ? 'Collapse' : 'Expand'}
+    </Disclosure.Trigger>
+    <Disclosure.Target>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing
+            elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis
+            nostrud exercitation ullamco laboris nisi ut aliquip
+            ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore
+            eu fugiat nulla pariatur. Excepteur sint occaecat
+            cupidatat non proident, sunt in culpa qui officia
+            deserunt mollit anim id est laborum
+        </p>
+    </Disclosure.Target>
+</Disclosure>
+```
+
+You can see it working here:
+
+<Disclosure>
+    <Disclosure.Trigger>
+        {expanded => (expanded ? 'Collapse' : 'Expand')}
+    </Disclosure.Trigger>
+    <Disclosure.Target>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum
+        </p>
+    </Disclosure.Target>
+</Disclosure>
+
+### The target
+
+The `Target` sub component houses the content you would like to expand and collapse.
+
+Please note that you can add multiple targets inside one `Disclosure` component. All
+the targets will then be operated on by their nearest sibling `Trigger`. For example:
+
+```
+<Disclosure>
+    <Disclosure.Trigger>
+        {expanded => (expanded ? 'Collapse' : 'Expand')}
+    </Disclosure.Trigger>
+    <Disclosure.Target>
+        <p>
+          First target.
+        </p>
+    </Disclosure.Target>
+    <Disclosure.Target>
+        <p>
+            Second target.
+        </p>
+    </Disclosure.Target>
+</Disclosure>
+```
+
+Which gives:
+
+<Disclosure>
+    <Disclosure.Trigger>
+        {expanded => (expanded ? 'Collapse' : 'Expand')}
+    </Disclosure.Trigger>
+    <Disclosure.Target>
+        <p>First target.</p>
+    </Disclosure.Target>
+    <Disclosure.Target>
+        <p>Second target.</p>
+    </Disclosure.Target>
+</Disclosure>
+
+This allows easy management of the content without extraneous wrapping tags. It also
+helps if you want to map elements into the target.
+
+**NOTE**: It is very important that the `Trigger` **PRECEDES** the `Target` components
+it controls. If you place the target before the trigger you will need to do more work
+to make it properly functional for keyboard and screen reader users. We recommend always
+placing your `Trigger` first. We further recommend placing the `Trigger` as close to the
+`Target` in the resulting DOM as possible.
+
+#### Target props
+
+#### useHidden
+
+By default the `Disclosure` component will add and remove the desired content from
+the DOM. This is the most performant option.
+
+However, if you want to animate the collapse / expand action or would rather have the
+content in memory and hidden with CSS you can set this boolean prop to `true`.
+
+The content will then be adorned with the `hidden` attribute instead.
+
+This is, of course, how you could preserve the state of the content, as removing the content out
+of the DOM would lose any internal component state for that part of the component
+tree.
+
+#### deactivate
+
+This boolean prop is an escape hatch out of the default behaviour. In some cases you
+may want to keep a specific target from hiding and showing. For example, where you
+map elements into the `Target` component and always want the first element shown.
+
+This reduces the amount of code you need to write to achieve this. Normally you would
+duplicate a section of JSX but with this prop you can simply do this:
+
+```
+<Disclosure>
+    <Disclosure.Trigger>
+        {expanded => (expanded ? 'Collapse' : 'Expand')}
+    </Disclosure.Trigger>
+    {targets.map((target, i) =>
+        <Disclosure.Target deactivate={i === 0}>
+           <p>
+             {target.text}
+           </p>
+        </Disclosure.Target>)}
+</Disclosure>
+```
+
+### Nesting
+
+You are able to nest `Disclosure` components. The `Target` will always be controlled by it's
+nearest sibling `Trigger`:
+
+```
+<Disclosure>
+    <Disclosure.Trigger>
+        {expanded => (expanded ? 'Collapse' : 'Expand')}
+    </Disclosure.Trigger>
+    <Disclosure.Target useHidden="true">
+        <p>Parent target.</p>
+        <Disclosure>
+            <Disclosure.Trigger>
+                {expanded => (expanded ? 'Collapse nested' : 'Expand nested')}
+            </Disclosure.Trigger>
+            <Disclosure.Target useHidden="true">
+                <p>Nested target.</p>
+            </Disclosure.Target>
+        </Disclosure>
+    </Disclosure.Target>
+</Disclosure>re.Target>
+</Disclosure>
+```
+
+<Disclosure>
+    <Disclosure.Trigger>
+        {expanded => (expanded ? 'Collapse' : 'Expand')}
+    </Disclosure.Trigger>
+    <Disclosure.Target useHidden="true">
+        <p>Parent target.</p>
+        <Disclosure>
+            <Disclosure.Trigger>
+                {expanded => (expanded ? 'Collapse nested' : 'Expand nested')}
+            </Disclosure.Trigger>
+            <Disclosure.Target useHidden="true">
+                <p>Nested target.</p>
+            </Disclosure.Target>
+        </Disclosure>
+    </Disclosure.Target>
+</Disclosure>
+
+**Note**: Here we used the `useHidden` prop to conserve the state of the nested
+`Disclosure` widget.
+
+### What about aria-controls
+
+If you know ARIA, you may ask why this widget does not automatically implement
+`aria-controls`?
+
+Well, this ARIA state is particularly badly implemented in screen readers, as you
+can read in [this article by Heydon Pickering](http://www.heydonworks.com/article/aria-controls-is-poop).
+
+We have therefore decided to forgo this until there is better support for it as it would
+lead to a more complex component.
+
+If, however, you want to implement `aria-controls` yourself, it can very easily be done:
+
+```
+<Disclosure>
+    <Disclosure.Trigger aria-controls="my-target">
+        {expanded => (expanded ? 'Collapse' : 'Expand')}
+    </Disclosure.Trigger>
+    <div id="my-target">
+        <Disclosure.Target>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing
+                elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis
+                nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat. Duis aute irure dolor in
+                reprehenderit in voluptate velit esse cillum dolore
+                eu fugiat nulla pariatur. Excepteur sint occaecat
+                cupidatat non proident, sunt in culpa qui officia
+                deserunt mollit anim id est laborum
+            </p>
+        </Disclosure.Target>
+    </div>
+</Disclosure>
+```
+
+If you check out the rendered DOM of this example, you will see that
+`aria-controls` is now rendered properly.
+
+<Disclosure>
+    <Disclosure.Trigger aria-controls="my-target">
+        {expanded => (expanded ? 'Collapse' : 'Expand')}
+    </Disclosure.Trigger>
+    <div id="my-target">
+        <Disclosure.Target>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                sunt in culpa qui officia deserunt mollit anim id est laborum
+            </p>
+        </Disclosure.Target>
+    </div>
+</Disclosure>

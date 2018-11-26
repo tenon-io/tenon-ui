@@ -28,6 +28,7 @@ class Disclosure extends Component {
         super(props);
         this.state = {
             expanded: false,
+            globalHidden: false,
             onExpandToggleHandler: this.onExpandToggleHandler
         };
     }
@@ -38,8 +39,9 @@ class Disclosure extends Component {
      * the isExpanded prop.
      */
     componentDidMount() {
-        const { isExpanded } = this.props;
+        const { isExpanded, hidden } = this.props;
         this.setState({
+            globalHidden: !!hidden,
             expanded: isExpanded === true || isExpanded === 'true'
         });
     }
@@ -55,6 +57,11 @@ class Disclosure extends Component {
         if (prevProps.isExpanded !== this.props.isExpanded) {
             this.setState({
                 expanded: this.props.isExpanded
+            });
+        }
+        if (prevProps.hidden !== this.props.hidden) {
+            this.setState({
+                globalHidden: !!this.props.hidden
             });
         }
     }

@@ -24,10 +24,7 @@ describe('Disclosure', () => {
             'aria-expanded',
             'false'
         );
-        expect(getByText('Expand-Collapse')).toHaveAttribute(
-            'type',
-            'button'
-        );
+        expect(getByText('Expand-Collapse')).toHaveAttribute('type', 'button');
         expect(container.querySelector('span')).toBeNull();
     });
 
@@ -189,7 +186,7 @@ describe('Disclosure', () => {
         expect(container.querySelectorAll('span').length).toBe(2);
     });
 
-    it('should override internal toggel state', () => {
+    it('should override internal toggle state', () => {
         const { container, rerender } = render(
             <Disclosure isExpanded={false}>
                 <Disclosure.Trigger>Expand-Collapse</Disclosure.Trigger>
@@ -211,5 +208,59 @@ describe('Disclosure', () => {
         );
 
         expect(container.querySelectorAll('span').length).toBe(1);
+    });
+
+    it('should allow for stateful nesting', () => {
+        const { getByText } = render(
+            <Disclosure>
+                <Disclosure.Trigger>Expand-Collapse</Disclosure.Trigger>
+                <Disclosure.Target useHidden="true">
+                    <span>I am some content</span>
+                    <Disclosure>
+                        <Disclosure.Trigger>
+                            Expand-Collapse nested
+                        </Disclosure.Trigger>
+                        <Disclosure.Target useHidden="true">
+                            <span>I am some nested content</span>
+                        </Disclosure.Target>
+                    </Disclosure>
+                </Disclosure.Target>
+            </Disclosure>
+        );
+
+        expect(getByText('I am some content')).toHaveAttribute('hidden');
+        expect(getByText('I am some nested content')).toHaveAttribute('hidden');
+        expect(getByText('Expand-Collapse nested')).toHaveAttribute('hidden');
+
+        fireEvent.click(getByText('Expand-Collapse'));
+
+        expect(getByText('I am some content')).not.toHaveAttribute('hidden');
+        expect(getByText('I am some nested content')).toHaveAttribute('hidden');
+        expect(getByText('Expand-Collapse nested')).not.toHaveAttribute(
+            'hidden'
+        );
+
+        fireEvent.click(getByText('Expand-Collapse nested'));
+
+        expect(getByText('I am some content')).not.toHaveAttribute('hidden');
+        expect(getByText('I am some nested content')).not.toHaveAttribute(
+            'hidden'
+        );
+
+        fireEvent.click(getByText('Expand-Collapse'));
+
+        expect(getByText('I am some content')).toHaveAttribute('hidden');
+        expect(getByText('I am some nested content')).toHaveAttribute('hidden');
+        expect(getByText('Expand-Collapse nested')).toHaveAttribute('hidden');
+
+        fireEvent.click(getByText('Expand-Collapse'));
+
+        expect(getByText('I am some content')).not.toHaveAttribute('hidden');
+        expect(getByText('I am some nested content')).not.toHaveAttribute(
+            'hidden'
+        );
+        expect(getByText('Expand-Collapse nested')).not.toHaveAttribute(
+            'hidden'
+        );
     });
 });

@@ -18,17 +18,18 @@ import PropTypes from 'prop-types';
  */
 const Target = ({ children, useHidden, deactivate }) => (
     <DisclosureContext.Consumer>
-        {({ expanded }) =>
-            useHidden === true || useHidden === 'true'
+        {({ expanded, globalHidden }) => {
+            const isExpanded = globalHidden ? false : expanded;
+            return useHidden === true || useHidden === 'true'
                 ? Children.map(children, child =>
                       cloneElement(child, {
-                          hidden: expanded || deactivate ? null : 'hidden'
+                          hidden: isExpanded || deactivate ? null : 'hidden'
                       })
                   )
-                : expanded || deactivate
+                : isExpanded || deactivate
                 ? children
-                : null
-        }
+                : null;
+        }}
     </DisclosureContext.Consumer>
 );
 

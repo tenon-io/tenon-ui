@@ -24,10 +24,11 @@ import PropTypes from 'prop-types';
  */
 const Trigger = ({ children, onClick, className, expandedClass, ...props }) => (
     <DisclosureContext.Consumer>
-        {({ expanded, onExpandToggleHandler }) => (
+        {({ expanded, globalHidden, onExpandToggleHandler }) => (
             <button
                 type="button"
                 aria-expanded={expanded}
+                hidden={globalHidden ? 'hidden' : null}
                 className={
                     expandedClass
                         ? classNames(className, { [expandedClass]: expanded })
