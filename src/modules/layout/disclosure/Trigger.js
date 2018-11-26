@@ -26,6 +26,7 @@ const Trigger = ({ children, onClick, className, expandedClass, ...props }) => (
     <DisclosureContext.Consumer>
         {({ expanded, onExpandToggleHandler }) => (
             <button
+                type="button"
                 aria-expanded={expanded}
                 className={
                     expandedClass

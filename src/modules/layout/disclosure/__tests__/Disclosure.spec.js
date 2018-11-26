@@ -24,6 +24,10 @@ describe('Disclosure', () => {
             'aria-expanded',
             'false'
         );
+        expect(getByText('Expand-Collapse')).toHaveAttribute(
+            'type',
+            'button'
+        );
         expect(container.querySelector('span')).toBeNull();
     });
 
