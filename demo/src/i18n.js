@@ -40,7 +40,7 @@ i18n.use(xhr)
         ns: ['translations'],
         defaultNS: 'translations',
 
-        debug: false,
+        debug: true,
 
         interpolation: {
             escapeValue: false // not needed for react!!

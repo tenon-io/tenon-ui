@@ -92,6 +92,9 @@ const SideNav = () => (
                         </ul>
                     </li>
                     <li>
+                        <FocusLink to="/disclosure">Disclosure</FocusLink>
+                    </li>
+                    <li>
                         <FocusLink to="/headings">Headings</FocusLink>
                     </li>
                     <li>

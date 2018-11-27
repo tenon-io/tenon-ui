@@ -173,5 +173,21 @@
                 "resetAction": "Dismiss"
             }
         }
+    },
+    "disclosure": {
+        "demo": {
+            "heading": "Disclosure component",
+            "example": {
+                "heading": "Working example",
+                "collapseAllButton": "Expand / Collapse All",
+                "collapseButtonOne": "Expand / Collapse One",
+                "collapseButtonTwo": "Expand / Collapse Two"
+            },
+            "code": {
+                "heading": "Code example",
+                "reset": "The disclosure example code was reset",
+                "resetAction": "Dismiss"
+            }
+        }
     }
 }
