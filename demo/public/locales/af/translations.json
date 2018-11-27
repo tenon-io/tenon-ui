@@ -173,5 +173,21 @@
                 "resetAction": "Sluit berig"
             }
         }
+    },
+    "disclosure": {
+        "demo": {
+            "heading": "Oopklapkomponent",
+            "example": {
+                "heading": "Werkende voorbeeld",
+                "collapseAllButton": "Klap alles uit / Klap alles toe",
+                "collapseButtonOne": "Klap eerste voorbeeld oop / Klap eerste voorbeeld toe",
+                "collapseButtonTwo": "Klap tweede voorbeeld oop / Klap tweede voorbeeld toe"
+            },
+            "code": {
+                "heading": "Code example",
+                "reset": "The disclosure example code was reset",
+                "resetAction": "Dismiss"
+            }
+        }
     }
 }

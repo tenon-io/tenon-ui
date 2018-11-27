@@ -5,6 +5,9 @@ const SideNav = () => (
     <nav>
         <ul>
             <li>
+                <Link to="/disclosure">Disclosure</Link>
+            </li>
+            <li>
                 <Link to="/focus-catcher">Focus Catcher</Link>
             </li>
             <li>
