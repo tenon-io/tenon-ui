@@ -115,7 +115,6 @@ class FormsGuide extends Component {
                                             labelText={t(
                                                 'forms.demo.petName.label'
                                             )}
-                                            type="number"
                                             component={Input}
                                         />
                                         <Form.TextInputController
