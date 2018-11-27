@@ -77,6 +77,37 @@ describe('Form.TextInputController', () => {
         expect(testInput.attributes.length).toBe(4);
     });
 
+    it('should allow overriding the input type when using the component prop', () => {
+        const Input = ({
+            getLabelProps,
+            getInputProps,
+            showError,
+            errorText,
+            getErrorProps,
+            getContentHintProps,
+            ...rest
+        }) => (
+            <div>
+                <label {...getLabelProps()}>Test input</label>
+                <input {...getInputProps()} {...rest} />
+            </div>
+        );
+
+        const { getByLabelText } = render(
+            <Form onSubmit={jest.fn()}>
+                {() => (
+                    <Form.TextInputController
+                        name="testInput"
+                        component={Input}
+                        type="number"
+                    />
+                )}
+            </Form>
+        );
+
+        expect(getByLabelText('Test input')).toHaveAttribute('type', 'number');
+    });
+
     it('should render allow view injection via the component prop', () => {
         const Input = ({ getInputProps, getLabelProps, labelText }) => (
             <div>
