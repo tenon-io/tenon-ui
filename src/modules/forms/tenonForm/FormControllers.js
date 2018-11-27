@@ -89,8 +89,6 @@ class FormController extends Component {
      * @constructor
      * Initializes the internal component ID's
      *
-     * If the type is radioGroup, extra id's are required.
-     *
      * @param props
      */
     constructor(props) {
@@ -127,9 +125,15 @@ class FormController extends Component {
             getControlValue,
             setControlValidity,
             name,
-            type
+            formControllerType
         } = this.props;
-        registerControl(name, this.controlId, defaultValues[type], true, '');
+        registerControl(
+            name,
+            this.controlId,
+            defaultValues[formControllerType],
+            true,
+            ''
+        );
         setControlValidity(name, this.runValidation(getControlValue(name)));
     }
 
@@ -190,10 +194,12 @@ class FormController extends Component {
      * @param {SyntheticKeyboardEvent} e
      */
     onChangeHandler = e => {
-        const { setControlValue, name, type } = this.props;
+        const { setControlValue, name, formControllerType } = this.props;
         setControlValue(
             name,
-            type === controllerType.checkbox ? e.target.checked : e.target.value
+            formControllerType === controllerType.checkbox
+                ? e.target.checked
+                : e.target.value
         );
     };
 
@@ -494,16 +500,16 @@ class FormController extends Component {
 
     /**
      * @function
-     * Return the render props object per type.
+     * Return the render props object per formControllerType.
      */
-    getTypeSpecificRenderProps = type => {
+    getTypeSpecificRenderProps = formControllerType => {
         const commonRenderProps = {
             getLabelProps: this.getLabelProps,
             getErrorProps: this.getErrorProps,
             getContentHintProps: this.getContentHintProps
         };
 
-        switch (type) {
+        switch (formControllerType) {
             case controllerType.textarea:
                 return {
                     getTextareaProps: this.getTextareaProps,
@@ -545,12 +551,14 @@ class FormController extends Component {
      *
      * Memoized so as to only recalculate if the type changes.
      */
-    buildRenderObject = memoize(type => this.getTypeSpecificRenderProps(type));
+    buildRenderObject = memoize(formControllerType =>
+        this.getTypeSpecificRenderProps(formControllerType)
+    );
 
     render() {
         const {
             children,
-            type,
+            formControllerType,
             getControlValidity,
             getControlErrorText,
             name,
@@ -570,7 +578,7 @@ class FormController extends Component {
             showError: registerErrors ? !getControlValidity(name) : false,
             errorText: getControlErrorText(name),
             required: required === true || required === 'true',
-            ...this.buildRenderObject(type)
+            ...this.buildRenderObject(formControllerType)
         };
 
         return component
@@ -585,17 +593,21 @@ class FormController extends Component {
 
 /**
  * @function
- * Function to return the controller based on type. Fetches the
+ * Function to return the controller based on formControllerType. Fetches the
  * React Context exposed functionality from the smart form
  * containing the Context provider and expose it as props
  * to the controllers.
  *
  * @props props
  */
-const getController = (props, type) => (
+const getController = (props, formControllerType) => (
     <FormContext.Consumer>
         {contextProps => (
-            <FormController {...props} {...contextProps} type={type}>
+            <FormController
+                {...props}
+                {...contextProps}
+                formControllerType={formControllerType}
+            >
                 {props.children}
             </FormController>
         )}
