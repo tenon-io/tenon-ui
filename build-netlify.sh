@@ -2,4 +2,4 @@
 
 cd www;
 $(which yarn);
-./node_modules/gatsby/.bin/gatsby build;
+$(which yarn) build;
