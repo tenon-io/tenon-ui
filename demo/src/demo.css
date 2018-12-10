@@ -60,6 +60,7 @@
 }
 
 .demo-spinner {
+    height: 3em;
     color: #002964;
 }
 
@@ -67,8 +68,8 @@
     stroke: currentColor;
 }
 
-.demo-spinner circle {
-    fill: currentColor;
+demo-spinner {
+    width: 1em;
 }
 
 .language-container {

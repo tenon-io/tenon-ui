@@ -4,7 +4,7 @@ exports[`spinner should also render a spinner without a title 1`] = `
 <div>
   <svg
     role="img"
-    viewBox="0 0 58 58"
+    viewBox="-1 -1 40 40"
     xmlns="http://www.w3.org/2000/svg"
   >
     <g
@@ -12,138 +12,27 @@ exports[`spinner should also render a spinner without a title 1`] = `
       fill-rule="evenodd"
     >
       <g
-        stroke="#FFFFFF"
-        stroke-width="1.5"
-        transform="translate(2 1)"
+        stroke-width="3"
+        transform="translate(1 1)"
       >
         <circle
-          cx="42.601"
-          cy="11.462"
-          fill="#FFFFFF"
-          fill-opacity="1"
-          r="5"
+          cx="18"
+          cy="18"
+          r="18"
+          stroke-opacity=".4"
+        />
+        <path
+          d="M36 18c0-9.94-8.06-18-18-18"
         >
-          <animate
-            attributeName="fill-opacity"
-            begin="0s"
-            calcMode="linear"
-            dur="1.3s"
+          <animatetransform
+            attributeName="transform"
+            dur="1s"
+            from="0 18 18"
             repeatCount="indefinite"
-            values="1;0;0;0;0;0;0;0"
+            to="360 18 18"
+            type="rotate"
           />
-        </circle>
-        <circle
-          cx="49.063"
-          cy="27.063"
-          fill="#FFFFFF"
-          fill-opacity="0"
-          r="5"
-        >
-          <animate
-            attributeName="fill-opacity"
-            begin="0s"
-            calcMode="linear"
-            dur="1.3s"
-            repeatCount="indefinite"
-            values="0;1;0;0;0;0;0;0"
-          />
-        </circle>
-        <circle
-          cx="42.601"
-          cy="42.663"
-          fill="#FFFFFF"
-          fill-opacity="0"
-          r="5"
-        >
-          <animate
-            attributeName="fill-opacity"
-            begin="0s"
-            calcMode="linear"
-            dur="1.3s"
-            repeatCount="indefinite"
-            values="0;0;1;0;0;0;0;0"
-          />
-        </circle>
-        <circle
-          cx="27"
-          cy="49.125"
-          fill="#FFFFFF"
-          fill-opacity="0"
-          r="5"
-        >
-          <animate
-            attributeName="fill-opacity"
-            begin="0s"
-            calcMode="linear"
-            dur="1.3s"
-            repeatCount="indefinite"
-            values="0;0;0;1;0;0;0;0"
-          />
-        </circle>
-        <circle
-          cx="11.399"
-          cy="42.663"
-          fill="#FFFFFF"
-          fill-opacity="0"
-          r="5"
-        >
-          <animate
-            attributeName="fill-opacity"
-            begin="0s"
-            calcMode="linear"
-            dur="1.3s"
-            repeatCount="indefinite"
-            values="0;0;0;0;1;0;0;0"
-          />
-        </circle>
-        <circle
-          cx="4.938"
-          cy="27.063"
-          fill="#FFFFFF"
-          fill-opacity="0"
-          r="5"
-        >
-          <animate
-            attributeName="fill-opacity"
-            begin="0s"
-            calcMode="linear"
-            dur="1.3s"
-            repeatCount="indefinite"
-            values="0;0;0;0;0;1;0;0"
-          />
-        </circle>
-        <circle
-          cx="11.399"
-          cy="11.462"
-          fill="#FFFFFF"
-          fill-opacity="0"
-          r="5"
-        >
-          <animate
-            attributeName="fill-opacity"
-            begin="0s"
-            calcMode="linear"
-            dur="1.3s"
-            repeatCount="indefinite"
-            values="0;0;0;0;0;0;1;0"
-          />
-        </circle>
-        <circle
-          cx="27"
-          cy="5"
-          fill="#FFFFFF"
-          fill-opacity="0"
-          r="5"
-        >
-          <animate
-            attributeName="fill-opacity"
-            begin="0s"
-            calcMode="linear"
-            dur="1.3s"
-            repeatCount="indefinite"
-            values="0;0;0;0;0;0;0;1"
-          />
-        </circle>
+        </path>
       </g>
     </g>
   </svg>
@@ -155,7 +44,7 @@ exports[`spinner should render a spinner 1`] = `
   <svg
     aria-labelledby="testId"
     role="img"
-    viewBox="0 0 58 58"
+    viewBox="-1 -1 40 40"
     xmlns="http://www.w3.org/2000/svg"
   >
     <title
@@ -168,138 +57,27 @@ exports[`spinner should render a spinner 1`] = `
       fill-rule="evenodd"
     >
       <g
-        stroke="#FFFFFF"
-        stroke-width="1.5"
-        transform="translate(2 1)"
+        stroke-width="3"
+        transform="translate(1 1)"
       >
         <circle
-          cx="42.601"
-          cy="11.462"
-          fill="#FFFFFF"
-          fill-opacity="1"
-          r="5"
+          cx="18"
+          cy="18"
+          r="18"
+          stroke-opacity=".4"
+        />
+        <path
+          d="M36 18c0-9.94-8.06-18-18-18"
         >
-          <animate
-            attributeName="fill-opacity"
-            begin="0s"
-            calcMode="linear"
-            dur="1.3s"
+          <animatetransform
+            attributeName="transform"
+            dur="1s"
+            from="0 18 18"
             repeatCount="indefinite"
-            values="1;0;0;0;0;0;0;0"
+            to="360 18 18"
+            type="rotate"
           />
-        </circle>
-        <circle
-          cx="49.063"
-          cy="27.063"
-          fill="#FFFFFF"
-          fill-opacity="0"
-          r="5"
-        >
-          <animate
-            attributeName="fill-opacity"
-            begin="0s"
-            calcMode="linear"
-            dur="1.3s"
-            repeatCount="indefinite"
-            values="0;1;0;0;0;0;0;0"
-          />
-        </circle>
-        <circle
-          cx="42.601"
-          cy="42.663"
-          fill="#FFFFFF"
-          fill-opacity="0"
-          r="5"
-        >
-          <animate
-            attributeName="fill-opacity"
-            begin="0s"
-            calcMode="linear"
-            dur="1.3s"
-            repeatCount="indefinite"
-            values="0;0;1;0;0;0;0;0"
-          />
-        </circle>
-        <circle
-          cx="27"
-          cy="49.125"
-          fill="#FFFFFF"
-          fill-opacity="0"
-          r="5"
-        >
-          <animate
-            attributeName="fill-opacity"
-            begin="0s"
-            calcMode="linear"
-            dur="1.3s"
-            repeatCount="indefinite"
-            values="0;0;0;1;0;0;0;0"
-          />
-        </circle>
-        <circle
-          cx="11.399"
-          cy="42.663"
-          fill="#FFFFFF"
-          fill-opacity="0"
-          r="5"
-        >
-          <animate
-            attributeName="fill-opacity"
-            begin="0s"
-            calcMode="linear"
-            dur="1.3s"
-            repeatCount="indefinite"
-            values="0;0;0;0;1;0;0;0"
-          />
-        </circle>
-        <circle
-          cx="4.938"
-          cy="27.063"
-          fill="#FFFFFF"
-          fill-opacity="0"
-          r="5"
-        >
-          <animate
-            attributeName="fill-opacity"
-            begin="0s"
-            calcMode="linear"
-            dur="1.3s"
-            repeatCount="indefinite"
-            values="0;0;0;0;0;1;0;0"
-          />
-        </circle>
-        <circle
-          cx="11.399"
-          cy="11.462"
-          fill="#FFFFFF"
-          fill-opacity="0"
-          r="5"
-        >
-          <animate
-            attributeName="fill-opacity"
-            begin="0s"
-            calcMode="linear"
-            dur="1.3s"
-            repeatCount="indefinite"
-            values="0;0;0;0;0;0;1;0"
-          />
-        </circle>
-        <circle
-          cx="27"
-          cy="5"
-          fill="#FFFFFF"
-          fill-opacity="0"
-          r="5"
-        >
-          <animate
-            attributeName="fill-opacity"
-            begin="0s"
-            calcMode="linear"
-            dur="1.3s"
-            repeatCount="indefinite"
-            values="0;0;0;0;0;0;0;1"
-          />
-        </circle>
+        </path>
       </g>
     </g>
   </svg>
