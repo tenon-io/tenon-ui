@@ -17,6 +17,8 @@ import Pane from '../Pane';
 import WorkingExample from '../WorkingExample';
 import CodeExample from '../CodeExample';
 
+import HooksInput from '../../../src/modules/hooks/forms/tenonForm/Input';
+
 class FormsGuide extends Component {
     constructor(props) {
         super(props);
@@ -80,6 +82,7 @@ class FormsGuide extends Component {
                             >
                                 {({ formControls, validity, hasSubmitted }) => (
                                     <Fragment>
+                                        {JSON.stringify(formControls)}
                                         {!validity && hasSubmitted ? (
                                             <ErrorBlock
                                                 headingText={t(
@@ -89,6 +92,22 @@ class FormsGuide extends Component {
                                                 formControls={formControls}
                                             />
                                         ) : null}
+                                        <HooksInput
+                                            name="hooksInput"
+                                            labelText="Hooks input"
+                                            contentHintText="Please fill this in well"
+                                            required="required"
+                                            validators={[
+                                                validator(
+                                                    isRequired,
+                                                    'This field is required'
+                                                ),
+                                                validator(
+                                                    isLongerThan(5),
+                                                    'Value is too short'
+                                                )
+                                            ]}
+                                        />
                                         <Form.TextInputController
                                             name="petName"
                                             required="true"
@@ -117,157 +136,157 @@ class FormsGuide extends Component {
                                             )}
                                             component={Input}
                                         />
-                                        <Form.TextInputController
-                                            name="petType"
-                                            required="true"
-                                            validators={[
-                                                validator(
-                                                    isRequired,
-                                                    t(
-                                                        'forms.demo.petType.errorMessageRequired'
-                                                    )
-                                                )
-                                            ]}
-                                            requiredText={t(
-                                                'forms.demo.requiredText'
-                                            )}
-                                            labelText={t(
-                                                'forms.demo.petType.label'
-                                            )}
-                                            component={Input}
-                                        />
-                                        <Form.TextareaController
-                                            name="petDescription"
-                                            rows="10"
-                                            labelText={t(
-                                                'forms.demo.petDescription.label'
-                                            )}
-                                            component={TextArea}
-                                        />
-                                        <Form.SelectController
-                                            name="petWeight"
-                                            required="true"
-                                            validators={[
-                                                validator(
-                                                    isRequired,
-                                                    t(
-                                                        'forms.demo.petWeight.errorMessageRequired'
-                                                    )
-                                                )
-                                            ]}
-                                            labelText={t(
-                                                'forms.demo.petWeight.label'
-                                            )}
-                                            requiredText={t(
-                                                'forms.demo.requiredText'
-                                            )}
-                                            component={Select}
-                                        >
-                                            <option>
-                                                {t(
-                                                    'forms.demo.petWeight.defaultOption'
-                                                )}
-                                            </option>
-                                            <option value="weightClass1">
-                                                {t(
-                                                    'forms.demo.petWeight.weightClass1'
-                                                )}
-                                            </option>
-                                            <option value="weightClass2">
-                                                {t(
-                                                    'forms.demo.petWeight.weightClass2'
-                                                )}
-                                            </option>
-                                            <option value="weightClass3">
-                                                {t(
-                                                    'forms.demo.petWeight.weightClass3'
-                                                )}
-                                            </option>
-                                        </Form.SelectController>
-                                        <Form.RadioGroupController
-                                            name="petColour"
-                                            required="true"
-                                            validators={[
-                                                validator(
-                                                    isRequired,
-                                                    t(
-                                                        'forms.demo.petColour.errorMessageRequired'
-                                                    )
-                                                )
-                                            ]}
-                                            legend={t(
-                                                'forms.demo.petColour.legend'
-                                            )}
-                                            requiredText={t(
-                                                'forms.demo.requiredText'
-                                            )}
-                                            options={{
-                                                black: t(
-                                                    'forms.demo.petColour.blackOption'
-                                                ),
-                                                white: t(
-                                                    'forms.demo.petColour.whiteOption'
-                                                ),
-                                                brown: t(
-                                                    'forms.demo.petColour.brownOption'
-                                                )
-                                            }}
-                                            component={RadioGroup}
-                                        />
+                                        {/*<Form.TextInputController*/}
+                                        {/*name="petType"*/}
+                                        {/*required="true"*/}
+                                        {/*validators={[*/}
+                                        {/*validator(*/}
+                                        {/*isRequired,*/}
+                                        {/*t(*/}
+                                        {/*'forms.demo.petType.errorMessageRequired'*/}
+                                        {/*)*/}
+                                        {/*)*/}
+                                        {/*]}*/}
+                                        {/*requiredText={t(*/}
+                                        {/*'forms.demo.requiredText'*/}
+                                        {/*)}*/}
+                                        {/*labelText={t(*/}
+                                        {/*'forms.demo.petType.label'*/}
+                                        {/*)}*/}
+                                        {/*component={Input}*/}
+                                        {/*/>*/}
+                                        {/*<Form.TextareaController*/}
+                                        {/*name="petDescription"*/}
+                                        {/*rows="10"*/}
+                                        {/*labelText={t(*/}
+                                        {/*'forms.demo.petDescription.label'*/}
+                                        {/*)}*/}
+                                        {/*component={TextArea}*/}
+                                        {/*/>*/}
+                                        {/*<Form.SelectController*/}
+                                        {/*name="petWeight"*/}
+                                        {/*required="true"*/}
+                                        {/*validators={[*/}
+                                        {/*validator(*/}
+                                        {/*isRequired,*/}
+                                        {/*t(*/}
+                                        {/*'forms.demo.petWeight.errorMessageRequired'*/}
+                                        {/*)*/}
+                                        {/*)*/}
+                                        {/*]}*/}
+                                        {/*labelText={t(*/}
+                                        {/*'forms.demo.petWeight.label'*/}
+                                        {/*)}*/}
+                                        {/*requiredText={t(*/}
+                                        {/*'forms.demo.requiredText'*/}
+                                        {/*)}*/}
+                                        {/*component={Select}*/}
+                                        {/*>*/}
+                                        {/*<option>*/}
+                                        {/*{t(*/}
+                                        {/*'forms.demo.petWeight.defaultOption'*/}
+                                        {/*)}*/}
+                                        {/*</option>*/}
+                                        {/*<option value="weightClass1">*/}
+                                        {/*{t(*/}
+                                        {/*'forms.demo.petWeight.weightClass1'*/}
+                                        {/*)}*/}
+                                        {/*</option>*/}
+                                        {/*<option value="weightClass2">*/}
+                                        {/*{t(*/}
+                                        {/*'forms.demo.petWeight.weightClass2'*/}
+                                        {/*)}*/}
+                                        {/*</option>*/}
+                                        {/*<option value="weightClass3">*/}
+                                        {/*{t(*/}
+                                        {/*'forms.demo.petWeight.weightClass3'*/}
+                                        {/*)}*/}
+                                        {/*</option>*/}
+                                        {/*</Form.SelectController>*/}
+                                        {/*<Form.RadioGroupController*/}
+                                        {/*name="petColour"*/}
+                                        {/*required="true"*/}
+                                        {/*validators={[*/}
+                                        {/*validator(*/}
+                                        {/*isRequired,*/}
+                                        {/*t(*/}
+                                        {/*'forms.demo.petColour.errorMessageRequired'*/}
+                                        {/*)*/}
+                                        {/*)*/}
+                                        {/*]}*/}
+                                        {/*legend={t(*/}
+                                        {/*'forms.demo.petColour.legend'*/}
+                                        {/*)}*/}
+                                        {/*requiredText={t(*/}
+                                        {/*'forms.demo.requiredText'*/}
+                                        {/*)}*/}
+                                        {/*options={{*/}
+                                        {/*black: t(*/}
+                                        {/*'forms.demo.petColour.blackOption'*/}
+                                        {/*),*/}
+                                        {/*white: t(*/}
+                                        {/*'forms.demo.petColour.whiteOption'*/}
+                                        {/*),*/}
+                                        {/*brown: t(*/}
+                                        {/*'forms.demo.petColour.brownOption'*/}
+                                        {/*)*/}
+                                        {/*}}*/}
+                                        {/*component={RadioGroup}*/}
+                                        {/*/>*/}
 
-                                        <Form.CheckboxGroupController
-                                            name="petEat"
-                                            required="true"
-                                            validators={[
-                                                validator(
-                                                    value => value.length > 0,
-                                                    t(
-                                                        'forms.demo.petLove.errorMessageRequired'
-                                                    )
-                                                )
-                                            ]}
-                                            legend={t(
-                                                'forms.demo.petLove.legend'
-                                            )}
-                                            contentHintText={t(
-                                                'forms.demo.petLove.contentHint'
-                                            )}
-                                            options={{
-                                                morning: t(
-                                                    'forms.demo.petLove.morningOption'
-                                                ),
-                                                noon: t(
-                                                    'forms.demo.petLove.noonOption'
-                                                ),
-                                                night: t(
-                                                    'forms.demo.petLove.nightOption'
-                                                )
-                                            }}
-                                            requiredText={t(
-                                                'forms.demo.requiredText'
-                                            )}
-                                            component={CheckboxGroup}
-                                        />
+                                        {/*<Form.CheckboxGroupController*/}
+                                        {/*name="petEat"*/}
+                                        {/*required="true"*/}
+                                        {/*validators={[*/}
+                                        {/*validator(*/}
+                                        {/*value => value.length > 0,*/}
+                                        {/*t(*/}
+                                        {/*'forms.demo.petLove.errorMessageRequired'*/}
+                                        {/*)*/}
+                                        {/*)*/}
+                                        {/*]}*/}
+                                        {/*legend={t(*/}
+                                        {/*'forms.demo.petLove.legend'*/}
+                                        {/*)}*/}
+                                        {/*contentHintText={t(*/}
+                                        {/*'forms.demo.petLove.contentHint'*/}
+                                        {/*)}*/}
+                                        {/*options={{*/}
+                                        {/*morning: t(*/}
+                                        {/*'forms.demo.petLove.morningOption'*/}
+                                        {/*),*/}
+                                        {/*noon: t(*/}
+                                        {/*'forms.demo.petLove.noonOption'*/}
+                                        {/*),*/}
+                                        {/*night: t(*/}
+                                        {/*'forms.demo.petLove.nightOption'*/}
+                                        {/*)*/}
+                                        {/*}}*/}
+                                        {/*requiredText={t(*/}
+                                        {/*'forms.demo.requiredText'*/}
+                                        {/*)}*/}
+                                        {/*component={CheckboxGroup}*/}
+                                        {/*/>*/}
 
-                                        <Form.CheckboxController
-                                            name="confirmInfo"
-                                            required="true"
-                                            validators={[
-                                                validator(
-                                                    value => value === true,
-                                                    t(
-                                                        'forms.demo.confirmInfo.errorMessageRequired'
-                                                    )
-                                                )
-                                            ]}
-                                            requiredText={t(
-                                                'forms.demo.requiredText'
-                                            )}
-                                            labelText={t(
-                                                'forms.demo.confirmInfo.label'
-                                            )}
-                                            component={Checkbox}
-                                        />
+                                        {/*<Form.CheckboxController*/}
+                                        {/*name="confirmInfo"*/}
+                                        {/*required="true"*/}
+                                        {/*validators={[*/}
+                                        {/*validator(*/}
+                                        {/*value => value === true,*/}
+                                        {/*t(*/}
+                                        {/*'forms.demo.confirmInfo.errorMessageRequired'*/}
+                                        {/*)*/}
+                                        {/*)*/}
+                                        {/*]}*/}
+                                        {/*requiredText={t(*/}
+                                        {/*'forms.demo.requiredText'*/}
+                                        {/*)}*/}
+                                        {/*labelText={t(*/}
+                                        {/*'forms.demo.confirmInfo.label'*/}
+                                        {/*)}*/}
+                                        {/*component={Checkbox}*/}
+                                        {/*/>*/}
 
                                         <button type="submit">
                                             {t('forms.demo.submitButton.label')}

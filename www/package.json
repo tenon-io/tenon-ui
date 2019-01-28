@@ -16,8 +16,8 @@
         "gatsby-plugin-react-helmet": "^3.0.0",
         "gatsby-plugin-sass": "^2.0.1",
         "gatsby-source-filesystem": "^2.0.3",
-        "react": "^16.6.0",
-        "react-dom": "^16.6.0",
+        "react": "^16.8.0-alpha.1",
+        "react-dom": "^16.8.0-alpha.1",
         "react-helmet": "^5.2.0",
         "vanilla-framework": "^1.8.0"
     }
