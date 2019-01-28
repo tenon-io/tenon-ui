@@ -108,6 +108,10 @@ class FormsGuide extends Component {
                                                 )
                                             ]}
                                         />
+                                        <HooksInput
+                                            name="hooksInput2"
+                                            labelText="Hooks input two"
+                                        />
                                         <Form.TextInputController
                                             name="petName"
                                             required="true"

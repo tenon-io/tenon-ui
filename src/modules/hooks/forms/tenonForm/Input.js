@@ -1,6 +1,4 @@
 import React, { forwardRef } from 'react';
-import { validator } from '../../../utils/helpers/validationHelpers';
-import { isLongerThan, isRequired } from '../../../utils/data/validation';
 import FeedbackBlock from '../../../forms/tenonForm/FeedbackBlock';
 import { useInput } from './formHooks';
 
@@ -27,6 +25,7 @@ const Input = forwardRef(
             showError,
             errorText
         } = useInput(name, validators);
+
         return (
             <div className="form-group">
                 <div className="field-wrapper">
