@@ -175,3 +175,13 @@ export const useTextArea = (name, validators = []) => {
     };
     return { getTextareaProps, ...inputRest };
 };
+
+export const useSelect = (name, validators = []) => {
+    const { getInputProps, ...inputRest } = useInput(name, validators);
+
+    const getSelectProps = (props = {}) => {
+        const { type, ...propsRest } = getInputProps(props);
+        return propsRest;
+    };
+    return { getSelectProps, ...inputRest };
+};

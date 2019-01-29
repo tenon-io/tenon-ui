@@ -19,6 +19,7 @@ import CodeExample from '../CodeExample';
 
 import HooksInput from '../../../src/modules/hooks/forms/tenonForm/Input';
 import HooksTextArea from '../../../src/modules/hooks/forms/tenonForm/TextArea';
+import HooksSelect from '../../../src/modules/hooks/forms/tenonForm/Select';
 
 class FormsGuide extends Component {
     constructor(props) {
@@ -118,6 +119,7 @@ class FormsGuide extends Component {
                                             labelText="Hooks text area"
                                             contentHintText="Please fill this in well"
                                             required="required"
+                                            rows="10"
                                             validators={[
                                                 validator(
                                                     isRequired,
@@ -129,6 +131,27 @@ class FormsGuide extends Component {
                                                 )
                                             ]}
                                         />
+                                        <HooksSelect
+                                            name="hooksSelect"
+                                            labelText="Select with hooks"
+                                            validators={[
+                                                validator(
+                                                    isRequired,
+                                                    'You must select a value'
+                                                )
+                                            ]}
+                                        >
+                                            <option>Select a value</option>
+                                            <option value="val1">
+                                                Value 1
+                                            </option>
+                                            <option value="val2">
+                                                Value 2
+                                            </option>
+                                            <option value="val3">
+                                                Value 3
+                                            </option>
+                                        </HooksSelect>
                                         <Form.TextInputController
                                             name="petName"
                                             required="true"
