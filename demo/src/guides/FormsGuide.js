@@ -18,6 +18,7 @@ import WorkingExample from '../WorkingExample';
 import CodeExample from '../CodeExample';
 
 import HooksInput from '../../../src/modules/hooks/forms/tenonForm/Input';
+import HooksTextArea from '../../../src/modules/hooks/forms/tenonForm/TextArea';
 
 class FormsGuide extends Component {
     constructor(props) {
@@ -111,6 +112,22 @@ class FormsGuide extends Component {
                                         <HooksInput
                                             name="hooksInput2"
                                             labelText="Hooks input two"
+                                        />
+                                        <HooksTextArea
+                                            name="hooksTextArea"
+                                            labelText="Hooks text area"
+                                            contentHintText="Please fill this in well"
+                                            required="required"
+                                            validators={[
+                                                validator(
+                                                    isRequired,
+                                                    'This text area is required'
+                                                ),
+                                                validator(
+                                                    isLongerThan(5),
+                                                    'Value for text area is too short'
+                                                )
+                                            ]}
                                         />
                                         <Form.TextInputController
                                             name="petName"

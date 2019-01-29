@@ -1,18 +1,18 @@
 import React, { forwardRef } from 'react';
-import FeedbackBlock from '../../../forms/tenonForm/FeedbackBlock';
-import { useInput } from './formHooks';
 import classNames from 'classnames';
+import FeedbackBlock from '../../../forms/tenonForm/FeedbackBlock';
+import { useTextArea } from './formHooks';
 
-const Input = forwardRef(
+const TextArea = forwardRef(
     (
         {
+            name,
+            contentHintText,
             labelText,
             labelProps,
-            name,
             required,
             requiredText,
             className,
-            contentHintText,
             validators,
             ...rest
         },
@@ -20,12 +20,12 @@ const Input = forwardRef(
     ) => {
         const {
             getLabelProps,
-            getInputProps,
+            getTextareaProps,
             getErrorProps,
             getContentHintProps,
             showError,
             errorText
-        } = useInput(name, validators);
+        } = useTextArea(name, validators);
 
         return (
             <div className="form-group">
@@ -39,13 +39,13 @@ const Input = forwardRef(
                             </span>
                         ) : null}
                     </label>
-                    <input
-                        {...getInputProps(rest)}
+                    <textarea
                         ref={ref}
                         className={
                             classNames(className, { 'has-error': showError }) ||
                             null
                         }
+                        {...getTextareaProps(rest)}
                     />
                 </div>
                 <FeedbackBlock
@@ -60,4 +60,4 @@ const Input = forwardRef(
     }
 );
 
-export default Input;
+export default TextArea;

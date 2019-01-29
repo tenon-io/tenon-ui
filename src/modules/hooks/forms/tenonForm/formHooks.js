@@ -121,8 +121,8 @@ export const useInput = (name, validators = []) => {
         setControlValue(name, e.target.value);
     };
 
-    const getLabelProps = ({ autoIdPostfix, ...props } = {}) => ({
-        htmlFor: `${controlId}${autoIdPostfix ? `-${autoIdPostfix}` : ''}`,
+    const getLabelProps = (props = {}) => ({
+        htmlFor: controlId,
         ...props
     });
 
@@ -164,4 +164,14 @@ export const useInput = (name, validators = []) => {
         showError,
         errorText
     };
+};
+
+export const useTextArea = (name, validators = []) => {
+    const { getInputProps, ...inputRest } = useInput(name, validators);
+
+    const getTextareaProps = (props = {}) => {
+        const { type, ...propsRest } = getInputProps(props);
+        return propsRest;
+    };
+    return { getTextareaProps, ...inputRest };
 };
