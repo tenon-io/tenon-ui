@@ -22,6 +22,7 @@ import HooksTextArea from '../../../src/modules/hooks/forms/tenonForm/TextArea';
 import HooksSelect from '../../../src/modules/hooks/forms/tenonForm/Select';
 import HooksCheckbox from '../../../src/modules/hooks/forms/tenonForm/Checkbox';
 import HooksCheckboxGroup from '../../../src/modules/hooks/forms/tenonForm/CheckboxGroup';
+import HooksRadioGroup from '../../../src/modules/hooks/forms/tenonForm/RadioGroup';
 
 class FormsGuide extends Component {
     constructor(props) {
@@ -183,34 +184,51 @@ class FormsGuide extends Component {
                                                 indifferent: 'Indifferent to it'
                                             }}
                                         />
-                                        <Form.TextInputController
-                                            name="petName"
+                                        <HooksRadioGroup
+                                            name="hooksRadioTest"
                                             required="true"
                                             validators={[
                                                 validator(
                                                     isRequired,
-                                                    t(
-                                                        'forms.demo.petName.errorMessageRequired'
-                                                    )
-                                                ),
-                                                validator(
-                                                    isLongerThan(5),
-                                                    t(
-                                                        'forms.demo.petName.errorMessageTooShort'
-                                                    )
+                                                    'Please select at least one radio button'
                                                 )
                                             ]}
-                                            requiredText={t(
-                                                'forms.demo.requiredText'
-                                            )}
-                                            contentHintText={t(
-                                                'forms.demo.petName.contentHint'
-                                            )}
-                                            labelText={t(
-                                                'forms.demo.petName.label'
-                                            )}
-                                            component={Input}
+                                            legend="This is a tests for radios and hooks"
+                                            options={{
+                                                black: 'black',
+                                                white: 'white',
+                                                brown: 'brown'
+                                            }}
                                         />
+
+                                        {/*<Form.TextInputController*/}
+                                        {/*name="petName"*/}
+                                        {/*required="true"*/}
+                                        {/*validators={[*/}
+                                        {/*validator(*/}
+                                        {/*isRequired,*/}
+                                        {/*t(*/}
+                                        {/*'forms.demo.petName.errorMessageRequired'*/}
+                                        {/*)*/}
+                                        {/*),*/}
+                                        {/*validator(*/}
+                                        {/*isLongerThan(5),*/}
+                                        {/*t(*/}
+                                        {/*'forms.demo.petName.errorMessageTooShort'*/}
+                                        {/*)*/}
+                                        {/*)*/}
+                                        {/*]}*/}
+                                        {/*requiredText={t(*/}
+                                        {/*'forms.demo.requiredText'*/}
+                                        {/*)}*/}
+                                        {/*contentHintText={t(*/}
+                                        {/*'forms.demo.petName.contentHint'*/}
+                                        {/*)}*/}
+                                        {/*labelText={t(*/}
+                                        {/*'forms.demo.petName.label'*/}
+                                        {/*)}*/}
+                                        {/*component={Input}*/}
+                                        {/*/>*/}
                                         {/*<Form.TextInputController*/}
                                         {/*name="petType"*/}
                                         {/*required="true"*/}

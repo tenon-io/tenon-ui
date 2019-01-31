@@ -256,3 +256,36 @@ export const useCheckboxGroup = (groupName, validators = []) => {
         errorText
     };
 };
+
+export const useRadioGroup = (groupName, validators = []) => {
+    const { setControlValue, getControlValue } = useContext(FormContext);
+    const [controlId] = useBaseControl(groupName, '', validators);
+    const [showError, errorText] = useErrorText(groupName);
+
+    const onChangeHandler = e => {
+        setControlValue(groupName, e.target.value);
+    };
+
+    const getRadioButtonProps = ({
+        value,
+        onChange,
+        focusElement,
+        ...props
+    }) => ({
+        'aria-disabled': props['disabled'] ? 'true' : null,
+        name: groupName,
+        id: focusElement ? controlId : `${controlId}-${value}`,
+        type: 'radio',
+        onChange: callAll(onChange, onChangeHandler),
+        value,
+        checked: getControlValue(groupName) === value,
+        ...props
+    });
+
+    return {
+        getLabelProps: getLabel(controlId),
+        getRadioButtonProps,
+        showError,
+        errorText
+    };
+};
