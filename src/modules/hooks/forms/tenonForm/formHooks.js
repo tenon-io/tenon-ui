@@ -20,12 +20,20 @@ const useContentHint = () => {
     return [contentHintId, getContentHintProps];
 };
 
-const useError = name => {
+const useErrorText = name => {
     const {
         registerErrors,
         getControlValidity,
         getControlErrorText
     } = useContext(FormContext);
+    return [
+        registerErrors ? !getControlValidity(name) : false,
+        getControlErrorText(name)
+    ];
+};
+
+const useError = name => {
+    const textInfo = useErrorText(name);
     const { current: errorId } = useRef(uuidv4());
 
     const getErrorProps = (props = {}) => ({
@@ -33,12 +41,7 @@ const useError = name => {
         ...props
     });
 
-    return [
-        errorId,
-        getErrorProps,
-        registerErrors ? !getControlValidity(name) : false,
-        getControlErrorText(name)
-    ];
+    return [errorId, getErrorProps, ...textInfo];
 };
 
 const getAriaDescribedBy = (isValid, errorId, contentHintId) => {
@@ -69,7 +72,7 @@ const useBaseControl = (name, defaultValue, validators) => {
 
     useEffect(
         () => {
-            registerControl(name, controlId, '', true, '');
+            registerControl(name, controlId, defaultValue, true, '');
             return () => {
                 deregisterControl(name);
             };
@@ -105,17 +108,19 @@ const useBaseControl = (name, defaultValue, validators) => {
     return [controlId];
 };
 
+export const getLabel = controlId => {
+    return ({ autoIdPostfix, props } = {}) => ({
+        htmlFor: `${controlId}${autoIdPostfix ? `-${autoIdPostfix}` : ''}`,
+        ...props
+    });
+};
+
 export const useBaseInput = (name, validators, defaultValue = '') => {
     const { registerErrors, getControlValidity } = useContext(FormContext);
 
     const [controlId] = useBaseControl(name, defaultValue, validators);
     const [contentHintId, getContentHintProps] = useContentHint();
     const [errorId, getErrorProps, showError, errorText] = useError(name);
-
-    const getLabelProps = (props = {}) => ({
-        htmlFor: controlId,
-        ...props
-    });
 
     const getBaseInputProps = props => {
         const isValid = registerErrors ? getControlValidity(name) : true;
@@ -137,7 +142,7 @@ export const useBaseInput = (name, validators, defaultValue = '') => {
     };
 
     return {
-        getLabelProps,
+        getLabelProps: getLabel(controlId),
         getBaseInputProps,
         getErrorProps,
         getContentHintProps,
@@ -217,4 +222,37 @@ export const useCheckbox = (name, validators = []) => {
     };
 
     return { getCheckboxProps, ...baseInputRest };
+};
+
+export const useCheckboxGroup = (groupName, validators = []) => {
+    const { setControlValue, getControlValue } = useContext(FormContext);
+    const [controlId] = useBaseControl(groupName, [], validators);
+    const [showError, errorText] = useErrorText(groupName);
+
+    const onChangeHandler = e => {
+        const strippedValue = getControlValue(groupName).filter(
+            value => value !== e.target.name
+        );
+        setControlValue(
+            groupName,
+            e.target.checked ? [...strippedValue, e.target.name] : strippedValue
+        );
+    };
+
+    const getCheckboxProps = ({ onChange, name, focusElement, ...props }) => ({
+        'aria-disabled': props['disabled'] ? 'true' : null,
+        name,
+        id: focusElement ? controlId : `${controlId}-${name}`,
+        type: 'checkbox',
+        onChange: callAll(onChange, onChangeHandler),
+        checked: getControlValue(groupName).indexOf(name) !== -1,
+        ...props
+    });
+
+    return {
+        getLabelProps: getLabel(controlId),
+        getCheckboxProps,
+        showError,
+        errorText
+    };
 };

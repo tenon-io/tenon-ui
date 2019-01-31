@@ -21,6 +21,7 @@ import HooksInput from '../../../src/modules/hooks/forms/tenonForm/Input';
 import HooksTextArea from '../../../src/modules/hooks/forms/tenonForm/TextArea';
 import HooksSelect from '../../../src/modules/hooks/forms/tenonForm/Select';
 import HooksCheckbox from '../../../src/modules/hooks/forms/tenonForm/Checkbox';
+import HooksCheckboxGroup from '../../../src/modules/hooks/forms/tenonForm/CheckboxGroup';
 
 class FormsGuide extends Component {
     constructor(props) {
@@ -164,6 +165,23 @@ class FormsGuide extends Component {
                                                     'Agree to continue'
                                                 )
                                             ]}
+                                        />
+                                        <HooksCheckboxGroup
+                                            name="hookCheckGroup"
+                                            required="true"
+                                            validators={[
+                                                validator(
+                                                    value => value.length > 0,
+                                                    'You must select at least one'
+                                                )
+                                            ]}
+                                            legend="This is a test for hooks"
+                                            contentHintText="What do you think about hooks"
+                                            options={{
+                                                love: 'Love it',
+                                                hate: 'Hate it',
+                                                indifferent: 'Indifferent to it'
+                                            }}
                                         />
                                         <Form.TextInputController
                                             name="petName"
