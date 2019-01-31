@@ -105,28 +105,19 @@ const useBaseControl = (name, defaultValue, validators) => {
     return [controlId];
 };
 
-export const useInput = (name, validators = []) => {
-    const {
-        registerErrors,
-        setControlValue,
-        getControlValue,
-        getControlValidity
-    } = useContext(FormContext);
+export const useBaseInput = (name, validators, defaultValue = '') => {
+    const { registerErrors, getControlValidity } = useContext(FormContext);
 
-    const [controlId] = useBaseControl(name, '', validators);
+    const [controlId] = useBaseControl(name, defaultValue, validators);
     const [contentHintId, getContentHintProps] = useContentHint();
     const [errorId, getErrorProps, showError, errorText] = useError(name);
-
-    const onChangeHandler = e => {
-        setControlValue(name, e.target.value);
-    };
 
     const getLabelProps = (props = {}) => ({
         htmlFor: controlId,
         ...props
     });
 
-    const getBaseInputProps = (props, onChange) => {
+    const getBaseInputProps = props => {
         const isValid = registerErrors ? getControlValidity(name) : true;
         const { required } = props;
 
@@ -141,28 +132,46 @@ export const useInput = (name, validators = []) => {
             'aria-required':
                 required === true || required === 'true' ? 'true' : null,
             id: controlId,
-            name,
-            onChange: callAll(onChange, onChangeHandler)
-        };
-    };
-
-    const getInputProps = ({ onChange, ...props } = {}) => {
-        return {
-            ...getBaseInputProps(props, onChange),
-            'aria-readonly': props['readOnly'] ? 'true' : null,
-            type: 'text',
-            value: getControlValue(name),
-            ...props
+            name
         };
     };
 
     return {
         getLabelProps,
-        getInputProps,
+        getBaseInputProps,
         getErrorProps,
         getContentHintProps,
         showError,
         errorText
+    };
+};
+
+export const useInput = (name, validators = []) => {
+    const { setControlValue, getControlValue } = useContext(FormContext);
+
+    const { getBaseInputProps, ...baseInputRest } = useBaseInput(
+        name,
+        validators
+    );
+
+    const onChangeHandler = e => {
+        setControlValue(name, e.target.value);
+    };
+
+    const getInputProps = ({ onChange, ...props } = {}) => {
+        return {
+            ...getBaseInputProps(props),
+            'aria-readonly': props['readOnly'] ? 'true' : null,
+            type: 'text',
+            value: getControlValue(name),
+            onChange: callAll(onChange, onChangeHandler),
+            ...props
+        };
+    };
+
+    return {
+        getInputProps,
+        ...baseInputRest
     };
 };
 
@@ -184,4 +193,28 @@ export const useSelect = (name, validators = []) => {
         return propsRest;
     };
     return { getSelectProps, ...inputRest };
+};
+
+export const useCheckbox = (name, validators = []) => {
+    const { setControlValue, getControlValue } = useContext(FormContext);
+    const { getBaseInputProps, ...baseInputRest } = useBaseInput(
+        name,
+        validators,
+        false
+    );
+    const onChangeHandler = e => {
+        setControlValue(name, e.target.checked);
+    };
+
+    const getCheckboxProps = ({ onChange, ...props } = {}) => {
+        return {
+            ...getBaseInputProps(props, onChange),
+            type: 'checkbox',
+            checked: getControlValue(name),
+            onChange: callAll(onChange, onChangeHandler),
+            ...props
+        };
+    };
+
+    return { getCheckboxProps, ...baseInputRest };
 };

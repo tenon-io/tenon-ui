@@ -20,6 +20,7 @@ import CodeExample from '../CodeExample';
 import HooksInput from '../../../src/modules/hooks/forms/tenonForm/Input';
 import HooksTextArea from '../../../src/modules/hooks/forms/tenonForm/TextArea';
 import HooksSelect from '../../../src/modules/hooks/forms/tenonForm/Select';
+import HooksCheckbox from '../../../src/modules/hooks/forms/tenonForm/Checkbox';
 
 class FormsGuide extends Component {
     constructor(props) {
@@ -152,6 +153,18 @@ class FormsGuide extends Component {
                                                 Value 3
                                             </option>
                                         </HooksSelect>
+                                        <HooksCheckbox
+                                            name="HooksCheck"
+                                            labelText="Hooks Checkbox"
+                                            contentHintText="You must agree to this"
+                                            required="required"
+                                            validators={[
+                                                validator(
+                                                    value => value === true,
+                                                    'Agree to continue'
+                                                )
+                                            ]}
+                                        />
                                         <Form.TextInputController
                                             name="petName"
                                             required="true"
