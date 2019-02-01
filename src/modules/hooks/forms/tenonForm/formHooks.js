@@ -1,14 +1,14 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import FormContext from '../../../forms/tenonForm/FormContext';
+import FormContext from './FormContext';
 import uuidv4 from 'uuid/v4';
 import { callAll } from '../../../utils/helpers/functionHelpers';
 
 const useContentHint = () => {
-    const [contentHintId, setContentHindId] = useState('');
+    const [contentHintId, setContentHintId] = useState('');
 
     const getContentHintProps = (props = {}) => {
         if (!contentHintId) {
-            setContentHindId(uuidv4());
+            setContentHintId(uuidv4());
         }
 
         return {
@@ -86,7 +86,7 @@ const useBaseControl = (name, defaultValue, validators) => {
             validationResult.validity !== getControlValidity(name) ||
             validationResult.errorText !== getControlErrorText(name)
         ) {
-            setControlValidity(name, validationResult);
+             //setControlValidity(name, validationResult);
         }
     });
 

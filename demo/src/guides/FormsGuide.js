@@ -23,6 +23,7 @@ import HooksSelect from '../../../src/modules/hooks/forms/tenonForm/Select';
 import HooksCheckbox from '../../../src/modules/hooks/forms/tenonForm/Checkbox';
 import HooksCheckboxGroup from '../../../src/modules/hooks/forms/tenonForm/CheckboxGroup';
 import HooksRadioGroup from '../../../src/modules/hooks/forms/tenonForm/RadioGroup';
+import HooksForm from '../../../src/modules/hooks/forms/tenonForm/Form';
 
 class FormsGuide extends Component {
     constructor(props) {
@@ -80,7 +81,7 @@ class FormsGuide extends Component {
                         <WorkingExample
                             heading={t('forms.demo.example.heading')}
                         >
-                            <Form
+                            <HooksForm
                                 formData={formData}
                                 onSubmit={this.onSubmitHandler}
                                 onRawSubmit={this.onRawSubmitHandler}
@@ -406,7 +407,7 @@ class FormsGuide extends Component {
                                         </button>
                                     </Fragment>
                                 )}
-                            </Form>
+                            </HooksForm>
                         </WorkingExample>
 
                         <CodeExample
