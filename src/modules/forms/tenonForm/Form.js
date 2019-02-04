@@ -10,7 +10,7 @@ import {
     CheckboxController,
     CheckboxGroupController
 } from './FormControllers';
-import deepEqual from 'lodash.isequal';
+import deepEqual from 'react-fast-compare';
 
 /**
  * @component

@@ -86,7 +86,7 @@ const useBaseControl = (name, defaultValue, validators) => {
             validationResult.validity !== getControlValidity(name) ||
             validationResult.errorText !== getControlErrorText(name)
         ) {
-             //setControlValidity(name, validationResult);
+            setControlValidity(name, validationResult);
         }
     });
 

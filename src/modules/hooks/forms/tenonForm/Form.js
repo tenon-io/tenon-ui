@@ -1,5 +1,4 @@
 import React, {
-    Component,
     useReducer,
     useEffect,
     useRef,
@@ -8,8 +7,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import FormContext from './FormContext';
-import memoize from 'memoize-one';
-import deepEqual from 'lodash.isequal';
+import deepEqual from 'react-fast-compare';
 
 /**
  * @component
@@ -85,8 +83,14 @@ const Form = ({
         register: 'REGISTER',
         deregister: 'DEREGISTER',
         setValue: 'SET_VALUE',
-        setValidity: 'SET_VALIDITY'
+        setValidity: 'SET_VALIDITY',
+        loadFormData: 'LOAD_FORM-DATA'
     };
+
+    const calculateValidityAll = formControls =>
+        Object.keys(formControls).every(
+            control => formControls[control].validity
+        );
 
     const controlsReducer = (state = {}, action) => {
         const { name, controlId, value, validity } = action;
@@ -107,10 +111,8 @@ const Form = ({
             case controlActions.deregister:
                 let newState = { ...state };
                 delete newState[name];
-                setFormValidity(calculateValidityAll(newState));
                 return newState;
             case controlActions.setValue:
-                console.log('set value');
                 return {
                     ...state,
                     [name]: {
@@ -127,6 +129,16 @@ const Form = ({
                         errorText: validity.errorText
                     }
                 };
+            case controlActions.loadFormData:
+                return Object.keys(formData).reduce(
+                    (combinedState, key) => {
+                        if (combinedState.hasOwnProperty(key)) {
+                            combinedState[key].value = formData[key];
+                        }
+                        return combinedState;
+                    },
+                    { ...state }
+                );
             default:
                 return state;
         }
@@ -137,11 +149,6 @@ const Form = ({
             switch (action.type) {
                 case controlActions.register:
                 case controlActions.setValue:
-                    // console.log(state);
-                    // console.log( controlsReducer(
-                    //     state.formControls,
-                    //     action
-                    // ));
                     return {
                         ...state,
                         formControls: controlsReducer(
@@ -151,6 +158,7 @@ const Form = ({
                     };
                 case controlActions.setValidity:
                 case controlActions.deregister:
+                case controlActions.loadFormData:
                     const formControls = controlsReducer(
                         state.formControls,
                         action
@@ -169,42 +177,22 @@ const Form = ({
         }
     );
 
-    // const [state, setState] = useReducer(
-    //     (state, newState) => {
-    //         console.log(state);
-    //         console.log(newState);
-    //         console.log({ ...state, ...newState });
-    //         return { ...state, ...newState };
-    //     },
-    //     { formControls: {}, validity: true }
-    // );
-
     const [hasSubmitted, setHasSubmitted] = useState(false);
-    const [formValidity, setFormValidity] = useState(true);
 
-    // useEffect(() => {
-    //     //TODo FIX!!!!
-    //     if (formData && !deepEqual(prevFormData.current, formData)) {
-    //         const copyState = { ...formState.formControls };
-    //         for (const control in formData) {
-    //             copyState[control].value = formData[control];
-    //         }
-    //         formStateDispatch({
-    //             formControls: copyState
-    //         });
-    //     }
-    // });
+    useEffect(() => {
+        if (formData && !deepEqual(prevFormData.current, formData)) {
+            formStateDispatch({
+                type: controlActions.loadFormData,
+                formData
+            });
+        }
+    });
 
     const prevFormData = useRef();
 
     useEffect(() => {
         prevFormData.current = formData;
     });
-
-    const calculateValidityAll = formControls =>
-        Object.keys(formControls).every(
-            control => formControls[control].validity
-        );
 
     const onSubmitHandler = e => {
         const { formControls } = formState;
@@ -213,10 +201,10 @@ const Form = ({
         setHasSubmitted(true);
 
         if (onRawSubmit) {
-            onRawSubmit(formControls, formValidity);
+            onRawSubmit(formControls, formState.validity);
         }
 
-        if (formValidity) {
+        if (formState.validity) {
             onSubmit(
                 Object.assign(
                     {},
@@ -249,7 +237,6 @@ const Form = ({
     };
 
     const setControlValue = (name, value) => {
-        console.log('set called')
         formStateDispatch({
             type: controlActions.setValue,
             name,
@@ -257,18 +244,8 @@ const Form = ({
         });
     };
 
-    const getControlValue = name => {
-
-        console.log('get called');
-        console.log(name);
-        console.log(formState);
-        console.log( formState.formControls[name]
-            ? formState.formControls[name].value
-            : '')
-        return formState.formControls[name]
-            ? formState.formControls[name].value
-            : '';
-    };
+    const getControlValue = name =>
+        formState.formControls[name] ? formState.formControls[name].value : '';
 
     const setControlValidity = (name, validity) => {
         formStateDispatch({
@@ -301,12 +278,10 @@ const Form = ({
             getControlErrorText,
             registerErrors
         }),
-        [registerErrors]
+        [registerErrors, formState]
     );
 
-    const { formControls } = formState;
-    console.log('render');
-    console.log(formControls);
+    const { formControls, validity } = formState;
     return (
         <FormContext.Provider value={contextValue}>
             <form
@@ -316,7 +291,7 @@ const Form = ({
             >
                 {children({
                     formControls,
-                    validity: formValidity,
+                    validity,
                     hasSubmitted
                 })}
             </form>
@@ -334,266 +309,5 @@ Form.propTypes = {
     alwaysShowErrors: PropTypes.bool,
     className: PropTypes.string
 };
-
-// class Form extends Component {
-//     static propTypes = {
-//         children: PropTypes.func.isRequired,
-//         onSubmit: PropTypes.func.isRequired,
-//         formData: PropTypes.object,
-//         onRawSubmit: PropTypes.func,
-//         alwaysShowErrors: PropTypes.bool,
-//         className: PropTypes.string
-//     };
-//
-//     static displayName = 'Form';
-//
-//     state = {
-//         formControls: {},
-//         validity: true,
-//         hasSubmitted: false
-//     };
-//
-//     /**
-//      * @function
-//      * Update lifecycle hook of the the component. Exists primarily
-//      * to check if the formData exists and has been modified. If so
-//      * that data is mapped into the form state to prefill the
-//      * form controls.
-//      *
-//      * @param {object} prevProps
-//      */
-//     componentDidUpdate(prevProps) {
-//         const { formData } = this.props;
-//         if (formData && !deepEqual(prevProps.formData, formData)) {
-//             const copyState = { ...this.state.formControls };
-//             for (const control in formData) {
-//                 copyState[control].value = formData[control];
-//             }
-//             this.setState({
-//                 formControls: copyState
-//             });
-//         }
-//     }
-//
-//     /**
-//      * @function
-//      * Event handler for the submit event of the smart form.
-//      *
-//      * @param {SyntheticEvent} e
-//      *
-//      * Constructs the submit object and calls the given
-//      * onSubmit event handler with this object if all
-//      * form controls in the scope of the smart form passes validation.
-//      */
-//     onSubmitHandler = e => {
-//         const { onSubmit, onRawSubmit } = this.props;
-//         const { validity, formControls } = this.state;
-//         e.preventDefault();
-//
-//         this.setState({
-//             hasSubmitted: true
-//         });
-//
-//         if (onRawSubmit) {
-//             onRawSubmit(formControls, validity);
-//         }
-//
-//         if (validity) {
-//             onSubmit(
-//                 Object.assign(
-//                     {},
-//                     ...Object.keys(formControls).map(control => ({
-//                         [control]: formControls[control].value
-//                     }))
-//                 )
-//             );
-//         }
-//     };
-//
-//     /**
-//      * @function
-//      * Registers a control with the smart form with the given state
-//      * parameters.
-//      *
-//      * If the formData prop exists and contains data for the name
-//      * being registered, this data is used over the default value.
-//      *
-//      * @param {string} name - The unique name.
-//      * @param {string} controlId - The unique DOM id for the focusable element.
-//      * @param {string} value - The string value.
-//      * @param {boolean} validity - The validation validity.
-//      * @param {string} errorText - The validation error message.
-//      */
-//     registerControl = (name, controlId, value, validity, errorText) => {
-//         const { formData } = this.props;
-//         this.setState(prevState => ({
-//             formControls: Object.assign({}, prevState.formControls, {
-//                 [name]: {
-//                     controlId,
-//                     value:
-//                         formData && formData.hasOwnProperty(name)
-//                             ? formData[name]
-//                             : value,
-//                     validity,
-//                     errorText
-//                 }
-//             })
-//         }));
-//     };
-//
-//     /**
-//      * @function
-//      * Removes a previously registered control from the smart form
-//      * state. Also repairs the state to exclude the data from the
-//      * control to be removed.
-//      *
-//      * @param {string} name - The unique name.
-//      */
-//     deregisterControl = name => {
-//         this.setState(prevState => {
-//             let newFormControls = { ...prevState.formControls };
-//             delete newFormControls[name];
-//             return {
-//                 formControls: newFormControls,
-//                 validity: this.calculateValidityAll(newFormControls)
-//             };
-//         });
-//     };
-//
-//     /**
-//      * @function
-//      * Sets the control value of the given control in the smart form
-//      * state.
-//      *
-//      * @param name - The unique name.
-//      * @param value - The string value.
-//      */
-//     setControlValue = (name, value) => {
-//         this.setState(prevState => ({
-//             formControls: Object.assign({}, prevState.formControls, {
-//                 [name]: Object.assign({}, prevState.formControls[name], {
-//                     value
-//                 })
-//             })
-//         }));
-//     };
-//
-//     /**
-//      * @function
-//      * Gets the string value from the smart form state based
-//      * for the given control
-//      *
-//      * @param name - The unique name.
-//      *
-//      * @returns {string} - The current string value of the
-//      * control
-//      */
-//     getControlValue = name =>
-//         this.state.formControls[name]
-//             ? this.state.formControls[name].value
-//             : '';
-//
-//     /**
-//      * @function
-//      * Sets the validation validity for the give control in
-//      * the smart form state.
-//      *
-//      * @param name - The unique name.
-//      * @param validity - The validation validity.
-//      */
-//     setControlValidity = (name, validity) => {
-//         this.setState(prevState => {
-//             const newFormControls = Object.assign({}, prevState.formControls, {
-//                 [name]: Object.assign({}, prevState.formControls[name], {
-//                     validity: validity.validity,
-//                     errorText: validity.errorText
-//                 })
-//             });
-//             return {
-//                 formControls: newFormControls,
-//                 validity: this.calculateValidityAll(newFormControls)
-//             };
-//         });
-//     };
-//
-//     /**
-//      * @function
-//      * Gets the validation validity for the given control from
-//      * the smart form state.
-//      *
-//      * @param name - The unique name.
-//      *
-//      * @returns {boolean} - The validation validity flag.
-//      */
-//     getControlValidity = name =>
-//         this.state.formControls[name]
-//             ? this.state.formControls[name].validity
-//             : true;
-//
-//     /**
-//      * @function
-//      * Gets the current error message for the given control.
-//      *
-//      * @param name - The unique name.
-//      * @returns {string} - The current error message, if any.
-//      */
-//     getControlErrorText = name =>
-//         this.state.formControls[name]
-//             ? this.state.formControls[name].errorText
-//             : '';
-//
-//     /**
-//      * @function
-//      * Calculates the total smart form validity from all
-//      * the container controls.
-//      *
-//      * @param {object} formControls - An object containing
-//      * the form control states.
-//      *
-//      * @returns {boolean} - The validation validity flag
-//      * for the entire form.
-//      */
-//     calculateValidityAll = formControls =>
-//         Object.keys(formControls).every(
-//             control => formControls[control].validity
-//         );
-//
-//     /**
-//      * @function
-//      * Builds up the React Context value. This function
-//      * memoized to avoid Consumer rerenders.
-//      */
-//     getContext = memoize(registerErrors => ({
-//         registerControl: this.registerControl,
-//         deregisterControl: this.deregisterControl,
-//         setControlValue: this.setControlValue,
-//         getControlValue: this.getControlValue,
-//         setControlValidity: this.setControlValidity,
-//         getControlValidity: this.getControlValidity,
-//         getControlErrorText: this.getControlErrorText,
-//         registerErrors
-//     }));
-//
-//     render() {
-//         const { alwaysShowErrors, className } = this.props;
-//         const { formControls, validity, hasSubmitted } = this.state;
-//         const context = this.getContext(alwaysShowErrors || hasSubmitted);
-//         return (
-//             <FormContext.Provider value={context}>
-//                 <form
-//                     noValidate={true}
-//                     onSubmit={this.onSubmitHandler}
-//                     className={className || null}
-//                 >
-//                     {this.props.children({
-//                         formControls,
-//                         validity,
-//                         hasSubmitted
-//                     })}
-//                 </form>
-//             </FormContext.Provider>
-//         );
-//     }
-// }
 
 export default Form;

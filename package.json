@@ -43,8 +43,8 @@
     },
     "dependencies": {
         "classnames": "2.2.6",
-        "lodash.isequal": "4.5.0",
         "memoize-one": "4.0.0",
+        "react-fast-compare": "2.0.4",
         "uuid": "3.3.2",
         "vanilla-framework": "1.8.0"
     },

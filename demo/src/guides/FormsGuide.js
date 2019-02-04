@@ -39,12 +39,13 @@ class FormsGuide extends Component {
     onDataChangeHandler = () => {
         this.setState({
             formData: {
-                petName: 'Dogter Who',
-                petType: 'Dog',
-                petDescription: 'A little brown dog that eats a lot!',
-                petWeight: 'weightClass2',
-                petColour: 'brown',
-                petEat: ['morning', 'noon', 'night']
+                hooksInput: 'Dogter Who',
+                hooksInput2: 'Dog',
+                hooksTextArea: 'A little brown dog that eats a lot!',
+                hooksSelect: 'val2',
+                HooksCheck: true,
+                hooksRadioTest: 'white',
+                hookCheckGroup: ['love', 'hate']
             }
         });
     };
@@ -52,10 +53,10 @@ class FormsGuide extends Component {
     onPartialDataChangeHandler = () => {
         this.setState({
             formData: {
-                petType: 'Cat',
-                petWeight: 'weightClass1',
-                petColour: 'black',
-                petEat: ['morning', 'night']
+                hooksInput: 'Cat',
+                hooksSelect: 'val2',
+                hooksRadioTest: 'black',
+                hookCheckGroup: ['indifferent']
             }
         });
     };

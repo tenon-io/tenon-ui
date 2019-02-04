@@ -2,7 +2,7 @@ import React, { Component, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import uuidv4 from 'uuid/v4';
 import memoize from 'memoize-one';
-import deepEqual from 'lodash.isequal';
+import deepEqual from 'react-fast-compare';
 import Heading from '../layout/Heading';
 import { keyNames } from '../utils/constants/keyCodes';
 import { getKey } from '../utils/helpers/eventHelpers';
