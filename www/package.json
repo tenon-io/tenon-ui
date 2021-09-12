@@ -6,7 +6,7 @@
     },
     "dependencies": {
         "@mdx-js/mdx": "^0.16.0",
-        "@mdx-js/tag": "^0.16.0",
+        "@mdx-js/tag": "^0.20.3",
         "@reach/router": "^1.2.1",
         "@tenon-io/tenon-codeblock": "^1.0.0",
         "gatsby": "^2.0.31",
