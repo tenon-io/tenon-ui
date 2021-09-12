@@ -5,7 +5,7 @@
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "dependencies": {
-        "@mdx-js/mdx": "^0.16.0",
+        "@mdx-js/mdx": "^0.20.3",
         "@mdx-js/tag": "^0.16.0",
         "@reach/router": "^1.2.1",
         "@tenon-io/tenon-codeblock": "^1.0.0",
