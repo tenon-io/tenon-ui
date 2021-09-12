@@ -45,7 +45,7 @@
         "classnames": "2.2.6",
         "lodash.isequal": "4.5.0",
         "memoize-one": "4.0.0",
-        "uuid": "3.3.2",
+        "uuid": "3.4.0",
         "vanilla-framework": "1.8.0"
     },
     "peerDependencies": {
