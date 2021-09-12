@@ -46,7 +46,7 @@
         "lodash.isequal": "4.5.0",
         "memoize-one": "4.0.0",
         "uuid": "3.3.2",
-        "vanilla-framework": "1.8.0"
+        "vanilla-framework": "1.8.1"
     },
     "peerDependencies": {
         "react": "^16.3.x"
