@@ -39,7 +39,8 @@
         "format-www": "prettier --write www/**/*.{js,mdx} !www/.cache/** !www/public/**",
         "format": "npm-run-all format-src format-demo format-www",
         "lint": "eslint *.js src",
-        "lint-demo": "eslint *.js demo"
+        "lint-demo": "eslint *.js demo",
+        "license": "npm install -g license-checker && license-checker --production --csv --out licenses.csv"
     },
     "dependencies": {
         "classnames": "2.2.6",
