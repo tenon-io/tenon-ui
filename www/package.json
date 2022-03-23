@@ -9,7 +9,7 @@
         "@mdx-js/tag": "^0.16.0",
         "@reach/router": "^1.2.1",
         "@tenon-io/tenon-codeblock": "^1.0.0",
-        "gatsby": "^2.0.31",
+        "gatsby": "^2.0.84",
         "gatsby-mdx": "^0.2.0",
         "gatsby-plugin-manifest": "^2.0.5",
         "gatsby-plugin-offline": "^2.0.5",
